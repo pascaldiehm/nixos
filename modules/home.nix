@@ -253,6 +253,100 @@
             bindkey "''${key[Down]}"  down-line-or-history
             bindkey "''${key[Left]}"  backward-char
             bindkey "''${key[Right]}" forward-char
+
+            # Functions
+            function nixos-update() {(
+                set -e
+                cd ~/.config/nixos
+
+                if [ -n "$(git status --porcelain)" ]; then
+                    echo "There are uncommitted changes. Please commit or stash them."
+                    return 1
+                fi
+
+                git fetch
+                local ahead=$(git rev-list --count @{u}..)
+                local behind=$(git rev-list --count ..@{u})
+
+                if [ $ahead -gt 0 ] && [ $behind -gt 0 ]; then
+                    clear
+                    echo "The local branch is diverged from the remote branch."
+                    echo
+                    echo "R) Hard reset"
+                    echo "P) Force push"
+                    echo "I) Ignore"
+                    echo "Q) Abort"
+                    echo
+                    echo -n "> "
+                    read -k 1 action
+                    echo
+
+                    if [ "$action" = "R" ]; then
+                        git reset --hard @{u}
+                    elif [ "$action" = "P" ]; then
+                        git push --force
+                    elif [ "$action" != "I" ]; then
+                        return 1
+                    fi
+                elif [ $ahead -gt 0 ]; then
+                    clear
+                    echo "The local branch is ahead of the remote branch."
+                    echo
+                    echo "P) Push"
+                    echo "R) Reset"
+                    echo "I) Ignore"
+                    echo "Q) Abort"
+                    echo
+                    echo -n "> "
+                    read -k 1 action
+                    echo
+
+                    if [ "$action" = "P" ]; then
+                        git push
+                    elif [ "$action" = "R" ]; then
+                        git reset --hard @{u}
+                    elif [ "$action" != "I" ]; then
+                        return 1
+                    fi
+                elif [ $behind -gt 0 ]; then
+                    clear
+                    echo "The local branch is behind the remote branch."
+                    echo
+                    echo "P) Pull"
+                    echo "I) Ignore"
+                    echo "Q) Abort"
+                    echo
+                    echo -n "> "
+                    read -k 1 action
+                    echo
+
+                    if [ "$action" = "P" ]; then
+                        git pull
+                    elif [ "$action" != "I" ]; then
+                        return 1
+                    fi
+                fi
+
+                nix flake update
+                if [ -n "$(git status --porcelain)" ]; then
+                    clear
+                    echo "Updates are available. Do you want to apply them?"
+                    echo -n "[y/N] "
+
+                    if read -q; then
+                        echo
+                        git add flake.lock
+                        git commit -m "Updated flake.lock"
+                        git push
+                    else
+                        echo
+                        git restore flake.lock
+                    fi
+                fi
+
+                sudo nixos-rebuild --impure --flake . switch
+                cd - > /dev/null
+            )}
         '';
 
         shellAliases = {
