@@ -30,11 +30,17 @@
     # User
     system.activationScripts.copyIcon.text = "cp /home/pascal/.config/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
 
+    programs.zsh = {
+        enable = true;
+        shellInit = ''export ZDOTDIR="$HOME/.config/zsh"'';
+    };
+
     users.users.pascal = {
         description = "Pascal Diehm";
         extraGroups = [ "wheel" "networkmanager" ];
         initialPassword = "pascal";
         isNormalUser = true;
+        shell = pkgs.zsh;
         uid = 1000;
     };
 
@@ -60,10 +66,7 @@
     };
 
     # Desktop
-    networking = {
-        firewall.allowedTCPPorts = [ 1234 ];
-        networkmanager.enable = true;
-    };
+    networking.networkmanager.enable = true;
 
     services = {
         desktopManager.plasma6.enable = true;
