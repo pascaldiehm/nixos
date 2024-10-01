@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
     # Home manager settings
     programs.home-manager.enable = true;
 
@@ -203,5 +203,62 @@
     programs.okular = {
         enable = true;
         accessibility.highlightLinks = true;
+    };
+
+    # ZSH
+    home.activation.deleteZSHEnv = lib.hm.dag.entryAfter [ "writeBoundary" ] "run rm -rf .zshenv";
+
+    programs.zsh = {
+        enable = true;
+        autocd = true;
+        autosuggestion.enable = true;
+        dotDir = ".config/zsh";
+        history.path = "$ZDOTDIR/.zsh_history";
+        plugins = [ { name = "zsh-completions"; src = pkgs.zsh-completions; } ];
+        syntaxHighlighting.enable = true;
+
+        initExtra = ''
+            # Prompt
+            export PROMPT=$'%F{4}%~%f %F{%(?.5.1)}\U276F%f '
+
+            # Keybindings
+            bindkey -rp ""
+            bindkey -R ' '-'~' self-insert
+            bindkey -R '\M-^@'-'\M-^?' self-insert
+
+            bindkey '^M'      accept-line                         # Enter
+            bindkey '^I'      expand-or-complete                  # Tab
+            bindkey '^[[C'    forward-char                        # Right
+            bindkey '^[[1;5C' forward-word                        # Ctrl+Right
+            bindkey '^[[D'    backward-char                       # Left
+            bindkey '^[[1;5D' backward-word                       # Ctrl+Left
+            bindkey '^[[H'    beginning-of-line                   # Home
+            bindkey '^[[F'    end-of-line                         # End
+            bindkey '^[[A'    up-line-or-history                  # Up
+            bindkey '^[[B'    down-line-or-history                # Down
+            bindkey '^?'      backward-delete-char                # Backspace
+            bindkey '^H'      backward-delete-word                # Ctrl+Backspace
+            bindkey '^[[3~'   delete-char                         # Delete
+            bindkey '^[[3;5~' delete-word                         # Ctrl+Delete
+            bindkey '^V'      quoted-insert                       # Ctrl+V
+            bindkey '^[[200~' bracketed-paste                     # Ctrl+Shift+V
+            bindkey '^R'      history-incremental-search-backward # Ctrl+R
+            bindkey '^L'      clear-screen                        # Ctrl+L
+            bindkey '^Z'      undo                                # Ctrl+Z
+            bindkey '^Y'      redo                                # Ctrl+Y
+
+            bindkey "''${key[Home]}"  beginning-of-line
+            bindkey "''${key[End]}"   end-of-line
+            bindkey "''${key[Up]}"    up-line-or-history
+            bindkey "''${key[Down]}"  down-line-or-history
+            bindkey "''${key[Left]}"  backward-char
+            bindkey "''${key[Right]}" forward-char
+        '';
+
+        shellAliases = {
+            l = "ls -alh";
+            ll = "ls -lh";
+            open = "xdg-open";
+        };
     };
 }
