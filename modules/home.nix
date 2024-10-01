@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
     # Home manager settings
     programs.home-manager.enable = true;
 
@@ -7,6 +7,9 @@
         stateVersion = "24.05";
         username = "pascal";
     };
+
+    # Home setup
+    home.activation.deleteChannelLinks = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf .nix-defexpr .nix-profile";
 
     # Plasma
     programs.plasma = {
