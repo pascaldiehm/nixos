@@ -28,6 +28,8 @@
     };
 
     # User
+    system.activationScripts.copyIcon.text = "cp /home/pascal/.config/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
+
     users.users.pascal = {
         description = "Pascal Diehm";
         extraGroups = [ "wheel" "networkmanager" ];
