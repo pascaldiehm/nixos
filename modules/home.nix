@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   # Home manager settings
   programs.home-manager.enable = true;
 
@@ -24,7 +24,7 @@
       klipperrc.General.KeepClipboardContents = false;
       kwinrc.Effect-overview.BorderActivate = 9;
       okularpartrc."Dlg Presentation".SlidesShowProgress = false;
-      spectaclerc.ImageSave.imageSaveLocation = "file:///home/pascal/Downloads";
+      spectaclerc.ImageSave.imageSaveLocation = "file://${config.home.homeDirectory}/Downloads";
       systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
 
       krunnerrc = {
@@ -111,7 +111,7 @@
 
     panels = [{
       widgets = [
-        { name = "org.kde.plasma.kickoff"; config.General.icon = "/home/pascal/.config/nixos/resources/flake.png"; }
+        { name = "org.kde.plasma.kickoff"; config.General.icon = "${config.xdg.configHome}/nixos/resources/flake.png"; }
         { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" ]; }
         { name = "org.kde.plasma.marginsseparator"; }
         { name = "org.kde.plasma.systemtray"; }
