@@ -232,4 +232,15 @@
     defaultEditor = true;
     extraConfig = builtins.readFile ../resources/vimrc.vim;
   };
+
+  # GnuPG
+  programs.gpg = {
+    enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-qt;
+  };
 }
