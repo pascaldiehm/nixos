@@ -40,8 +40,25 @@ function nixos-update() {(
     cd ~/.config/nixos
 
     if [ -n "$(git status --porcelain)" ]; then
-        echo "There are uncommitted changes. Please commit or stash them."
-        return 1
+        clear
+        echo "There are uncommitted changes."
+        echo
+        echo "S) Stash"
+        echo "R) Restore"
+        echo "Q) Abort"
+        echo
+        echo -n "> "
+        read -k 1 action
+        echo
+
+        if [ "$action" = "S" ]; then
+            local stashed="yes"
+            git stash push
+        elif [ "$action" = "R" ]; then
+            git restore .
+        else
+            return 1
+        fi
     fi
 
     git fetch
@@ -66,6 +83,7 @@ function nixos-update() {(
         elif [ "$action" = "P" ]; then
             git push --force
         elif [ "$action" != "I" ]; then
+            [ -n "$stashed" ] && git stash pop
             return 1
         fi
     elif [ $ahead -gt 0 ]; then
@@ -86,6 +104,7 @@ function nixos-update() {(
         elif [ "$action" = "R" ]; then
             git reset --hard @{u}
         elif [ "$action" != "I" ]; then
+            [ -n "$stashed" ] && git stash pop
             return 1
         fi
     elif [ $behind -gt 0 ]; then
@@ -103,6 +122,7 @@ function nixos-update() {(
         if [ "$action" = "P" ]; then
             git pull
         elif [ "$action" != "I" ]; then
+            [ -n "$stashed" ] && git stash pop
             return 1
         fi
     fi
@@ -125,5 +145,6 @@ function nixos-update() {(
     fi
 
     sudo nixos-rebuild --impure --flake . switch
+    [ -n "$stashed" ] && git stash pop
     cd - > /dev/null
 )}
