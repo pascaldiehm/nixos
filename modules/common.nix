@@ -1,103 +1,103 @@
 { pkgs, nixpkgs, ... }: {
-    # Nix settings
-    environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
-    nixpkgs.config.allowUnfree = true;
-    system.stateVersion = "24.05";
+  # Nix settings
+  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
+  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "24.05";
 
-    nix = {
-        channel.enable = false;
-        registry.nixpkgs.flake = nixpkgs;
+  nix = {
+    channel.enable = false;
+    registry.nixpkgs.flake = nixpkgs;
 
-        gc = {
-            automatic = true;
-            dates = "weekly";
-            options = "--delete-older-than 30d";
-        };
-
-        settings = {
-            auto-optimise-store = true;
-            experimental-features = [ "nix-command" "flakes" ];
-            nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
-        };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
 
-    # Bootloader
-    boot.loader = {
-        efi.canTouchEfiVariables = true;
-        systemd-boot.enable = true;
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
     };
+  };
 
-    # User
-    system.activationScripts.copyIcon.text = "cp /home/pascal/.config/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
+  # Bootloader
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
+  };
 
-    programs.zsh = {
-        enable = true;
-        shellInit = ''export ZDOTDIR="$HOME/.config/zsh"'';
+  # User
+  system.activationScripts.copyIcon.text = "cp /home/pascal/.config/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
+
+  programs.zsh = {
+    enable = true;
+    shellInit = ''export ZDOTDIR="$HOME/.config/zsh"'';
+  };
+
+  users.users.pascal = {
+    description = "Pascal Diehm";
+    extraGroups = [ "wheel" "networkmanager" ];
+    initialPassword = "pascal";
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    uid = 1000;
+  };
+
+  # Localization
+  console.keyMap = "de";
+  services.xserver.xkb.layout = "de";
+  time.timeZone = "Europe/Berlin";
+
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+
+    extraLocaleSettings = {
+      LC_ADDRESS = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
+      LC_MEASUREMENT = "de_DE.UTF-8";
+      LC_MONETARY = "de_DE.UTF-8";
+      LC_NAME = "de_DE.UTF-8";
+      LC_NUMERIC = "de_DE.UTF-8";
+      LC_PAPER = "de_DE.UTF-8";
+      LC_TELEPHONE = "de_DE.UTF-8";
+      LC_TIME = "de_DE.UTF-8";
     };
+  };
 
-    users.users.pascal = {
-        description = "Pascal Diehm";
-        extraGroups = [ "wheel" "networkmanager" ];
-        initialPassword = "pascal";
-        isNormalUser = true;
-        shell = pkgs.zsh;
-        uid = 1000;
+  # Desktop
+  networking.networkmanager.enable = true;
+
+  services = {
+    desktopManager.plasma6.enable = true;
+
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
     };
+  };
 
-    # Localization
-    console.keyMap = "de";
-    services.xserver.xkb.layout = "de";
-    time.timeZone = "Europe/Berlin";
+  # Audio
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
 
-    i18n = {
-        defaultLocale = "en_US.UTF-8";
-
-        extraLocaleSettings = {
-            LC_ADDRESS = "de_DE.UTF-8";
-            LC_IDENTIFICATION = "de_DE.UTF-8";
-            LC_MEASUREMENT = "de_DE.UTF-8";
-            LC_MONETARY = "de_DE.UTF-8";
-            LC_NAME = "de_DE.UTF-8";
-            LC_NUMERIC = "de_DE.UTF-8";
-            LC_PAPER = "de_DE.UTF-8";
-            LC_TELEPHONE = "de_DE.UTF-8";
-            LC_TIME = "de_DE.UTF-8";
-        };
+    alsa = {
+      enable = true;
+      support32Bit = true;
     };
+  };
 
-    # Desktop
-    networking.networkmanager.enable = true;
+  # Home manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 
-    services = {
-        desktopManager.plasma6.enable = true;
-
-        displayManager.sddm = {
-            enable = true;
-            wayland.enable = true;
-        };
-    };
-
-    # Audio
-    services.pipewire = {
-        enable = true;
-        pulse.enable = true;
-
-        alsa = {
-            enable = true;
-            support32Bit = true;
-        };
-    };
-
-    # Home manager
-    home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-    };
-
-    # Additional programs
-    programs = {
-        git.enable = true;
-        nano.enable = false;
-        vim.enable = true;
-    };
+  # Additional programs
+  programs = {
+    git.enable = true;
+    nano.enable = false;
+    vim.enable = true;
+  };
 }
