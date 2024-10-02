@@ -1,4 +1,6 @@
-{ pkgs, nixpkgs, ... }: {
+{ config, pkgs, nixpkgs, ...}: let
+  home-config = config.home-manager.users.pascal;
+in {
   # Nix settings
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nixpkgs.config.allowUnfree = true;
@@ -28,7 +30,7 @@
   };
 
   # User
-  system.activationScripts.copyIcon.text = "cp /home/pascal/.config/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
+  system.activationScripts.copyIcon.text = "cp ${home-config.xdg.configHome}/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
 
   programs.zsh = {
     enable = true;
