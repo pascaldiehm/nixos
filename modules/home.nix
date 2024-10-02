@@ -10,6 +10,7 @@
 
   # Home setup
   home.activation.deleteChannelLinks = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf .nix-defexpr .nix-profile";
+  xdg.enable = true;
 
   # Plasma
   programs.plasma = {
