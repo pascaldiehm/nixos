@@ -355,4 +355,25 @@
             open = "xdg-open";
         };
     };
+
+    # Vim
+    programs.vim = {
+        enable = true;
+        defaultEditor = true;
+
+        extraConfig = ''
+            set autoindent
+            set clipboard=unnamedplus
+            set expandtab
+            set ignorecase
+            set nowrap
+            set number
+            set relativenumber
+            set scrolloff=10
+            set shiftwidth=4
+            set smartcase
+            set tabstop=4
+            set viminfo=""
+        '';
+    };
 }
