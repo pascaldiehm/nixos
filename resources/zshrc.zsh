@@ -37,7 +37,7 @@ bindkey "${key[Right]}" forward-char
 # Functions
 function nixos-update() {(
     set -e
-    cd ~/.config/nixos
+    pushd ~/.config/nixos > /dev/null
 
     if [ -n "$(git status --porcelain)" ]; then
         clear
@@ -52,7 +52,7 @@ function nixos-update() {(
         echo
 
         if [ "$action" = "S" ]; then
-            local stashed="yes"
+            local stashed=1
             git stash push
         elif [ "$action" = "R" ]; then
             git restore .
@@ -83,7 +83,7 @@ function nixos-update() {(
         elif [ "$action" = "P" ]; then
             git push --force
         elif [ "$action" != "I" ]; then
-            [ -n "$stashed" ] && git stash pop
+            [ "$stashed" -eq 1 ] && git stash pop
             return 1
         fi
     elif [ $ahead -gt 0 ]; then
@@ -104,7 +104,7 @@ function nixos-update() {(
         elif [ "$action" = "R" ]; then
             git reset --hard @{u}
         elif [ "$action" != "I" ]; then
-            [ -n "$stashed" ] && git stash pop
+            [ "$stashed" -eq 1 ] && git stash pop
             return 1
         fi
     elif [ $behind -gt 0 ]; then
@@ -122,7 +122,7 @@ function nixos-update() {(
         if [ "$action" = "P" ]; then
             git pull
         elif [ "$action" != "I" ]; then
-            [ -n "$stashed" ] && git stash pop
+            [ "$stashed" -eq 1 ] && git stash pop
             return 1
         fi
     fi
@@ -145,6 +145,6 @@ function nixos-update() {(
     fi
 
     sudo nixos-rebuild --impure --flake . switch
-    [ -n "$stashed" ] && git stash pop
-    cd - > /dev/null
+    [ "$stashed" -eq 1 ] && git stash pop
+    popd > /dev/null
 )}
