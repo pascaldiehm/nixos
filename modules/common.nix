@@ -73,6 +73,7 @@
   };
 
   # Desktop
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
   networking.networkmanager.enable = true;
 
   services = {
