@@ -5,11 +5,6 @@ function error() {
     exit 1
 }
 
-function find-dev() {
-    [ -b "$1" ] && echo "$1" && return
-    [ -b "/dev/$1" ] && echo "/dev/$1" && return
-}
-
 [ "$EUID" -eq 0 ] || error "Please run as root"
 ping -c 1 1.1.1.1 &> /dev/null || error "No internet connection"
 
@@ -29,7 +24,7 @@ while [ ! -b "$DEV" ]; do
     echo
     echo "Which device should I format?"
     read -p "> " DEV
-    DEV="$(find-dev "$DEV")"
+    [ ! -b "$DEV" ] && DEV="/dev/$DEV"
 done
 
 clear
@@ -47,7 +42,7 @@ while [ ! -b "$PART_ROOT" ]; do
     echo
     echo "I couldn't detect the root partition. Please enter it manually."
     read -p "> " PART_ROOT
-    PART_ROOT="$(find-dev "$PART_ROOT")"
+    [ ! -b "$PART_ROOT" ] && PART_ROOT="/dev/$PART_ROOT"
 done
 
 PART_BOOT="${DEV}2"
@@ -58,7 +53,7 @@ while [ ! -b "$PART_BOOT" ]; do
     echo
     echo "I couldn't detect the boot partition. Please enter it manually."
     read -p "> " PART_BOOT
-    PART_BOOT="$(find-dev "$PART_BOOT")"
+    [ ! -b "$PART_BOOT" ] && PART_BOOT="/dev/$PART_BOOT"
 done
 
 clear
