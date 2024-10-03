@@ -1,43 +1,12 @@
-{ config, lib, pkgs, ... }: {
-  # Home manager settings
-  programs.home-manager.enable = true;
-
-  home = {
-    homeDirectory = "/home/pascal";
-    stateVersion = "24.05";
-    username = "pascal";
-  };
-
-  # Home setup
-  home.activation.deleteChannelLinks = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf .nix-defexpr .nix-profile";
-
-  xdg = {
-    enable = true;
-    dataFile.nixos-packages.text = builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (p: p.name) config.home.packages)));
-
-    mimeApps = {
-      enable = true;
-
-      defaultApplications = {
-        "text/html" = "google-chrome.desktop";
-        "x-scheme-handler/http" = "google-chrome.desktop";
-        "x-scheme-handler/https" = "google-chrome.desktop";
-      };
-    };
-  };
-
-  # Plasma
+{ config, ... }: {
   programs.plasma = {
     enable = true;
-    kscreenlocker.appearance.wallpaper = ../resources/wallpaper.jpg;
+    kscreenlocker.appearance.wallpaper = ../../resources/wallpaper.jpg;
     overrideConfig = true;
 
     configFile = {
-      dolphinrc.General.RememberOpenedTabs = false;
-      katerc.General."Show welcome view for new window" = false;
       klipperrc.General.KeepClipboardContents = false;
       kwinrc.Effect-overview.BorderActivate = 9;
-      okularpartrc."Dlg Presentation".SlidesShowProgress = false;
       spectaclerc.ImageSave.imageSaveLocation = "file://${config.home.homeDirectory}/Downloads";
       systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
 
@@ -77,11 +46,6 @@
         ];
       };
 
-      kwalletrc = {
-        "Auto Allow".kdewallet = builtins.concatStringsSep "," [ "kded6" "KDE System" "kwalletmanager" "Google Chrome" "Code" "Signal" ];
-        Wallet."Prompt on Open" = true;
-      };
-
       powerdevilrc = {
         "LowBattery/Display".DisplayBrightness = 25;
 
@@ -95,21 +59,18 @@
           UseProfileSpecificDisplayBrightness = true;
         };
       };
-
     };
 
     input.keyboard = {
       numlockOnStartup = "on";
       options = [ "caps:escape_shifted_capslock" ];
       repeatDelay = 200;
-      repeatRate = 25;
     };
 
     krunner = {
       historyBehavior = "disabled";
       position = "center";
     };
-
 
     kwin = {
       cornerBarrier = false;
@@ -125,7 +86,7 @@
 
     panels = [{
       widgets = [
-        { name = "org.kde.plasma.kickoff"; config.General.icon = "${../resources/flake.png}"; }
+        { name = "org.kde.plasma.kickoff"; config.General.icon = "${../../resources/flake.png}"; }
         { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" "applications:google-chrome.desktop" ]; }
         { name = "org.kde.plasma.marginsseparator"; }
         { name = "org.kde.plasma.systemtray"; }
@@ -204,95 +165,7 @@
 
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
-      wallpaper = ../resources/wallpaper.jpg;
+      wallpaper = ../../resources/wallpaper.jpg;
     };
   };
-
-  # Konsole
-  programs.konsole = {
-    enable = true;
-    extraConfig.KonsoleWindow.RememberWindowSize = false;
-  };
-
-  # Okular
-  programs.okular = {
-    enable = true;
-    accessibility.highlightLinks = true;
-  };
-
-  # ZSH
-  home.activation.deleteZSHEnv = lib.hm.dag.entryAfter [ "writeBoundary" ] "run rm -rf .zshenv";
-
-  programs.zsh = {
-    enable = true;
-    autocd = true;
-    autosuggestion.enable = true;
-    dotDir = ".config/zsh";
-    history.path = "$ZDOTDIR/.zsh_history";
-    initExtra = builtins.readFile ../resources/zshrc.zsh;
-    plugins = [ { name = "zsh-completions"; src = pkgs.zsh-completions; } ];
-    syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      l = "ls -alh";
-      ll = "ls -lh";
-      open = "xdg-open";
-    };
-  };
-
-  # Vim
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-    extraConfig = builtins.readFile ../resources/vimrc.vim;
-  };
-
-  # GnuPG
-  programs.gpg = {
-    enable = true;
-    homedir = "${config.xdg.dataHome}/gnupg";
-  };
-
-  services.gpg-agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-qt;
-  };
-
-  # Git
-  programs.git = {
-    enable = true;
-    userEmail = "pdiehm8@gmail.com";
-    userName = "Pascal Diehm";
-
-    extraConfig = {
-      help.autocorrect = "prompt";
-      init.defaultBranch = "main";
-      pull.rebase = true;
-      rebase.autostash = true;
-      submodule.recurse = true;
-
-      fetch = {
-        prune = true;
-        pruneTags = true;
-      };
-
-      push = {
-        autoSetupRemote = true;
-        followTags = true;
-      };
-
-      url = {
-        "git@github.com:".insteadOf = "gh:";
-        "git@github.com:pascaldiehm/".insteadOf = "gh:/";
-      };
-    };
-
-    signing = {
-      key = "pdiehm8@gmail.com";
-      signByDefault = true;
-    };
-  };
-
-  # Additional packages
-  home.packages = [ pkgs.google-chrome ];
 }
