@@ -5,6 +5,9 @@
     systemd-boot.enable = true;
   };
 
+  # Firmware updates
+  services.fwupd.enable = true;
+
   # Localization
   console.keyMap = "de";
   services.xserver.xkb.layout = "de";
