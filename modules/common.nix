@@ -1,8 +1,12 @@
-{ pkgs, nixpkgs, ...}: {
+{ config, lib, pkgs, nixpkgs, ...}: {
   # Nix settings
-  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.05";
+
+  environment.etc = {
+    "nix/inputs/nixpkgs".source = "${nixpkgs}";
+    nixos-packages.text = builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (p: p.name) config.environment.systemPackages)));
+  };
 
   nix = {
     channel.enable = false;
