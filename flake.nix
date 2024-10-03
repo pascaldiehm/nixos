@@ -16,7 +16,7 @@
 
   outputs = { nixpkgs, home-manager, plasma-manager, ... }: {
     nixosConfigurations = let
-      mkSystem = modules: nixpkgs.lib.nixosSystem {
+      mkSystem = module: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Pass nixpkgs to configuration files
@@ -24,16 +24,17 @@
 
           # System configuration
           /etc/nixos/hardware-configuration.nix
-          ./modules/common.nix
+          ./modules/common
+          module
 
           # User configuration
           home-manager.nixosModules.home-manager
           { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          { home-manager.users.pascal = import ./modules/home.nix; }
-        ] ++ modules;
+          { home-manager.users.pascal = import ./modules/home; }
+        ];
       };
     in {
-      nixos = mkSystem [ ./machines/nixos.nix ];
+      nixos = mkSystem ./machines/nixos.nix;
     };
 
     apps.x86_64-linux.install = {
