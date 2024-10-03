@@ -14,6 +14,16 @@
   xdg = {
     enable = true;
     dataFile.nixos-packages.text = builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (p: p.name) config.home.packages)));
+
+    mimeApps = {
+      enable = true;
+
+      defaultApplications = {
+        "text/html" = "google-chrome.desktop";
+        "x-scheme-handler/http" = "google-chrome.desktop";
+        "x-scheme-handler/https" = "google-chrome.desktop";
+      };
+    };
   };
 
   # Plasma
@@ -116,7 +126,7 @@
     panels = [{
       widgets = [
         { name = "org.kde.plasma.kickoff"; config.General.icon = "${../resources/flake.png}"; }
-        { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" ]; }
+        { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" "applications:google-chrome.desktop" ]; }
         { name = "org.kde.plasma.marginsseparator"; }
         { name = "org.kde.plasma.systemtray"; }
         { name = "org.kde.plasma.digitalclock"; config.Appearance.showSeconds = 2; }
@@ -282,4 +292,7 @@
       signByDefault = true;
     };
   };
+
+  # Additional packages
+  home.packages = [ pkgs.google-chrome ];
 }
