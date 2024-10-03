@@ -1,6 +1,4 @@
-{ config, pkgs, nixpkgs, ...}: let
-  home-config = config.home-manager.users.pascal;
-in {
+{ pkgs, nixpkgs, ...}: {
   # Nix settings
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nixpkgs.config.allowUnfree = true;
@@ -30,12 +28,15 @@ in {
   };
 
   # User
-  system.activationScripts.copyIcon.text = "cp ${home-config.xdg.configHome}/nixos/resources/icon.png /var/lib/AccountsService/icons/pascal";
-
   programs.zsh = {
     enable = true;
     shellInit = ''export ZDOTDIR="$HOME/.config/zsh"'';
   };
+
+  system.activationScripts.profilePicture.text = ''
+    mkdir -p -m 0775 /var/lib/AccountsService/icons
+    ln -sf ${../resources/profile.png} /var/lib/AccountsService/icons/pascal
+  '';
 
   users.users.pascal = {
     description = "Pascal Diehm";
