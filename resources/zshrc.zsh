@@ -36,9 +36,11 @@ bindkey "${key[Right]}" forward-char
 
 # Functions
 function nixos-update() {(
+    # Prepare the environment
     set -e
     pushd ~/.config/nixos > /dev/null
 
+    # Make sure the working directory is clean
     if [ -n "$(git status --porcelain)" ]; then
         clear
         echo "There are uncommitted changes."
@@ -61,6 +63,7 @@ function nixos-update() {(
         fi
     fi
 
+    # Make sure the working directory is up-to-date
     git fetch
     local ahead=$(git rev-list --count @{u}..)
     local behind=$(git rev-list --count ..@{u})
@@ -127,7 +130,34 @@ function nixos-update() {(
         fi
     fi
 
+    # Update the flake
     nix flake update
+
+    # Update VSCode marketplace extensions
+    local tmpdir=$(mktemp -d)
+    echo "[" > "$tmpdir/extensions.json"
+
+    local first=1
+    for ext in $(cat resources/vscode-extensions.json | jq -c '.[]'); do
+        [ "$first" -eq 0 ] && echo "," >> "$tmpdir/extensions.json"
+        first=0
+
+        local publisher=$(echo "$ext" | jq -r '.publisher')
+        local name=$(echo "$ext" | jq -r '.name')
+        local id="$publisher.$name"
+
+        curl --silent -o "$tmpdir/$id.zip" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+        local version=$(unzip -qc "$tmpdir/$id.zip" "extension/package.json" | jq -r '.version')
+        local sha256=$(nix-hash --flat --base32 --type sha256 "$tmpdir/$id.zip")
+
+        echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"sha256\": \"$sha256\" }" >> "$tmpdir/extensions.json"
+    done
+
+    echo -e "\n]" >> "$tmpdir/extensions.json"
+    mv "$tmpdir/extensions.json" resources/vscode-extensions.json
+    rm -rf "$tmpdir"
+
+    # Apply the updates
     if [ -n "$(git status --porcelain)" ]; then
         clear
         echo "Updates are available. Do you want to apply them?"
@@ -136,14 +166,17 @@ function nixos-update() {(
         if read -q; then
             echo
             git add flake.lock
-            git commit -m "Updated flake.lock"
+            git add resources/vscode-extensions.json
+            git commit -m "Automatic update"
             git push
         else
             echo
             git restore flake.lock
+            git restore resources/vscode-extensions.json
         fi
     fi
 
+    # Rebuild the system
     sudo nixos-rebuild --impure --flake . switch
     [ "$stashed" -eq 1 ] && git stash pop
     popd > /dev/null
