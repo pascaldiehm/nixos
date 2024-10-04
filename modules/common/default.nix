@@ -1,1 +1,8 @@
-{ ... }: { imports = [ ./nix.nix ./system.nix ./desktop.nix ./user.nix ]; }
+{ ... }: {
+  imports = [
+    ./desktop.nix
+    ./nix.nix
+    ./system.nix
+    ./user.nix
+  ];
+}
