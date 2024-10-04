@@ -1,4 +1,5 @@
 { config, ... }: {
+  # Setup plasma
   programs.plasma = {
     enable = true;
     kscreenlocker.appearance.wallpaper = ../../resources/wallpaper.jpg;

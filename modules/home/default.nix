@@ -7,6 +7,7 @@
     ./plasma.nix
     ./programs.nix
     ./vim.nix
+    ./vscode.nix
     ./zsh.nix
   ];
 }
