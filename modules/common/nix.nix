@@ -18,6 +18,7 @@
   };
 
   # Disable channels
+  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nix.settings.nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
 
   nix = {
