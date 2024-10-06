@@ -8,8 +8,6 @@ function error() {
 [ "$EUID" -eq 0 ] || error "Please run as root"
 ping -c 1 1.1.1.1 &> /dev/null || error "No internet connection"
 
-command -v git || nix-env -iA nixos.git
-
 MACHINE=""
 while [ -z "$MACHINE" ]; do
     clear
