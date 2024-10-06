@@ -1,5 +1,5 @@
 { config, ... }: {
-  # Setup plasma
+  # Setup Plasma
   programs.plasma = {
     enable = true;
     kscreenlocker.appearance.wallpaper = ../../resources/wallpaper.jpg;
@@ -88,7 +88,7 @@
     panels = [{
       widgets = [
         { name = "org.kde.plasma.kickoff"; config.General.icon = "${../../resources/flake.png}"; }
-        { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" "applications:google-chrome.desktop" ]; }
+        { name = "org.kde.plasma.icontasks"; config.General.launchers = [ "applications:org.kde.dolphin.desktop" "applications:firefox.desktop" ]; }
         { name = "org.kde.plasma.marginsseparator"; }
         { name = "org.kde.plasma.systemtray"; }
         { name = "org.kde.plasma.digitalclock"; config.Appearance.showSeconds = 2; }

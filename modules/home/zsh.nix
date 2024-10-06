@@ -2,7 +2,7 @@
   # Delete ~/.zshenv (ZDOTDIR is defiend system-wide)
   home.activation.deleteZSHEnv = lib.hm.dag.entryAfter [ "writeBoundary" ] "run rm -rf .zshenv";
 
-  # Setup zsh
+  # Setup ZSH
   programs.zsh = {
     enable = true;
     autocd = true;
