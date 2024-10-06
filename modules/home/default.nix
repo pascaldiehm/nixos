@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./firefox.nix
     ./git.nix
     ./home-manager.nix
     ./home.nix
