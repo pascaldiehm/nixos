@@ -7,6 +7,7 @@
     ./kde.nix
     ./plasma.nix
     ./programs.nix
+    ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
     ./zsh.nix
