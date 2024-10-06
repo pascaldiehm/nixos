@@ -37,9 +37,18 @@
       nixos = mkSystem ./machines/nixos.nix;
     };
 
-    apps.x86_64-linux.install = {
-      type = "app";
-      program = ./install.sh;
+    packages.x86_64-linux.install = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.stdenv.mkDerivation {
+      name = "install.sh";
+      src = ./.;
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      buildInputs = [ pkgs.git ];
+
+      installPhase = ''
+        install -Dt $out/bin bin/install.sh
+        wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.git}/bin
+      '';
     };
   };
 }
