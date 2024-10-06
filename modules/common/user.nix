@@ -27,4 +27,13 @@
     useGlobalPkgs = true;
     useUserPackages = true;
   };
+
+  # Mount tmpfs in ~/Downloads
+  systemd.mounts = [{
+    description = "Mount tmpfs in ~/Downloads";
+    type = "tmpfs";
+    wantedBy = [ "multi-user.target" ];
+    what = "tmpfs";
+    where = "/home/pascal/Downloads";
+  }];
 }
