@@ -8,6 +8,12 @@
     uid = 1000;
   };
 
+  # Enable Yubikey authentication
+  security.pam.u2f = {
+    enable = true;
+    settings.cue = true;
+  };
+
   # Link profile picture
   system.activationScripts.profilePicture = ''
     mkdir -p -m 0775 /var/lib/AccountsService/icons
