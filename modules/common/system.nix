@@ -29,11 +29,23 @@
     };
   };
 
+  # Yubikey authentication
+  security.pam.u2f = {
+    enable = true;
+    settings.cue = true;
+  };
+
   # Programs
   programs = {
     git.enable = true;
     nano.enable = false;
     vim.enable = true;
+  };
+
+  # Home Manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
   };
 
   # List system packages
