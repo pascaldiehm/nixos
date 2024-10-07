@@ -35,6 +35,7 @@
       };
     in {
       nixos = mkSystem ./machines/nixos.nix;
+      pascal-pc = mkSystem ./machines/pascal-pc.nix;
     };
 
     packages.x86_64-linux.install = let
