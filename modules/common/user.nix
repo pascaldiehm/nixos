@@ -8,12 +8,6 @@
     uid = 1000;
   };
 
-  # Enable Yubikey authentication
-  security.pam.u2f = {
-    enable = true;
-    settings.cue = true;
-  };
-
   # Link profile picture
   system.activationScripts.profilePicture = ''
     mkdir -p -m 0775 /var/lib/AccountsService/icons
@@ -26,12 +20,6 @@
   programs.zsh = {
     enable = true;
     shellInit = "export ZDOTDIR=\"$HOME/.config/zsh\"";
-  };
-
-  # Setup home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
   };
 
   # Mount tmpfs in ~/Downloads
