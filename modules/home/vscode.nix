@@ -24,6 +24,7 @@
       esbenp.prettier-vscode
       github.copilot
       github.copilot-chat
+      james-yu.latex-workshop
       ms-vsliveshare.vsliveshare
       pkief.material-icon-theme
       streetsidesoftware.code-spell-checker
