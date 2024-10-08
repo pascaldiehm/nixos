@@ -32,6 +32,15 @@
           ];
         }
 
+        {
+          name = "NixOS Manuals";
+          bookmarks = [
+            { name = "NixOS Manual"; url = "https://nixos.org/manual/nixos/stable"; }
+            { name = "Home Manager Manual"; url = "https://nix-community.github.io/home-manager"; }
+            { name = "Plasma Manager Manual"; url = "https://nix-community.github.io/plasma-manager"; }
+          ];
+        }
+
         { name = "Amazon"; url = "https://amazon.de"; }
         { name = "Cloudflare"; url = "https://dash.cloudflare.com"; }
         { name = "Hetzner"; url = "https://console.hetzner.cloud"; }
