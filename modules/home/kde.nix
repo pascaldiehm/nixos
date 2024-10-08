@@ -1,6 +1,9 @@
 { ... }: {
   # Dolphin
-  programs.plasma.configFile.dolphinrc.General.RememberOpenedTabs = false;
+  programs.plasma.configFile.dolphinrc = {
+    General.RememberOpenedTabs = false;
+    IconsMode.PreviewSize = 80;
+  };
 
   # Kate
   programs.plasma.configFile.katerc.General."Show welcome view for new window" = false;
