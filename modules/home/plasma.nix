@@ -86,6 +86,7 @@
     };
 
     panels = [{
+      screen = 0;
       widgets = [
         { name = "org.kde.plasma.kickoff"; config.General.icon = "${../../resources/flake.png}"; }
 
