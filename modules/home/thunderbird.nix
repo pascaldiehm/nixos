@@ -34,4 +34,9 @@
       withExternalGnupg = true;
     };
   };
+
+  # Add mime types
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/mailto" = "thunderbird.desktop";
+  };
 }
