@@ -15,13 +15,11 @@
     imap = {
       host = "imap.gmail.com";
       port = 993;
-      tls.enable = true;
     };
 
     smtp = {
       host = "smtp.gmail.com";
       port = 465;
-      tls.enable = true;
     };
   };
 
