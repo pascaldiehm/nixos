@@ -25,6 +25,7 @@
           # System configuration
           /etc/nixos/hardware-configuration.nix
           ./modules/common
+          ./modules/extra
           module
 
           # User configuration
