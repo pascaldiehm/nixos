@@ -21,6 +21,7 @@
 
     profiles.default = {
       name = "Default";
+      settings."browser.translations.automaticallyPopup" = false;
 
       bookmarks = [
         {
