@@ -8,7 +8,7 @@
     thunderbird.enable = true;
 
     gpg = {
-      key = "pdiehm8@gmail.com";
+      key = "69A3263CA0B0FDC8";
       signByDefault = true;
     };
 
@@ -26,6 +26,7 @@
   # Setup thunderbird
   programs.thunderbird = {
     enable = true;
+    settings."mail.openpgp.fetch_pubkeys_from_gnupg" = true;
 
     profiles.default = {
       isDefault = true;
