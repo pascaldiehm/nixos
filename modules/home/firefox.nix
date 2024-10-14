@@ -1,8 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
   # Setup Firefox
   programs.firefox = {
     enable = true;
     languagePacks = [ "en-US" "de" ];
+    package = pkgs.firefox.override { nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ]; };
 
     policies = {
       DisableFirefoxAccounts = true;
