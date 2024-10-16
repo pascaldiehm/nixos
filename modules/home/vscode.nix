@@ -52,6 +52,12 @@
       "workbench.iconTheme" = "material-icon-theme";
       "workbench.startupEditor" = "none";
 
+      "editor.codeActionsOnSave" = {
+        "source.organizeImports" = "always";
+        "source.removeUnusedImports" = "always";
+        "source.sortImports" = "always";
+      };
+
       # General
       "cSpell.language" = "en,de";
       "material-icon-theme.activeIconPack" = "react";
