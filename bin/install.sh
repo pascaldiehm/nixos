@@ -65,9 +65,13 @@ rm -rf /mnt/lost+found
 mkdir -p /mnt/boot
 mount -o umask=077 "$PART_BOOT" /mnt/boot
 
-echo "Building NixOS configuration..."
+echo "Generating hardware configuration..."
 nixos-generate-config --root /mnt
-ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
+rm /mnt/etc/nixos/configuration.nix
+mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/hardware.nix
+ln -s /mnt/etc/nixos/hardware.nix /etc/nixos/hardware.nix
+
+echo "Cloning NixOS configuration..."
 git clone https://github.com/pascaldiehm/nixos /mnt/home/pascal/.config/nixos
 
 echo "Fixing home directory permissions..."
