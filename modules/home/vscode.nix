@@ -25,6 +25,11 @@
       github.copilot
       github.copilot-chat
       james-yu.latex-workshop
+      ms-python.black-formatter
+      ms-python.debugpy
+      ms-python.isort
+      ms-python.python
+      ms-python.vscode-pylance
       ms-vsliveshare.vsliveshare
       pkief.material-icon-theme
       streetsidesoftware.code-spell-checker
@@ -75,8 +80,15 @@
       "prettier.bracketSameLine" = true;
       "prettier.printWidth" = 150;
 
+      # Python
+      "black-formatter.args" = [ "--line-length" "150" ];
+      "python.analysis.autoFormatStrings" = true;
+      "python.analysis.autoImportCompletions" = true;
+      "python.analysis.typeCheckingMode" = "standard";
+
       # Languages
       "[json]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; "editor.tabSize" = 2; };
+      "[jsonc]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; "editor.tabSize" = 2; };
       "[nix]" = { "editor.tabSize" = 2; };
     };
   };
