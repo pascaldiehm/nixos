@@ -17,7 +17,6 @@
   outputs = { nixpkgs, home-manager, plasma-manager, ... }: {
     nixosConfigurations = let
       mkSystem = module: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
           # Pass nixpkgs to configuration files
           { _module.args = { inherit nixpkgs; }; }
