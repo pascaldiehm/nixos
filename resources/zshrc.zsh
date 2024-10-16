@@ -133,6 +133,9 @@ function nixos-update() {(
     # Update the flake
     nix flake update
 
+    # Update global yarn packages
+    yarn --cwd resources/yarn upgrade --latest
+
     # Update VSCode marketplace extensions
     local tmpdir=$(mktemp -d)
     echo "[" > "$tmpdir/extensions.json"
@@ -166,6 +169,8 @@ function nixos-update() {(
         if read -q; then
             echo
             git add flake.lock
+            git add resources/yarn/package.json
+            git add resources/yarn/yarn.lock
             git add resources/vscode-extensions.json
             git commit -m "Automatic update"
             git push

@@ -10,6 +10,7 @@
     ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
+    ./yarn.nix
     ./zsh.nix
   ];
 }
