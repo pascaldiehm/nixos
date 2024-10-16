@@ -7,6 +7,7 @@
     pkgs.kdePackages.filelight
     pkgs.kdePackages.kdeconnect-kde
     pkgs.kdePackages.partitionmanager
+    pkgs.python3
     pkgs.texlive.combined.scheme-full
     pkgs.vlc
     pkgs.yt-dlp

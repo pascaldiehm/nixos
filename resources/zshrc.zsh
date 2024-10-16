@@ -1,5 +1,6 @@
 # Prompt
 export PROMPT=$'%F{4}%~%f %F{%(?.5.1)}\U276F%f '
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Keybindings
 bindkey -rp ""
