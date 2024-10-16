@@ -21,6 +21,7 @@
     extensions = with pkgs.vscode-extensions; [
       aaron-bond.better-comments
       bbenoist.nix
+      bmewburn.vscode-intelephense-client
       esbenp.prettier-vscode
       github.copilot
       github.copilot-chat
@@ -79,6 +80,9 @@
       "prettier.arrowParens" = "avoid";
       "prettier.bracketSameLine" = true;
       "prettier.printWidth" = 150;
+
+      # PHP
+      "intelephense.format.braces" = "k&r";
 
       # Python
       "black-formatter.args" = [ "--line-length" "150" ];
