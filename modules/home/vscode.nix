@@ -25,7 +25,9 @@
       esbenp.prettier-vscode
       github.copilot
       github.copilot-chat
+      github.vscode-github-actions
       james-yu.latex-workshop
+      ms-azuretools.vscode-docker
       ms-python.black-formatter
       ms-python.debugpy
       ms-python.isort
