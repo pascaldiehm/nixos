@@ -22,7 +22,7 @@
           { _module.args = { inherit nixpkgs; }; }
 
           # System configuration
-          /etc/nixos/hardware-configuration.nix
+          /etc/nixos/hardware.nix
           ./modules/common
           ./modules/extra
           module
