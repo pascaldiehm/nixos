@@ -35,6 +35,10 @@
     settings.cue = true;
   };
 
+  # Docker
+  users.users.pascal.extraGroups = [ "docker" ];
+  virtualisation.docker.enable = true;
+
   # Programs
   programs = {
     git.enable = true;
