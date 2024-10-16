@@ -2,7 +2,7 @@
   # Setup Plasma
   programs.plasma = {
     enable = true;
-    kscreenlocker.appearance.wallpaper = ../../resources/wallpaper.jpg;
+    kscreenlocker.appearance.wallpaper = "${../../resources/wallpaper.jpg}";
     overrideConfig = true;
 
     configFile = {
