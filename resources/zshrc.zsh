@@ -182,6 +182,9 @@ function nixos-update() {(
         fi
     fi
 
+    # Update secrets
+    sudo bash /etc/nixos/secrets.sh
+
     # Rebuild the system
     sudo nixos-rebuild --impure --flake . switch
     [ "$stashed" -eq 1 ] && git stash pop
