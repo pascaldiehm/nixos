@@ -22,10 +22,10 @@
     programs.firefox.profiles.default.bookmarks = [
       {
         name = "Uni Würzburg";
-        bookmarks = [
-          { name = "WueStudy"; url = "https://wuestudy.zv.uni-wuerzburg.de"; }
-          { name = "WueCampus"; url = "https://wuecampus.uni-wuerzburg.de"; }
-        ];
+        bookmarks = (import ../lib.nix).mkFirefoxBookmarks {
+          WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
+          WueCampus = "https://wuecampus.uni-wuerzburg.de";
+        };
       }
     ];
   };
