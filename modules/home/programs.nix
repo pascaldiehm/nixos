@@ -9,6 +9,7 @@
     pkgs.kdePackages.partitionmanager
     pkgs.php
     pkgs.python3
+    pkgs.quickemu
     pkgs.texlive.combined.scheme-full
     pkgs.vlc
     pkgs.yt-dlp
