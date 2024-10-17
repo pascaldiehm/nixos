@@ -183,10 +183,37 @@ function nixos-update() {(
     fi
 
     # Update secrets
-    sudo bash /etc/nixos/secrets.sh
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" | sudo tee /etc/nixos/secrets.json > /dev/null
 
     # Rebuild the system
     sudo nixos-rebuild --impure --flake . switch
     [ "$stashed" -eq 1 ] && git stash pop
     popd > /dev/null
 )}
+
+function nixos-secrets() {
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -su "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" | jq
+}
+
+function nixos-secret-get() { # <key>
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS/$1"
+}
+
+function nixos-secret-set() { # <key> <value>
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" -d "$2" "https://$SECRET_SERVER_ADDRESS/$1"
+}
+
+function nixos-secret-file() { # <key> <file>
+    [ -f "$2" ] || return 1
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" -d "$(cat "$2")" "https://$SECRET_SERVER_ADDRESS/$1"
+}
+
+function nixos-secret-delete() { # <key>
+    eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
+    curl -X DELETE -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS/$1"
+}

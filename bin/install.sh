@@ -85,8 +85,10 @@ chmod 600 /mnt/etc/nixos/secrets.json
 chown root:root /mnt/etc/nixos/secrets.json
 ln -s /mnt/etc/nixos/secrets.json /etc/nixos/secrets.json
 
-echo "curl -u \"$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD\" \"https://$SECRET_SERVER_ADDRESS\" > /etc/nixos/secrets.json" > /etc/nixos/secrets.sh
-chmod 700 /etc/nixos/secrets.sh
+echo "local SECRET_SERVER_ADDRESS=\"$SECRET_SERVER_ADDRESS\"" > /etc/nixos/secrets.sh
+echo "local SECRET_SERVER_USERNAME=\"$SECRET_SERVER_USERNAME\"" >> /etc/nixos/secrets.sh
+echo "local SECRET_SERVER_PASSWORD=\"$SECRET_SERVER_PASSWORD\"" >> /etc/nixos/secrets.sh
+chmod 600 /etc/nixos/secrets.sh
 chown root:root /etc/nixos/secrets.sh
 
 echo "Cloning NixOS configuration..."
