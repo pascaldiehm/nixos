@@ -15,6 +15,7 @@
 
     shellAliases = {
       l = "ls -alh";
+      nixos-test = "sudo nixos-rebuild --impure --flake ~/.config/nixos test";
       open = "xdg-open";
       py = "python3";
       pyenv = "[ -d .venv ] || python3 -m venv .venv; source .venv/bin/activate";
