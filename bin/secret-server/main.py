@@ -19,19 +19,20 @@ app = FastAPI(docs_url=None, redoc_url=None)
 
 @app.middleware("http")
 async def check_auth(request: Request, next):
-    auth = request.headers.get("Authorization")
-    if not auth:
-        return PlainTextResponse("Unauthorized", status_code=401, headers={"WWW-Authenticate": "Basic"})
+    try:
+        auth = request.headers.get("Authorization")
+        auth = base64.b64decode(auth.split(" ")[1]).decode("utf-8")
+        username, password = auth.split(":")
 
-    auth = base64.b64decode(auth.split(" ")[1]).decode("utf-8")
-    username, password = auth.split(":")
-    if not secrets.compare_digest(username, os.environ.get("SECRET_SERVER_USERNAME", "admin")):
-        return PlainTextResponse("Unauthorized", status_code=401, headers={"WWW-Authenticate": "Basic"})
+        if not secrets.compare_digest(username, os.environ.get("SECRET_SERVER_USERNAME", "admin")):
+            raise Exception()
 
-    if not secrets.compare_digest(password, os.environ.get("SECRET_SERVER_PASSWORD", "admin")):
-        return PlainTextResponse("Unauthorized", status_code=401, headers={"WWW-Authenticate": "Basic"})
+        if not secrets.compare_digest(password, os.environ.get("SECRET_SERVER_PASSWORD", "admin")):
+            raise Exception()
 
-    return await next(request)
+        return await next(request)
+    except:
+        return PlainTextResponse("Unauthorized", status_code=401)
 
 
 @app.get("/")
