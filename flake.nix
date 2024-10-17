@@ -23,7 +23,7 @@
 
           # System configuration
           /etc/nixos/hardware.nix
-          ./modules/common
+          ./modules/system
           ./modules/extra
           module
 
