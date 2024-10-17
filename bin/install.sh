@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-function error() {
-    echo "Error: $1"
-    exit 1
-}
-
-[ "$EUID" -eq 0 ] || error "Please run as root"
-ping -c 1 1.1.1.1 &> /dev/null || error "No internet connection"
+[ "$EUID" -eq 0 ] || (echo "Please run as root" && exit 1)
+ping -c 1 1.1.1.1 &> /dev/null || (echo "No internet connection" && exit 1)
 
 MACHINE=""
 while [ -z "$MACHINE" ]; do
@@ -60,7 +55,7 @@ echo
 read -p "Address: " SECRET_SERVER_ADDRESS
 read -p "Username: " SECRET_SERVER_USERNAME
 read -s -p "Password: " SECRET_SERVER_PASSWORD
-curl -fsu "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" > /dev/null || error "Invalid secret server credentials"
+curl -fsu "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" > /dev/null || (echo "Invalid credentials" && exit 1)
 
 clear
 echo "Creating filesystems..."
