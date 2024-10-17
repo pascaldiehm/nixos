@@ -32,7 +32,11 @@
   # Yubikey authentication
   security.pam.u2f = {
     enable = true;
-    settings.cue = true;
+
+    settings = {
+      cue = true;
+      origin = "pam://pascal";
+    };
   };
 
   # Docker
