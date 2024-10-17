@@ -3,7 +3,7 @@
   users.users.pascal = {
     description = "Pascal Diehm";
     extraGroups = [ "wheel" "networkmanager" ];
-    initialPassword = "pascal";
+    hashedPassword = (import ../lib.nix).secret "password";
     isNormalUser = true;
     uid = 1000;
   };
