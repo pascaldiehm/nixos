@@ -11,20 +11,14 @@
       OverridePostUpdatePage = "";
       PasswordManagerEnabled = false;
 
-      ExtensionSettings = { "*".installation_mode = "blocked"; } // builtins.listToAttrs (map (id: {
-        name = id;
-        value = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
-        };
-      }) [
+      ExtensionSettings = { "*".installation_mode = "blocked"; } // (import ../lib.nix).mkFirefoxExtensions [
         "{446900e4-71c2-419f-a6a7-df9c091e268b}" # Bitwarden
-        "dont-track-me-google@robwu.nl" # Don't track me Google
+        "dont-track-me-google@robwu.nl"          # Don't track me Google
         "{1018e4d6-728f-4b20-ad56-37578a4de76b}" # Flagfox
-        "plasma-browser-integration@kde.org" # Plasma Integration
+        "plasma-browser-integration@kde.org"     # Plasma Integration
         "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
-        "uBlock0@raymondhill.net" # uBlock Origin
-      ]);
+        "uBlock0@raymondhill.net"                # uBlock Origin
+      ];
     };
 
     profiles.default = {
@@ -35,29 +29,29 @@
         {
           name = "Toolbar";
           toolbar = true;
-          bookmarks = [
-            { name = "GitHub"; url = "https://github.com"; }
-            { name = "WhatsApp"; url = "https://web.whatsapp.com"; }
-            { name = "Home Assistant"; url = "http://192.168.1.88:8123"; }
-          ];
+          bookmarks = (import ../lib.nix).mkFirefoxBookmarks {
+            GitHub = "https://github.com";
+            WhatsApp = "https://web.whatsapp.com";
+            "Home Assistant" = "http://192.168.1.88:8123";
+          };
         }
 
         {
           name = "NixOS Manuals";
-          bookmarks = [
-            { name = "NixOS Manual"; url = "https://nixos.org/manual/nixos/stable"; }
-            { name = "Home Manager Manual"; url = "https://nix-community.github.io/home-manager"; }
-            { name = "Plasma Manager Manual"; url = "https://nix-community.github.io/plasma-manager"; }
-          ];
+          bookmarks = (import ../lib.nix).mkFirefoxBookmarks {
+            "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
+            "Home Manager Manual" = "https://nix-community.github.io/home-manager";
+            "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
+          };
         }
-
-        { name = "Amazon"; url = "https://amazon.de"; }
-        { name = "Cloudflare"; url = "https://dash.cloudflare.com"; }
-        { name = "Hetzner"; url = "https://console.hetzner.cloud"; }
-        { name = "PayPal"; url = "https://paypal.com"; }
-        { name = "PiHole"; url = "http://192.168.1.88/admin"; }
-        { name = "Sparkasse"; url = "https://sparkasse-mainfranken.de"; }
-      ];
+      ] ++ (import ../lib.nix).mkFirefoxBookmarks {
+        Amazon = "https://amazon.de";
+        Cloudflare = "https://dash.cloudflare.com";
+        Hetzner = "https://console.hetzner.cloud";
+        PayPal = "https://paypal.com";
+        PiHole = "http://192.168.1.88/admin";
+        Sparkasse = "https://sparkasse-mainfranken.de";
+      };
 
       search = {
         default = "Google";

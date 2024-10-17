@@ -58,11 +58,5 @@
   };
 
   # List system packages
-  environment.etc.nixos-packages.text = let
-    packages = config.environment.systemPackages;
-    names = builtins.map (p: p.name) packages;
-    sorted = lib.naturalSort names;
-    unique = lib.unique sorted;
-    content = builtins.concatStringsSep "\n" unique;
-  in content;
+  environment.etc.nixos-packages.text = (import ../lib.nix).mkPkgList config.environment.systemPackages;
 }
