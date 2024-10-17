@@ -9,7 +9,7 @@
   };
 
   # Install u2f keys
-  xdg.configFile."Yubico/u2f_keys".text = (import ../lib.nix).secret "u2f_keys";
+  xdg.configFile."Yubico/u2f_keys".text = (import ../lib.nix).secrets.u2f_keys;
 
   # List user packages
   xdg.dataFile.nixos-packages.text = (import ../lib.nix).mkPkgList config.home.packages;

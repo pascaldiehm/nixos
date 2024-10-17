@@ -11,5 +11,5 @@
 
   mkPkgList = pkgs: builtins.concatStringsSep "\n" (builtins.sort (a: b: a < b) (builtins.map (p: p.name) pkgs));
 
-  secret = key: (builtins.fromJSON (builtins.readFile /etc/nixos/secrets.json)).${key};
+  secrets = builtins.fromJSON (builtins.readFile /etc/nixos/secrets.json);
 }
