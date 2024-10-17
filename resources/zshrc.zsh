@@ -198,22 +198,30 @@ function nixos-secrets() {
 }
 
 function nixos-secret-get() { # <key>
+    [ -n "$1" ] || (echo "Usage: nixos-secret-get <key>" && return 1)
+
     eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
     curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS/$1"
 }
 
 function nixos-secret-set() { # <key> <value>
+    ([ -n "$1" ] && [ -n "$2" ]) || (echo "Usage: nixos-secret-set <key> <value>" && return 1)
+
     eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
     curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" -d "$2" "https://$SECRET_SERVER_ADDRESS/$1"
 }
 
 function nixos-secret-file() { # <key> <file>
-    [ -f "$2" ] || return 1
+    ([ -n "$1" ] && [ -n "$2" ]) || (echo "Usage: nixos-secret-file <key> <file>" && return 1)
+    [ -f "$2" ] || (echo "File not found: $2" && return 1)
+
     eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
     curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" -d "$(cat "$2")" "https://$SECRET_SERVER_ADDRESS/$1"
 }
 
 function nixos-secret-delete() { # <key>
+    [ -n "$1" ] || (echo "Usage: nixos-secret-delete <key>" && return 1)
+
     eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
     curl -X DELETE -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS/$1"
 }
