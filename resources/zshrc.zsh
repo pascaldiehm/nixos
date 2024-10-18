@@ -178,6 +178,8 @@ function nixos-update() {(
         else
             echo
             git restore flake.lock
+            git restore resources/yarn/package.json
+            git restore resources/yarn/yarn.lock
             git restore resources/vscode-extensions.json
         fi
     fi
