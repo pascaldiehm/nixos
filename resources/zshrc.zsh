@@ -184,7 +184,7 @@ function nixos-update() {(
 
     # Update secrets
     eval "$(sudo cat /etc/nixos/secrets.sh | grep -E '^local \w+=.+$')"
-    curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" | sudo tee /etc/nixos/secrets.json > /dev/null
+    curl -fu "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" | sudo tee /etc/nixos/secrets.json > /dev/null
 
     # Rebuild the system
     sudo nixos-rebuild --impure --flake . switch
