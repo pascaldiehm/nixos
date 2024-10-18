@@ -12,6 +12,4 @@ in {
   }) list);
 
   mkPkgList = pkgs: builtins.concatStringsSep "\n" (unique (builtins.sort (a: b: a < b) (builtins.map (p: p.name) pkgs)));
-
-  secrets = builtins.fromJSON (builtins.readFile /etc/nixos/secrets.json);
 }
