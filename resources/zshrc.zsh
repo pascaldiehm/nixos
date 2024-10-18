@@ -3,6 +3,7 @@ function _prompt_git() {
     local git_dir=$(git rev-parse --git-dir 2> /dev/null)
     [ -z "$git_dir" ] && return
 
+    git rev-parse HEAD &> /dev/null || return
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local commit=$(git rev-parse --short HEAD)
     local changed=$({ git diff --name-only; git ls-files --others --exclude-standard; } | wc -l)
