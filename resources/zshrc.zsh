@@ -164,6 +164,8 @@ function nixos-update() {(
     # Apply the updates
     if [ -n "$(git status --porcelain)" ]; then
         clear
+        git status --porcelain
+        echo
         echo "Updates are available. Do you want to apply them?"
         echo -n "[y/N] "
 
