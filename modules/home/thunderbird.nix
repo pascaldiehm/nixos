@@ -8,7 +8,7 @@
     thunderbird.enable = true;
 
     gpg = {
-      key = "69A3263CA0B0FDC8";
+      key = "44F1404358E52DB9";
       signByDefault = true;
     };
 

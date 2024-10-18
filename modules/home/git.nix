@@ -1,16 +1,4 @@
-{ config, pkgs, ... }: {
-  # Setup GnuPG
-  programs.gpg = {
-    enable = true;
-    homedir = "${config.xdg.dataHome}/gnupg";
-  };
-
-  # Setup gpg-agent
-  services.gpg-agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-qt;
-  };
-
+{ ... }: {
   # Setup git
   programs.git = {
     enable = true;
@@ -41,7 +29,7 @@
     };
 
     signing = {
-      key = "pdiehm8@gmail.com";
+      key = "44F1404358E52DB9";
       signByDefault = true;
     };
   };

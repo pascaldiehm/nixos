@@ -2,6 +2,7 @@
   imports = [
     ./firefox.nix
     ./git.nix
+    ./gnupg.nix
     ./home-manager.nix
     ./home.nix
     ./kde.nix
