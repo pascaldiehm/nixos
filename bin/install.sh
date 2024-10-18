@@ -50,14 +50,6 @@ while [ ! -b "$PART_BOOT" ]; do
 done
 
 clear
-echo "Please enter the secret server credentials."
-echo
-read -p "Address: " SECRET_SERVER_ADDRESS
-read -p "Username: " SECRET_SERVER_USERNAME
-read -s -p "Password: " SECRET_SERVER_PASSWORD
-curl -fsu "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" > /dev/null || (echo "Invalid credentials" && exit 1)
-
-clear
 echo "Creating filesystems..."
 mkfs.ext4 -L nixos "$PART_ROOT"
 mkfs.fat -F 32 -n boot "$PART_BOOT"
@@ -73,18 +65,6 @@ nixos-generate-config --root /mnt
 rm /mnt/etc/nixos/configuration.nix
 mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/hardware.nix
 ln -s /mnt/etc/nixos/hardware.nix /etc/nixos/hardware.nix
-
-echo "Preparing secrets..."
-curl -u "$SECRET_SERVER_USERNAME:$SECRET_SERVER_PASSWORD" "https://$SECRET_SERVER_ADDRESS" > /mnt/etc/nixos/secrets.json
-chmod 600 /mnt/etc/nixos/secrets.json
-chown root:root /mnt/etc/nixos/secrets.json
-ln -s /mnt/etc/nixos/secrets.json /etc/nixos/secrets.json
-
-echo "local SECRET_SERVER_ADDRESS=\"$SECRET_SERVER_ADDRESS\"" > /etc/nixos/secrets.sh
-echo "local SECRET_SERVER_USERNAME=\"$SECRET_SERVER_USERNAME\"" >> /etc/nixos/secrets.sh
-echo "local SECRET_SERVER_PASSWORD=\"$SECRET_SERVER_PASSWORD\"" >> /etc/nixos/secrets.sh
-chmod 600 /etc/nixos/secrets.sh
-chown root:root /etc/nixos/secrets.sh
 
 echo "Cloning NixOS configuration..."
 git clone https://github.com/pascaldiehm/nixos /mnt/home/pascal/.config/nixos
