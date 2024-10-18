@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   # Hostname
   networking.hostName = "pascal-pc";
 
@@ -14,5 +14,15 @@
       dns = "192.168.1.88";
       method = "manual";
     };
+  };
+
+  # Printer
+  hardware.sane.enable = true;
+  home-manager.users.pascal.home.packages = [ pkgs.system-config-printer pkgs.kdePackages.skanlite ];
+  users.users.pascal.extraGroups = [ "scanner" "lp" ];
+
+  services = {
+    ipp-usb.enable = true;
+    printing.enable = true;
   };
 }
