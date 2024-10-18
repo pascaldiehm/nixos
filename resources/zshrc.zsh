@@ -1,6 +1,58 @@
 # Prompt
-export PROMPT=$'%F{4}%~%f %F{%(?.5.1)}\U276F%f '
+function _prompt_git() {
+    local git_dir=$(git rev-parse --git-dir 2> /dev/null)
+    [ -z "$git_dir" ] && return
+
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local commit=$(git rev-parse --short HEAD)
+    local changed=$({ git diff --name-only; git ls-files --others --exclude-standard; } | wc -l)
+    local staged=$(git diff --name-only --cached | wc -l)
+    local stashed=$(git stash list | wc -l)
+    local merge=$([ -f "$git_dir/MERGE_HEAD" ] && echo "merge")
+
+    local remote=$(git rev-parse --abbrev-ref @{u} 2> /dev/null)
+    if [ -n "$remote" ]; then
+        local ahead=$(git rev-list --count @{u}..)
+        local behind=$(git rev-list --count ..@{u})
+    fi
+
+    local rebase=$([ -f "$git_dir/rebase-merge/interactive" ] && echo "rebase")
+    if [ -n "$rebase" ]; then
+        local rebase_step=$(cat "$git_dir/rebase-merge/msgnum")
+        local rebase_total=$(cat "$git_dir/rebase-merge/end")
+    fi
+
+    [ "$branch" = "HEAD" ] && echo -n " %F{3}$commit%f" || echo -n " %F{8}$branch%f"
+
+    if [ "$changed" -gt 0 ] && [ "$staged" -gt 0 ]; then
+        echo -n "%F{6}\U203D%f"
+    elif [ "$changed" -gt 0 ]; then
+        echo -n "%F{6}?%f"
+    elif [ "$staged" -gt 0 ]; then
+        echo -n "%F{6}!%f"
+    fi
+
+    [ "$stashed" -gt 0 ] && echo -n " %F{4}\U2026%f"
+
+    if [ -n "$remote" ]; then
+        if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then
+            echo -n " %F{6}\U296F%f"
+        elif [ "$ahead" -gt 0 ]; then
+            echo -n " %F{6}\U2191%f"
+        elif [ "$behind" -gt 0 ]; then
+            echo -n " %F{6}\U2193%f"
+        fi
+    elif [ "$branch" != "HEAD" ]; then
+        echo -n " %F{6}\U21A5%f"
+    fi
+
+    [ -n "$rebase" ] && echo -n " %F{1}(rebase)%f %F{2}$rebase_step%F{8}/%F{2}$rebase_total%f"
+    [ -n "$merge" ] && echo -n " %F{1}(merge)%f"
+}
+
+setopt PROMPT_SUBST
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
 
 # Keybindings
 bindkey -rp ""
