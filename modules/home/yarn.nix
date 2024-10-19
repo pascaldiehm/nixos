@@ -12,10 +12,10 @@
   };
 
   # Install global packages
-  home.activation.yarnInstallGlobalPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.yarn}/bin/yarn --cwd ${config.home.sessionVariables.YARN_GLOBAL_FOLDER} install
-    [ -h ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin ] && rm ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin
-    ln -s ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/node_modules/.bin ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin
+  home.activation.installGlobalYarnPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ${pkgs.yarn}/bin/yarn --cwd ${config.home.sessionVariables.YARN_GLOBAL_FOLDER} install
+    [ -h ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin ] && run rm ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin
+    run ln -s ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/node_modules/.bin ${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin
   '';
 
   # Update yarn path
@@ -25,5 +25,5 @@
   };
 
   # Add binary directory to PATH
-  home.sessionPath = [ "${config.xdg.configHome}/yarn/global/bin" ];
+  home.sessionPath = [ "${config.home.sessionVariables.YARN_GLOBAL_FOLDER}/bin" ];
 }

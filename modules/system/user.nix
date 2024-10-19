@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   # Create user
   users.users.pascal = {
     description = "Pascal Diehm";
@@ -9,7 +9,7 @@
   };
 
   # Link profile picture
-  system.activationScripts.profilePicture = ''
+  system.activationScripts.linkProfilePicture = ''
     mkdir -p -m 0775 /var/lib/AccountsService/icons
     ln -sf ${../../resources/profile.png} /var/lib/AccountsService/icons/pascal
   '';
@@ -28,6 +28,6 @@
     type = "tmpfs";
     wantedBy = [ "multi-user.target" ];
     what = "tmpfs";
-    where = "/home/pascal/Downloads";
+    where = "${config.home-manager.users.pascal.xdg.userDirs.download}";
   }];
 }

@@ -8,7 +8,7 @@
     configFile = {
       klipperrc.General.KeepClipboardContents = false;
       kwinrc.Effect-overview.BorderActivate = 9;
-      spectaclerc.ImageSave.imageSaveLocation = "file://${config.home.homeDirectory}/Downloads";
+      spectaclerc.ImageSave.imageSaveLocation = "file://${config.xdg.userDirs.download}";
       systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
 
       krunnerrc = {
