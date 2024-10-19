@@ -16,6 +16,9 @@
     };
   };
 
+  # Disable auto mute
+  home-manager.users.pascal.home.activation.disableAutoMute = "run ${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
+
   # Printer
   hardware.sane.enable = true;
   home-manager.users.pascal.home.packages = [ pkgs.system-config-printer pkgs.kdePackages.skanlite ];
