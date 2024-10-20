@@ -12,9 +12,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, plasma-manager, ... }: let
+  outputs = { nixpkgs, home-manager, plasma-manager, sops-nix, ... }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
     lib = nixpkgs.lib;
   in {
@@ -26,6 +31,7 @@
 
           # Modules
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
           { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
 
           # Common configuration
@@ -50,7 +56,7 @@
 
       installPhase = ''
         install -Dt $out/bin bin/install.sh
-        wrapProgram $out/bin/install.sh --prefix PATH : ${lib.makeBinPath [ pkgs.git ]}
+        wrapProgram $out/bin/install.sh --prefix PATH : ${lib.makeBinPath [ pkgs.git pkgs.gnupg ]}
       '';
     };
   };

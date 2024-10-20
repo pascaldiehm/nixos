@@ -79,3 +79,11 @@ chmod 700 /mnt/home/pascal
 
 echo "Installing NixOS..."
 nixos-install --impure --no-channel-copy --no-root-password --root /mnt --flake "/mnt/home/pascal/.config/nixos#$MACHINE"
+
+echo "Decrypting secrets..."
+echo -n "Insert the YubiKey and press enter."
+read
+
+echo "fetch" | gpg --command-fd 0 --card-edit || { echo "Failed to fetch GPG key"; exit 1; }
+gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg > /mnt/etc/nixos/secret.key
+chmod 400 /mnt/etc/nixos/secret.key
