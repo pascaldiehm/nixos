@@ -3,6 +3,8 @@
 [ "$EUID" -eq 0 ] || { echo "Please run as root"; exit 1; }
 ping -c 1 1.1.1.1 &> /dev/null || { echo "No internet connection"; exit 1; }
 
+set -e
+
 MACHINE=""
 while [ -z "$MACHINE" ]; do
     clear
@@ -52,7 +54,7 @@ done
 clear
 echo "Encrypting root partition..."
 cryptsetup luksFormat "$PART_ROOT"
-cryptsetup open "$PART_ROOT" nixos || { echo "Failed to open encrypted partition"; exit 1; }
+cryptsetup open "$PART_ROOT" nixos
 
 echo "Creating filesystems..."
 mkfs.ext4 -L nixos /dev/mapper/nixos
@@ -84,6 +86,6 @@ echo "Decrypting secrets..."
 echo -n "Insert the YubiKey and press enter."
 read
 
-echo "fetch" | gpg --command-fd 0 --card-edit || { echo "Failed to fetch GPG key"; exit 1; }
+echo "fetch" | gpg --command-fd 0 --card-edit
 gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg > /mnt/etc/nixos/secret.key
 chmod 400 /mnt/etc/nixos/secret.key
