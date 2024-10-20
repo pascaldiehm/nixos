@@ -12,4 +12,6 @@ in {
   }) list);
 
   mkPkgList = pkgs: builtins.concatStringsSep "\n" (unique (builtins.sort (a: b: a < b) (builtins.map (p: p.name) pkgs)));
+
+  mkUserSecrets = set: builtins.listToAttrs (builtins.map (name: { name = name; value = { owner = "pascal"; path = set.${name}; }; }) (builtins.attrNames set));
 }

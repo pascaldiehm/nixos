@@ -3,7 +3,6 @@
   users.users.pascal = {
     description = "Pascal Diehm";
     extraGroups = [ "wheel" "networkmanager" ];
-    initialPassword = "pascal";
     isNormalUser = true;
     uid = 1000;
   };
