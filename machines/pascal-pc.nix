@@ -5,7 +5,7 @@
   # Wired connection
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
-      id = "wired";
+      id = "Wired connection";
       type = "ethernet";
     };
 
