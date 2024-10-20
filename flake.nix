@@ -14,23 +14,28 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, plasma-manager, ... }: {
+  outputs = { nixpkgs, home-manager, plasma-manager, ... }: let
+    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    lib = nixpkgs.lib;
+  in {
     nixosConfigurations = let
       mkSystem = module: nixpkgs.lib.nixosSystem {
         modules = [
           # Pass nixpkgs to configuration files
           { _module.args = { inherit nixpkgs; }; }
 
-          # System configuration
-          /etc/nixos/hardware.nix
-          ./modules/system
-          ./modules/extra
-          module
-
-          # User configuration
+          # Modules
           home-manager.nixosModules.home-manager
           { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          { home-manager.users.pascal = import ./modules/home; }
+
+          # Common configuration
+          ./modules/system
+          ./modules/extra
+          { home-manager.users.pascal = import ./modules/user; }
+
+          # Machine-specific configuration
+          /etc/nixos/hardware.nix
+          module
         ];
       };
     in {
@@ -38,17 +43,14 @@
       pascal-pc = mkSystem ./machines/pascal-pc.nix;
     };
 
-    packages.x86_64-linux.install = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in pkgs.stdenv.mkDerivation {
+    packages.x86_64-linux.install = pkgs.stdenv.mkDerivation {
       name = "install.sh";
       src = ./.;
       nativeBuildInputs = [ pkgs.makeWrapper ];
-      buildInputs = [ pkgs.git ];
 
       installPhase = ''
         install -Dt $out/bin bin/install.sh
-        wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.git}/bin
+        wrapProgram $out/bin/install.sh --prefix PATH : ${lib.makeBinPath [ pkgs.git ]}
       '';
     };
   };
