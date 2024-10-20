@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-[ "$EUID" -eq 0 ] || (echo "Please run as root" && exit 1)
-ping -c 1 1.1.1.1 &> /dev/null || (echo "No internet connection" && exit 1)
+[ "$EUID" -eq 0 ] || { echo "Please run as root"; exit 1; }
+ping -c 1 1.1.1.1 &> /dev/null || { echo "No internet connection"; exit 1; }
 
 MACHINE=""
 while [ -z "$MACHINE" ]; do
@@ -50,12 +50,16 @@ while [ ! -b "$PART_BOOT" ]; do
 done
 
 clear
+echo "Encrypting root partition..."
+cryptsetup luksFormat "$PART_ROOT"
+cryptsetup open "$PART_ROOT" nixos || { echo "Failed to open encrypted partition"; exit 1; }
+
 echo "Creating filesystems..."
-mkfs.ext4 -L nixos "$PART_ROOT"
+mkfs.ext4 -L nixos /dev/mapper/nixos
 mkfs.fat -F 32 -n boot "$PART_BOOT"
 
 echo "Mounting partitions..."
-mount "$PART_ROOT" /mnt
+mount /dev/mapper/nixos /mnt
 rm -rf /mnt/lost+found
 mkdir -p /mnt/boot
 mount -o umask=077 "$PART_BOOT" /mnt/boot
