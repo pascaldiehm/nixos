@@ -1,6 +1,12 @@
-{ config, ... }: {
+{ hmcfg, pkgs, ... }: {
+  # Enable Plasma
+  services.desktopManager.plasma6.enable = true;
+
+  # Exclude some packages
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
+
   # Setup Plasma
-  programs.plasma = {
+  home-manager.users.pascal.programs.plasma = {
     enable = true;
     kscreenlocker.appearance.wallpaper = "${../../resources/wallpaper.jpg}";
     overrideConfig = true;
@@ -8,7 +14,7 @@
     configFile = {
       klipperrc.General.KeepClipboardContents = false;
       kwinrc.Effect-overview.BorderActivate = 9;
-      spectaclerc.ImageSave.imageSaveLocation = "file://${config.xdg.userDirs.download}";
+      spectaclerc.ImageSave.imageSaveLocation = "file://${hmcfg.xdg.userDirs.download}";
       systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
 
       krunnerrc = {

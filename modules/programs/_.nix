@@ -1,12 +1,14 @@
 { ... }: {
   imports = [
+    ./docker.nix
+    ./dolphin.nix
     ./firefox.nix
     ./git.nix
     ./gnupg.nix
-    ./home-manager.nix
-    ./home.nix
-    ./kde.nix
-    ./plasma.nix
+    ./kate.nix
+    ./konsole.nix
+    ./kwallet.nix
+    ./okular.nix
     ./programs.nix
     ./thunderbird.nix
     ./vim.nix

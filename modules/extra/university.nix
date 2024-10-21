@@ -1,4 +1,4 @@
-{ ... }: {
+{ helpers, ... }: {
   home-manager.users.pascal = {
     # Email address
     accounts.email.accounts.university = {
@@ -22,7 +22,7 @@
     programs.firefox.profiles.default.bookmarks = [
       {
         name = "Uni Würzburg";
-        bookmarks = (import ../lib.nix).mkFirefoxBookmarks {
+        bookmarks = helpers.mkFirefoxBookmarks {
           WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
           WueCampus = "https://wuecampus.uni-wuerzburg.de";
         };

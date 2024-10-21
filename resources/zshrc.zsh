@@ -1,9 +1,10 @@
 # Prompt
 function _prompt_git() {
-    local git_dir=$(git rev-parse --git-dir 2> /dev/null)
-    [ -z "$git_dir" ] && return
-
+    # Check if the current directory is part of a Git repository
     git rev-parse HEAD &> /dev/null || return
+
+    # Get information about the current state
+    local git_dir=$(git rev-parse --git-dir)
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local commit=$(git rev-parse --short HEAD)
     local changed=$({ git diff --name-only; git ls-files --others --exclude-standard; } | wc -l)
@@ -23,6 +24,7 @@ function _prompt_git() {
         local rebase_total=$(cat "$git_dir/rebase-merge/end")
     fi
 
+    # Assemble the prompt
     [ "$branch" = "HEAD" ] && echo -n " %F{3}$commit%f" || echo -n " %F{8}$branch%f"
 
     if [ "$changed" -gt 0 ] && [ "$staged" -gt 0 ]; then
@@ -192,13 +194,13 @@ function nixos-update() {(
         fi
     fi
 
-    # Update the flake
+    # Update system packages
     nix flake update
 
-    # Update global yarn packages
+    # Update yarn packages
     yarn --cwd resources/yarn upgrade --latest
 
-    # Update VSCode marketplace extensions
+    # Update vscode extensions
     local tmpdir=$(mktemp -d)
     echo "[" > "$tmpdir/extensions.json"
 

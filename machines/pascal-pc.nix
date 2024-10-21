@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
-  # Hostname
+{ pkgs, helpers, ... }: {
+  # Set hostname
   networking.hostName = "pascal-pc";
 
-  # Wired connection
+  # Add wired connection
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
       id = "Wired connection";
@@ -16,13 +16,13 @@
     };
   };
 
-  # Disable auto mute
+  # Disable auto-mute
   home-manager.users.pascal.home.activation.disableAutoMute = "run ${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
 
-  # Printer
+  # Setup printer
   hardware.sane.enable = true;
   home-manager.users.pascal.home.packages = [ pkgs.system-config-printer pkgs.kdePackages.skanlite ];
-  users.users.pascal.extraGroups = [ "scanner" "lp" ];
+  users.users.pascal.extraGroups = [ "lp" "scanner" ];
 
   services = {
     ipp-usb.enable = true;

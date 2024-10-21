@@ -1,4 +1,3 @@
 { ... }: {
-  # Hostname
   networking.hostName = "nixos";
 }

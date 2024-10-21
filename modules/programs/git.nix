@@ -1,15 +1,14 @@
 { ... }: {
-  # Setup git
-  programs.git = {
+  home-manager.users.pascal.programs.git = {
     enable = true;
     userEmail = "pdiehm8@gmail.com";
     userName = "Pascal Diehm";
 
     extraConfig = {
-      help.autocorrect = "prompt";
+      help.autoCorrect = "prompt";
       init.defaultBranch = "main";
-      pull.rebsae = true;
-      rebase.autostash = true;
+      pull.rebase = true;
+      rebase.autoStash = true;
       submodule.recurse = true;
 
       fetch = {

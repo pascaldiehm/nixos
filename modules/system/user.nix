@@ -1,32 +1,19 @@
-{ config, pkgs, ... }: {
-  # Create user
+{ config, ... }: {
+  # Setup user
   users.users.pascal = {
     description = "Pascal Diehm";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" ];
+    hashedPasswordFile = config.sops.secrets.password.path;
     isNormalUser = true;
     uid = 1000;
   };
 
+  # Enable password secret
+  sops.secrets.password.neededForUsers = true;
+
   # Link profile picture
   system.activationScripts.linkProfilePicture = ''
-    mkdir -p -m 0775 /var/lib/AccountsService/icons
+    mkdir -p /var/lib/AccountsService/icons
     ln -sf ${../../resources/profile.png} /var/lib/AccountsService/icons/pascal
   '';
-
-  # Setup ZSH
-  users.users.pascal.shell = pkgs.zsh;
-
-  programs.zsh = {
-    enable = true;
-    shellInit = "export ZDOTDIR=\"$HOME/.config/zsh\"";
-  };
-
-  # Mount tmpfs in ~/Downloads
-  systemd.mounts = [{
-    description = "Mount tmpfs in ~/Downloads";
-    type = "tmpfs";
-    wantedBy = [ "multi-user.target" ];
-    what = "tmpfs";
-    where = "${config.home-manager.users.pascal.xdg.userDirs.download}";
-  }];
 }
