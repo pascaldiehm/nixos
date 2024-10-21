@@ -4,7 +4,7 @@
 
   # Setup sops-nix
   sops = {
-    age.keyFile = /etc/nixos/secret.key;
     defaultSopsFile = ../../resources/secrets/store.yml;
+    gnupg.home = "/etc/nixos/.gnupg";
   };
 }

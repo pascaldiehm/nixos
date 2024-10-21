@@ -23,7 +23,7 @@
 
       shellAliases = {
         l = "ls -alh";
-        nixos-secrets = "sudo SOPS_AGE_KEY_FILE=/etc/nixos/secret.key sops ~/.config/nixos/resources/secrets/store.yml";
+        nixos-secrets = "sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/store.yml";
         nixos-test = "sudo nixos-rebuild --impure --flake ~/.config/nixos test";
         open = "xdg-open";
         py = "python3";

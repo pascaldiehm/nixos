@@ -87,9 +87,9 @@ echo -n "Insert the YubiKey and press enter..."
 read
 
 echo "fetch" | gpg --command-fd 0 --card-edit
-gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg > /mnt/etc/nixos/secret.key
-chmod 400 /mnt/etc/nixos/secret.key
-ln -s /mnt/etc/nixos/secret.key /etc/nixos/secret.key
+mkdir -p -m 700 /mnt/etc/nixos/.gnupg
+gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg | gpg --homedir /mnt/etc/nixos/.gnupg --import
+ln -s /mnt/etc/nixos/.gnupg /etc/nixos/.gnupg
 
 echo "Installing NixOS..."
 nixos-install --impure --no-channel-copy --no-root-password --root /mnt --flake "/mnt/home/pascal/.config/nixos#$MACHINE"
