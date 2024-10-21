@@ -39,6 +39,7 @@
       };
     in {
       nixos = mkSystem ./machines/nixos.nix;
+      pascal-laptop = mkSystem ./machines/pascal-laptop.nix;
       pascal-pc = mkSystem ./machines/pascal-pc.nix;
     };
 

@@ -1,4 +1,7 @@
 { config, ... }: {
+  # Setup password secret
+  sops.secrets.password.neededForUsers = true;
+
   # Setup user
   users.users.pascal = {
     description = "Pascal Diehm";
@@ -7,9 +10,6 @@
     isNormalUser = true;
     uid = 1000;
   };
-
-  # Setup password secret
-  sops.secrets.password.neededForUsers = true;
 
   # Link profile picture
   system.activationScripts.linkProfilePicture = ''

@@ -2,7 +2,7 @@
   # Set hostname
   networking.hostName = "pascal-pc";
 
-  # Add wired connection
+  # Add network connection
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
       id = "Wired connection";
