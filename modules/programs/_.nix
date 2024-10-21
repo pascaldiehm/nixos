@@ -10,6 +10,7 @@
     ./kwallet.nix
     ./okular.nix
     ./programs.nix
+    ./ssh.nix
     ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
