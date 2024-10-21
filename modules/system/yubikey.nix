@@ -1,4 +1,4 @@
-{ hmcfg, helpers, ... }: {
+{ hmcfg, ... }: {
   # Setup U2F login
   security.pam.u2f = {
     enable = true;
@@ -10,5 +10,8 @@
   };
 
   # Setup U2F keys
-  sops.secrets.u2f_keys = helpers.mkUserSecret (hmcfg.xdg.configHome + "/Yubico/u2f_keys");
+  sops.secrets.u2f_keys = {
+    owner = "pascal";
+    path = "${hmcfg.xdg.configHome}/Yubico/u2f_keys";
+  };
 }

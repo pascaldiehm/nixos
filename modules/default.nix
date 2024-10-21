@@ -21,8 +21,6 @@
     mkHomeManagerActivation = after: data: { inherit after data; before = []; };
 
     mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
-
-    mkUserSecret = path: { owner = "pascal"; inherit path; };
   };
 
   # Shortcut to home manager configuration

@@ -8,7 +8,7 @@
     uid = 1000;
   };
 
-  # Enable password secret
+  # Setup password secret
   sops.secrets.password.neededForUsers = true;
 
   # Link profile picture
