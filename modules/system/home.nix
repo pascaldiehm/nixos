@@ -1,7 +1,7 @@
 { hmcfg, helpers, ... }: {
   home-manager.users.pascal = {
     # Delete dead channel links
-    home.activation.deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf .nix-defexpr .nix-profile";
+    home.activation.deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
 
     # Enable XDG
     xdg = {

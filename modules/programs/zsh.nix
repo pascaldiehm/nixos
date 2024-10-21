@@ -8,7 +8,7 @@
 
   home-manager.users.pascal = {
     # Delete .zshenv
-    home.activation.deleteZSHEnv = helpers.mkHomeManagerActivation [ "writeBoundary" ] "run rm -f .zshenv";
+    home.activation.deleteZSHEnv = helpers.mkHomeManagerActivation [ "writeBoundary" ] "run rm -f $HOME/.zshenv";
 
     # Setup ZSH
     programs.zsh = {

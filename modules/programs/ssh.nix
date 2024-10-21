@@ -8,7 +8,7 @@
 
   # Setup SSH
   home-manager.users.pascal.home.activation.writeSSHConfig = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
-    run cd "${hmcfg.home.homeDirectory}"
+    cd $HOME
     [ -d .ssh ] || run mkdir -m 700 .ssh
 
     run cat << EOF > .ssh/config

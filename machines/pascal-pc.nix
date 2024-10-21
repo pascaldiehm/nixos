@@ -17,7 +17,7 @@
   };
 
   # Disable auto-mute
-  home-manager.users.pascal.home.activation.disableAutoMute = "run ${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
+  home-manager.users.pascal.home.activation.disableAutoMute = helpers.mkHomeManagerActivation [ "writeBoundary" ] "run ${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
 
   # Setup printer
   hardware.sane.enable = true;

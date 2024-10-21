@@ -5,7 +5,7 @@
 
     # Setup global folder
     home.activation.installGlobalYarnPackages = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
-      run cd "${hmcfg.home.sessionVariables.YARN_GLOBAL_FOLDER}"
+      run cd ${hmcfg.home.sessionVariables.YARN_GLOBAL_FOLDER}
       run ${pkgs.yarn}/bin/yarn install
       run rm -rf bin
       run ln -s node_modules/.bin bin
