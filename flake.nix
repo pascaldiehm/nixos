@@ -53,7 +53,7 @@
 
         installPhase = ''
           install -Dt $out/bin bin/install.sh
-          wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.gnupg ]}
+          wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ]}
         '';
       };
     };
