@@ -19,7 +19,7 @@
   systemd.mounts = [{
     description = "Mount tmpfs in ~/Downloads";
     type = "tmpfs";
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "local-fs.target" ];
     what = "tmpfs";
     where = hmcfg.xdg.userDirs.download;
   }];
