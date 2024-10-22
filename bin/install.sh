@@ -79,17 +79,19 @@ echo "Fixing home directory permissions..."
 chown -R 1000:100 /mnt/home/pascal
 chmod 700 /mnt/home/pascal
 
-echo "Decrypting secrets..."
+echo "Preparing GnuPG..."
 mkdir -p -m 700 ~/.gnupg
 echo "pinentry-program $(which pinentry-tty)" > ~/.gnupg/gpg-agent.conf
-gpg-connect-agent reloadagent /bye
-echo -n "Insert the YubiKey and press enter..."
+
+mkdir -p -m 700 /mnt/etc/nixos/.gnupg
+echo "disable-scdaemon" > /mnt/etc/nixos/.gnupg/gpg-agent.conf
+ln -s /mnt/etc/nixos/.gnupg /etc/nixos/.gnupg
+
+echo -n "Installing secret key. Insert YubiKey and press enter..."
 read
 
 echo "fetch" | gpg --command-fd 0 --card-edit
-mkdir -p -m 700 /mnt/etc/nixos/.gnupg
 gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg | gpg --homedir /mnt/etc/nixos/.gnupg --import
-ln -s /mnt/etc/nixos/.gnupg /etc/nixos/.gnupg
 
 echo "Installing NixOS..."
 nixos-install --impure --no-channel-copy --no-root-password --root /mnt --flake "/mnt/home/pascal/.config/nixos#$MACHINE"
