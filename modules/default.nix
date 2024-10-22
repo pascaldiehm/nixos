@@ -21,6 +21,8 @@
     mkHomeManagerActivation = after: data: { inherit after data; before = []; };
 
     mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
+
+    mkScript = code: "/bin/sh -c '${builtins.replaceStrings ["\n"] ["; "] code}'";
   };
 
   # Shortcut to home manager configuration
