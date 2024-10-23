@@ -20,13 +20,10 @@
 
     # Bookmarks
     programs.firefox.profiles.default.bookmarks = [
-      {
-        name = "Uni Würzburg";
-        bookmarks = helpers.mkFirefoxBookmarks {
-          WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
-          WueCampus = "https://wuecampus.uni-wuerzburg.de";
-        };
-      }
+      (helpers.mkFirefoxBookmarksFolder "Uni Würzburg" {
+        WueCampus = "https://wuecampus.uni-wuerzburg.de";
+        WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
+      })
     ];
   };
 }

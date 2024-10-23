@@ -7,8 +7,10 @@
   ];
 
   # Custom helper functions
-  _module.args.helpers = {
+  _module.args.helpers = let
     mkFirefoxBookmarks = set: builtins.map (name: { inherit name; url = set.${name}; }) (builtins.attrNames set);
+
+    mkFirefoxBookmarksFolder = name: set: { inherit name; bookmarks = mkFirefoxBookmarks set; };
 
     mkFirefoxExtensions = list: builtins.listToAttrs (builtins.map (id: {
       name = id;
@@ -23,6 +25,13 @@
     mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
 
     mkScript = code: "/bin/sh -c '${builtins.replaceStrings ["\n"] ["; "] code}'";
+  in {
+    inherit mkFirefoxBookmarks;
+    inherit mkFirefoxBookmarksFolder;
+    inherit mkFirefoxExtensions;
+    inherit mkHomeManagerActivation;
+    inherit mkPackageList;
+    inherit mkScript;
   };
 
   # Shortcut to home manager configuration

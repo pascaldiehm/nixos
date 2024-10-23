@@ -30,21 +30,29 @@
           {
             name = "Toolbar";
             toolbar = true;
-            bookmarks = helpers.mkFirefoxBookmarks {
+            bookmarks = [
+              (helpers.mkFirefoxBookmarksFolder "Google" {
+                Account = "https://myaccount.google.com";
+                Calendar = "https://calendar.google.com";
+                Contacts = "https://contacts.google.com";
+                Drive = "https://drive.google.com";
+                Keep = "https://keep.google.com";
+                Maps = "https://google.com/maps";
+                Photos = "https://photos.google.com";
+                YouTube = "https://youtube.com";
+              })
+            ] ++ helpers.mkFirefoxBookmarks {
               GitHub = "https://github.com";
-              WhatsApp = "https://web.whatsapp.com";
               "Home Assistant" = "http://192.168.1.88:8123";
+              WhatsApp = "https://web.whatsapp.com";
             };
           }
 
-          {
-            name = "NixOS Manuals";
-            bookmarks = helpers.mkFirefoxBookmarks {
-              "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
-              "Home Manager Manual" = "https://nix-community.github.io/home-manager";
-              "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
-            };
-          }
+          (helpers.mkFirefoxBookmarksFolder "NixOS Manuals" {
+            "Home Manager Manual" = "https://nix-community.github.io/home-manager";
+            "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
+            "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
+          })
         ] ++ helpers.mkFirefoxBookmarks {
           Amazon = "https://amazon.de";
           Cloudflare = "https://dash.cloudflare.com";
