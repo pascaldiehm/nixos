@@ -6,7 +6,7 @@ set nowrap
 set number
 set relativenumber
 set scrolloff=10
-set shiftwidth=4
+set shiftwidth=2
 set smartcase
-set tabstop=4
+set tabstop=2
 set viminfo=""
