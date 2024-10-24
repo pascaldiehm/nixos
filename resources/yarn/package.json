@@ -1,6 +1,6 @@
 {
   "license": "UNLICENSED",
   "dependencies": {
-    "create-vite": "^5.5.3"
+    "create-vite": "^5.5.4"
   }
 }
