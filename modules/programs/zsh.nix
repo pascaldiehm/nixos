@@ -18,7 +18,7 @@
       dotDir = ".config/zsh";
       history.path = "$ZDOTDIR/.zsh_history";
       initExtra = builtins.readFile ../../resources/zshrc.zsh;
-      plugins = [ { name = "zsh-completions"; src = pkgs.zsh-completions; } ];
+      plugins = [{ name = "zsh-completions"; src = pkgs.zsh-completions; }];
       syntaxHighlighting.enable = true;
 
       shellAliases = {

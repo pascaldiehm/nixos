@@ -1,9 +1,15 @@
-{ config, hmcfg, helpers, ... }: {
+{ config, helpers, ... }: {
   # Setup SSH secrets
   sops.secrets = builtins.listToAttrs (builtins.map (key: { name = key; value = { owner = "pascal"; restartUnits = [ "home-manager-pascal.service" ]; }; }) [
     "ssh/github/key"
-    "ssh/bowser/host" "ssh/bowser/key" "ssh/bowser/port" "ssh/bowser/user"
-    "ssh/goomba/host" "ssh/goomba/key" "ssh/goomba/port" "ssh/goomba/user"
+    "ssh/bowser/host"
+    "ssh/bowser/key"
+    "ssh/bowser/port"
+    "ssh/bowser/user"
+    "ssh/goomba/host"
+    "ssh/goomba/key"
+    "ssh/goomba/port"
+    "ssh/goomba/user"
   ]);
 
   # Setup SSH

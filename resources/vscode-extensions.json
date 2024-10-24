@@ -1,3 +1,4 @@
 [
-  { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "sha256": "17nmgmvrdy5h2sbf4bphryn06q5km40fc1kfqif0z8hd4zmrqhz3" }
+  { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "sha256": "17nmgmvrdy5h2sbf4bphryn06q5km40fc1kfqif0z8hd4zmrqhz3" },
+  { "publisher": "ms-python", "name": "autopep8", "version": "2024.1.11501016", "sha256": "0c9q0b97sf45zcip4mqqri7c5ym490985dzpqpmc22j8lxs2f5nl" }
 ]

@@ -1,25 +1,29 @@
 #!/usr/bin/env bash
 
-[ "$EUID" -eq 0 ] || { echo "Please run as root"; exit 1; }
-ping -c 1 1.1.1.1 &> /dev/null || { echo "No internet connection"; exit 1; }
-
 set -e
+
+[ "$EUID" -eq 0 ] || exec sudo "$0" "$@"
+
+if ! ping -c 1 1.1.1.1 &>/dev/null; then
+  echo "No internet connection"
+  exit 1
+fi
 
 MACHINE=""
 while [ -z "$MACHINE" ]; do
-    clear
-    echo "Which machine should I install?"
-    read -p "> " MACHINE
+  clear
+  echo "Which machine should I install?"
+  read -p "> " MACHINE
 done
 
 DEV=""
 while [ ! -b "$DEV" ]; do
-    clear
-    lsblk
-    echo
-    echo "Which device should I format?"
-    read -p "> " DEV
-    [ ! -b "$DEV" ] && DEV="/dev/$DEV"
+  clear
+  lsblk
+  echo
+  echo "Which device should I format?"
+  read -p "> " DEV
+  [ ! -b "$DEV" ] && DEV="/dev/$DEV"
 done
 
 clear
@@ -32,23 +36,23 @@ parted "$DEV" -- set 2 esp on
 PART_ROOT="${DEV}1"
 [ ! -b "$PART_ROOT" ] && PART_ROOT="${DEV}p1"
 while [ ! -b "$PART_ROOT" ]; do
-    clear
-    lsblk
-    echo
-    echo "I couldn't detect the root partition. Please enter it manually."
-    read -p "> " PART_ROOT
-    [ ! -b "$PART_ROOT" ] && PART_ROOT="/dev/$PART_ROOT"
+  clear
+  lsblk
+  echo
+  echo "I couldn't detect the root partition. Please enter it manually."
+  read -p "> " PART_ROOT
+  [ ! -b "$PART_ROOT" ] && PART_ROOT="/dev/$PART_ROOT"
 done
 
 PART_BOOT="${DEV}2"
 [ ! -b "$PART_BOOT" ] && PART_BOOT="${DEV}p2"
 while [ ! -b "$PART_BOOT" ]; do
-    clear
-    lsblk
-    echo
-    echo "I couldn't detect the boot partition. Please enter it manually."
-    read -p "> " PART_BOOT
-    [ ! -b "$PART_BOOT" ] && PART_BOOT="/dev/$PART_BOOT"
+  clear
+  lsblk
+  echo
+  echo "I couldn't detect the boot partition. Please enter it manually."
+  read -p "> " PART_BOOT
+  [ ! -b "$PART_BOOT" ] && PART_BOOT="/dev/$PART_BOOT"
 done
 
 clear
@@ -81,10 +85,10 @@ chmod 700 /mnt/home/pascal
 
 echo "Preparing GnuPG..."
 mkdir -p -m 700 ~/.gnupg
-echo "pinentry-program $(which pinentry-tty)" > ~/.gnupg/gpg-agent.conf
+echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 
 mkdir -p -m 700 /mnt/etc/nixos/.gnupg
-echo "disable-scdaemon" > /mnt/etc/nixos/.gnupg/gpg-agent.conf
+echo "disable-scdaemon" >/mnt/etc/nixos/.gnupg/gpg-agent.conf
 ln -s /mnt/etc/nixos/.gnupg /etc/nixos/.gnupg
 
 echo -n "Installing secret key. Insert YubiKey and press enter..."

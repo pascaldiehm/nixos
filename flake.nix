@@ -20,42 +20,46 @@
   };
 
   outputs = { nixpkgs, home-manager, plasma-manager, sops-nix, ... }: {
-    nixosConfigurations = let
-      mkSystem = module: nixpkgs.lib.nixosSystem {
-        modules = [
-          # Libraries
-          home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
-          { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+    nixosConfigurations =
+      let
+        mkSystem = module: nixpkgs.lib.nixosSystem {
+          modules = [
+            # Libraries
+            home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
+            { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
 
-          # Modules
-          { _module.args = { inherit nixpkgs; }; }
-          ./modules
+            # Modules
+            { _module.args = { inherit nixpkgs; }; }
+            ./modules
 
-          # Hardware
-          /etc/nixos/hardware.nix
-          module
-        ];
+            # Hardware
+            /etc/nixos/hardware.nix
+            module
+          ];
+        };
+      in
+      {
+        nixos = mkSystem ./machines/nixos.nix;
+        pascal-laptop = mkSystem ./machines/pascal-laptop.nix;
+        pascal-pc = mkSystem ./machines/pascal-pc.nix;
       };
-    in {
-      nixos = mkSystem ./machines/nixos.nix;
-      pascal-laptop = mkSystem ./machines/pascal-laptop.nix;
-      pascal-pc = mkSystem ./machines/pascal-pc.nix;
-    };
 
-    packages.x86_64-linux = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in {
-      install = pkgs.stdenv.mkDerivation {
-        name = "install.sh";
-        src = ./.;
-        nativeBuildInputs = [ pkgs.makeWrapper ];
+    packages.x86_64-linux =
+      let
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      in
+      {
+        install = pkgs.stdenv.mkDerivation {
+          name = "install.sh";
+          src = ./.;
+          nativeBuildInputs = [ pkgs.makeWrapper ];
 
-        installPhase = ''
-          install -Dt $out/bin bin/install.sh
-          wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ]}
-        '';
+          installPhase = ''
+            install -Dt $out/bin bin/install.sh
+            wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ]}
+          '';
+        };
       };
-    };
   };
 }

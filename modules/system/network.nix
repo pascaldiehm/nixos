@@ -1,6 +1,6 @@
 { config, ... }: {
   # Setup network secrets
-  sops.secrets.network = {};
+  sops.secrets.network = { };
 
   # Setup NetworkManager
   networking.networkmanager = {
