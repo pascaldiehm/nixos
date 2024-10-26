@@ -6,6 +6,7 @@
   home-manager.users.pascal.home.packages = [
     pkgs.freecad-wayland
     pkgs.kdePackages.skanlite
+    pkgs.krita
     pkgs.prusa-slicer
     pkgs.system-config-printer
   ];
