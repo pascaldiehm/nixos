@@ -42,6 +42,7 @@
                 YouTube = "https://youtube.com";
               })
             ] ++ helpers.mkFirefoxBookmarks {
+              Element = "https://app.element.io";
               GitHub = "https://github.com";
               "Home Assistant" = "http://192.168.1.88:8123";
               WhatsApp = "https://web.whatsapp.com";
