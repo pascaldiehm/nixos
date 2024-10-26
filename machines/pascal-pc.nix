@@ -2,6 +2,14 @@
   # Set hostname
   networking.hostName = "pascal-pc";
 
+  # Additional packages
+  home-manager.users.pascal.home.packages = [
+    pkgs.freecad-wayland
+    pkgs.kdePackages.skanlite
+    pkgs.prusa-slicer
+    pkgs.system-config-printer
+  ];
+
   # Add network connection
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
@@ -26,11 +34,17 @@
 
   # Setup printer
   hardware.sane.enable = true;
-  home-manager.users.pascal.home.packages = [ pkgs.system-config-printer pkgs.kdePackages.skanlite ];
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
 
   services = {
     ipp-usb.enable = true;
     printing.enable = true;
+  };
+
+  # Setup 3D printer
+  home-manager.users.pascal.xdg.configFile = {
+    "PrusaSlicer/filament/PLA.ini".source = ../resources/prusa/PLA.ini;
+    "PrusaSlicer/print/Normal.ini".source = ../resources/prusa/Normal.ini;
+    "PrusaSlicer/printer/AnycubicKobra2.ini".source = ../resources/prusa/AnycubicKobra2.ini;
   };
 }
