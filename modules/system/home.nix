@@ -1,7 +1,24 @@
 { hmcfg, helpers, ... }: {
   home-manager.users.pascal = {
-    # Delete dead channel links
-    home.activation.deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
+    # Remove unwanted files from home directory
+    home.activation = {
+      deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
+
+      cleanHome = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
+        run rm -rf \
+          $HOME/.config/Code/User/History \
+          $HOME/.config/Code/User/workspaceStorage \
+          $HOME/.config/zsh/.zsh_history \
+          $HOME/.docker \
+          $HOME/.gtkrc-2.0 \
+          $HOME/.local/share/nix/repl-history \
+          $HOME/.node_repl_history \
+          $HOME/.npm \
+          $HOME/.python_history \
+          $HOME/.vim \
+          $HOME/.yarnrc
+      '';
+    };
 
     # Enable XDG
     xdg = {
