@@ -1,8 +1,8 @@
 { ... }: {
-  # Set hostname
+  # Hostname
   networking.hostName = "pascal-laptop";
 
-  # Add network connections
+  # Network
   networking.networkmanager.ensureProfiles.profiles = {
     bayern-wlan = {
       connection = {

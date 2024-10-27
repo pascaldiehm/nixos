@@ -1,15 +1,21 @@
 { pkgs, helpers, ... }: {
+  # Hostname
+  networking.hostName = "pascal-pc";
+
   # Modules
   imports = [
     ./common/3d-printing.nix
-    ./common/media.nix
+    ./common/disable-auto-mute.nix
     ./common/printing.nix
   ];
 
-  # Set hostname
-  networking.hostName = "pascal-pc";
+  # Packages
+  home-manager.users.pascal.home.packages = [
+    pkgs.krita
+    pkgs.prismlauncher
+  ];
 
-  # Add network connection
+  # Network
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
       id = "Wired connection";
@@ -21,13 +27,5 @@
       dns = "192.168.1.88";
       method = "manual";
     };
-  };
-
-  # Disable auto-mute
-  systemd.services.disableAutoMute = {
-    after = [ "sound.target" ];
-    description = "Disable auto-mute";
-    script = "${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
-    wantedBy = [ "multi-user.target" ];
   };
 }
