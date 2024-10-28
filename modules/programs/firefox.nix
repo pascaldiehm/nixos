@@ -56,8 +56,10 @@
           })
         ] ++ helpers.mkFirefoxBookmarks {
           Amazon = "https://amazon.de";
+          ChatGPT = "https://chatgpt.com";
           Cloudflare = "https://dash.cloudflare.com";
           Hetzner = "https://console.hetzner.cloud";
+          "Matrix Admin" = "https://matrix-admin.pdiehm.dev";
           PayPal = "https://paypal.com";
           PiHole = "http://192.168.1.88/admin";
           Sparkasse = "https://sparkasse-mainfranken.de";
