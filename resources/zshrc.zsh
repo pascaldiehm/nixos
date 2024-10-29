@@ -11,6 +11,7 @@ function _prompt_git() {
   local staged=$(git diff --name-only --cached | wc -l)
   local stashed=$(git stash list | wc -l)
   local merge=$([ -f "$git_dir/MERGE_HEAD" ] && echo "merge")
+  local revert=$([ -f "$git_dir/REVERT_HEAD" ] && echo "revert")
 
   local remote=$(git rev-parse --abbrev-ref @{u} 2>/dev/null)
   if [ -n "$remote" ]; then
@@ -51,6 +52,7 @@ function _prompt_git() {
 
   [ -n "$rebase" ] && echo -n " %F{1}(rebase)%f %F{2}$rebase_step%F{8}/%F{2}$rebase_total%f"
   [ -n "$merge" ] && echo -n " %F{1}(merge)%f"
+  [ -n "$revert" ] && echo -n " %F{1}(revert)%f"
 }
 
 function _prompt_pyenv() {
