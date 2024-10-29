@@ -78,6 +78,7 @@ ln -s /mnt/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
 echo "Cloning NixOS configuration..."
 git clone https://github.com/pascaldiehm/nixos /mnt/home/pascal/.config/nixos
+git --git-dir /mnt/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
 
 echo "Fixing home directory permissions..."
 chown -R 1000:100 /mnt/home/pascal
