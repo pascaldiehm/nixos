@@ -13,6 +13,7 @@
 
     configFile = {
       klipperrc.General.KeepClipboardContents = false;
+      ksmserverrc.General.loginMode = "emptySession";
       kwinrc.Effect-overview.BorderActivate = 9;
       spectaclerc.ImageSave.imageSaveLocation = "file://${hmcfg.xdg.userDirs.download}";
       systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
