@@ -13,12 +13,13 @@
         PasswordManagerEnabled = false;
 
         ExtensionSettings = { "*".installation_mode = "blocked"; } // helpers.mkFirefoxExtensions [
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" # Bitwarden
           "dont-track-me-google@robwu.nl" # Don't track me Google
-          "{1018e4d6-728f-4b20-ad56-37578a4de76b}" # Flagfox
           "plasma-browser-integration@kde.org" # Plasma Integration
-          "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
           "uBlock0@raymondhill.net" # uBlock Origin
+          "{1018e4d6-728f-4b20-ad56-37578a4de76b}" # Flagfox
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" # Bitwarden
+          "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" # Return YouTube Dislike
+          "{cf3dba12-a848-4f68-8e2d-f9fadc0721de}" # Google Lighthouse
         ];
       };
 
