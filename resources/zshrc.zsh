@@ -68,7 +68,7 @@ export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
 export RPROMPT='$(_prompt_pyenv)'
 
 # Keybindings
-bindkey -rp ""
+bindkey -rp ''
 bindkey -R ' '-'~' self-insert
 bindkey -R '\M-^@'-'\M-^?' self-insert
 
@@ -131,10 +131,10 @@ function nixos-update() { (
 
   # Make sure the working directory is up-to-date
   git fetch
-  local ahead=$(git rev-list --count @{u}..)
-  local behind=$(git rev-list --count ..@{u})
+  local ahead="$(git rev-list --count @{u}..)"
+  local behind="$(git rev-list --count ..@{u})"
 
-  if [ $ahead -gt 0 ] && [ $behind -gt 0 ]; then
+  if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then
     clear
     echo "The local branch is diverged from the remote branch."
     echo
@@ -155,7 +155,7 @@ function nixos-update() { (
       [ "$stashed" -eq 1 ] && git stash pop
       return 1
     fi
-  elif [ $ahead -gt 0 ]; then
+  elif [ "$ahead" -gt 0 ]; then
     clear
     echo "The local branch is ahead of the remote branch."
     echo
@@ -176,7 +176,7 @@ function nixos-update() { (
       [ "$stashed" -eq 1 ] && git stash pop
       return 1
     fi
-  elif [ $behind -gt 0 ]; then
+  elif [ "$behind" -gt 0 ]; then
     clear
     echo "The local branch is behind the remote branch."
     echo
@@ -203,7 +203,7 @@ function nixos-update() { (
   yarn --cwd resources/yarn upgrade --latest
 
   # Update vscode extensions
-  local tmpdir=$(mktemp -d)
+  local tmpdir="$(mktemp -d)"
   echo "[" >"$tmpdir/extensions.json"
 
   local first=1
@@ -211,13 +211,13 @@ function nixos-update() { (
     [ "$first" -eq 0 ] && echo "," >>"$tmpdir/extensions.json"
     first=0
 
-    local publisher=$(echo "$ext" | jq -r '.publisher')
-    local name=$(echo "$ext" | jq -r '.name')
+    local publisher="$(echo "$ext" | jq -r '.publisher')"
+    local name="$(echo "$ext" | jq -r '.name')"
     local id="$publisher.$name"
 
     curl --silent -o "$tmpdir/$id.zip" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-    local version=$(unzip -qc "$tmpdir/$id.zip" "extension/package.json" | jq -r '.version')
-    local sha256=$(nix-hash --flat --base32 --type sha256 "$tmpdir/$id.zip")
+    local version="$(unzip -qc "$tmpdir/$id.zip" "extension/package.json" | jq -r '.version')"
+    local sha256="$(nix-hash --flat --base32 --type sha256 "$tmpdir/$id.zip")"
 
     echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"sha256\": \"$sha256\" }" >>"$tmpdir/extensions.json"
   done
