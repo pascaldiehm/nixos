@@ -97,6 +97,9 @@ bindkey "${key[Left]}" backward-char
 bindkey "${key[Right]}" forward-char
 
 # Functions
+function mkcd() { mkdir -p "$1" && cd "$1"; }
+function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
+
 function nixos-update() { (
   # Prepare the environment
   set -e
@@ -252,3 +255,9 @@ function nixos-update() { (
   [ "$stashed" -eq 1 ] && git stash pop
   popd >/dev/null
 ); }
+
+function tmprun() {
+  local tmpdir="$(mktemp -d)"
+  HOME="$tmpdir" XDG_CONFIG_HOME="$tmpdir" XDG_DATA_HOME="$tmpdir" XDG_CACHE_HOME="$tmpdir" nix run "nixpkgs#$1" -- "${@:2}"
+  rm -rf "$tmpdir"
+}
