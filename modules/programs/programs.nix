@@ -5,6 +5,7 @@
   # Install user programs
   home-manager.users.pascal.home.packages = [
     pkgs.bitwarden-desktop
+    pkgs.cryptsetup
     pkgs.exfat
     pkgs.imagemagick
     pkgs.kdePackages.filelight
