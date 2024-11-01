@@ -1,65 +1,61 @@
 # Prompt
 function _prompt_git() {
-  # Check if the current directory is part of a Git repository
+  # Abort if not in a git repository
   git rev-parse HEAD &>/dev/null || return
 
-  # Get information about the current state
-  local git_dir=$(git rev-parse --git-dir)
-  local branch=$(git rev-parse --abbrev-ref HEAD)
-  local commit=$(git rev-parse --short HEAD)
-  local changed=$(($(git diff --name-only | wc -l) + $(git ls-files --others --exclude-standard | wc -l)))
-  local staged=$(git diff --name-only --cached | wc -l)
-  local stashed=$(git stash list | wc -l)
-  local merge=$([ -f "$git_dir/MERGE_HEAD" ] && echo "merge")
-  local revert=$([ -f "$git_dir/REVERT_HEAD" ] && echo "revert")
+  # Branch
+  local branch="$(git rev-parse --abbrev-ref HEAD)"
+  [ "$branch" = "HEAD" ] && echo -n " %F{3}$(git rev-parse --short HEAD)%f" || echo -n " %F{8}$branch%f"
 
-  local remote=$(git rev-parse --abbrev-ref @{u} 2>/dev/null)
-  if [ -n "$remote" ]; then
-    local ahead=$(git rev-list --count @{u}..)
-    local behind=$(git rev-list --count ..@{u})
-  fi
+  # Changes
+  local changed="$(git diff --name-only && git ls-files --others --exclude-standard)"
+  local staged="$(git diff --cached --name-only)"
 
-  local rebase=$([ -f "$git_dir/rebase-merge/interactive" ] && echo "rebase")
-  if [ -n "$rebase" ]; then
-    local rebase_step=$(cat "$git_dir/rebase-merge/msgnum")
-    local rebase_total=$(cat "$git_dir/rebase-merge/end")
-  fi
-
-  # Assemble the prompt
-  [ "$branch" = "HEAD" ] && echo -n " %F{3}$commit%f" || echo -n " %F{8}$branch%f"
-
-  if [ "$changed" -gt 0 ] && [ "$staged" -gt 0 ]; then
+  if [ -n "$changed" ] && [ -n "$staged" ]; then
     echo -n "%F{6}\U203D%f"
-  elif [ "$changed" -gt 0 ]; then
+  elif [ -n "$changed" ]; then
     echo -n "%F{6}?%f"
-  elif [ "$staged" -gt 0 ]; then
+  elif [ -n "$staged" ]; then
     echo -n "%F{6}!%f"
   fi
 
-  [ "$stashed" -gt 0 ] && echo -n " %F{4}\U2026%f"
+  # Stash
+  [ -n "$(git stash list)" ] && echo -n " %F{4}\U2026%f"
 
-  if [ -n "$remote" ]; then
-    if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then
-      echo -n " %F{6}\U296F%f"
-    elif [ "$ahead" -gt 0 ]; then
-      echo -n " %F{6}\U2191%f"
-    elif [ "$behind" -gt 0 ]; then
-      echo -n " %F{6}\U2193%f"
+  # Commits
+  if [ -n "$(git remote show)" ] && [ "$branch" != "HEAD" ]; then
+    if git rev-parse @{u} &>/dev/null; then
+      local ahead="$(git rev-list @{u}..)"
+      local behind="$(git rev-list ..@{u})"
+
+      if [ -n "$ahead" ] && [ -n "$behind" ]; then
+        echo -n " %F{6}\U296F%f"
+      elif [ -n "$ahead" ]; then
+        echo -n " %F{6}\U2191%f"
+      elif [ -n "$behind" ]; then
+        echo -n " %F{6}\U2193%f"
+      fi
+    else
+      echo -n " %F{6}\U21A5%f"
     fi
-  elif [ "$branch" != "HEAD" ]; then
-    echo -n " %F{6}\U21A5%f"
   fi
 
-  [ -n "$rebase" ] && echo -n " %F{1}(rebase)%f %F{2}$rebase_step%F{8}/%F{2}$rebase_total%f"
-  [ -n "$merge" ] && echo -n " %F{1}(merge)%f"
-  [ -n "$revert" ] && echo -n " %F{1}(revert)%f"
+  # Action
+  local git_dir="$(git rev-parse --git-dir)"
+
+  if [ -f "$git_dir/MERGE_HEAD" ]; then
+    echo -n " %F{1}(merge)%f"
+  elif [ -f "$git_dir/REVERT_HEAD" ]; then
+    echo -n "$ %F{1}(revert)%f"
+  elif [ -f "$git_dir/rebase-merge/interactive" ]; then
+    local step="$(cat "$git_dir/rebase-merge/msgnum")"
+    local total="$(cat "$git_dir/rebase-merge/end")"
+    echo -n " %F{1}(rebase)%f %F{2}$step%F{8}/%F{2}$total%f"
+  fi
 }
 
 function _prompt_pyenv() {
-  local venv="$VIRTUAL_ENV"
-  [ -z "$venv" ] && return
-
-  echo -n " %F{5}($(basename $(dirname "$venv")))%f"
+  [ -n "$VIRTUAL_ENV" ] && echo -n " %F{5}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
 }
 
 setopt PROMPT_SUBST
@@ -131,10 +127,10 @@ function nixos-update() { (
 
   # Make sure the working directory is up-to-date
   git fetch
-  local ahead="$(git rev-list --count @{u}..)"
-  local behind="$(git rev-list --count ..@{u})"
+  local ahead="$(git rev-list @{u}..)"
+  local behind="$(git rev-list ..@{u})"
 
-  if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then
+  if [ -n "$ahead" ] && [ -n "$behind" ]; then
     clear
     echo "The local branch is diverged from the remote branch."
     echo
@@ -155,7 +151,7 @@ function nixos-update() { (
       [ "$stashed" -eq 1 ] && git stash pop
       return 1
     fi
-  elif [ "$ahead" -gt 0 ]; then
+  elif [ -n "$ahead" ]; then
     clear
     echo "The local branch is ahead of the remote branch."
     echo
@@ -176,7 +172,7 @@ function nixos-update() { (
       [ "$stashed" -eq 1 ] && git stash pop
       return 1
     fi
-  elif [ "$behind" -gt 0 ]; then
+  elif [ -n "$behind" ]; then
     clear
     echo "The local branch is behind the remote branch."
     echo
