@@ -1,4 +1,4 @@
-{ hmcfg, pkgs, helpers, ... }: {
+{ hmcfg, pkgs, ... }: {
   home-manager.users.pascal = {
     # Install yarn
     home.packages = [ pkgs.nodejs pkgs.yarn ];
@@ -19,9 +19,9 @@
       Install.WantedBy = [ "multi-user.target" ];
 
       Service = {
-        ExecStartPre = helpers.mkScript "until ping -c 1 1.1.1.1; do sleep 1; done";
+        ExecStartPre = pkgs.writeShellScript "wait-for-network" "until ping -c 1 1.1.1.1; do sleep 1; done";
 
-        ExecStart = helpers.mkScript ''
+        ExecStart = pkgs.writeShellScript "install-global-yarn-packages" ''
           cd ${hmcfg.home.sessionVariables.YARN_GLOBAL_FOLDER}
           yarn install
           rm -f bin

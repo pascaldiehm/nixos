@@ -26,8 +26,6 @@
       mkHomeManagerActivation = after: data: { inherit after data; before = [ ]; };
 
       mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
-
-      mkScript = code: "/bin/sh -c '${builtins.replaceStrings ["\n"] ["; "] code}'";
     in
     {
       inherit mkFirefoxBookmarks;
@@ -35,7 +33,6 @@
       inherit mkFirefoxExtensions;
       inherit mkHomeManagerActivation;
       inherit mkPackageList;
-      inherit mkScript;
     };
 
   # Shortcut to home manager configuration
