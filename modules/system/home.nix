@@ -10,7 +10,6 @@
           $HOME/.config/Code/User/workspaceStorage \
           $HOME/.config/zsh/.zsh_history \
           $HOME/.docker \
-          $HOME/.gtkrc-2.0 \
           $HOME/.local/share/nix/repl-history \
           $HOME/.node_repl_history \
           $HOME/.npm \
