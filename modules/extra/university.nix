@@ -1,4 +1,4 @@
-{ helpers, ... }: {
+{ config, helpers, ... }: {
   home-manager.users.pascal = {
     # Email address
     accounts.email.accounts.university = {
@@ -19,11 +19,30 @@
     };
 
     # Bookmarks
-    programs.firefox.profiles.default.bookmarks = [
-      (helpers.mkFirefoxBookmarksFolder "Uni Würzburg" {
-        WueCampus = "https://wuecampus.uni-wuerzburg.de";
-        WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
-      })
-    ];
+    programs = {
+      firefox.profiles.default.bookmarks = [
+        (helpers.mkFirefoxBookmarksFolder "Uni Würzburg" {
+          GitLab = "https://gitlab.informatik.uni-wuerzburg.de";
+          WueCampus = "https://wuecampus.uni-wuerzburg.de";
+          WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
+        })
+      ];
+
+      git.extraConfig.url."git@gitlab.informatik.uni-wuerzburg.de:".insteadOf = "uni:";
+    };
+  };
+
+  # GitLab
+  sops.secrets = helpers.mkSSHSecrets [ "university/gitlab-ssh-key" ];
+
+  home-manager.users.pascal = {
+    home.activation.writeUniversitySSHConfig = helpers.mkHomeManagerActivation [ "writeSSHConfig" ] ''
+      cd $HOME
+      run cat << EOF >> .ssh/config
+
+      Host gitlab.informatik.uni-wuerzburg.de
+        IdentityFile ${config.sops.secrets."university/gitlab-ssh-key".path}
+      EOF
+    '';
   };
 }

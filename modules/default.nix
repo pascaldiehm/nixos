@@ -14,11 +14,11 @@
       mkFirefoxBookmarksFolder = name: set: { inherit name; bookmarks = mkFirefoxBookmarks set; };
 
       mkFirefoxExtensions = list: builtins.listToAttrs (builtins.map
-        (id: {
-          name = id;
+        (name: {
+          inherit name;
           value = {
             installation_mode = "force_installed";
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
           };
         })
         list);
@@ -26,6 +26,8 @@
       mkHomeManagerActivation = after: data: { inherit after data; before = [ ]; };
 
       mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
+
+      mkSSHSecrets = list: builtins.listToAttrs (builtins.map (name: { inherit name; value = { owner = "pascal"; restartUnits = [ "home-manager-pascal.service" ]; }; }) list);
     in
     {
       inherit mkFirefoxBookmarks;
@@ -33,6 +35,7 @@
       inherit mkFirefoxExtensions;
       inherit mkHomeManagerActivation;
       inherit mkPackageList;
+      inherit mkSSHSecrets;
     };
 
   # Shortcut to home manager configuration
