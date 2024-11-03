@@ -1,6 +1,5 @@
 { pkgs, helpers, ... }: {
   home-manager.users.pascal = {
-    # Setup Firefox
     programs.firefox = {
       enable = true;
       languagePacks = [ "en-US" "de" ];
@@ -115,7 +114,6 @@
       };
     };
 
-    # Add mime types
     xdg.mimeApps.defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/http" = "firefox.desktop";

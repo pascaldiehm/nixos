@@ -1,6 +1,5 @@
 { hmcfg, helpers, ... }: {
   home-manager.users.pascal = {
-    # Remove unwanted files from home directory
     home.activation = {
       deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
 
@@ -19,7 +18,6 @@
       '';
     };
 
-    # Enable XDG
     xdg = {
       enable = true;
       mimeApps.enable = true;
@@ -31,7 +29,6 @@
     };
   };
 
-  # Mount tmpfs in ~/Downloads
   systemd.mounts = [{
     description = "Mount tmpfs in ~/Downloads";
     type = "tmpfs";

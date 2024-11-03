@@ -1,16 +1,9 @@
 { pkgs, helpers, ... }: {
-  # Set ZSH as default shell
-  programs.zsh.enable = true;
   users.users.pascal.shell = pkgs.zsh;
 
-  # Set ZDOTDIR
-  programs.zsh.shellInit = "export ZDOTDIR=\"$HOME/.config/zsh\"";
-
   home-manager.users.pascal = {
-    # Delete .zshenv
     home.activation.deleteZSHEnv = helpers.mkHomeManagerActivation [ "writeBoundary" ] "run rm -f $HOME/.zshenv";
 
-    # Setup ZSH
     programs.zsh = {
       enable = true;
       autocd = true;
@@ -30,5 +23,10 @@
         pyenv = "[ -d .venv ] || python3 -m venv .venv; source .venv/bin/activate";
       };
     };
+  };
+
+  programs.zsh = {
+    enable = true;
+    shellInit = "export ZDOTDIR=\"$HOME/.config/zsh\"";
   };
 }

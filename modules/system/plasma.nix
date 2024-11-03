@@ -1,11 +1,7 @@
 { hmcfg, pkgs, ... }: {
-  # Enable Plasma
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
   services.desktopManager.plasma6.enable = true;
 
-  # Exclude some packages
-  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
-
-  # Setup Plasma
   home-manager.users.pascal.programs.plasma = {
     enable = true;
     kscreenlocker.appearance.wallpaper = "${../../resources/wallpaper.jpg}";

@@ -1,20 +1,15 @@
 { hmcfg, pkgs, ... }: {
   home-manager.users.pascal = {
-    # Install yarn
-    home.packages = [ pkgs.nodejs pkgs.yarn ];
+    home = {
+      packages = [ pkgs.nodejs pkgs.yarn ];
+      sessionPath = [ "${hmcfg.home.sessionVariables.YARN_PREFIX}/bin" ];
 
-    # Setup global folder
-    home.sessionVariables = {
-      YARN_GLOBAL_FOLDER = "${hmcfg.xdg.configHome}/yarn/global";
-      YARN_PREFIX = hmcfg.home.sessionVariables.YARN_GLOBAL_FOLDER;
+      sessionVariables = {
+        YARN_GLOBAL_FOLDER = "${hmcfg.xdg.configHome}/yarn/global";
+        YARN_PREFIX = hmcfg.home.sessionVariables.YARN_GLOBAL_FOLDER;
+      };
     };
 
-    xdg.configFile = {
-      "yarn/global/package.json".source = ../../resources/yarn/package.json;
-      "yarn/global/yarn.lock".source = ../../resources/yarn/yarn.lock;
-    };
-
-    # Install global packages
     systemd.user.services.installGlobalYarnPackages = {
       Install.WantedBy = [ "multi-user.target" ];
 
@@ -35,7 +30,9 @@
       };
     };
 
-    # Add yarn packages to path
-    home.sessionPath = [ "${hmcfg.home.sessionVariables.YARN_PREFIX}/bin" ];
+    xdg.configFile = {
+      "yarn/global/package.json".source = ../../resources/yarn/package.json;
+      "yarn/global/yarn.lock".source = ../../resources/yarn/yarn.lock;
+    };
   };
 }

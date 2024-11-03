@@ -1,6 +1,5 @@
 { ... }: {
   home-manager.users.pascal = {
-    # Setup email account
     accounts.email.accounts.default = {
       address = "pdiehm8@gmail.com";
       flavor = "gmail.com";
@@ -24,7 +23,6 @@
       };
     };
 
-    # Setup Thunderbird
     programs.thunderbird = {
       enable = true;
       settings."mail.openpgp.fetch_pubkeys_from_gnupg" = true;
@@ -35,7 +33,6 @@
       };
     };
 
-    # Add mime types
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/mailto" = "thunderbird.desktop";
     };

@@ -1,18 +1,4 @@
 { config, helpers, ... }: {
-  # Setup SSH secrets
-  sops.secrets = helpers.mkSSHSecrets [
-    "ssh/bowser/host"
-    "ssh/bowser/key"
-    "ssh/bowser/port"
-    "ssh/bowser/user"
-    "ssh/github/key"
-    "ssh/goomba/host"
-    "ssh/goomba/key"
-    "ssh/goomba/port"
-    "ssh/goomba/user"
-  ];
-
-  # Setup SSH
   home-manager.users.pascal.home.activation.writeSSHConfig = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
     cd $HOME
     [ -d .ssh ] || run mkdir -m 700 .ssh
@@ -36,4 +22,16 @@
 
     run chmod 600 .ssh/config
   '';
+
+  sops.secrets = helpers.mkSSHSecrets [
+    "ssh/bowser/host"
+    "ssh/bowser/key"
+    "ssh/bowser/port"
+    "ssh/bowser/user"
+    "ssh/github/key"
+    "ssh/goomba/host"
+    "ssh/goomba/key"
+    "ssh/goomba/port"
+    "ssh/goomba/user"
+  ];
 }

@@ -1,8 +1,11 @@
 { config, ... }: {
-  # Setup password secret
   sops.secrets.password.neededForUsers = true;
 
-  # Setup user
+  system.activationScripts.linkProfilePicture = ''
+    mkdir -p /var/lib/AccountsService/icons
+    ln -sf ${../../resources/profile.png} /var/lib/AccountsService/icons/pascal
+  '';
+
   users.users.pascal = {
     description = "Pascal Diehm";
     extraGroups = [ "wheel" ];
@@ -10,10 +13,4 @@
     isNormalUser = true;
     uid = 1000;
   };
-
-  # Link profile picture
-  system.activationScripts.linkProfilePicture = ''
-    mkdir -p /var/lib/AccountsService/icons
-    ln -sf ${../../resources/profile.png} /var/lib/AccountsService/icons/pascal
-  '';
 }

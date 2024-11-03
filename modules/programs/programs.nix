@@ -1,8 +1,7 @@
 { config, hmcfg, pkgs, helpers, ... }: {
-  # Disable nano
+  environment.etc."nixos/packages".text = helpers.mkPackageList (config.environment.systemPackages ++ hmcfg.home.packages);
   programs.nano.enable = false;
 
-  # Install user programs
   home-manager.users.pascal.home.packages = [
     pkgs.bitwarden-desktop
     pkgs.cryptsetup
@@ -18,7 +17,4 @@
     pkgs.vlc
     pkgs.yt-dlp
   ];
-
-  # List packages
-  environment.etc."nixos/packages".text = helpers.mkPackageList (config.environment.systemPackages ++ hmcfg.home.packages);
 }

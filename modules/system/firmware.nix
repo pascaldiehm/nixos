@@ -1,5 +1,6 @@
 { ... }: {
-  # Setup bootloader
+  services.fwupd.enable = true;
+
   boot.loader = {
     efi.canTouchEfiVariables = true;
 
@@ -8,7 +9,4 @@
       configurationLimit = 8;
     };
   };
-
-  # Enable firmware updates
-  services.fwupd.enable = true;
 }

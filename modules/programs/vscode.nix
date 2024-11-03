@@ -1,10 +1,8 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
-    # Setup dependencies
     fonts.fontconfig.enable = true;
     home.packages = [ pkgs.jetbrains-mono pkgs.jq pkgs.nixpkgs-fmt pkgs.unzip ];
 
-    # Setup VSCode
     programs.vscode = {
       enable = true;
       enableExtensionUpdateCheck = false;

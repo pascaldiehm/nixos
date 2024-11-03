@@ -1,28 +1,22 @@
 { nixpkgs, ... }: {
-  # System version
-  system.stateVersion = "24.11";
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Enable nix command and flakes
-  nix = { settings = { experimental-features = [ "nix-command" "flakes" ]; }; }; # Slightly convoluted syntax; thanks for that, Nix (see nixos/nix#7897)
-
-  # Optimise store
-  nix.settings.auto-optimise-store = true;
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-  # Disable channels
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
-  nix.settings.nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "24.11";
 
   nix = {
     channel.enable = false;
     registry.nixpkgs.flake = nixpkgs;
+
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+    };
   };
 }
