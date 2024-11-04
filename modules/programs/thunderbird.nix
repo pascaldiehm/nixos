@@ -25,11 +25,16 @@
 
     programs.thunderbird = {
       enable = true;
-      settings."mail.openpgp.fetch_pubkeys_from_gnupg" = true;
+      #settings."mail.openpgp.fetch_pubkeys_from_gnupg" = true;
 
       profiles.default = {
         isDefault = true;
         withExternalGnupg = true;
+      };
+
+      settings = {
+        "mail.collect_email_address_outgoing" = false;
+        "mail.openpgp.fetch_pubkeys_from_gnupg" = true;
       };
     };
 
