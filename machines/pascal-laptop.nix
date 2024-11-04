@@ -1,23 +1,10 @@
 { ... }: {
-  # Hostname
-  networking.hostName = "pascal-laptop";
+  networking = {
+    hostName = "pascal-laptop";
 
-  # Network
-  networking.networkmanager.ensureProfiles.profiles = {
-    bayern-wlan = {
+    networkmanager.ensureProfiles.profiles.home-wifi = {
       connection = {
-        id = "BayernWLAN";
-        type = "wifi";
-      };
-
-      wifi = {
-        mode = "infrastructure";
-        ssid = "@BayernWLAN";
-      };
-    };
-
-    home-wifi = {
-      connection = {
+        autoconnect-priority = 50;
         id = "Home WiFi";
         type = "wifi";
       };
