@@ -198,15 +198,56 @@ function nixos-update() { (
   # Update system packages
   nix flake update
 
-  # Update yarn packages
-  yarn --cwd resources/yarn upgrade --latest
+  # Update firefox extensions
+  local tmpdir="$(mktemp -d)"
+  echo "[" >"$tmpdir/extensions.json"
+
+  local first=1
+  for ext in $(cat resources/extensions/firefox.json | jq -c '.[]'); do
+    [ "$first" -eq 0 ] && echo "," >>"$tmpdir/extensions.json"
+    first=0
+
+    local name="$(echo "$ext" | jq -r '.name')"
+    local source="$(curl --silent --show-headers "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" | grep "^location:" | sed -E 's/^location: (\S*).*/\1/')"
+
+    curl --silent -o "$tmpdir/$name.xpi" "$source"
+    local id="$(unzip -qc "$tmpdir/$name.xpi" "manifest.json" | jq -r '(.browser_specific_settings // .applications).gecko.id')"
+
+    echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmpdir/extensions.json"
+  done
+
+  echo -e "\n]" >>"$tmpdir/extensions.json"
+  mv "$tmpdir/extensions.json" resources/extensions/firefox.json
+  rm -rf "$tmpdir"
+
+  # Update thunderbird extensions
+  local tmpdir="$(mktemp -d)"
+  echo "[" >"$tmpdir/extensions.json"
+
+  local first=1
+  for ext in $(cat resources/extensions/thunderbird.json | jq -c '.[]'); do
+    [ "$first" -eq 0 ] && echo "," >>"$tmpdir/extensions.json"
+    first=0
+
+    local name="$(echo "$ext" | jq -r '.name')"
+    local source="$(curl --silent --show-headers "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" | grep "^location:" | sed -E 's/^location: (\S*).*/\1/')"
+
+    curl --silent -o "$tmpdir/$name.xpi" "$source"
+    local id="$(unzip -qc "$tmpdir/$name.xpi" "manifest.json" | jq -r '(.browser_specific_settings // .applications).gecko.id')"
+
+    echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmpdir/extensions.json"
+  done
+
+  echo -e "\n]" >>"$tmpdir/extensions.json"
+  mv "$tmpdir/extensions.json" resources/extensions/thunderbird.json
+  rm -rf "$tmpdir"
 
   # Update vscode extensions
   local tmpdir="$(mktemp -d)"
   echo "[" >"$tmpdir/extensions.json"
 
   local first=1
-  for ext in $(cat resources/vscode-extensions.json | jq -c '.[]'); do
+  for ext in $(cat resources/extensions/vscode.json | jq -c '.[]'); do
     [ "$first" -eq 0 ] && echo "," >>"$tmpdir/extensions.json"
     first=0
 
@@ -222,8 +263,11 @@ function nixos-update() { (
   done
 
   echo -e "\n]" >>"$tmpdir/extensions.json"
-  mv "$tmpdir/extensions.json" resources/vscode-extensions.json
+  mv "$tmpdir/extensions.json" resources/extensions/vscode.json
   rm -rf "$tmpdir"
+
+  # Update yarn packages
+  yarn --cwd resources/yarn upgrade --latest
 
   # Apply the updates
   if [ -n "$(git status --porcelain)" ]; then
@@ -236,17 +280,21 @@ function nixos-update() { (
     if read -q; then
       echo
       git add flake.lock
+      git add resources/extensions/firefox.json
+      git add resources/extensions/thunderbird.json
+      git add resources/extensions/vscode.json
       git add resources/yarn/package.json
       git add resources/yarn/yarn.lock
-      git add resources/vscode-extensions.json
       git commit -m "Automatic update"
       git push
     else
       echo
       git restore flake.lock
+      git restore resources/extensions/firefox.json
+      git restore resources/extensions/thunderbird.json
+      git restore resources/extensions/vscode.json
       git restore resources/yarn/package.json
       git restore resources/yarn/yarn.lock
-      git restore resources/vscode-extensions.json
     fi
   fi
 

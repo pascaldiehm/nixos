@@ -12,9 +12,9 @@
 
     mkFirefoxBookmarksFolder = name: set: { inherit name; bookmarks = mkFirefoxBookmarks set; };
 
-    mkFirefoxExtensions = list: builtins.listToAttrs (builtins.map (name: { inherit name; value = { installation_mode = "force_installed"; install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi"; }; }) list);
-
     mkHMActivation = after: data: { inherit after data; before = [ ]; };
+
+    mkMozillaExtensions = path: { "*".installation_mode = "blocked"; } // builtins.listToAttrs (builtins.map (ext: { name = ext.id; value = { installation_mode = "force_installed"; install_url = ext.source; }; }) (lib.importJSON path));
 
     mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
 

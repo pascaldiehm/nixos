@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, helpers, ... }: {
   home-manager.users.pascal = {
     accounts.email.accounts.default = {
       address = "pdiehm8@gmail.com";
@@ -25,7 +25,7 @@
 
     programs.thunderbird = {
       enable = true;
-      #settings."mail.openpgp.fetch_pubkeys_from_gnupg" = true;
+      package = pkgs.thunderbird.override { extraPolicies.ExtensionSettings = helpers.mkMozillaExtensions ../../resources/extensions/thunderbird.json; };
 
       profiles.default = {
         isDefault = true;

@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
     fonts.fontconfig.enable = true;
-    home.packages = [ pkgs.jetbrains-mono pkgs.jq pkgs.nixpkgs-fmt pkgs.unzip ];
+    home.packages = [ pkgs.jetbrains-mono pkgs.nixpkgs-fmt ];
 
     programs.vscode = {
       enable = true;
@@ -29,7 +29,7 @@
         streetsidesoftware.code-spell-checker
         usernamehw.errorlens
         vscodevim.vim
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/vscode-extensions.json);
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
 
       keybindings = [{
         key = "shift+enter";

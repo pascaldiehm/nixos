@@ -7,6 +7,7 @@
     pkgs.cryptsetup
     pkgs.exfat
     pkgs.imagemagick
+    pkgs.jq
     pkgs.kdePackages.filelight
     pkgs.kdePackages.kdeconnect-kde
     pkgs.kdePackages.partitionmanager
@@ -14,7 +15,9 @@
     pkgs.python3
     pkgs.quickemu
     pkgs.texlive.combined.scheme-full
+    pkgs.unzip
     pkgs.vlc
     pkgs.yt-dlp
+    pkgs.zip
   ];
 }
