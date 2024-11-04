@@ -19,7 +19,7 @@
       };
     };
 
-    home.activation.writeSSHConfigUniversity = helpers.mkHomeManagerActivation [ "writeSSHConfig" ] ''
+    home.activation.writeSSHConfigUniversity = helpers.mkHMActivation [ "writeSSHConfig" ] ''
       cd $HOME
       run cat << EOF >> .ssh/config
 

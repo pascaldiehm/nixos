@@ -1,9 +1,9 @@
 { hmcfg, helpers, ... }: {
   home-manager.users.pascal = {
     home.activation = {
-      deleteChannelLinks = helpers.mkHomeManagerActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
+      deleteChannelLinks = helpers.mkHMActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
 
-      cleanHome = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
+      cleanHome = helpers.mkHMActivation [ "writeBoundary" ] ''
         run rm -rf \
           $HOME/.config/Code/User/History \
           $HOME/.config/Code/User/workspaceStorage \

@@ -1,5 +1,5 @@
 { config, helpers, ... }: {
-  home-manager.users.pascal.home.activation.writeSSHConfig = helpers.mkHomeManagerActivation [ "writeBoundary" ] ''
+  home-manager.users.pascal.home.activation.writeSSHConfig = helpers.mkHMActivation [ "writeBoundary" ] ''
     cd $HOME
     [ -d .ssh ] || run mkdir -m 700 .ssh
 

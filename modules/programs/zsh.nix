@@ -2,7 +2,7 @@
   users.users.pascal.shell = pkgs.zsh;
 
   home-manager.users.pascal = {
-    home.activation.deleteZSHEnv = helpers.mkHomeManagerActivation [ "writeBoundary" ] "run rm -f $HOME/.zshenv";
+    home.activation.deleteZSHEnv = helpers.mkHMActivation [ "writeBoundary" ] "run rm -f $HOME/.zshenv";
 
     programs.zsh = {
       enable = true;
