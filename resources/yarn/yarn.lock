@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-create-vite@^5.5.4:
-  version "5.5.4"
-  resolved "https://registry.yarnpkg.com/create-vite/-/create-vite-5.5.4.tgz#c0228577afce22a152f9bd4a922008758f29e300"
-  integrity sha512-r6tVDLWJpjCKoonv8F1LUAP6ksTS6J2raqBbsdnvth05ihJT74jBhl25PiEcrAQvuVqureOsYRCfI6Qwa+Lj4Q==
+create-vite@^5.5.5:
+  version "5.5.5"
+  resolved "https://registry.yarnpkg.com/create-vite/-/create-vite-5.5.5.tgz#75cc5fe2c2c0a8a701c6b2e3a110cc2f419f2747"
+  integrity sha512-xQaaMBBP7iTs9GrWj48y6WIMqn1l+83ao/BW1T32KkEzzi6kTEEAp0UI9EW/waCy7R4dGN6bRR86YQfPHmUsuQ==
