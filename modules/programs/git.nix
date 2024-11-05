@@ -47,6 +47,10 @@
       ma = "merge --abort";
       mc = "merge --continue";
 
+      pf = "push --force-with-lease";
+      pl = "pull";
+      ps = "push";
+
       rb = "rebase";
       rba = "rebase --abort";
       rbc = "rebase --continue";
