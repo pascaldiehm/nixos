@@ -41,6 +41,7 @@
 
         # General
         "cSpell.language" = "en,de";
+        "cSpell.enabledFileTypes" = { "*" = true; };
         "material-icon-theme.activeIconPack" = "react";
         "vim.handleKeys" = { "<C-i>" = false; "<C-k>" = false; "<C-p>" = false; "<C-s>" = true; "<C-z>" = true; };
         "vim.useSystemClipboard" = true;
