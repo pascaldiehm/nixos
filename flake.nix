@@ -47,19 +47,22 @@
 
     packages.x86_64-linux =
       let
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      in
-      {
-        install = pkgs.stdenv.mkDerivation {
-          name = "install.sh";
+        mkScript = name: deps: pkgs.stdenv.mkDerivation {
+          inherit name;
           src = ./.;
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
           installPhase = ''
-            install -Dt $out/bin bin/install.sh
-            wrapProgram $out/bin/install.sh --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ]}
+            install -Dt $out/bin bin/${name}
+            wrapProgram $out/bin/${name} --prefix PATH : ${pkgs.lib.makeBinPath deps}
           '';
         };
+
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      in
+      {
+        install = mkScript "install.sh" [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ];
+        update = mkScript "update.sh" [ pkgs.git pkgs.jq pkgs.unzip ];
       };
   };
 }

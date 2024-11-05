@@ -10,7 +10,7 @@
   { "publisher": "jnoortheen", "name": "nix-ide", "version": "0.3.5", "sha256": "12sg67mn3c8mjayh9d6y8qaky00vrlnwwx58v1f1m4qrbdjqab46" },
   { "publisher": "ms-azuretools", "name": "vscode-docker", "version": "1.29.3", "sha256": "1j35yr8f0bqzv6qryw0krbfigfna94b519gnfy46sr1licb6li6g" },
   { "publisher": "ms-python", "name": "autopep8", "version": "2024.1.11501016", "sha256": "0c9q0b97sf45zcip4mqqri7c5ym490985dzpqpmc22j8lxs2f5nl" },
-  { "publisher": "ms-python", "name": "debugpy", "version": "2024.13.2024103001", "sha256": "0d832abwjbf92gis48fh3imdnnn5qljvb3m4py90nl9l2g69vfy4" },
+  { "publisher": "ms-python", "name": "debugpy", "version": "2024.10.0", "sha256": "1s6v2pj24bczkf14gf5ymf3xx29640r3sbclw084a2cgwprq3if1" },
   { "publisher": "ms-python", "name": "isort", "version": "2023.13.12321012", "sha256": "00i27f61yqq79yhvd52ffwdq0dz1lw2zwgkz7da58h0wvps0ib1h" },
   { "publisher": "ms-python", "name": "python", "version": "2024.19.2024103101", "sha256": "0qaamn1w4n8mnai5mmx7nz945xw35ynl8p20x2264y9cni2jyx32" },
   { "publisher": "ms-python", "name": "vscode-pylance", "version": "2024.11.1", "sha256": "0cry2jxnayq78967ij0wqlnbb8zjns9xz7i4pjx6wndvpn0krpav" },
