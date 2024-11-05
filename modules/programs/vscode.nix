@@ -1,40 +1,15 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
     fonts.fontconfig.enable = true;
-    home.packages = [ pkgs.jetbrains-mono pkgs.nixpkgs-fmt ];
+    home.packages = [ pkgs.jetbrains-mono ];
 
     programs.vscode = {
       enable = true;
       enableExtensionUpdateCheck = false;
       enableUpdateCheck = false;
+      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
+      keybindings = [{ key = "shift+enter"; command = "-python.execSelectionInTerminal"; }];
       mutableExtensionsDir = false;
-
-      extensions = with pkgs.vscode-extensions; [
-        aaron-bond.better-comments
-        bmewburn.vscode-intelephense-client
-        esbenp.prettier-vscode
-        foxundermoon.shell-format
-        github.copilot
-        github.copilot-chat
-        github.vscode-github-actions
-        james-yu.latex-workshop
-        jnoortheen.nix-ide
-        ms-azuretools.vscode-docker
-        ms-python.debugpy
-        ms-python.isort
-        ms-python.python
-        ms-python.vscode-pylance
-        ms-vsliveshare.vsliveshare
-        pkief.material-icon-theme
-        streetsidesoftware.code-spell-checker
-        usernamehw.errorlens
-        vscodevim.vim
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
-
-      keybindings = [{
-        key = "shift+enter";
-        command = "-python.execSelectionInTerminal";
-      }];
 
       userSettings = {
         # Editor
@@ -93,7 +68,7 @@
         "python.analysis.autoImportCompletions" = true;
         "python.analysis.typeCheckingMode" = "standard";
 
-        # Languages
+        # Formatters
         "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[dockerfile]"."editor.defaultFormatter" = "ms-azuretools.vscode-docker";
         "[html]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -102,6 +77,8 @@
         "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescriptreact]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "nix.formatterPath" = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
+        "shellformat.path" = "${pkgs.shfmt}/bin/shfmt";
       };
     };
   };
