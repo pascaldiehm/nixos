@@ -8,23 +8,22 @@
       a = "add";
 
       b = "branch";
-      bD = "branch -D";
-      bM = "branch -M";
-      bc = "branch -c";
-      bd = "branch -d";
-      bm = "branch -m";
-      bu = "branch -u";
+      bc = "branch --copy";
+      bd = "branch --delete";
+      bdd = "branch --delete --force";
+      bm = "branch --move";
+      bu = "branch --set-upstream-to";
 
       c = "commit";
-      ca = "commit -a";
-      caa = "commit -a --amend --no-edit";
-      caam = "commit -a --amend -m";
-      cam = "commit -a -m";
+      ca = "commit --all";
+      caa = "commit --all --amend --no-edit";
+      caam = "commit --all --amend --message";
+      cam = "commit --all --message";
       cc = "commit --amend --no-edit";
-      ccm = "commit --amend -m";
+      ccm = "commit --amend --message";
       ce = "commit --allow-empty";
-      cem = "commit --allow-empty -m";
-      cm = "commit -m";
+      cem = "commit --allow-empty --message";
+      cm = "commit --message";
 
       cl = "clean -fdx";
       cli = "clean -fdX";
@@ -40,7 +39,7 @@
       f = "fetch";
 
       i = "status";
-      is = "status -s";
+      is = "status --short";
 
       l = "log --format='%C(yellow)%h %C(blue)%aN, %ah %C(reset)%s%C(dim white)%d'";
       ll = "log --format='%C(yellow)%h %C(white)%s%C(dim white)%d%n%C(blue)%aN <%aE>, %ah %C(reset)- %C(green)(%G?) %GS%n'";
@@ -57,8 +56,8 @@
       rb = "rebase";
       rba = "rebase --abort";
       rbc = "rebase --continue";
-      rbi = "rebase -i";
-      rbr = "rebase -i --root";
+      rbi = "rebase --interactive";
+      rbr = "rebase --interactive --root";
 
       rsh = "reset --hard";
       rso = "reset --hard origin";
@@ -70,18 +69,17 @@
       rva = "revert --abort";
       rvc = "revert --continue";
 
-      s = "stash";
-      sb = "stash branch";
+      s = "stash --include-untracked";
       sc = "stash clear";
       sd = "stash drop";
       sl = "stash list";
       sp = "stash pop";
-      su = "stash -u";
 
       sh = "show";
 
       t = "tag";
-      td = "tag -d";
+      td = "tag --delete";
+      tm = "tag --message";
     };
 
     extraConfig = {
