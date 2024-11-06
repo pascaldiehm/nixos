@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./audio.nix
+    ./boot.nix
     ./firmware.nix
     ./home-manager.nix
     ./home.nix
