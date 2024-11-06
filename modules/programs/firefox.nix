@@ -59,46 +59,15 @@
           default = "Google";
           force = true;
 
-          engines = {
-            "Docker Hub" = {
-              definedAliases = [ "@docker" ];
-              urls = [{ template = "https://hub.docker.com/search?q={searchTerms}"; }];
-            };
-
-            "GitHub" = {
-              definedAliases = [ "@github" "@gh" ];
-              urls = [{ template = "https://github.com/search?q={searchTerms}"; }];
-            };
-
-            "NixOS Options" = {
-              definedAliases = [ "@nixopts" ];
-              urls = [{ template = "https://search.nixos.org/options?query={searchTerms}"; }];
-            };
-
-            "NixOS Packages" = {
-              definedAliases = [ "@nixpkgs" ];
-              urls = [{ template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}"; }];
-            };
-
-            "NPM" = {
-              definedAliases = [ "@npm" ];
-              urls = [{ template = "https://npmjs.com/search?q={searchTerms}"; }];
-            };
-
-            "Mozilla Developer Network" = {
-              definedAliases = [ "@mdn" "@js" ];
-              urls = [{ template = "https://developer.mozilla.org/search?q={searchTerms}"; }];
-            };
-
-            "YouTube" = {
-              definedAliases = [ "@youtube" "@yt" ];
-              urls = [{ template = "https://youtube.com/results?search_query={searchTerms}"; }];
-            };
-
-            "YouTube Music" = {
-              definedAliases = [ "@music" "@ytm" ];
-              urls = [{ template = "https://music.youtube.com/search?q={searchTerms}"; }];
-            };
+          engines = helpers.mkFirefoxSearchEngines {
+            "https://hub.docker.com/search?q=%s" = [ "@docker" ];
+            "https://github.com/search?q=%s" = [ "@github" "@gh" ];
+            "https://search.nixos.org/options?query=%s" = [ "@nixopts" ];
+            "https://search.nixos.org/packages?channel=unstable&query=%s" = [ "@nixpkgs" ];
+            "https://npmjs.com/search?q=%s" = [ "@npm" ];
+            "https://developer.mozilla.org/search?q=%s" = [ "@mdn" "@js" ];
+            "https://youtube.com/results?search_query=%s" = [ "@youtube" "@yt" ];
+            "https://music.youtube.com/search?q=%s" = [ "@music" "@ytm" ];
           };
         };
       };

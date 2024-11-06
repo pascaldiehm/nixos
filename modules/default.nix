@@ -12,6 +12,8 @@
 
     mkFirefoxBookmarksFolder = name: set: { inherit name; bookmarks = mkFirefoxBookmarks set; };
 
+    mkFirefoxSearchEngines = set: builtins.listToAttrs (builtins.map (name: { name = builtins.dirOf name; value = { definedAliases = set.${name}; urls = [{ template = builtins.replaceStrings [ "%s" ] [ "{searchTerms}" ] name; }]; }; }) (builtins.attrNames set));
+
     mkHMActivation = after: data: { inherit after data; before = [ ]; };
 
     mkMozillaExtensions = path: { "*".installation_mode = "blocked"; } // builtins.listToAttrs (builtins.map (ext: { name = ext.id; value = { installation_mode = "force_installed"; install_url = ext.source; }; }) (lib.importJSON path));
