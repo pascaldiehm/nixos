@@ -18,9 +18,12 @@
       c = "commit";
       ca = "commit -a";
       caa = "commit -a --amend --no-edit";
-      cae = "commit --amend";
-      cam = "commit --amend --no-edit";
+      caam = "commit -a --amend -m";
+      cam = "commit -a -m";
+      cc = "commit --amend --no-edit";
+      ccm = "commit --amend -m";
       ce = "commit --allow-empty";
+      cem = "commit --allow-empty -m";
       cm = "commit -m";
 
       cl = "clean -fdx";
