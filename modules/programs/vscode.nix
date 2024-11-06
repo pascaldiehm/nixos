@@ -53,6 +53,7 @@
         "git.openRepositoryInParentFolders" = "always";
 
         # LaTeX
+        "latex-workshop.formatting.latex" = "latexindent";
         "latex-workshop.latex.autoClean.run" = "onSucceeded";
 
         # PHP
