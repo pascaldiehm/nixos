@@ -1,5 +1,7 @@
 { pkgs, helpers, ... }: {
   home-manager.users.pascal = {
+    xdg.mimeApps.defaultApplications."x-scheme-handler/mailto" = "thunderbird.desktop";
+
     accounts.email.accounts.default = {
       address = "pdiehm8@gmail.com";
       flavor = "gmail.com";
@@ -36,10 +38,6 @@
         "mail.collect_email_address_outgoing" = false;
         "mail.openpgp.fetch_pubkeys_from_gnupg" = true;
       };
-    };
-
-    xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/mailto" = "thunderbird.desktop";
     };
   };
 }

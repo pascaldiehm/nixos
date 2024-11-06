@@ -1,13 +1,10 @@
 { pkgs, helpers, ... }: {
+  home-manager.users.pascal.home.packages = [ pkgs.krita pkgs.prismlauncher ];
+
   imports = [
     ./common/3d-printing.nix
     ./common/disable-auto-mute.nix
     ./common/printing.nix
-  ];
-
-  home-manager.users.pascal.home.packages = [
-    pkgs.krita
-    pkgs.prismlauncher
   ];
 
   networking = {

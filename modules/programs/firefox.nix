@@ -60,14 +60,14 @@
           force = true;
 
           engines = helpers.mkFirefoxSearchEngines {
-            "https://hub.docker.com/search?q=%s" = [ "@docker" ];
-            "https://github.com/search?q=%s" = [ "@github" "@gh" ];
-            "https://search.nixos.org/options?query=%s" = [ "@nixopts" ];
-            "https://search.nixos.org/packages?channel=unstable&query=%s" = [ "@nixpkgs" ];
-            "https://npmjs.com/search?q=%s" = [ "@npm" ];
-            "https://developer.mozilla.org/search?q=%s" = [ "@mdn" "@js" ];
-            "https://youtube.com/results?search_query=%s" = [ "@youtube" "@yt" ];
-            "https://music.youtube.com/search?q=%s" = [ "@music" "@ytm" ];
+            "https://developer.mozilla.org/search?q=%s" = [ "mdn" "js" ];
+            "https://github.com/search?q=%s" = [ "github" "gh" ];
+            "https://hub.docker.com/search?q=%s" = [ "docker" ];
+            "https://music.youtube.com/search?q=%s" = [ "music" "ytm" ];
+            "https://npmjs.com/search?q=%s" = [ "npm" ];
+            "https://search.nixos.org/options?query=%s" = [ "nixopts" ];
+            "https://search.nixos.org/packages?channel=unstable&query=%s" = [ "nixpkgs" ];
+            "https://youtube.com/results?search_query=%s" = [ "youtube" "yt" ];
           };
         };
       };
