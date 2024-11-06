@@ -203,9 +203,11 @@ elif [ "$1" = "upgrade-vscode" ]; then
 
     curl --silent -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
     version="$(unzip -qc "$tmp/$id.vsix" "extension/package.json" | jq -r ".version")"
-    sha256="$(nix-hash --flat --base32 --type sha256 "$tmp/$id.vsix")"
 
-    echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"sha256\": \"$sha256\" }" >>"$tmp/extensions.json"
+    curl --silent -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/$version/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+    hash="sha256-$(sha256sum "$tmp/$id.vsix" | cut -d " " -f 1 | xxd -r -p | base64 -w 0)"
+
+    echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"hash\": \"$hash\" }" >>"$tmp/extensions.json"
   done
 
   echo -e "\n]" >>"$tmp/extensions.json"
