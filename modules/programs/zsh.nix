@@ -21,7 +21,6 @@
         nixos-update = "nix run ~/.config/nixos#update";
         open = "xdg-open";
         py = "python3";
-        pyenv = "[ -d .venv ] || python3 -m venv .venv; source .venv/bin/activate";
       };
     };
   };

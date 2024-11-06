@@ -100,6 +100,12 @@ bindkey "${key[Right]}" forward-char
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 
+function pyenv() {
+  local dir="${1:-.venv}"
+  [ ! -d "$dir" ] && python3 -m venv "$dir"
+  source "$dir/bin/activate"
+}
+
 function tmprun() {
   local tmp="$(mktemp -d)"
   HOME="$tmp" XDG_CONFIG_HOME="$tmp" XDG_DATA_HOME="$tmp" XDG_CACHE_HOME="$tmp" nix run "nixpkgs#$1" -- "${@:2}"
