@@ -166,8 +166,10 @@ elif [ "$1" = "upgrade-firefox" ]; then
     first=0
 
     name="$(echo "$ext" | jq -r ".name")"
-    source="$(curl --silent --show-headers "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" | grep "^location:" | sed -E "s/^location: (\S+)\s*$/\1/")"
     echo "  - $name"
+
+    curl --silent --show-headers "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+    source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
     curl --silent -o "$tmp/$name.xpi" "$source"
     id="$(unzip -qc "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
@@ -189,8 +191,10 @@ elif [ "$1" = "upgrade-thunderbird" ]; then
     first=0
 
     name="$(echo "$ext" | jq -r ".name")"
-    source="$(curl --silent --show-headers "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" | grep "^location:" | sed -E "s/^location: (\S+)\s*$/\1/")"
     echo "  - $name"
+
+    curl --silent --show-headers "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+    source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
     curl --silent -o "$tmp/$name.xpi" "$source"
     id="$(unzip -qc "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
