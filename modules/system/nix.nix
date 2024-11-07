@@ -1,6 +1,5 @@
 { nixpkgs, ... }: {
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
-  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.11";
 
   nix = {

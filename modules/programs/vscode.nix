@@ -10,6 +10,7 @@
       extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
       keybindings = [{ key = "shift+enter"; command = "-python.execSelectionInTerminal"; }];
       mutableExtensionsDir = false;
+      package = pkgs.vscodium;
 
       userSettings = {
         # Editor

@@ -15,6 +15,7 @@
       syntaxHighlighting.enable = true;
 
       shellAliases = {
+        vsc = "codium";
         l = "ls -alh";
         nixos-secrets = "sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/store.yml";
         nixos-test = "sudo nixos-rebuild --impure --flake ~/.config/nixos test";
