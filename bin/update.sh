@@ -91,17 +91,31 @@ if [ -z "$1" ]; then
     fi
   fi
 
-  # Upgrade system
+  # Update the system
+  bin/update.sh update
+  [ -n "$stashed" ] && git stash pop
+  popd >/dev/null
+elif [ "$1" = "update" ]; then
+  # Check if configuration changed
+  if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
+    clear
+    echo "The configuration has not changed. Continue anyway?"
+    echo
+    read -n 1 -p "[Y/n] " res
+    echo
+    [ "$res" = "n" ] && exit 1
+  fi
+
+  # Check if upgrades are available
   clear
-  echo "Do you want to check for updates?"
+  echo "Do you want to check for upgrades?"
+  echo
   read -n 1 -p "[Y/n] " res
   echo
   [ "$res" != "n" ] && bin/update.sh upgrade
 
-  # Rebuild
+  # Rebuild system
   sudo nixos-rebuild --impure --flake . switch
-  [ -n "$stashed" ] && git stash pop
-  popd >/dev/null
 elif [ "$1" = "upgrade" ]; then
   # Upgrade modules
   bin/update.sh upgrade-system
@@ -110,12 +124,13 @@ elif [ "$1" = "upgrade" ]; then
   bin/update.sh upgrade-vscode
   bin/update.sh upgrade-yarn
 
-  # Apply updates
+  # Apply upgrades
   if [ -n "$(git status --porcelain)" ]; then
     clear
     git status --short
     echo
-    echo "Updates are available. Do you want to apply them?"
+    echo "Upgrades are available. Apply them?"
+    echo
     read -n 1 -p "[y/N] " res
     echo
 
@@ -126,7 +141,7 @@ elif [ "$1" = "upgrade" ]; then
       git add resources/extensions/vscode.json
       git add resources/yarn/package.json
       git add resources/yarn/yarn.lock
-      git commit -m "Automatic update"
+      git commit -m "Automatic upgrade"
       git push
     else
       git restore flake.lock
