@@ -52,6 +52,10 @@
         "git.inputValidation" = true;
         "git.openRepositoryInParentFolders" = "always";
 
+        # C++
+        "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
+        "cmake.pinnedCommands" = [ "workbench.action.tasks.configureTaskRunner" "workbench.action.tasks.runTask" ];
+
         # LaTeX
         "latex-workshop.formatting.latex" = "latexindent";
         "latex-workshop.latex.autoClean.run" = "onSucceeded";
