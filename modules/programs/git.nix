@@ -32,9 +32,9 @@
       cob = "checkout -b";
 
       d = "diff";
-      dm = "diff main @";
+      dm = "rev-list --left-right --oneline main...";
       ds = "diff --staged";
-      du = "diff @{u} @";
+      du = "rev-list --left-right --oneline @{u}...";
 
       f = "fetch";
 
