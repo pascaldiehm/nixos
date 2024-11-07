@@ -66,10 +66,10 @@
         # Prettier
         "prettier.arrowParens" = "avoid";
         "prettier.bracketSameLine" = true;
-        "prettier.printWidth" = 150;
+        "prettier.printWidth" = 120;
 
         # Python
-        "autopep8.args" = [ "--indent-size=2" "--max-line-length=150" ];
+        "autopep8.args" = [ "--indent-size=2" "--max-line-length=120" ];
         "python.analysis.autoFormatStrings" = true;
         "python.analysis.autoImportCompletions" = true;
         "python.analysis.typeCheckingMode" = "standard";
