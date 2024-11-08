@@ -44,6 +44,8 @@
         "cSpell.language" = "en,de";
         "cSpell.enabledFileTypes" = { "*" = true; };
         "material-icon-theme.activeIconPack" = "react";
+        "tabnine.codeLensEnabled" = false;
+        "tabnine.experimentalAutoImports" = true;
         "vim.handleKeys" = { "<C-i>" = false; "<C-k>" = false; "<C-p>" = false; "<C-s>" = true; "<C-z>" = true; };
         "vim.useSystemClipboard" = true;
 
@@ -71,9 +73,6 @@
 
         # Python
         "autopep8.args" = [ "--indent-size=2" "--max-line-length=120" ];
-        "python.analysis.autoFormatStrings" = true;
-        "python.analysis.autoImportCompletions" = true;
-        "python.analysis.typeCheckingMode" = "standard";
 
         # Formatters
         "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
