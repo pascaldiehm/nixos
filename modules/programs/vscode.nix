@@ -41,23 +41,27 @@
         };
 
         # General
-        "cSpell.language" = "en,de";
         "cSpell.enabledFileTypes" = { "*" = true; };
+        "cSpell.language" = "en,de";
+        "git.autofetch" = true;
+        "git.confirmSync" = false;
+        "git.inputValidation" = true;
+        "git.openRepositoryInParentFolders" = "always";
         "material-icon-theme.activeIconPack" = "react";
         "tabnine.codeLensEnabled" = false;
         "tabnine.experimentalAutoImports" = true;
         "vim.handleKeys" = { "<C-i>" = false; "<C-k>" = false; "<C-p>" = false; "<C-s>" = true; "<C-z>" = true; };
         "vim.useSystemClipboard" = true;
 
-        # Git
-        "git.autofetch" = true;
-        "git.confirmSync" = false;
-        "git.inputValidation" = true;
-        "git.openRepositoryInParentFolders" = "always";
-
         # C++
         "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
         "cmake.pinnedCommands" = [ "workbench.action.tasks.configureTaskRunner" "workbench.action.tasks.runTask" ];
+
+        # Java
+        "java.compile.nullAnalysis.mode" = "automatic";
+        "java.configuration.updateBuildConfiguration" = "automatic";
+        "java.format.settings.url" = "${../../resources/java-format.xml}";
+        "redhat.telemetry.enabled" = false;
 
         # LaTeX
         "latex-workshop.formatting.latex" = "latexindent";

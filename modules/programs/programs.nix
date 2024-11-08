@@ -6,7 +6,9 @@
     pkgs.bitwarden-desktop
     pkgs.cryptsetup
     pkgs.exfat
+    pkgs.gradle
     pkgs.imagemagick
+    pkgs.jdk
     pkgs.jq
     pkgs.kdePackages.filelight
     pkgs.kdePackages.kdeconnect-kde

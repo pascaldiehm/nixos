@@ -17,6 +17,7 @@
   { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "hash": "sha256-40Oc6ycNog9cxG4G5gCps2ADrM/wLuKWFrD4lnd91Z4=" },
   { "publisher": "tabnine", "name": "tabnine-vscode", "version": "3.187.0", "hash": "sha256-KWzLV2W7Uhj+wMDTDvr7mmlUCzhDjxbc+dthCTb3nOo=" },
   { "publisher": "twxs", "name": "cmake", "version": "0.0.17", "hash": "sha256-CFiva1AO/oHpszbpd7lLtDzbv1Yi55yQOQPP/kCTH4Y=" },
+  { "publisher": "redhat", "name": "java", "version": "1.37.2024110808", "hash": "sha256-Czz4ruZyVDFgivtLbD6tzoWJJO7tns5WWtnwKgehwnc=" },
   { "publisher": "usernamehw", "name": "errorlens", "version": "3.20.0", "hash": "sha256-0gCT+u6rfkEcWcdzqRdc4EosROllD/Q0TIOQ4k640j0=" },
   { "publisher": "vscodevim", "name": "vim", "version": "1.28.1", "hash": "sha256-cr9gP3/3kB3X8PnhdBUdR0b2ydvqr5RhiFDIZ/6hlTM=" }
 ]
