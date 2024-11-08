@@ -96,6 +96,14 @@ if [ -z "$1" ]; then
   [ -n "$stashed" ] && git stash pop
   popd >/dev/null
 elif [ "$1" = "update" ]; then
+  # Check if upgrades are available
+  clear
+  echo "Do you want to check for upgrades?"
+  echo
+  read -n 1 -p "[Y/n] " res
+  echo
+  [ "$res" != "n" ] && bin/update.sh upgrade
+
   # Check if configuration changed
   if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
     clear
@@ -105,14 +113,6 @@ elif [ "$1" = "update" ]; then
     echo
     [ "$res" = "n" ] && exit 1
   fi
-
-  # Check if upgrades are available
-  clear
-  echo "Do you want to check for upgrades?"
-  echo
-  read -n 1 -p "[Y/n] " res
-  echo
-  [ "$res" != "n" ] && bin/update.sh upgrade
 
   # Rebuild system
   sudo nixos-rebuild --impure --flake . switch
