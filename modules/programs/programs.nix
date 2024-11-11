@@ -13,12 +13,14 @@
     pkgs.kdePackages.filelight
     pkgs.kdePackages.kdeconnect-kde
     pkgs.kdePackages.partitionmanager
+    pkgs.nodejs
     pkgs.php
     pkgs.python3
     pkgs.quickemu
     pkgs.texlive.combined.scheme-full
     pkgs.unzip
     pkgs.vlc
+    pkgs.yarn
     pkgs.yt-dlp
     pkgs.zip
   ];

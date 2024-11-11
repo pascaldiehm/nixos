@@ -14,6 +14,7 @@
           $HOME/.npm \
           $HOME/.python_history \
           $HOME/.vim \
+          $HOME/.yarn \
           $HOME/.yarnrc
       '';
     };
