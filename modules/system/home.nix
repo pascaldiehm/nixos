@@ -5,10 +5,11 @@
 
       cleanHome = helpers.mkHMActivation [ "writeBoundary" ] ''
         run rm -rf \
-          $HOME/.config/Code/User/History \
-          $HOME/.config/Code/User/workspaceStorage \
+          $HOME/.config/VSCodium/User/History \
+          $HOME/.config/VSCodium/User/workspaceStorage \
           $HOME/.config/zsh/.zsh_history \
           $HOME/.docker \
+          $HOME/.gradle \
           $HOME/.local/share/nix/repl-history \
           $HOME/.node_repl_history \
           $HOME/.npm \
