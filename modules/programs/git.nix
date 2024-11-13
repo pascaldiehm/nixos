@@ -10,14 +10,14 @@
       b = "branch";
       bc = "branch --copy";
       bd = "branch --delete";
-      bdd = "branch --delete --force";
+      bdf = "branch --delete --force";
       bm = "branch --move";
       bu = "branch --set-upstream-to";
 
       c = "commit";
       ca = "commit --all";
-      caa = "commit --all --amend --no-edit";
-      caam = "commit --all --amend --message";
+      cac = "commit --all --amend --no-edit";
+      cacm = "commit --all --amend --message";
       cam = "commit --all --message";
       cc = "commit --amend --no-edit";
       ccm = "commit --amend --message";
