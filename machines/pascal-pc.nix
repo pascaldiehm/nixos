@@ -1,11 +1,22 @@
 { pkgs, helpers, ... }: {
-  home-manager.users.pascal.home.packages = [ pkgs.krita pkgs.prismlauncher ];
+  hardware.sane.enable = true;
+  users.users.pascal.extraGroups = [ "lp" "scanner" ];
 
-  imports = [
-    ./common/3d-printing.nix
-    ./common/disable-auto-mute.nix
-    ./common/printing.nix
-  ];
+  home-manager.users.pascal = {
+    home.packages = [
+      pkgs.freecad-wayland
+      pkgs.kdePackages.skanlite
+      pkgs.krita
+      pkgs.prusa-slicer
+      pkgs.system-config-printer
+    ];
+
+    xdg.configFile = {
+      "PrusaSlicer/filament/PLA.ini".source = ../../resources/prusa/PLA.ini;
+      "PrusaSlicer/print/Normal.ini".source = ../../resources/prusa/Normal.ini;
+      "PrusaSlicer/printer/AnycubicKobra2.ini".source = ../../resources/prusa/AnycubicKobra2.ini;
+    };
+  };
 
   networking = {
     hostName = "pascal-pc";
@@ -23,5 +34,17 @@
         method = "manual";
       };
     };
+  };
+
+  services = {
+    ipp-usb.enable = true;
+    printing.enable = true;
+  };
+
+  systemd.services.disableAutoMute = {
+    after = [ "sound.target" ];
+    description = "Disable auto-mute";
+    script = "${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
+    wantedBy = [ "multi-user.target" ];
   };
 }

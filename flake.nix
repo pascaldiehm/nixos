@@ -33,7 +33,7 @@
             { _module.args = { inherit nixpkgs; }; }
             ./modules
 
-            # Hardware
+            # Machine
             /etc/nixos/hardware.nix
             module
           ];
