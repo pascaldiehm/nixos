@@ -27,8 +27,6 @@
     '';
 
     programs = {
-      git.extraConfig.url."git@gitlab.informatik.uni-wuerzburg.de:".insteadOf = "uni:";
-
       firefox.profiles.default.bookmarks = [
         (helpers.mkFirefoxBookmarksFolder "Uni Würzburg" {
           GitLab = "https://gitlab.informatik.uni-wuerzburg.de";
@@ -36,6 +34,11 @@
           WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
         })
       ];
+
+      git.extraConfig.url = {
+        "git@gitlab.informatik.uni-wuerzburg.de:".insteadOf = "uni:";
+        "git@gitlab.informatik.uni-wuerzburg.de:s457719/".insteadOf = "uni:/";
+      };
     };
   };
 
