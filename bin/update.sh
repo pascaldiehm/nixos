@@ -115,6 +115,7 @@ elif [ "$1" = "update" ]; then
   fi
 
   # Rebuild system
+  git rev-parse HEAD | sudo tee /etc/nixos/commit
   sudo nixos-rebuild --impure --flake . switch
 elif [ "$1" = "upgrade" ]; then
   # Upgrade modules

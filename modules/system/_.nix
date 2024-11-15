@@ -14,7 +14,6 @@
     ./sddm.nix
     ./sops.nix
     ./user.nix
-    ./version.nix
     ./yubikey.nix
   ];
 }
