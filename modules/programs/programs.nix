@@ -21,7 +21,6 @@
     pkgs.texlive.combined.scheme-full
     pkgs.unzip
     pkgs.vlc
-    pkgs.yarn
     pkgs.yt-dlp
     pkgs.zip
   ];
