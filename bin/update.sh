@@ -122,7 +122,6 @@ elif [ "$1" = "upgrade" ]; then
   bin/update.sh upgrade-firefox
   bin/update.sh upgrade-thunderbird
   bin/update.sh upgrade-vscode
-  bin/update.sh upgrade-yarn
 
   # Apply upgrades
   if [ -n "$(git status --porcelain)" ]; then
@@ -139,8 +138,6 @@ elif [ "$1" = "upgrade" ]; then
       git add resources/extensions/firefox.json
       git add resources/extensions/thunderbird.json
       git add resources/extensions/vscode.json
-      git add resources/yarn/package.json
-      git add resources/yarn/yarn.lock
       git commit -m "Automatic upgrade"
       git push
     else
@@ -148,8 +145,6 @@ elif [ "$1" = "upgrade" ]; then
       git restore resources/extensions/firefox.json
       git restore resources/extensions/thunderbird.json
       git restore resources/extensions/vscode.json
-      git restore resources/yarn/package.json
-      git restore resources/yarn/yarn.lock
     fi
   fi
 elif [ "$1" = "upgrade-system" ]; then
@@ -232,7 +227,4 @@ elif [ "$1" = "upgrade-vscode" ]; then
   echo -e "\n]" >>"$tmp/extensions.json"
   mv "$tmp/extensions.json" resources/extensions/vscode.json
   rm -rf "$tmp"
-elif [ "$1" = "upgrade-yarn" ]; then
-  echo "Upgrading yarn packages..."
-  yarn --cwd resources/yarn upgrade --latest
 fi
