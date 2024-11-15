@@ -20,12 +20,12 @@
         ".thunderbird/default"
         "Documents"
         { directory = ".local/share/gnupg"; mode = "0700"; }
+        { directory = ".ssh"; mode = "0700"; }
       ];
 
       files = [
         ".config/Bitwarden/data.json"
         ".config/VSCodium/User/globalStorage/state.vscdb"
-        ".ssh/known_hosts"
       ];
     };
   };
