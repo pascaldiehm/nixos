@@ -7,9 +7,28 @@
       enable = true;
       enableExtensionUpdateCheck = false;
       enableUpdateCheck = false;
-      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
       keybindings = [{ key = "shift+enter"; command = "-python.execSelectionInTerminal"; }];
       package = pkgs.vscodium;
+
+      extensions = with pkgs.vscode-extensions; [
+        aaron-bond.better-comments
+        esbenp.prettier-vscode
+        foxundermoon.shell-format
+        github.vscode-github-actions
+        james-yu.latex-workshop
+        jnoortheen.nix-ide
+        llvm-vs-code-extensions.vscode-clangd
+        ms-azuretools.vscode-docker
+        ms-python.isort
+        ms-python.python
+        ms-vscode.cmake-tools
+        pkief.material-icon-theme
+        streetsidesoftware.code-spell-checker
+        twxs.cmake
+        redhat.java
+        usernamehw.errorlens
+        vscodevim.vim
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
 
       userSettings = {
         # Editor

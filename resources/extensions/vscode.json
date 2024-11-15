@@ -1,22 +1,5 @@
 [
-  { "publisher": "aaron-bond", "name": "better-comments", "version": "3.0.2", "hash": "sha256-hQmA8PWjf2Nd60v5EAuqqD8LIEu7slrNs8luc3ePgZc=" },
   { "publisher": "bmewburn", "name": "vscode-intelephense-client", "version": "1.12.6", "hash": "sha256-PBshvtO7NDMfKK482GN8qSyGw7OEeExEwr1/whH9yUA=" },
-  { "publisher": "esbenp", "name": "prettier-vscode", "version": "11.0.0", "hash": "sha256-pNjkJhof19cuK0PsXJ/Q/Zb2H7eoIkfXJMLZJ4lDn7k=" },
-  { "publisher": "foxundermoon", "name": "shell-format", "version": "7.2.5", "hash": "sha256-kfpRByJDcGY3W9+ELBzDOUMl06D/vyPlN//wPgQhByk=" },
-  { "publisher": "github", "name": "vscode-github-actions", "version": "0.27.0", "hash": "sha256-sZ831fPgy/HGsXL1gTezbTsnVcYjwxEd79JfMu1jaGo=" },
-  { "publisher": "james-yu", "name": "latex-workshop", "version": "10.5.6", "hash": "sha256-49sxhmMVKUw+++7wGeK0G5rXNBBynf9SPU2at7TJ4tM=" },
-  { "publisher": "jnoortheen", "name": "nix-ide", "version": "0.3.5", "hash": "sha256-hiyFZVsZkxpc2Kh0zi3NGwA/FUbetAS9khWxYesxT4s=" },
-  { "publisher": "llvm-vs-code-extensions", "name": "vscode-clangd", "version": "0.1.31", "hash": "sha256-iIo1zOVMOiPR2ZhZrzYbZgZTiSILPvuMiZOCVC7IQzg=" },
-  { "publisher": "ms-azuretools", "name": "vscode-docker", "version": "1.29.3", "hash": "sha256-z0RqFos0ZG2Id/alUBZJyroX3coTcJ+x2R8v4FD2Zcg=" },
   { "publisher": "ms-python", "name": "autopep8", "version": "2024.1.13171014", "hash": "sha256-TMbSKa/7XmnHCHgjC2RQ6OppV7UvdZ4vCOSYixETVok=" },
-  { "publisher": "ms-python", "name": "isort", "version": "2023.13.13171013", "hash": "sha256-UBV9i3LPVv60+toy+kJvESAuJHRmH/uEIwjTidYUXLc=" },
-  { "publisher": "ms-python", "name": "python", "version": "2024.21.2024111401", "hash": "sha256-cCoRDbydd4V7qLXIiwhmvRVxr0/95UkkrSDypSg72vs=" },
-  { "publisher": "ms-vscode", "name": "cmake-tools", "version": "1.20.24", "hash": "sha256-ZwIgcz1NPBAkjIO/irBrUH5/jRRyxddOri3rpklF9T8=" },
-  { "publisher": "pkief", "name": "material-icon-theme", "version": "5.14.1", "hash": "sha256-a3yb5moSyViJRznzABHajWbdKW096Lla26pVeFghpDo=" },
-  { "publisher": "streetsidesoftware", "name": "code-spell-checker", "version": "4.0.16", "hash": "sha256-1GH3liiExURy5e6owSRr5UJ7UXa8KUgglIzfGsSPARg=" },
-  { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "hash": "sha256-40Oc6ycNog9cxG4G5gCps2ADrM/wLuKWFrD4lnd91Z4=" },
-  { "publisher": "twxs", "name": "cmake", "version": "0.0.17", "hash": "sha256-CFiva1AO/oHpszbpd7lLtDzbv1Yi55yQOQPP/kCTH4Y=" },
-  { "publisher": "redhat", "name": "java", "version": "1.37.2024111408", "hash": "sha256-Ovi3IiUlw5gk2GlRmaP9RIaiBb8eyrtlatDKrrmiogg=" },
-  { "publisher": "usernamehw", "name": "errorlens", "version": "3.20.0", "hash": "sha256-0gCT+u6rfkEcWcdzqRdc4EosROllD/Q0TIOQ4k640j0=" },
-  { "publisher": "vscodevim", "name": "vim", "version": "1.28.1", "hash": "sha256-cr9gP3/3kB3X8PnhdBUdR0b2ydvqr5RhiFDIZ/6hlTM=" }
+  { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "hash": "sha256-40Oc6ycNog9cxG4G5gCps2ADrM/wLuKWFrD4lnd91Z4=" }
 ]
