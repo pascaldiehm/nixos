@@ -9,6 +9,7 @@
     ./localisation.nix
     ./network.nix
     ./nix.nix
+    ./persistence.nix
     ./plasma.nix
     ./sddm.nix
     ./sops.nix

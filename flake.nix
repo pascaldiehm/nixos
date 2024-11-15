@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    impermanence.url = github:nix-community/impermanence;
 
     home-manager = {
       url = github:nix-community/home-manager;
@@ -14,18 +15,19 @@
     };
 
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = github:Mic92/sops-nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, plasma-manager, sops-nix, ... }: {
+  outputs = { nixpkgs, home-manager, impermanence, plasma-manager, sops-nix, ... }: {
     nixosConfigurations =
       let
         mkSystem = module: nixpkgs.lib.nixosSystem {
           modules = [
             # Libraries
             home-manager.nixosModules.home-manager
+            impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
             { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
 

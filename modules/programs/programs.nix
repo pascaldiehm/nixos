@@ -4,6 +4,7 @@
 
   home-manager.users.pascal.home.packages = [
     pkgs.bitwarden-desktop
+    pkgs.btrfs-progs
     pkgs.cryptsetup
     pkgs.exfat
     pkgs.gradle

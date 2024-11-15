@@ -3,6 +3,6 @@
 
   sops = {
     defaultSopsFile = ../../resources/secrets/store.yml;
-    gnupg.home = "/etc/nixos/.gnupg";
+    gnupg.home = "/perm/etc/nixos/.gnupg";
   };
 }

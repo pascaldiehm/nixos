@@ -1,24 +1,6 @@
 { hmcfg, helpers, ... }: {
   home-manager.users.pascal = {
-    home.activation = {
-      deleteChannelLinks = helpers.mkHMActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
-
-      cleanHome = helpers.mkHMActivation [ "writeBoundary" ] ''
-        run rm -rf \
-          $HOME/.config/VSCodium/User/History \
-          $HOME/.config/VSCodium/User/workspaceStorage \
-          $HOME/.config/zsh/.zsh_history \
-          $HOME/.docker \
-          $HOME/.gradle \
-          $HOME/.local/share/nix/repl-history \
-          $HOME/.node_repl_history \
-          $HOME/.npm \
-          $HOME/.python_history \
-          $HOME/.vim \
-          $HOME/.yarn \
-          $HOME/.yarnrc
-      '';
-    };
+    home.activation.deleteChannelLinks = helpers.mkHMActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
 
     xdg = {
       enable = true;
@@ -30,12 +12,4 @@
       };
     };
   };
-
-  systemd.mounts = [{
-    description = "Mount tmpfs in ~/Downloads";
-    type = "tmpfs";
-    wantedBy = [ "local-fs.target" ];
-    what = "tmpfs";
-    where = hmcfg.xdg.userDirs.download;
-  }];
 }

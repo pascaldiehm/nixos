@@ -105,9 +105,3 @@ function pyenv() {
   [ ! -d "$dir" ] && python3 -m venv "$dir"
   source "$dir/bin/activate"
 }
-
-function tmprun() {
-  local tmp="$(mktemp -d)"
-  HOME="$tmp" XDG_CONFIG_HOME="$tmp" XDG_DATA_HOME="$tmp" XDG_CACHE_HOME="$tmp" nix run "nixpkgs#$1" -- "${@:2}"
-  rm -rf "$tmp"
-}

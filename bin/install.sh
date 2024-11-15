@@ -11,14 +11,12 @@ fi
 
 MACHINE=""
 while [ -z "$MACHINE" ]; do
-  clear
   echo "Which machine should I install?"
   read -p "> " MACHINE
 done
 
 DEV=""
 while [ ! -b "$DEV" ]; do
-  clear
   lsblk
   echo
   echo "Which device should I format?"
@@ -26,77 +24,65 @@ while [ ! -b "$DEV" ]; do
   [ ! -b "$DEV" ] && DEV="/dev/$DEV"
 done
 
-clear
 echo "Formatting $DEV..."
 parted "$DEV" -- mklabel gpt
-parted "$DEV" -- mkpart root ext4 512MB 100%
+parted "$DEV" -- mkpart nixos btrfs 512MB 100%
 parted "$DEV" -- mkpart ESP fat32 1MB 512MB
 parted "$DEV" -- set 2 esp on
 
-PART_ROOT="${DEV}1"
-[ ! -b "$PART_ROOT" ] && PART_ROOT="${DEV}p1"
-while [ ! -b "$PART_ROOT" ]; do
-  clear
-  lsblk
-  echo
-  echo "I couldn't detect the root partition. Please enter it manually."
-  read -p "> " PART_ROOT
-  [ ! -b "$PART_ROOT" ] && PART_ROOT="/dev/$PART_ROOT"
-done
+echo "Waiting for partitions..."
+while [ ! -b /dev/disk/by-partlabel/nixos ]; do sleep 1; done
+while [ ! -b /dev/disk/by-partlabel/ESP ]; do sleep 1; done
 
-PART_BOOT="${DEV}2"
-[ ! -b "$PART_BOOT" ] && PART_BOOT="${DEV}p2"
-while [ ! -b "$PART_BOOT" ]; do
-  clear
-  lsblk
-  echo
-  echo "I couldn't detect the boot partition. Please enter it manually."
-  read -p "> " PART_BOOT
-  [ ! -b "$PART_BOOT" ] && PART_BOOT="/dev/$PART_BOOT"
-done
-
-clear
 echo "Encrypting root partition..."
-cryptsetup luksFormat "$PART_ROOT"
-cryptsetup open "$PART_ROOT" nixos
+cryptsetup luksFormat /dev/disk/by-partlabel/nixos
+cryptsetup open /dev/disk/by-partlabel/nixos nixos
 
 echo "Creating filesystems..."
-mkfs.ext4 -L nixos /dev/mapper/nixos
-mkfs.fat -F 32 -n boot "$PART_BOOT"
+mkfs.btrfs -L nixos /dev/mapper/nixos
+mkfs.fat -F 32 -n ESP /dev/disk/by-partlabel/ESP
+
+echo "Creating subvolumes..."
+mount /dev/mapper/nixos /mnt
+btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/root
+btrfs subvolume create /mnt/perm
+umount /mnt
 
 echo "Mounting partitions..."
-mount /dev/mapper/nixos /mnt
-rm -rf /mnt/lost+found
-mkdir -p /mnt/boot
-mount -o umask=077 "$PART_BOOT" /mnt/boot
+mount -o subvol=root /dev/mapper/nixos /mnt
+mkdir /mnt/{nix,perm,boot}
+mount -o subvol=nix /dev/mapper/nixos /mnt/nix
+mount -o subvol=perm /dev/mapper/nixos /mnt/perm
+mount -o umask=077 /dev/disk/by-partlabel/ESP /mnt/boot
 
 echo "Generating hardware configuration..."
-nixos-generate-config --root /mnt
-rm /mnt/etc/nixos/configuration.nix
-mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/hardware.nix
-ln -s /mnt/etc/nixos/hardware.nix /etc/nixos/hardware.nix
+mkdir -p /mnt/perm/etc/nixos
+nixos-generate-config --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
+ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
 echo "Cloning NixOS configuration..."
-git clone https://github.com/pascaldiehm/nixos /mnt/home/pascal/.config/nixos
-git --git-dir /mnt/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
-
-echo "Fixing home directory permissions..."
-chown -R 1000:100 /mnt/home/pascal
-chmod 700 /mnt/home/pascal
+git clone https://github.com/pascaldiehm/nixos /mnt/perm/home/pascal/.config/nixos
+git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+chown -R 1000:100 /mnt/perm/home/pascal
+chmod 700 /mnt/perm/home/pascal
+ln -s /mnt/perm/home/pascal /home/pascal
 
 echo "Preparing GnuPG..."
 mkdir -p -m 700 ~/.gnupg
 echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 
-mkdir -p -m 700 /mnt/etc/nixos/.gnupg
-echo "disable-scdaemon" >/mnt/etc/nixos/.gnupg/gpg-agent.conf
-ln -s /mnt/etc/nixos/.gnupg /etc/nixos/.gnupg
+echo "Setting up GnuPG..."
+mkdir -p -m 700 /mnt/perm/etc/nixos/.gnupg
+echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
+ln -s /mnt/perm/etc/nixos/.gnupg /etc/nixos/.gnupg
 
-echo -n "Installing secret key. Insert YubiKey and press enter..."
+echo -n "Insert YubiKey and press enter..."
 read
 
+echo "Installing secret key..."
 echo "fetch" | gpg --command-fd 0 --card-edit
-gpg --decrypt /mnt/home/pascal/.config/nixos/resources/secrets/key.gpg | gpg --homedir /mnt/etc/nixos/.gnupg --import
+gpg --decrypt /home/pascal/.config/nixos/resources/secrets/key.gpg | gpg --homedir /etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
-nixos-install --impure --no-channel-copy --no-root-password --root /mnt --flake "/mnt/home/pascal/.config/nixos#$MACHINE"
+nixos-install --impure --no-channel-copy --no-root-password --flake "/home/pascal/.config/nixos#$MACHINE"
