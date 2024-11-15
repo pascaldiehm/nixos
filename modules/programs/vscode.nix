@@ -48,8 +48,6 @@
         "git.inputValidation" = true;
         "git.openRepositoryInParentFolders" = "always";
         "material-icon-theme.activeIconPack" = "react";
-        "tabnine.codeLensEnabled" = false;
-        "tabnine.experimentalAutoImports" = true;
         "vim.handleKeys" = { "<C-i>" = false; "<C-k>" = false; "<C-p>" = false; "<C-s>" = true; "<C-z>" = true; };
         "vim.useSystemClipboard" = true;
 
