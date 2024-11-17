@@ -6,8 +6,8 @@
       sessionVariables.CMAKE_GENERATOR = "Ninja";
 
       file = {
-        "Documents/.clang-format".source = ../../resources/clang/.clang-format;
-        "Documents/.clang-tidy".source = ../../resources/clang/.clang-tidy;
+        "Documents/.clang-format".source = ../../resources/clang/format.yaml;
+        "Documents/.clang-tidy".source = ../../resources/clang/tidy.yaml;
       };
 
       packages = [

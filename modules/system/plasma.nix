@@ -1,4 +1,4 @@
-{ hmcfg, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
   services.desktopManager.plasma6.enable = true;
 

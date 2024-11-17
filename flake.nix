@@ -51,11 +51,11 @@
       let
         mkScript = name: deps: pkgs.stdenv.mkDerivation {
           inherit name;
-          src = ./.;
+          src = ./bin;
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
           installPhase = ''
-            install -Dt $out/bin bin/${name}
+            install -Dt $out/bin ${name}
             wrapProgram $out/bin/${name} --prefix PATH : ${pkgs.lib.makeBinPath deps}
           '';
         };

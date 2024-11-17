@@ -11,17 +11,19 @@ fi
 
 MACHINE=""
 while [ -z "$MACHINE" ]; do
+  clear
   echo "Which machine should I install?"
   read -p "> " MACHINE
 done
 
 DEV=""
 while [ ! -b "$DEV" ]; do
+  clear
   lsblk
   echo
   echo "Which device should I format?"
   read -p "> " DEV
-  [ ! -b "$DEV" ] && DEV="/dev/$DEV"
+  [ -b "$DEV" ] || DEV="/dev/$DEV"
 done
 
 echo "Formatting $DEV..."

@@ -1,4 +1,4 @@
-{ pkgs, helpers, ... }: {
+{ pkgs, ... }: {
   hardware.sane.enable = true;
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
 

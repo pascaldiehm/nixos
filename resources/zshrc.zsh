@@ -102,6 +102,6 @@ function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 
 function pyenv() {
   local dir="${1:-.venv}"
-  [ ! -d "$dir" ] && python3 -m venv "$dir"
+  [ -d "$dir" ] || python3 -m venv "$dir"
   source "$dir/bin/activate"
 }

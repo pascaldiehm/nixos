@@ -1,4 +1,4 @@
-{ hmcfg, helpers, ... }: {
+{ helpers, ... }: {
   home-manager.users.pascal = {
     home.activation.deleteChannelLinks = helpers.mkHMActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
 
