@@ -8,7 +8,7 @@
     pkgs.cryptsetup
     pkgs.exfat
     pkgs.gradle
-    pkgs.imagemagick
+    pkgs.imagemagickBig
     pkgs.jdk
     pkgs.jq
     pkgs.kdePackages.filelight
