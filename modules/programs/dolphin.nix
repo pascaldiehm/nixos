@@ -1,7 +1,7 @@
 { ... }: {
   home-manager.users.pascal.programs.plasma = {
     configFile.dolphinrc = {
-      General.RememberOpenedTabs = true;
+      General.RememberOpenedTabs = false;
       IconsMode.PreviewSize = 80;
     };
 
