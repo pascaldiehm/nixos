@@ -13,6 +13,7 @@
       extensions = with pkgs.vscode-extensions; [
         aaron-bond.better-comments
         bradlc.vscode-tailwindcss
+        dbaeumer.vscode-eslint
         esbenp.prettier-vscode
         foxundermoon.shell-format
         github.vscode-github-actions
