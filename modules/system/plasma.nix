@@ -48,20 +48,6 @@
           "helprunner"
         ];
       };
-
-      powerdevilrc = {
-        "LowBattery/Display".DisplayBrightness = 25;
-
-        "AC/Display" = {
-          DisplayBrightness = 100;
-          UseProfileSpecificDisplayBrightness = true;
-        };
-
-        "Battery/Display" = {
-          DisplayBrightness = 50;
-          UseProfileSpecificDisplayBrightness = true;
-        };
-      };
     };
 
     input.keyboard = {
