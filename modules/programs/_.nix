@@ -6,6 +6,7 @@
     ./git.nix
     ./gnupg.nix
     ./kate.nix
+    ./kdeconnect.nix
     ./konsole.nix
     ./kwallet.nix
     ./okular.nix

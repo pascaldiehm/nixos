@@ -12,7 +12,6 @@
     pkgs.jdk
     pkgs.jq
     pkgs.kdePackages.filelight
-    pkgs.kdePackages.kdeconnect-kde
     pkgs.kdePackages.partitionmanager
     pkgs.nodejs
     pkgs.php
