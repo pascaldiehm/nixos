@@ -17,9 +17,11 @@
     pkgs.php
     pkgs.python3
     pkgs.quickemu
+    pkgs.sshfs
     pkgs.texlive.combined.scheme-full
     pkgs.unzip
     pkgs.vlc
+    pkgs.wireguard-tools
     pkgs.yt-dlp
     pkgs.zip
   ];
