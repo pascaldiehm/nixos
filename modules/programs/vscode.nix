@@ -73,7 +73,7 @@
 
         # C++
         "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
-        "cmake.pinnedCommands" = [ "workbench.action.tasks.configureTaskRunner" "workbench.action.tasks.runTask" ];
+        "cmake.configureOnOpen" = true;
 
         # Java
         "java.compile.nullAnalysis.mode" = "automatic";
@@ -82,7 +82,6 @@
         "redhat.telemetry.enabled" = false;
 
         # LaTeX
-        "latex-workshop.formatting.latex" = "latexindent";
         "latex-workshop.latex.autoClean.run" = "onSucceeded";
 
         # PHP
