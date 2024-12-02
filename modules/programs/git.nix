@@ -69,7 +69,7 @@
       rva = "revert --abort";
       rvc = "revert --continue";
 
-      s = "stash --include-untracked";
+      s = "stash push --include-untracked";
       sc = "stash clear";
       sd = "stash drop";
       sl = "stash list";
