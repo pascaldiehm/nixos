@@ -16,6 +16,7 @@
         ".config/kdeconnect"
         ".config/nixos"
         ".local/share/kwalletd"
+        ".local/state/wireplumber"
         ".mozilla/firefox/default"
         ".thunderbird/default"
         "Documents"
