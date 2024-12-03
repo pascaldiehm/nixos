@@ -1,7 +1,5 @@
 { lib, pkgs, ... }: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-
     initrd = {
       luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
       postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
