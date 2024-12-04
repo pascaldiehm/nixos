@@ -1,4 +1,6 @@
-{ ... }: {
+{ pkgs, ... }: {
+  hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
+
   networking = {
     hostName = "pascal-laptop";
 

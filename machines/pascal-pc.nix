@@ -1,6 +1,10 @@
 { pkgs, ... }: {
-  hardware.sane.enable = true;
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
+
+  hardware = {
+    graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
+    sane.enable = true;
+  };
 
   home-manager.users.pascal = {
     home.packages = [
