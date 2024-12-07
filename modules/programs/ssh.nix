@@ -8,7 +8,7 @@
       HostName $(cat ${config.sops.secrets."ssh/bowser/host".path})
       IdentityFile ${config.sops.secrets."ssh/bowser/key".path}
       Port $(cat ${config.sops.secrets."ssh/bowser/port".path})
-      User $(cat ${config.sops.secrets."ssh/bowser/user".path})
+      User mario
 
     Host github.com
       IdentityFile ${config.sops.secrets."ssh/github/key".path}
@@ -17,7 +17,7 @@
       HostName $(cat ${config.sops.secrets."ssh/goomba/host".path})
       IdentityFile ${config.sops.secrets."ssh/goomba/key".path}
       Port $(cat ${config.sops.secrets."ssh/goomba/port".path})
-      User $(cat ${config.sops.secrets."ssh/goomba/user".path})
+      User mario
     EOF
 
     run chmod 600 .ssh/config
@@ -27,11 +27,9 @@
     "ssh/bowser/host"
     "ssh/bowser/key"
     "ssh/bowser/port"
-    "ssh/bowser/user"
     "ssh/github/key"
     "ssh/goomba/host"
     "ssh/goomba/key"
     "ssh/goomba/port"
-    "ssh/goomba/user"
   ];
 }

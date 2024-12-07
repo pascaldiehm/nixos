@@ -48,7 +48,7 @@
     profiles = {
       bayern-wlan = {
         connection = {
-          autoconnect-priority = 10;
+          autoconnect-priority = 25;
           id = "BayernWLAN";
           type = "wifi";
         };
@@ -72,7 +72,7 @@
         };
 
         connection = {
-          autoconnect-priority = 20;
+          autoconnect-priority = 50;
           id = "eduroam";
           type = "wifi";
         };

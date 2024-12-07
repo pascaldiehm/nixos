@@ -3,7 +3,6 @@
   programs.nano.enable = false;
 
   home-manager.users.pascal.home.packages = [
-    pkgs.bitwarden-desktop
     pkgs.btrfs-progs
     pkgs.cryptsetup
     pkgs.exfat

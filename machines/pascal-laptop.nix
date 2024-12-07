@@ -51,6 +51,24 @@
           psk = "$HOME_WIFI_PSK";
         };
       };
+
+      hotspot = {
+        connection = {
+          autoconnect-priority = 25;
+          id = "Hotspot";
+          type = "wifi";
+        };
+
+        wifi = {
+          mode = "infrastructure";
+          ssid = "$HOTSPOT_SSID";
+        };
+
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "$HOTSPOT_PSK";
+        };
+      };
     };
   };
 }

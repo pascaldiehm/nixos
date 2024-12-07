@@ -33,9 +33,7 @@
 
     mkPackageList = pkgs: builtins.concatStringsSep "\n" (lib.unique (lib.naturalSort (builtins.map (pkg: pkg.name) pkgs)));
 
-    mkSSHSecrets = mapToSet noop (_: { owner = "pascal"; restartUnits = [ "home-manager-pascal.service" ]; });
-
-    noop = arg: arg;
+    mkSSHSecrets = mapToSet (key: key) (_: { owner = "pascal"; restartUnits = [ "home-manager-pascal.service" ]; });
   };
 
   # Shortcut to home manager configuration
