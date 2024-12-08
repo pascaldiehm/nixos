@@ -32,13 +32,18 @@
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
-            { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
 
             # Modules
-            { _module.args = { inherit nixpkgs; }; }
             /etc/nixos/hardware.nix
             (./modules + "/${type}.nix")
             (./machines + "/${type}/${name}.nix")
+
+            # Extra
+            {
+              _module.args = { inherit nixpkgs; };
+              home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+              networking.hostName = name;
+            }
           ];
         };
       in
