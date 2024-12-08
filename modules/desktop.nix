@@ -6,7 +6,6 @@
     programs/firefox.nix
     programs/git.nix
     programs/gnupg.nix
-    programs/kate.nix
     programs/kdeconnect.nix
     programs/konsole.nix
     programs/kwallet.nix

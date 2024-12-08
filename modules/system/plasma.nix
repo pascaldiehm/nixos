@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate pkgs.kdePackages.krdp ];
   services.desktopManager.plasma6.enable = true;
 
   home-manager.users.pascal.programs.plasma = {
