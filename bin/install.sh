@@ -77,7 +77,6 @@ echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 echo "Setting up GnuPG..."
 mkdir -p -m 700 /mnt/perm/etc/nixos/.gnupg
 echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
-ln -s /mnt/perm/etc/nixos/.gnupg /etc/nixos/.gnupg
 
 echo -n "Insert YubiKey and press enter..."
 read
