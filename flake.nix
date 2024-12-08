@@ -23,9 +23,12 @@
   outputs = { nixpkgs, home-manager, impermanence, plasma-manager, sops-nix, ... }: {
     nixosConfigurations =
       let
-        mkSystem = module: nixpkgs.lib.nixosSystem {
+        mkSystems = set: builtins.listToAttrs (builtins.map (name: { inherit name; value = mkSystem name set.${name}; }) (builtins.attrNames set));
+
+        mkSystem = name: type: nixpkgs.lib.nixosSystem {
           modules = [
             # Libraries
+            modules/lib.nix
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
@@ -33,18 +36,15 @@
 
             # Modules
             { _module.args = { inherit nixpkgs; }; }
-            ./modules
-
-            # Machine
             /etc/nixos/hardware.nix
-            module
+            (./modules + "/${type}.nix")
+            (./machines + "/${type}/${name}.nix")
           ];
         };
       in
-      {
-        nixos = mkSystem ./machines/nixos.nix;
-        pascal-laptop = mkSystem ./machines/pascal-laptop.nix;
-        pascal-pc = mkSystem ./machines/pascal-pc.nix;
+      mkSystems {
+        pascal-laptop = "desktop";
+        pascal-pc = "desktop";
       };
 
     packages.x86_64-linux =
