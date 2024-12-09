@@ -47,7 +47,17 @@
           ];
         };
       in
-      mkSystems {
+      {
+        iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ({ pkgs, modulesPath, ... }: {
+              imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
+              environment.systemPackages = [ (pkgs.writeShellScriptBin "install" "nix --extra-experimental-features 'nix-command flakes' run github:pascaldiehm/nixos#install") ];
+            })
+          ];
+        };
+      } // mkSystems {
         pascal-laptop = "desktop";
         pascal-pc = "desktop";
       };
