@@ -83,7 +83,7 @@ read
 
 echo "Installing secret key..."
 echo "fetch" | gpg --command-fd 0 --card-edit
-gpg --decrypt /home/pascal/.config/nixos/resources/secrets/key.gpg | gpg --homedir /etc/nixos/.gnupg --import
+gpg --decrypt /home/pascal/.config/nixos/resources/secrets/desktop/key.gpg | gpg --homedir /etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
 nixos-install --impure --no-channel-copy --no-root-password --flake "/home/pascal/.config/nixos#$MACHINE"
