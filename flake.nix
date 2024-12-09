@@ -35,8 +35,8 @@
 
             # Modules
             /etc/nixos/hardware.nix
-            (./modules + "/${type}.nix")
-            (./machines + "/${type}/${name}.nix")
+            modules/${type}.nix
+            machines/${type}/${name}.nix
 
             # Extra
             {
