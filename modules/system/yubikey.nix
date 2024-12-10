@@ -1,4 +1,11 @@
-{ hmcfg, ... }: {
+{ hmcfg, pkgs, ... }: {
+  services.pcscd.enable = true;
+
+  home-manager.users.pascal = {
+    home.packages = [ pkgs.yubioath-flutter ];
+    programs.gpg.scdaemonSettings.disable-ccid = true;
+  };
+
   security.pam.u2f = {
     enable = true;
 
