@@ -25,7 +25,6 @@
       ];
 
       files = [
-        ".config/Bitwarden/data.json"
         ".config/VSCodium/User/globalStorage/state.vscdb"
         ".config/kwinoutputconfig.json"
       ];
