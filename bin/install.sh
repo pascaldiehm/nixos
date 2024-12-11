@@ -122,21 +122,22 @@ echo "Preparing GnuPG..."
 mkdir -p -m 700 ~/.gnupg
 echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 
+echo "Setting up GnuPG..."
 if [ "$TYPE" = "D" ]; then
-  echo "Setting up GnuPG..."
   mkdir -p -m 700 /mnt/perm/etc/nixos/.gnupg
   echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
+elif [ "$TYPE" = "S" ]; then
+  mkdir -p -m 700 /mnt/etc/nixos/.gnupg
+  echo "disable-scdaemon" >/mnt/etc/nixos/.gnupg/gpg-agent.conf
 fi
 
-echo "Installing secret key..."
-gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /etc/nixos/.gnupg --import
-
 if [ "$TYPE" = "D" ]; then
-  echo -n "Insert YubiKey and press enter..."
-  read
-
-  echo "fetch" | gpg --command-fd 0 --card-edit
-  gpg --decrypt /home/pascal/.config/nixos/resources/secrets/desktop/key.gpg | gpg --homedir /etc/nixos/.gnupg --import
+  echo "Installing secret keys..."
+  gpg --decrypt /home/pascal/.config/nixos/resources/secrets/desktop/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
+  gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
+elif [ "$TYPE" = "S" ]; then
+  echo "Installing secret key..."
+  gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /mnt/etc/nixos/.gnupg --import
 fi
 
 echo "Installing NixOS..."
