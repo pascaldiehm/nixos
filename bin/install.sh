@@ -131,12 +131,10 @@ elif [ "$TYPE" = "S" ]; then
   echo "disable-scdaemon" >/mnt/etc/nixos/.gnupg/gpg-agent.conf
 fi
 
+echo "Installing secret key..."
 if [ "$TYPE" = "D" ]; then
-  echo "Installing secret keys..."
   gpg --decrypt /home/pascal/.config/nixos/resources/secrets/desktop/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
-  gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 elif [ "$TYPE" = "S" ]; then
-  echo "Installing secret key..."
   gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /mnt/etc/nixos/.gnupg --import
 fi
 
