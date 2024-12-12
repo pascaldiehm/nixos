@@ -1,6 +1,10 @@
 { ... }: {
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
+  services.displayManager = {
+    autoLogin.user = "pascal";
+
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
   };
 }
