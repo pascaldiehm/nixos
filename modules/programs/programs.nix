@@ -14,6 +14,7 @@
     pkgs.kdePackages.partitionmanager
     pkgs.nodejs
     pkgs.php
+    pkgs.poppler_utils
     pkgs.python3
     pkgs.quickemu
     pkgs.sshfs
