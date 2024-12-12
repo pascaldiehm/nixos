@@ -107,12 +107,14 @@ echo "Cloning NixOS configuration"
 if [ "$TYPE" = "D" ]; then
   git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
   git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+  git --git-dir /mnt/perm/home/pascal/.config/nixos/.git rev-parse HEAD >/mnt/perm/etc/nixos/commit
   chown -R 1000:100 /mnt/perm/home/pascal
   chmod 700 /mnt/perm/home/pascal
   ln -s /mnt/perm/home/pascal /home/pascal
 elif [ "$TYPE" = "S" ]; then
   git clone https://github.com/pascaldiehm/nixos.git /mnt/home/pascal/.config/nixos
   git --git-dir /mnt/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+  git --git-dir /mnt/home/pascal/.config/nixos/.git rev-parse HEAD >/mnt/etc/nixos/commit
   chown -R 1000:100 /mnt/home/pascal
   chmod 700 /mnt/home/pascal
   ln -s /mnt/home/pascal /home/pascal
