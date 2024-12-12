@@ -57,7 +57,7 @@
       };
 
       # General
-      "cSpell.enabledFileTypes" = { "*" = true; };
+      "cSpell.diagnosticLevel" = "Hint";
       "cSpell.language" = "en,de";
       "git.autofetch" = true;
       "git.confirmSync" = false;
