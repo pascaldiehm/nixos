@@ -164,7 +164,7 @@
 
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
-      wallpaper = ../../resources/wallpaper.jpg;
+      wallpaper = "${../../resources/wallpaper.jpg}";
     };
   };
 }

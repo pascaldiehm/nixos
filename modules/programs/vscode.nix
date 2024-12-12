@@ -74,7 +74,7 @@
       # Java
       "java.compile.nullAnalysis.mode" = "automatic";
       "java.configuration.updateBuildConfiguration" = "automatic";
-      "java.format.settings.url" = "${../../resources/java-format.xml}";
+      "java.format.settings.url" = ../../resources/java-format.xml;
       "redhat.telemetry.enabled" = false;
 
       # LaTeX
