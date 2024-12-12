@@ -30,7 +30,7 @@
 
     userSettings = {
       # Editor
-      "editor.fontFamily" = "Cascadia Code";
+      "editor.fontFamily" = "Fira Code";
       "editor.fontLigatures" = true;
       "editor.formatOnSave" = true;
       "editor.inlayHints.enabled" = "off";

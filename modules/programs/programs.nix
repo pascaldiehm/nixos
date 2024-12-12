@@ -1,9 +1,9 @@
 { config, hmcfg, pkgs, helpers, ... }: {
   environment.etc."nixos/packages".text = helpers.mkPackageList (config.environment.systemPackages ++ hmcfg.home.packages);
+  fonts.packages = [ pkgs.fira-code ];
   programs.nano.enable = false;
 
   home-manager.users.pascal.home.packages = [
-    pkgs.cascadia-code
     pkgs.btrfs-progs
     pkgs.cryptsetup
     pkgs.exfat

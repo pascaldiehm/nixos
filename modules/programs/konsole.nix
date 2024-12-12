@@ -6,7 +6,7 @@
       enable = true;
       defaultProfile = "default";
       extraConfig.KonsoleWindow.RememberWindowSize = false;
-      profiles.default.font.name = "Cascadia Code";
+      profiles.default.font.name = "Fira Code";
     };
   };
 }
