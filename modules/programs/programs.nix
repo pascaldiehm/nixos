@@ -3,6 +3,7 @@
   programs.nano.enable = false;
 
   home-manager.users.pascal.home.packages = [
+    pkgs.cascadia-code
     pkgs.btrfs-progs
     pkgs.cryptsetup
     pkgs.exfat

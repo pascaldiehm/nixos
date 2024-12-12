@@ -4,7 +4,9 @@
 
     programs.konsole = {
       enable = true;
+      defaultProfile = "default";
       extraConfig.KonsoleWindow.RememberWindowSize = false;
+      profiles.default.font.name = "Cascadia Code";
     };
   };
 }
