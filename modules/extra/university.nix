@@ -88,7 +88,7 @@
   sops.secrets = helpers.mkSSHSecrets [ "university/gitlab-ssh-key" ] // {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network" = { };
+    "university/eduroam/network".restartUnits = [ "home-manager-pascal.service" ];
     "university/eduroam/private-key" = { };
   };
 }

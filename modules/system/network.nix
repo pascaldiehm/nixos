@@ -1,5 +1,5 @@
 { config, ... }: {
-  sops.secrets.network = { };
+  sops.secrets.network.restartUnits = [ "home-manager-pascal.service" ];
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
   networking = {
