@@ -18,8 +18,7 @@
     };
 
     home.activation.writeSSHConfigUniversity = helpers.mkHMActivation [ "writeSSHConfig" ] ''
-      cd $HOME
-      run cat << EOF >> .ssh/config
+      run cat << EOF >> $HOME/.ssh/config
 
       Host gitlab.informatik.uni-wuerzburg.de
         IdentityFile ${config.sops.secrets."university/gitlab-ssh-key".path}

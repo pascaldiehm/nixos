@@ -8,7 +8,7 @@
       programs.home-manager.enable = true;
 
       home = {
-        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run rm -rf $(find $HOME -name '*.hm-bak')";
+        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find $HOME -name '*.hm-bak' -exec rm -rf {} \\;";
         homeDirectory = "/home/pascal";
         stateVersion = config.system.stateVersion;
         username = "pascal";

@@ -1,9 +1,7 @@
 { config, helpers, ... }: {
   home-manager.users.pascal.home.activation.writeSSHConfig = helpers.mkHMActivation [ "writeBoundary" ] ''
-    cd $HOME
-    [ -d .ssh ] || run mkdir -m 700 .ssh
-
-    run cat << EOF > .ssh/config
+    [ ! -d $HOME/.ssh ] && run mkdir -m 700 $HOME/.ssh
+    run cat << EOF > $HOME/.ssh/config
     Host bowser
       HostName $(cat ${config.sops.secrets."ssh/bowser/host".path})
       IdentityFile ${config.sops.secrets."ssh/bowser/key".path}
@@ -20,7 +18,7 @@
       User mario
     EOF
 
-    run chmod 600 .ssh/config
+    run chmod 600 $HOME/.ssh/config
   '';
 
   sops.secrets = helpers.mkSSHSecrets [
