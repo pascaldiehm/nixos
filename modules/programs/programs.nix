@@ -7,6 +7,8 @@
     pkgs.btrfs-progs
     pkgs.cryptsetup
     pkgs.exfat
+    pkgs.gdb
+    pkgs.gnumake
     pkgs.gradle
     pkgs.imagemagickBig
     pkgs.jdk
