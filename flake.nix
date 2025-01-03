@@ -23,20 +23,20 @@
   outputs = { nixpkgs, home-manager, impermanence, plasma-manager, sops-nix, ... }: {
     nixosConfigurations =
       let
-        mkSystems = set: builtins.listToAttrs (builtins.map (name: { inherit name; value = mkSystem name set.${name}; }) (builtins.attrNames set));
+        mkSystems = set: builtins.mapAttrs (name: value: mkSystem name set.${name}) set;
 
         mkSystem = name: type: nixpkgs.lib.nixosSystem {
           modules = [
             # Libraries
-            modules/lib.nix
+            config/lib.nix
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
 
             # Modules
             /etc/nixos/hardware.nix
-            modules/${type}.nix
-            machines/${type}/${name}.nix
+            config/base/${type}.nix
+            config/machines/${name}.nix
 
             # Extra
             {
@@ -54,22 +54,23 @@
 
     packages.x86_64-linux =
       let
+        mkScripts = set: builtins.mapAttrs (name: value: mkScript name set.${name}) set;
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
         mkScript = name: deps: pkgs.stdenv.mkDerivation {
-          inherit name;
-          src = ./bin;
+          name = "${name}.sh";
           nativeBuildInputs = [ pkgs.makeWrapper ];
+          src = ./bin;
 
           installPhase = ''
-            install -Dt $out/bin ${name}
-            wrapProgram $out/bin/${name} --prefix PATH : ${pkgs.lib.makeBinPath deps}
+            install -Dt $out/bin ${name}.sh
+            wrapProgram $out/bin/${name}.sh --prefix PATH : ${pkgs.lib.makeBinPath deps}
           '';
         };
-
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
       in
-      {
-        install = mkScript "install.sh" [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ];
-        update = mkScript "update.sh" [ pkgs.git pkgs.jq pkgs.unzip ];
+      mkScripts {
+        install = [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ];
+        update = [ pkgs.git pkgs.jq pkgs.unzip ];
       };
   };
 }

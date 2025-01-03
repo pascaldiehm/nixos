@@ -27,11 +27,14 @@
 
     programs = {
       firefox.profiles.default.bookmarks = [
-        (helpers.mkFirefoxBookmarksFolder "Uni Würzburg" {
-          GitLab = "https://gitlab.informatik.uni-wuerzburg.de";
-          WueCampus = "https://wuecampus.uni-wuerzburg.de";
-          WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
-        })
+        {
+          name = "Uni Würzburg";
+          bookmarks = [
+            { name = "GitLab"; url = "https://gitlab.informatik.uni-wuerzburg.de"; }
+            { name = "WueCampus"; url = "https://wuecampus.uni-wuerzburg.de"; }
+            { name = "WueStudy"; url = "https://wuestudy.zv.uni-wuerzburg.de"; }
+          ];
+        }
       ];
 
       git.extraConfig.url = {
@@ -84,10 +87,15 @@
     };
   };
 
-  sops.secrets = helpers.mkSSHSecrets [ "university/gitlab-ssh-key" ] // {
+  sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network".restartUnits = [ "home-manager-pascal.service" ];
+    "university/eduroam/network".restartUnits = [ "home-manager-pascal.service" "NetworkManager.service" ];
     "university/eduroam/private-key" = { };
+
+    "university/gitlab-ssh-key" = {
+      owner = "pascal";
+      restartUnits = [ "home-manager-pascal.service" ];
+    };
   };
 }
