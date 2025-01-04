@@ -48,6 +48,8 @@
         };
       in
       mkSystems {
+        bowser = "server";
+        goomba = "server";
         pascal-laptop = "desktop";
         pascal-pc = "desktop";
       };
