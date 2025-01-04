@@ -40,6 +40,7 @@
 
       programs = {
         home-manager.enable = true;
+        ssh.enable = true;
 
         git = {
           enable = true;

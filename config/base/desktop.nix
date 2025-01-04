@@ -4,9 +4,9 @@
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
   boot.initrd = {
-      luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
-      postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
-    };
+    luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
+    postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
+  };
 
   environment = {
     plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate pkgs.kdePackages.krdp ];
@@ -97,26 +97,6 @@
 
     home = {
       sessionVariables.CMAKE_GENERATOR = "Ninja";
-
-      activation.writeSSHConfig = helpers.mkHMActivation [ "writeBoundary" ] ''
-        [ ! -d $HOME/.ssh ] && run mkdir -m 700 $HOME/.ssh
-        run cat << EOF > $HOME/.ssh/config
-        Host bowser
-          HostName $(cat ${config.sops.secrets."ssh/bowser/host".path})
-          IdentityFile ${config.sops.secrets."ssh/bowser/key".path}
-          Port 1970
-
-        Host github.com
-          IdentityFile ${config.sops.secrets."ssh/github/key".path}
-
-        Host goomba
-          HostName $(cat ${config.sops.secrets."ssh/goomba/host".path})
-          IdentityFile ${config.sops.secrets."ssh/goomba/key".path}
-          Port 1970
-        EOF
-
-        run chmod 600 $HOME/.ssh/config
-      '';
 
       file = {
         "Documents/.clang-format".source = ../../resources/clang/format.yaml;
@@ -458,6 +438,22 @@
         };
       };
 
+      ssh.matchBlocks = {
+        "github.com".identityFile = config.sops.secrets."ssh/github".path;
+
+        bowser = {
+          hostname = "192.168.1.88";
+          identityFile = config.sops.secrets."ssh/bowser".path;
+          port = 1970;
+        };
+
+        goomba = {
+          hostname = "116.203.102.96";
+          identityFile = config.sops.secrets."ssh/goomba".path;
+          port = 1970;
+        };
+      };
+
       thunderbird = {
         enable = true;
         package = pkgs.thunderbird.override { extraPolicies.ExtensionSettings = helpers.mkMozillaExtensions ../../resources/extensions/thunderbird.json; };
@@ -673,31 +669,9 @@
 
     secrets = {
       network.restartUnits = [ "home-manager-pascal.service" "NetworkManager.service" ];
-
-      "ssh/bowser/host" = {
-        owner = "pascal";
-        restartUnits = [ "home-manager-pascal.service" ];
-      };
-
-      "ssh/bowser/key" = {
-        owner = "pascal";
-        restartUnits = [ "home-manager-pascal.service" ];
-      };
-
-      "ssh/github/key" = {
-        owner = "pascal";
-        restartUnits = [ "home-manager-pascal.service" ];
-      };
-
-      "ssh/goomba/host" = {
-        owner = "pascal";
-        restartUnits = [ "home-manager-pascal.service" ];
-      };
-
-      "ssh/goomba/key" = {
-        owner = "pascal";
-        restartUnits = [ "home-manager-pascal.service" ];
-      };
+      "ssh/bowser".owner = "pascal";
+      "ssh/github".owner = "pascal";
+      "ssh/goomba".owner = "pascal";
 
       u2f_keys = {
         owner = "pascal";

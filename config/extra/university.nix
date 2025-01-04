@@ -17,15 +17,9 @@
       };
     };
 
-    home.activation.writeSSHConfigUniversity = helpers.mkHMActivation [ "writeSSHConfig" ] ''
-      run cat << EOF >> $HOME/.ssh/config
-
-      Host gitlab.informatik.uni-wuerzburg.de
-        IdentityFile ${config.sops.secrets."university/gitlab-ssh-key".path}
-      EOF
-    '';
-
     programs = {
+      ssh.matchBlocks."gitlab.informatik.uni-wuerzburg.de".identityFile = config.sops.secrets."university/gitlab-ssh-key".path;
+
       firefox.profiles.default.bookmarks = [
         {
           name = "Uni Würzburg";
@@ -92,10 +86,6 @@
     "university/eduroam/client-cert" = { };
     "university/eduroam/network".restartUnits = [ "home-manager-pascal.service" "NetworkManager.service" ];
     "university/eduroam/private-key" = { };
-
-    "university/gitlab-ssh-key" = {
-      owner = "pascal";
-      restartUnits = [ "home-manager-pascal.service" ];
-    };
+    "university/gitlab-ssh-key".owner = "pascal";
   };
 }
