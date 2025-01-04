@@ -95,11 +95,11 @@ fi
 echo "Generating hardware configuration..."
 if [ "$TYPE" = "D" ]; then
   mkdir -p /mnt/perm/etc/nixos
-  nixos-generate-config --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
+  nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
   ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 elif [ "$TYPE" = "S" ]; then
   mkdir -p /mnt/etc/nixos
-  nixos-generate-config --show-hardware-config >/mnt/etc/nixos/hardware.nix
+  nixos-generate-config --root /mnt --show-hardware-config >/mnt/etc/nixos/hardware.nix
   ln -s /mnt/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 fi
 
