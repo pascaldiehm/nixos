@@ -7,6 +7,15 @@
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
 
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 8;
+    };
+  };
+
   home-manager = {
     backupFileExtension = "hm-bak";
     useGlobalPkgs = true;
