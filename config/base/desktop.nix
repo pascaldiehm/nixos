@@ -603,7 +603,6 @@
     };
 
     xdg = {
-      enable = true;
       configFile."clangd/config.yaml".source = ../../resources/clang/clangd.yaml;
       stateFile.konsolestaterc.source = ../../resources/konsolestaterc;
 

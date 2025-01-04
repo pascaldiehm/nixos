@@ -13,17 +13,13 @@
     useUserPackages = true;
 
     users.pascal = {
-      programs.home-manager.enable = true;
+      xdg.enable = true;
 
       home = {
+        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find $HOME -name '*.hm-bak' -exec rm -rf {} \\;";
         homeDirectory = "/home/pascal";
         stateVersion = config.system.stateVersion;
         username = "pascal";
-
-        activation = {
-          deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find $HOME -name '*.hm-bak' -exec rm -rf {} \\;";
-          deleteChannelLinks = helpers.mkHMActivation [ "writeBoundary" "installPackages" "linkGeneration" ] "run rm -rf $HOME/.nix-defexpr $HOME/.nix-profile";
-        };
 
         packages = [
           pkgs.jq
@@ -34,6 +30,8 @@
       };
 
       programs = {
+        home-manager.enable = true;
+
         git = {
           enable = true;
           userEmail = "pdiehm8@gmail.com";
@@ -178,9 +176,10 @@
     };
 
     settings = {
-      experimental-features = [ "flakes" "nix-command" ];
       auto-optimise-store = true;
+      experimental-features = [ "flakes" "nix-command" ];
       nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+      use-xdg-base-directories = true;
     };
   };
 
