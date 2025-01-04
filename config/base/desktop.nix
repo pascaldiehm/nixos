@@ -165,8 +165,8 @@
                     { name = "Maps"; url = "https://google.com/maps"; }
                     { name = "Photos"; url = "https://photos.google.com"; }
                     { name = "Tasks"; url = "https://tasks.google.com"; }
-                    { name = "YouTube Music"; url = "https://music.youtube.com"; }
                     { name = "YouTube"; url = "https://youtube.com"; }
+                    { name = "YouTube Music"; url = "https://music.youtube.com"; }
                   ];
                 }
 
