@@ -72,7 +72,8 @@
       in
       mkScripts {
         install = [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ];
-        update = [ pkgs.git pkgs.jq pkgs.unzip ];
+        update = [ pkgs.git ];
+        upgrade = [ pkgs.jq pkgs.unzip ];
       };
   };
 }
