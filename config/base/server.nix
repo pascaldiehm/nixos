@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   imports = [ ./common.nix ];
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets."ssh/github".path;
+  security.sudo.wheelNeedsPassword = false;
 
   fileSystems = {
     "/" = {
