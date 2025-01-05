@@ -3,6 +3,19 @@
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   networking.firewall.enable = false;
 
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-partlabel/nixos";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-partlabel/ESP";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+  };
+
   services.openssh = {
     enable = true;
     ports = [ 1970 ];
