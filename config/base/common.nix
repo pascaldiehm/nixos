@@ -102,11 +102,12 @@
             rbi = "rebase --interactive";
             rbr = "rebase --interactive --root";
 
-            rsh = "reset --hard";
-            rso = "reset --hard origin";
-
             rs = "restore";
             rss = "restore --staged";
+
+            rt = "reset";
+            rth = "reset --hard";
+            rto = "reset --hard origin";
 
             rv = "revert";
             rva = "revert --abort";
