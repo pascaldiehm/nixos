@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [ ./common.nix ];
-  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
+  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets."ssh/github".path;
 
   fileSystems = {
     "/" = {
@@ -23,6 +23,7 @@
 
   services.openssh = {
     enable = true;
+    authorizedKeysFiles = [ config.sops.secrets."ssh/${config.networking.hostName}".path ];
     ports = [ 1970 ];
 
     settings = {
@@ -42,8 +43,9 @@
     };
 
     secrets = {
-      github.owner = "pascal";
       ntfy.restartUnits = [ "journalwatch.service" ];
+      "ssh/${config.networking.hostName}" = { };
+      "ssh/github".owner = "pascal";
     };
   };
 
