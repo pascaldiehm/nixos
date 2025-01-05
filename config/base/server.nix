@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   imports = [ ./common.nix ];
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
-  networking.firewall.enable = false;
 
   fileSystems = {
     "/" = {
@@ -14,6 +13,11 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+  };
+
+  networking = {
+    firewall.enable = false;
+    usePredictableInterfaceNames = false;
   };
 
   services.openssh = {
