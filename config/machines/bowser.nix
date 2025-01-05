@@ -9,4 +9,11 @@
       ARRAY /dev/md/0 metadata=1.2 name=bowser:0 UUID=d56224b5:9d97fe09:73ab00f5:631ed84c
     '';
   };
+
+  systemd.network.networks."10-wired" = {
+    address = [ "192.168.1.88/16" ];
+    gateway = [ "192.168.1.1" ];
+    linkConfig.RequiredForOnline = "routable";
+    matchConfig.Name = "eth0";
+  };
 }
