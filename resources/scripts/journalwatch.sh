@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+NTFY_TOKEN="$(cat "$NTFY_TOKEN_PATH")"
+
+function report() {
+  curl -s -H "Authorization: Bearer $NTFY_TOKEN" -d "$1" "https://ntfy.pdiehm.dev/$NTFY_CHANNEL"
+}
+
 PAT_SSHD_PASSWORD='^(Accepted|Failed) password for (\w+) from (\S+) port ([0-9]+) ssh2$'
 PAT_SSHD_PUBLICKEY='^(Accepted|Failed) publickey for (\w+) from (\S+) port ([0-9]+) ssh2: (\S+) SHA256:(\S+)$'
 PAT_SSHD_USER='^Invalid user (\w+) from (\S+) port ([0-9]+)$'

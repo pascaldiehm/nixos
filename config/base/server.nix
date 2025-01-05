@@ -49,14 +49,13 @@
 
   systemd.services.journalwatch = {
     description = "Watch journalctl and report security-relevant events to ntfy";
+    path = [ pkgs.curl ];
+    script = builtins.readFile ../../resources/scripts/journalwatch.sh;
     wantedBy = [ "default.target" ];
 
-    script = ''
-      function report() {
-        ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $(cat ${config.sops.secrets.ntfy.path})" -d "$1" 'https://ntfy.pdiehm.dev/bowser-journal'
-      }
-
-      ${builtins.readFile ../../resources/scripts/journalwatch.sh}
-    '';
+    environment = {
+      NTFY_CHANNEL = "${config.networking.hostName}-journal";
+      NTFY_TOKEN_PATH = config.sops.secrets.ntfy.path;
+    };
   };
 }
