@@ -8,6 +8,11 @@
     '';
   };
 
+  fileSystems."/home/pascal/archive" = {
+    device = "/dev/md/0";
+    fsType = "ext4";
+  };
+
   sops.secrets = {
     "wireguard/bowser/key".owner = "systemd-network";
     "wireguard/bowser/goomba".owner = "systemd-network";
