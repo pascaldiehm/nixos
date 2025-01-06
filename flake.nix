@@ -71,9 +71,9 @@
         };
       in
       mkScripts {
-        install = [ pkgs.git pkgs.gnupg pkgs.pinentry-tty ];
+        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
         update = [ pkgs.git ];
-        upgrade = [ pkgs.jq pkgs.unzip ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
       };
   };
 }
