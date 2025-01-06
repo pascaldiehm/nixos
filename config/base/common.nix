@@ -107,7 +107,7 @@
 
             rt = "reset";
             rth = "reset --hard";
-            rto = "reset --hard origin";
+            rtu = "reset --hard @{u}";
 
             rv = "revert";
             rva = "revert --abort";
