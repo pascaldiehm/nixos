@@ -17,10 +17,10 @@ for ext in $(cat resources/extensions/firefox.json | jq -c ".[]"); do
   name="$(echo "$ext" | jq -r ".name")"
   echo "  - $name"
 
-  curl --silent --show-headers "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+  curl -si "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-  curl --silent -o "$tmp/$name.xpi" "$source"
+  curl -so "$tmp/$name.xpi" "$source"
   id="$(unzip -qc "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
@@ -42,10 +42,10 @@ for ext in $(cat resources/extensions/thunderbird.json | jq -c ".[]"); do
   name="$(echo "$ext" | jq -r ".name")"
   echo "  - $name"
 
-  curl --silent --show-headers "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+  curl -si "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-  curl --silent -o "$tmp/$name.xpi" "$source"
+  curl -so "$tmp/$name.xpi" "$source"
   id="$(unzip -qc "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
@@ -69,10 +69,10 @@ for ext in $(cat resources/extensions/vscode.json | jq -c ".[]"); do
   id="$publisher.$name"
   echo "  - $id"
 
-  curl --silent -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+  curl -so "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
   version="$(unzip -qc "$tmp/$id.vsix" "extension/package.json" | jq -r ".version")"
 
-  curl --silent -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/$version/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+  curl -so "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/$version/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
   hash="sha256-$(sha256sum "$tmp/$id.vsix" | cut -d " " -f 1 | xxd -r -p | base64 -w 0)"
 
   echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"hash\": \"$hash\" }" >>"$tmp/extensions.json"

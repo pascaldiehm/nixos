@@ -1,4 +1,4 @@
-{ pkgs }: {
+{ pkgs, ... }: {
   hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
 
   networking.networkmanager.ensureProfiles.profiles = {
