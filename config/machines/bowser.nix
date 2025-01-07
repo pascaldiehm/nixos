@@ -1,9 +1,9 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, helpers, ... }: {
   boot.swraid = {
     enable = true;
 
     mdadmConf = ''
-      PROGRAM ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $(cat ${config.sops.secrets."bowser/ntfy".path})" -d 'A RAID drive has failed' 'https://ntfy.pdiehm.dev/bowser-raid'
+      PROGRAM ${helpers.ntfy "bowser-raid" "A RAID drive has failed"}
       ARRAY /dev/md/0 metadata=1.2 name=bowser:0 UUID=d56224b5:9d97fe09:73ab00f5:631ed84c
     '';
   };
