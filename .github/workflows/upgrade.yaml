@@ -16,10 +16,7 @@ jobs:
     steps:
       - uses: jlumbroso/free-disk-space@main
       - uses: actions/checkout@main
-
       - uses: cachix/install-nix-action@master
-        with:
-          extra_nix_config: extra-experimental-features = flakes nix-command
 
       - name: Upgrade
         run: nix run .#upgrade
@@ -31,7 +28,7 @@ jobs:
         if: env.changed == 'true'
         run: |
           sudo mkdir -p /etc/nixos
-          echo '{ ... }: { nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
+          echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
       - name: Verify
         if: env.changed == 'true'
