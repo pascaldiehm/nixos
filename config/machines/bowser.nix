@@ -69,7 +69,7 @@
 
       wireguardPeers = [{
         AllowedIPs = [ "10.42.0.0/24" ];
-        Endpoint = "116.203.102.96:51820";
+        Endpoint = "goomba:51820";
         PersistentKeepalive = 25;
         PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
         PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";

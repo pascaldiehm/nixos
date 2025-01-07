@@ -446,13 +446,11 @@
         "github.com".identityFile = config.sops.secrets."ssh/github".path;
 
         bowser = {
-          hostname = "192.168.1.88";
           identityFile = config.sops.secrets."ssh/bowser".path;
           port = 1970;
         };
 
         goomba = {
-          hostname = "116.203.102.96";
           identityFile = config.sops.secrets."ssh/goomba".path;
           port = 1970;
         };

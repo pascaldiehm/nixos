@@ -19,7 +19,7 @@
 
       "wireguard-peer.8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=" = {
         allowed-ips = "10.42.0.0/24;192.168.0.0/16";
-        endpoint = "$WIREGUARD_ENDPOINT";
+        endpoint = "goomba:51820";
         preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
         preshared-key-flags = 0;
       };

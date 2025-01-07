@@ -1,8 +1,6 @@
 { config, pkgs, nixpkgs, helpers, ... }: {
   console.keyMap = "de";
-  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   i18n.defaultLocale = "en_US.UTF-8";
-  sops.secrets.password.neededForUsers = true;
   services.xserver.xkb.layout = "de";
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
@@ -14,6 +12,11 @@
       enable = true;
       configurationLimit = 8;
     };
+  };
+
+  environment.etc = {
+    hosts.mode = "0644";
+    "nix/inputs/nixpkgs".source = "${nixpkgs}";
   };
 
   home-manager = {
@@ -197,6 +200,16 @@
   programs = {
     nano.enable = false;
     zsh.enable = true;
+  };
+
+  sops.secrets = {
+    hosts.sopsFile = ../../resources/secrets/common/store.yaml;
+    password.neededForUsers = true;
+  };
+
+  system.activationScripts.addSecretHosts = {
+    deps = [ "etc" "setupSecrets" ];
+    text = "cat ${config.sops.secrets.hosts.path} >> /etc/hosts";
   };
 
   users.users.pascal = {
