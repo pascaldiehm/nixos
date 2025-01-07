@@ -29,6 +29,7 @@
 
     settings = {
       AllowUsers = [ "pascal" ];
+      KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
     };
   };
