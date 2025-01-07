@@ -17,7 +17,6 @@
   };
 
   networking = {
-    firewall.enable = false;
     useNetworkd = true;
     usePredictableInterfaceNames = false;
   };

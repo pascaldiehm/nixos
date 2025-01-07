@@ -1,4 +1,6 @@
 { config, ... }: {
+  networking.firewall.allowedUDPPorts = [ 51820 ];
+
   sops.secrets = {
     "goomba/wireguard/key".owner = "systemd-network";
     "goomba/wireguard/bowser".owner = "systemd-network";
