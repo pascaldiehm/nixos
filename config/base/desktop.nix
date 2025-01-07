@@ -192,7 +192,6 @@
             { name = "Hetzner"; url = "https://console.hetzner.cloud"; }
             { name = "Matrix Admin"; url = "https://matrix-admin.pdiehm.dev"; }
             { name = "PayPal"; url = "https://paypal.com"; }
-            { name = "PiHole"; url = "http://192.168.1.88/admin"; }
             { name = "Sparkasse"; url = "https://sparkasse-mainfranken.de"; }
           ];
 
