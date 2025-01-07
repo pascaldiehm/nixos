@@ -96,13 +96,27 @@ bindkey "${key[Down]}" down-line-or-history
 bindkey "${key[Left]}" backward-char
 bindkey "${key[Right]}" forward-char
 
-# Functions
+# Aliases and functions
+alias l='ls -alh'
+
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
-function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
+function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos test; }
+function nixos-update() { nix run ~/.config/nixos#update; }
 
-function pyenv() {
-  local dir="${1:-.venv}"
-  [ -d "$dir" ] || python3 -m venv "$dir"
-  source "$dir/bin/activate"
-}
+compdef _nothing nixos-test
+compdef _nothing nixos-update
+
+if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+  alias open='xdg-open'
+  alias py='python3'
+  alias vsc='codium'
+
+  function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
+
+  compdef "_arguments ':type:($(echo $(ls ~/.config/nixos/resources/secrets)))'" nixos-secrets
+elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
+  function service() { docker compose --project-directory "~/docker/$1" ${@:2}; }
+
+  compdef "_arguments ':type:($(echo $(find ~/docker -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)))'" service
+fi

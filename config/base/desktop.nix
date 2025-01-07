@@ -133,6 +133,8 @@
     };
 
     programs = {
+      zsh.localVariables.NIXOS_MACHINE_TYPE = "desktop";
+
       firefox = {
         enable = true;
         package = pkgs.firefox.override { nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ]; };
@@ -575,12 +577,6 @@
           "nix.formatterPath" = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
           "shellformat.path" = "${pkgs.shfmt}/bin/shfmt";
         };
-      };
-
-      zsh.shellAliases = {
-        open = "xdg-open";
-        py = "python3";
-        vsc = "codium";
       };
     };
 

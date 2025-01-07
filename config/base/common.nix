@@ -168,12 +168,6 @@
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           plugins = [{ name = "zsh-completions"; src = pkgs.zsh-completions; }];
           syntaxHighlighting.enable = true;
-
-          shellAliases = {
-            l = "ls -alh";
-            nixos-test = "sudo nixos-rebuild --impure --flake ~/.config/nixos test";
-            nixos-update = "nix run ~/.config/nixos#update";
-          };
         };
       };
     };
