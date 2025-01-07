@@ -30,7 +30,6 @@
     settings = {
       AllowUsers = [ "pascal" ];
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
     };
   };
 
