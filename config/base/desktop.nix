@@ -673,7 +673,7 @@
     gnupg.home = "/perm/etc/nixos/.gnupg";
 
     secrets = {
-      network.restartUnits = [ "home-manager-pascal.service" "NetworkManager.service" ];
+      network.restartUnits = [ "NetworkManager-ensure-profiles.service" "NetworkManager.service" ];
       "ssh/bowser".owner = "pascal";
       "ssh/github".owner = "pascal";
       "ssh/goomba".owner = "pascal";

@@ -84,7 +84,7 @@
   sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network".restartUnits = [ "home-manager-pascal.service" "NetworkManager.service" ];
+    "university/eduroam/network".restartUnits = [ "NetworkManager-ensure-profiles.service" "NetworkManager.service" ];
     "university/eduroam/private-key" = { };
     "university/gitlab-ssh-key".owner = "pascal";
   };

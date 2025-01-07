@@ -53,7 +53,7 @@
   };
 
   sops.secrets = {
-    "bowser/nut" = { };
+    "bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba".owner = "systemd-network";
   };
