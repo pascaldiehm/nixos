@@ -54,7 +54,7 @@
     description = "Watch journalctl and report security-relevant events to ntfy";
     path = [ pkgs.curl ];
     script = builtins.readFile ../../resources/scripts/journalwatch.sh;
-    wantedBy = [ "default.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     environment = {
       NTFY_CHANNEL = "${config.networking.hostName}-journal";
