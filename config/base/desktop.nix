@@ -225,6 +225,11 @@
                 definedAliases = [ "@nixpkgs" ];
               };
 
+              "NixOS Wiki" = {
+                urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+                definedAliases = [ "@nixwiki" ];
+              };
+
               "NPM" = {
                 urls = [{ template = "https://npmjs.com/search?q={searchTerms}"; }];
                 definedAliases = [ "@npm" ];
