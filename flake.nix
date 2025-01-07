@@ -28,7 +28,7 @@
         mkSystem = name: type: nixpkgs.lib.nixosSystem {
           modules = [
             # Libraries
-            config/lib.nix
+            config/helpers.nix
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops

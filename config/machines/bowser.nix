@@ -3,7 +3,7 @@
     enable = true;
 
     mdadmConf = ''
-      PROGRAM ${helpers.ntfy "bowser-raid" "A RAID drive has failed"}
+      PROGRAM ${helpers.ntfy "raid" "A RAID drive has failed"}
       ARRAY /dev/md/0 metadata=1.2 name=bowser:0 UUID=d56224b5:9d97fe09:73ab00f5:631ed84c
     '';
   };
@@ -29,7 +29,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "${helpers.ntfy "bowser-ups" "$1"}";
+        NOTIFYCMD = "${helpers.ntfy "ups" "$1"}";
 
         NOTIFYFLAG = [
           [ "ONLINE" "SYSLOG+EXEC" ]

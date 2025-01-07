@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, helpers, ... }: {
   imports = [ ./common.nix ];
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   security.sudo.wheelNeedsPassword = false;
@@ -51,13 +51,8 @@
 
   systemd.services.journalwatch = {
     description = "Watch journalctl and report security-relevant events to ntfy";
-    path = [ pkgs.curl ];
+    environment.NTFY_CMD = "${helpers.ntfy "journal" "$1"}";
     script = builtins.readFile ../../resources/scripts/journalwatch.sh;
     wantedBy = [ "multi-user.target" ];
-
-    environment = {
-      NTFY_CHANNEL = "${config.networking.hostName}-journal";
-      NTFY_TOKEN_PATH = config.sops.secrets."${config.networking.hostName}/ntfy".path;
-    };
   };
 }
