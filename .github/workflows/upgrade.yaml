@@ -25,7 +25,7 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        run: '[ -n "$(git status --porcelain)" ] && echo "changed=true" >> $GITHUB_ENV'
+        run: '[ -n "$(git status --porcelain)" ] && echo "changed=true" >> "$GITHUB_ENV"'
 
       - name: Prepare environment
         if: env.changed == 'true'
@@ -36,10 +36,10 @@ jobs:
       - name: Verify
         if: env.changed == 'true'
         run: |
-          nix build --impure .#nixosConfigurations.pascal-pc.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
-          nix build --impure .#nixosConfigurations.pascal-laptop.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
-          nix build --impure .#nixosConfigurations.bowser.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
-          nix build --impure .#nixosConfigurations.goomba.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
+          nix build --impure .#nixosConfigurations.pascal-pc.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
+          nix build --impure .#nixosConfigurations.pascal-laptop.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
+          nix build --impure .#nixosConfigurations.bowser.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
+          nix build --impure .#nixosConfigurations.goomba.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
 
       - name: Commit
         if: env.changed == 'true' && env.valid == 'true'

@@ -10,7 +10,7 @@ tmp="$(mktemp -d)"
 echo "[" >"$tmp/extensions.json"
 
 first=1
-for ext in $(cat resources/extensions/firefox.json | jq -c ".[]"); do
+jq -c ".[]" <resources/extensions/firefox.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
@@ -35,7 +35,7 @@ tmp="$(mktemp -d)"
 echo "[" >"$tmp/extensions.json"
 
 first=1
-for ext in $(cat resources/extensions/thunderbird.json | jq -c ".[]"); do
+jq -c ".[]" <resources/extensions/thunderbird.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
@@ -60,7 +60,7 @@ tmp="$(mktemp -d)"
 echo "[" >"$tmp/extensions.json"
 
 first=1
-for ext in $(cat resources/extensions/vscode.json | jq -c ".[]"); do
+jq -c ".[]" <resources/extensions/vscode.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
