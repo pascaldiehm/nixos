@@ -13,7 +13,47 @@
     fsType = "ext4";
   };
 
+  power.ups = {
+    enable = true;
+
+    ups.ups = {
+      description = "Main UPS";
+      driver = "usbhid-ups";
+      port = "auto";
+    };
+
+    upsmon = {
+      monitor.ups = {
+        type = "primary";
+        user = "pascal";
+      };
+
+      settings = {
+        NOTIFYCMD = "${helpers.ntfy "bowser-ups" "$1"}";
+
+        NOTIFYFLAG = [
+          [ "ONLINE" "SYSLOG+EXEC" ]
+          [ "ONBATT" "SYSLOG+EXEC" ]
+          [ "LOWBATT" "SYSLOG+EXEC" ]
+          [ "FSD" "SYSLOG+EXEC" ]
+          [ "SHUTDOWN" "SYSLOG+EXEC" ]
+          [ "REPLBATT" "SYSLOG+EXEC" ]
+          [ "NOCOMM" "SYSLOG+EXEC" ]
+          [ "NOPARENT" "SYSLOG+EXEC" ]
+        ];
+      };
+    };
+
+    users.pascal = {
+      actions = [ "SET" ];
+      instcmds = [ "ALL" ];
+      passwordFile = config.sops.secrets."bowser/nut".path;
+      upsmon = "primary";
+    };
+  };
+
   sops.secrets = {
+    "bowser/nut" = { };
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba".owner = "systemd-network";
   };
