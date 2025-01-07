@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       changed: "false"
+      valid: "true"
     permissions:
       contents: write
     steps:
@@ -35,13 +36,13 @@ jobs:
       - name: Verify
         if: env.changed == 'true'
         run: |
-          nix build --impure .#nixosConfigurations.pascal-pc.config.system.build.toplevel
-          nix build --impure .#nixosConfigurations.pascal-laptop.config.system.build.toplevel
-          nix build --impure .#nixosConfigurations.bowser.config.system.build.toplevel
-          nix build --impure .#nixosConfigurations.goomba.config.system.build.toplevel
+          nix build --impure .#nixosConfigurations.pascal-pc.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
+          nix build --impure .#nixosConfigurations.pascal-laptop.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
+          nix build --impure .#nixosConfigurations.bowser.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
+          nix build --impure .#nixosConfigurations.goomba.config.system.build.toplevel || echo 'valid=false' >> $GITHUB_ENV
 
       - name: Commit
-        if: env.changed == 'true'
+        if: env.changed == 'true' && env.valid == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
