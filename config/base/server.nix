@@ -21,15 +21,19 @@
     usePredictableInterfaceNames = false;
   };
 
-  services.openssh = {
-    enable = true;
-    authorizedKeysFiles = [ config.sops.secrets."${config.networking.hostName}/ssh".path ];
-    ports = [ 1970 ];
+  services = {
+    fail2ban.enable = true;
 
-    settings = {
-      AllowUsers = [ "pascal" ];
-      KbdInteractiveAuthentication = false;
-      PasswordAuthentication = false;
+    openssh = {
+      enable = true;
+      authorizedKeysFiles = [ config.sops.secrets."${config.networking.hostName}/ssh".path ];
+      ports = [ 1970 ];
+
+      settings = {
+        AllowUsers = [ "pascal" ];
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+      };
     };
   };
 
