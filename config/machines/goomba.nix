@@ -1,9 +1,9 @@
 { config, ... }: {
   sops.secrets = {
-    "wireguard/goomba/key".owner = "systemd-network";
-    "wireguard/goomba/bowser".owner = "systemd-network";
-    "wireguard/goomba/pascal-laptop".owner = "systemd-network";
-    "wireguard/goomba/pascal-phone".owner = "systemd-network";
+    "goomba/wireguard/key".owner = "systemd-network";
+    "goomba/wireguard/bowser".owner = "systemd-network";
+    "goomba/wireguard/pascal-laptop".owner = "systemd-network";
+    "goomba/wireguard/pascal-phone".owner = "systemd-network";
   };
 
   systemd.network = {
@@ -15,25 +15,25 @@
 
       wireguardConfig = {
         ListenPort = 51820;
-        PrivateKeyFile = config.sops.secrets."wireguard/goomba/key".path;
+        PrivateKeyFile = config.sops.secrets."goomba/wireguard/key".path;
       };
 
       wireguardPeers = [
         {
           AllowedIPs = [ "10.42.0.2/32" "192.168.0.0/24" ];
-          PresharedKeyFile = config.sops.secrets."wireguard/goomba/bowser".path;
+          PresharedKeyFile = config.sops.secrets."goomba/wireguard/bowser".path;
           PublicKey = "DGhb5LNEW6X+WhVhzkuUi3wpyYuDDDNq1TQDze4cCTk=";
         }
 
         {
           AllowedIPs = [ "10.42.0.3/32" ];
-          PresharedKeyFile = config.sops.secrets."wireguard/goomba/pascal-laptop".path;
+          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop".path;
           PublicKey = "NcWpXbnJs4bn9QvhIvCfM/9ocp1JYKSL4DLxDskhIRg=";
         }
 
         {
           AllowedIPs = [ "10.42.0.4/32" ];
-          PresharedKeyFile = config.sops.secrets."wireguard/goomba/pascal-phone".path;
+          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-phone".path;
           PublicKey = "dYBJTDmUJCEMB6apLXdgktkRkQrtUvi7up5SFismomI=";
         }
       ];

@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [ ./common.nix ];
-  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets."ssh/github".path;
+  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   security.sudo.wheelNeedsPassword = false;
 
   fileSystems = {
@@ -24,7 +24,7 @@
 
   services.openssh = {
     enable = true;
-    authorizedKeysFiles = [ config.sops.secrets."ssh/${config.networking.hostName}".path ];
+    authorizedKeysFiles = [ config.sops.secrets."${config.networking.hostName}/ssh".path ];
     ports = [ 1970 ];
 
     settings = {
@@ -44,9 +44,9 @@
     };
 
     secrets = {
-      ntfy.restartUnits = [ "journalwatch.service" ];
-      "ssh/${config.networking.hostName}" = { };
-      "ssh/github".owner = "pascal";
+      "${config.networking.hostName}/ntfy".restartUnits = [ "journalwatch.service" ];
+      "${config.networking.hostName}/ssh" = { };
+      github.owner = "pascal";
     };
   };
 
@@ -58,7 +58,7 @@
 
     environment = {
       NTFY_CHANNEL = "${config.networking.hostName}-journal";
-      NTFY_TOKEN_PATH = config.sops.secrets.ntfy.path;
+      NTFY_TOKEN_PATH = config.sops.secrets."${config.networking.hostName}/ntfy".path;
     };
   };
 }
