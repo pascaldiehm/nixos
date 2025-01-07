@@ -669,7 +669,7 @@
   };
 
   sops = {
-    defaultSopsFile = ../../resources/secrets/desktop/store.yml;
+    defaultSopsFile = ../../resources/secrets/desktop/store.yaml;
     gnupg.home = "/perm/etc/nixos/.gnupg";
 
     secrets = {

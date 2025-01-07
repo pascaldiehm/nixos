@@ -35,7 +35,7 @@
 
   sops = {
     age.sshKeyPaths = [ ];
-    defaultSopsFile = ../../resources/secrets/server/store.yml;
+    defaultSopsFile = ../../resources/secrets/server/store.yaml;
 
     gnupg = {
       home = "/etc/nixos/.gnupg";

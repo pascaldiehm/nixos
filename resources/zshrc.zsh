@@ -99,7 +99,7 @@ bindkey "${key[Right]}" forward-char
 # Functions
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
-function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yml; }
+function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
 function pyenv() {
   local dir="${1:-.venv}"
