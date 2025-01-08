@@ -283,6 +283,7 @@
         configFile = {
           kwinrc.Effect-overview.BorderActivate = 9;
           okularpartrc."Dlg Presentation".SlidesShowProgress = false;
+          plasmashellrc."Notification Messages".klipperClearHistoryAskAgain = false;
           systemsettingsrc.systemsettings_sidebar_mode.HighlightNonDefaultSettings = true;
 
           dolphinrc = {
