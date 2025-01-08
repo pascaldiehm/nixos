@@ -4,23 +4,6 @@
   hardware = {
     graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
     sane.enable = true;
-
-    printers = {
-      ensureDefaultPrinter = "Brother_DCP-J1050DW";
-
-      ensurePrinters = [{
-        description = "Brother DCP-J1050DW";
-        deviceUri = "ipp://localhost:60000/ipp/print";
-        model = "everywhere";
-        name = "Brother_DCP-J1050DW";
-
-        ppdOptions = {
-          ColorMode = "Gray";
-          Duplex = "DuplexNoTumble";
-          PageSize = "A4";
-        };
-      }];
-    };
   };
 
   home-manager.users.pascal = {
@@ -57,11 +40,26 @@
     printing.enable = true;
   };
 
-  systemd.services.disableAutoMute = {
-    after = [ "sound.target" ];
-    description = "Disable auto-mute";
-    script = "${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "sound.target" ];
+  systemd.services = {
+    disableAutoMute = {
+      after = [ "sound.target" ];
+      description = "Disable auto-mute";
+      script = "${pkgs.alsa-utils}/bin/amixer -c 2 sset 'Auto-Mute Mode' Disabled";
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "sound.target" ];
+    };
+
+    ensurePrinter = {
+      after = [ "cups.service" ];
+      description = "Add printer without failing if it is not connected";
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "cups.service" ];
+
+      script = ''
+        ${pkgs.cups}/bin/lpadmin -D 'Brother DCP-J1050DW' -m everywhere -o 'ColorMode=Gray' -o 'Duplex=DuplexNoTumble' -o 'PageSize=A4' -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
+        ${pkgs.cups}/bin/lpadmin -d Brother_DCP-J1050DW
+        systemctl stop cups.service
+      '';
+    };
   };
 }
