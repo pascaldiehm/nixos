@@ -20,6 +20,14 @@
   services = {
     fail2ban.enable = true;
 
+    cron = {
+      enable = true;
+
+      systemCronJobs = [
+        "0 3 * * * pascal rm $HOME/.config/zsh/.zsh_history"
+      ];
+    };
+
     openssh = {
       enable = true;
       authorizedKeysFiles = [ config.sops.secrets."${config.networking.hostName}/ssh".path ];
