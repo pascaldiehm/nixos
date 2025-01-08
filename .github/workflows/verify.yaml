@@ -11,7 +11,11 @@ jobs:
       - uses: cachix/install-nix-action@master
 
       - name: Check
-        run: nix flake check --impure --option keep-going true
+        run: |
+          sudo mkdir -p /etc/nixos
+          echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
+
+          nix flake check --impure --option keep-going true
 
       - name: Lint
         run: nix run nixpkgs#statix -- check
