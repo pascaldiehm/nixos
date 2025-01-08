@@ -112,5 +112,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() { docker compose --project-directory "~/docker/$1" ${@:2}; }
 
-  compdef "_arguments ':type:($(echo $(find ~/docker -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)))'" service
+  function _service() { _arguments ":service:($([ -d ~/docker ] && find ~/docker -mindepth 1 -maxdepth 1 -type d -exec basename {} \;))"; }
+  compdef _service service
 fi
