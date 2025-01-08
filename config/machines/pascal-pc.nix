@@ -4,6 +4,23 @@
   hardware = {
     graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
     sane.enable = true;
+
+    printers = {
+      ensureDefaultPrinter = "Brother_DCP-J1050DW";
+
+      ensurePrinters = [{
+        description = "Brother DCP-J1050DW";
+        deviceUri = "ipp://localhost:60000/ipp/print";
+        model = "everywhere";
+        name = "Brother_DCP-J1050DW";
+
+        ppdOptions = {
+          ColorMode = "Gray";
+          Duplex = "DuplexNoTumble";
+          PageSize = "A4";
+        };
+      }];
+    };
   };
 
   home-manager.users.pascal = {
