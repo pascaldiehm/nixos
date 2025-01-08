@@ -2,17 +2,9 @@
   imports = [ ./common.nix ];
   security.sudo.wheelNeedsPassword = false;
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-partlabel/ESP";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-partlabel/nixos";
+    fsType = "ext4";
   };
 
   home-manager.users.pascal.programs = {

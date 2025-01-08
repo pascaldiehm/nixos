@@ -51,12 +51,6 @@
       options = [ "subvol=root" ];
     };
 
-    "/boot" = {
-      device = "/dev/disk/by-partlabel/ESP";
-      fsType = "vfat";
-      options = [ "dmask=0077" "fmask=0077" ];
-    };
-
     "/nix" = {
       device = "/dev/mapper/nixos";
       fsType = "btrfs";
@@ -643,7 +637,6 @@
 
   services = {
     desktopManager.plasma6.enable = true;
-    fwupd.enable = true;
     pcscd.enable = true;
 
     displayManager = {

@@ -1,7 +1,6 @@
 { config, pkgs, nixpkgs, helpers, ... }: {
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
-  services.xserver.xkb.layout = "de";
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
 
@@ -17,6 +16,12 @@
   environment.etc = {
     hosts.mode = "0644";
     "nix/inputs/nixpkgs".source = "${nixpkgs}";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-partlabel/ESP";
+    fsType = "vfat";
+    options = [ "dmask=0077" "fmask=0077" ];
   };
 
   home-manager = {
@@ -193,6 +198,11 @@
   programs = {
     nano.enable = false;
     zsh.enable = true;
+  };
+
+  services = {
+    fwupd.enable = true;
+    xserver.xkb.layout = "de";
   };
 
   sops.secrets = {
