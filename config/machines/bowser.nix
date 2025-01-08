@@ -1,4 +1,4 @@
-{ config, pkgs, helpers, ... }: {
+{ config, helpers, ... }: {
   boot.swraid = {
     enable = true;
 

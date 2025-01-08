@@ -1,4 +1,4 @@
-{ config, helpers, ... }: {
+{ config, ... }: {
   home-manager.users.pascal = {
     accounts.email.accounts.university = {
       address = "pascal.diehm@stud-mail.uni-wuerzburg.de";

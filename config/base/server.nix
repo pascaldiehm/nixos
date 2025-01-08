@@ -1,4 +1,4 @@
-{ config, pkgs, helpers, ... }: {
+{ config, helpers, ... }: {
   imports = [ ./common.nix ];
   security.sudo.wheelNeedsPassword = false;
 
