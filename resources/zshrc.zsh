@@ -54,14 +54,8 @@ function _prompt_git() {
   fi
 }
 
-function _prompt_pyenv() {
-  [ -n "$VIRTUAL_ENV" ] && echo -n " %F{5}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
-}
-
 setopt PROMPT_SUBST
-export VIRTUAL_ENV_DISABLE_PROMPT=1
 export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
-export RPROMPT='$(_prompt_pyenv)'
 
 # Keybindings
 bindkey -rp ''
