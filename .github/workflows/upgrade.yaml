@@ -24,19 +24,18 @@ jobs:
       - name: Detect changes
         run: '[ -n "$(git status --porcelain)" ] && echo "changed=true" >> "$GITHUB_ENV"'
 
-      - name: Prepare environment
+      - name: Verify
         if: env.changed == 'true'
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
-      - name: Verify
-        if: env.changed == 'true'
-        run: |
-          nix build --impure .#nixosConfigurations.pascal-pc.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
-          nix build --impure .#nixosConfigurations.pascal-laptop.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
-          nix build --impure .#nixosConfigurations.bowser.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
-          nix build --impure .#nixosConfigurations.goomba.config.system.build.toplevel || echo 'valid=false' >> "$GITHUB_ENV"
+          for machine in bowser goomba pascal-laptop pascal-pc; do
+            if ! timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel"; then
+              echo 'valid=false' >> "$GITHUB_ENV"
+              break
+            fi
+          done
 
       - name: Commit
         if: env.changed == 'true' && env.valid == 'true'
