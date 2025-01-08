@@ -123,7 +123,6 @@
             sp = "stash pop";
 
             sh = "show";
-            shh = "show @";
 
             t = "tag";
             td = "tag --delete";
