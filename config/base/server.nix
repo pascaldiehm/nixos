@@ -52,7 +52,7 @@
 
     secrets = {
       "${config.networking.hostName}/ntfy".restartUnits = [ "journalwatch.service" ];
-      "${config.networking.hostName}/ssh" = { };
+      "${config.networking.hostName}/ssh".owner = "pascal";
       github.owner = "pascal";
     };
   };
