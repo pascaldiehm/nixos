@@ -100,8 +100,8 @@ if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
 fi
 
 # Rebuild system
-git rev-parse HEAD | sudo tee /etc/nixos/commit
 sudo nixos-rebuild --impure --flake . switch
+git rev-parse HEAD | sudo tee /etc/nixos/commit
 
 [ -n "$stashed" ] && git stash pop
 popd >/dev/null
