@@ -1,5 +1,4 @@
 name: Upgrade
-
 on:
   schedule:
     - cron: "0 3 * * *"
@@ -8,11 +7,14 @@ jobs:
   upgrade:
     name: Upgrade
     runs-on: ubuntu-latest
+
     env:
       changed: "false"
       valid: "true"
+
     permissions:
       contents: write
+
     steps:
       - uses: jlumbroso/free-disk-space@main
       - uses: actions/checkout@main
