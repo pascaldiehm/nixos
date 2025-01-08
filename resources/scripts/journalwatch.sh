@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-PAT_SSHD_PASSWORD='^(Accepted|Failed) password for (\w+) from (\S+) port ([0-9]+) ssh2$'
-PAT_SSHD_PUBLICKEY='^(Accepted|Failed) publickey for (\w+) from (\S+) port ([0-9]+) ssh2: (\S+) SHA256:(\S+)$'
-PAT_SSHD_USER='^Invalid user (\w+) from (\S+) port ([0-9]+)$'
-PAT_SYSTEMD_SESSION='^New session ([0-9]+) of user (\w+).$'
-PAT_SUDO_COMMAND='^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$'
+PAT_SSHD_PASSWORD="^(Accepted|Failed) password for (\w+) from (\S+) port ([0-9]+) ssh2$"
+PAT_SSHD_PUBLICKEY="^(Accepted|Failed) publickey for (\w+) from (\S+) port ([0-9]+) ssh2: (\S+) SHA256:(\S+)$"
+PAT_SSHD_USER="^Invalid user (\w+) from (\S+) port ([0-9]+)$"
+PAT_SYSTEMD_SESSION="^New session ([0-9]+) of user (\w+).$"
+PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
 
 journalctl -f | while read -r line; do
-  service=$(echo "$line" | cut -d '[' -f 1 | cut -d ' ' -f 5)
-  message=$(echo "$line" | cut -d ':' -f 4- | tail -c +2)
+  service="$(echo "$line" | cut -d "[" -f 1 | cut -d " " -f 5)"
+  message="$(echo "$line" | cut -d ":" -f 4- | tail -c +2)"
 
   if [[ "$service" == "sshd" ]]; then
     if echo "$message" | grep -q -E "$PAT_SSHD_PASSWORD"; then

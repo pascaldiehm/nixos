@@ -64,7 +64,7 @@
 
       netdevConfig = {
         Kind = "wireguard";
-        Name = "wg";
+        Name = "wg0";
       };
 
       wireguardPeers = [{
@@ -86,7 +86,7 @@
 
       "50-wg" = {
         address = [ "10.42.0.2/24" ];
-        matchConfig.Name = "wg";
+        matchConfig.Name = "wg0";
         networkConfig.IPMasquerade = "ipv4";
       };
     };

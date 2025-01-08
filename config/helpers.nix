@@ -7,8 +7,8 @@
       (lib.importJSON path));
 
     ntfy = channel: message: pkgs.writeShellScript "ntfy" ''
-      TOKEN="$(cat ${config.sops.secrets."${config.networking.hostName}/ntfy".path})"
-      ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" 'https://ntfy.pdiehm.dev/${config.networking.hostName}-${channel}'
+      TOKEN="$(cat "${config.sops.secrets."${config.system.name}/ntfy".path}")"
+      ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${config.system.name}-${channel}"
     '';
   };
 }

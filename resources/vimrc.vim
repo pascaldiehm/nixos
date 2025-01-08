@@ -11,4 +11,4 @@ set smartcase
 set tabstop=2
 set viminfo=""
 
-autocmd FileType * call timer_start(1, { -> execute('set shiftwidth=2 tabstop=2') })
+autocmd FileType * call timer_start(1, { -> execute("set shiftwidth=2 tabstop=2") })

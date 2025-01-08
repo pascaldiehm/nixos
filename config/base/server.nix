@@ -22,15 +22,12 @@
 
     cron = {
       enable = true;
-
-      systemCronJobs = [
-        "0 3 * * * pascal rm $HOME/.config/zsh/.zsh_history"
-      ];
+      systemCronJobs = [ "0 3 * * * pascal rm '${config.home-manager.users.pascal.programs.zsh.history.path}'" ];
     };
 
     openssh = {
       enable = true;
-      authorizedKeysFiles = [ config.sops.secrets."${config.networking.hostName}/ssh".path ];
+      authorizedKeysFiles = [ config.sops.secrets."${config.system.name}/ssh".path ];
       ports = [ 1970 ];
 
       settings = {
@@ -51,8 +48,8 @@
     };
 
     secrets = {
-      "${config.networking.hostName}/ntfy".restartUnits = [ "journalwatch.service" ];
-      "${config.networking.hostName}/ssh".owner = "pascal";
+      "${config.system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
+      "${config.system.name}/ssh".owner = "pascal";
       github.owner = "pascal";
     };
   };

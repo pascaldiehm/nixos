@@ -65,15 +65,15 @@
           src = ./bin;
 
           installPhase = ''
-            install -Dt $out/bin ${name}.sh
-            wrapProgram $out/bin/${name}.sh --prefix PATH : ${pkgs.lib.makeBinPath deps}
+            install -Dt $out/bin "${name}.sh"
+            wrapProgram "$out/bin/${name}.sh" --prefix PATH : "${pkgs.lib.makeBinPath deps}"
           '';
         };
       in
       mkScripts {
         install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
         update = [ pkgs.git ];
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
       };
   };
 }

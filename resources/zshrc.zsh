@@ -24,9 +24,9 @@ function _prompt_git() {
 
   # Commits
   if [ -n "$(git remote show)" ] && [ "$branch" != "HEAD" ]; then
-    if git rev-parse @{u} &>/dev/null; then
-      local ahead="$(git rev-list @{u}..)"
-      local behind="$(git rev-list ..@{u})"
+    if git rev-parse "@{u}" &>/dev/null; then
+      local ahead="$(git rev-list "@{u}..")"
+      local behind="$(git rev-list "..@{u}")"
 
       if [ -n "$ahead" ] && [ -n "$behind" ]; then
         echo -n " %F{6}\U296F%f"
@@ -59,30 +59,30 @@ export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
 [ "$NIXOS_MACHINE_TYPE" = "server" ] && export RPROMPT='%F{14}%n@%M%f'
 
 # Keybindings
-bindkey -rp ''
-bindkey -R ' '-'~' self-insert
-bindkey -R '\M-^@'-'\M-^?' self-insert
+bindkey -rp ""
+bindkey -R " "-"~" self-insert
+bindkey -R "\M-^@"-"\M-^?" self-insert
 
-bindkey '^M' accept-line                         # Enter
-bindkey '^I' expand-or-complete                  # Tab
-bindkey '^[[C' forward-char                      # Right
-bindkey '^[[1;5C' forward-word                   # Ctrl+Right
-bindkey '^[[D' backward-char                     # Left
-bindkey '^[[1;5D' backward-word                  # Ctrl+Left
-bindkey '^[[H' beginning-of-line                 # Home
-bindkey '^[[F' end-of-line                       # End
-bindkey '^[[A' up-line-or-history                # Up
-bindkey '^[[B' down-line-or-history              # Down
-bindkey '^?' backward-delete-char                # Backspace
-bindkey '^H' backward-delete-word                # Ctrl+Backspace
-bindkey '^[[3~' delete-char                      # Delete
-bindkey '^[[3;5~' delete-word                    # Ctrl+Delete
-bindkey '^V' quoted-insert                       # Ctrl+V
-bindkey '^[[200~' bracketed-paste                # Ctrl+Shift+V
-bindkey '^R' history-incremental-search-backward # Ctrl+R
-bindkey '^L' clear-screen                        # Ctrl+L
-bindkey '^Z' undo                                # Ctrl+Z
-bindkey '^Y' redo                                # Ctrl+Y
+bindkey "^M" accept-line                         # Enter
+bindkey "^I" expand-or-complete                  # Tab
+bindkey "^[[C" forward-char                      # Right
+bindkey "^[[1;5C" forward-word                   # Ctrl+Right
+bindkey "^[[D" backward-char                     # Left
+bindkey "^[[1;5D" backward-word                  # Ctrl+Left
+bindkey "^[[H" beginning-of-line                 # Home
+bindkey "^[[F" end-of-line                       # End
+bindkey "^[[A" up-line-or-history                # Up
+bindkey "^[[B" down-line-or-history              # Down
+bindkey "^?" backward-delete-char                # Backspace
+bindkey "^H" backward-delete-word                # Ctrl+Backspace
+bindkey "^[[3~" delete-char                      # Delete
+bindkey "^[[3;5~" delete-word                    # Ctrl+Delete
+bindkey "^V" quoted-insert                       # Ctrl+V
+bindkey "^[[200~" bracketed-paste                # Ctrl+Shift+V
+bindkey "^R" history-incremental-search-backward # Ctrl+R
+bindkey "^L" clear-screen                        # Ctrl+L
+bindkey "^Z" undo                                # Ctrl+Z
+bindkey "^Y" redo                                # Ctrl+Y
 
 bindkey "${key[Home]}" beginning-of-line
 bindkey "${key[End]}" end-of-line
@@ -92,7 +92,7 @@ bindkey "${key[Left]}" backward-char
 bindkey "${key[Right]}" forward-char
 
 # Aliases and functions
-alias l='ls -alh'
+alias l="ls -alh"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
@@ -103,15 +103,16 @@ compdef _nothing nixos-test
 compdef _nothing nixos-update
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
-  alias open='xdg-open'
-  alias py='python3'
-  alias vsc='codium'
+  alias open="xdg-open"
+  alias py="python3"
+  alias vsc="codium"
 
-  function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
+  function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops "~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml"; }
 
-  compdef "_arguments ':type:($(echo $(ls ~/.config/nixos/resources/secrets)))'" nixos-secrets
+  function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
+  compdef _nixos-secrets nixos-secrets
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
-  function service() { docker compose --project-directory "~/docker/$1" ${@:2}; }
+  function service() { docker compose --project-directory "~/docker/$1" "${@:2}"; }
 
   function _service() { _arguments ":service:($([ -d ~/docker ] && find ~/docker -mindepth 1 -maxdepth 1 -type d -exec basename {} \;))"; }
   compdef _service service

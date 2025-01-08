@@ -12,7 +12,7 @@
     netdevs."50-wg" = {
       netdevConfig = {
         Kind = "wireguard";
-        Name = "wg";
+        Name = "wg0";
       };
 
       wireguardConfig = {
@@ -43,7 +43,7 @@
 
     networks."50-wg" = {
       address = [ "10.42.0.1/24" ];
-      matchConfig.Name = "wg";
+      matchConfig.Name = "wg0";
       networkConfig.IPv4Forwarding = true;
     };
   };

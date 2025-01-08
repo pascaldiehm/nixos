@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, helpers, ... }: {
+{ config, lib, pkgs, nixpkgs, helpers, ... }: {
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
   system.stateVersion = "24.11";
@@ -34,16 +34,10 @@
 
       home = {
         inherit (config.system) stateVersion;
-        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find $HOME -name '*.hm-bak' -exec rm -rf {} \\;";
-        homeDirectory = "/home/pascal";
+        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf {} \\;";
+        homeDirectory = config.users.users.pascal.home;
+        packages = [ pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
         username = "pascal";
-
-        packages = [
-          pkgs.jq
-          pkgs.unzip
-          pkgs.wireguard-tools
-          pkgs.zip
-        ];
       };
 
       programs = {
@@ -53,7 +47,7 @@
         git = {
           enable = true;
           userEmail = "pdiehm8@gmail.com";
-          userName = "Pascal Diehm";
+          userName = config.users.users.pascal.description;
 
           aliases = {
             a = "add";
@@ -167,8 +161,8 @@
         zsh = {
           enable = true;
           autosuggestion.enable = true;
-          dotDir = ".config/zsh";
-          history.path = "$ZDOTDIR/.zsh_history";
+          dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
+          history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           plugins = [{ name = "zsh-completions"; src = pkgs.zsh-completions; }];
           syntaxHighlighting.enable = true;
@@ -202,7 +196,7 @@
 
   services = {
     fwupd.enable = true;
-    xserver.xkb.layout = "de";
+    xserver.xkb.layout = config.console.keyMap;
   };
 
   sops.secrets = {
@@ -212,7 +206,7 @@
 
   system.activationScripts.addSecretHosts = {
     deps = [ "etc" "setupSecrets" ];
-    text = "cat ${config.sops.secrets.hosts.path} >> /etc/hosts";
+    text = "cat '${config.sops.secrets.hosts.path}' >> /etc/hosts";
   };
 
   users.users.pascal = {

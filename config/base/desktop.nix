@@ -12,18 +12,13 @@
     plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate pkgs.kdePackages.krdp ];
 
     persistence."/perm" = {
+      directories = [ "/etc/nixos" "/var/lib/nixos" ];
+      files = [ "/etc/machine-id" ];
       hideMounts = true;
 
-      directories = [
-        "/etc/nixos"
-        "/var/lib/nixos"
-      ];
-
-      files = [
-        "/etc/machine-id"
-      ];
-
       users.pascal = {
+        files = [ ".config/VSCodium/User/globalStorage/state.vscdb" ".config/kwinoutputconfig.json" ];
+
         directories = [
           ".config/kdeconnect"
           ".config/nixos"
@@ -34,11 +29,6 @@
           "Documents"
           { directory = ".local/share/gnupg"; mode = "0700"; }
           { directory = ".ssh"; mode = "0700"; }
-        ];
-
-        files = [
-          ".config/VSCodium/User/globalStorage/state.vscdb"
-          ".config/kwinoutputconfig.json"
         ];
       };
     };
@@ -70,7 +60,7 @@
       address = "pdiehm8@gmail.com";
       flavor = "gmail.com";
       primary = true;
-      realName = "Pascal Diehm";
+      realName = config.users.users.pascal.description;
       thunderbird.enable = true;
 
       gpg = {
@@ -351,6 +341,7 @@
 
             {
               name = "org.kde.plasma.icontasks";
+
               config.General.launchers = [
                 "applications:org.kde.dolphin.desktop"
                 "applications:firefox.desktop"
@@ -660,7 +651,7 @@
     gnupg.home = "/perm/etc/nixos/.gnupg";
 
     secrets = {
-      network.restartUnits = [ "NetworkManager-ensure-profiles.service" "NetworkManager.service" ];
+      network.restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
       "ssh/bowser".owner = "pascal";
       "ssh/github".owner = "pascal";
       "ssh/goomba".owner = "pascal";
@@ -674,6 +665,6 @@
 
   system.activationScripts.linkProfilePicture = ''
     mkdir -p /var/lib/AccountsService/icons
-    ln -sf ${../../resources/profile.png} /var/lib/AccountsService/icons/pascal
+    ln -sf "${../../resources/profile.png}" /var/lib/AccountsService/icons/pascal
   '';
 }

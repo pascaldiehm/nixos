@@ -2,7 +2,7 @@
   home-manager.users.pascal = {
     accounts.email.accounts.university = {
       address = "pascal.diehm@stud-mail.uni-wuerzburg.de";
-      realName = "Pascal Diehm";
+      realName = config.users.users.pascal.description;
       thunderbird.enable = true;
       userName = "s457719";
 
@@ -84,7 +84,7 @@
   sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network".restartUnits = [ "NetworkManager-ensure-profiles.service" "NetworkManager.service" ];
+    "university/eduroam/network".restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
     "university/eduroam/private-key" = { };
     "university/gitlab-ssh-key".owner = "pascal";
   };
