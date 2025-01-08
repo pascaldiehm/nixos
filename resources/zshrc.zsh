@@ -20,7 +20,7 @@ function _prompt_git() {
   fi
 
   # Stash
-  [ -n "$(git stash list)" ] && echo -n " %F{4}\U2026%f"
+  [ -n "$(git stash list)" ] && echo -n " %F{6}\U2026%f"
 
   # Commits
   if [ -n "$(git remote show)" ] && [ "$branch" != "HEAD" ]; then
@@ -50,12 +50,13 @@ function _prompt_git() {
   elif [ -f "$git_dir/rebase-merge/interactive" ]; then
     local step="$(cat "$git_dir/rebase-merge/msgnum")"
     local total="$(cat "$git_dir/rebase-merge/end")"
-    echo -n " %F{1}(rebase)%f %F{2}$step%F{8}/%F{2}$total%f"
+    echo -n " %F{1}(rebase)%f %F{6}$step%F{8}/%F{6}$total%f"
   fi
 }
 
 setopt PROMPT_SUBST
 export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
+[ "$NIXOS_MACHINE_TYPE" = "server" ] && export RPROMPT='%F{14}%n@%M%f'
 
 # Keybindings
 bindkey -rp ''
