@@ -28,9 +28,9 @@
       xdg.enable = true;
 
       home = {
+        inherit (config.system) stateVersion;
         activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find $HOME -name '*.hm-bak' -exec rm -rf {} \\;";
         homeDirectory = "/home/pascal";
-        stateVersion = config.system.stateVersion;
         username = "pascal";
 
         packages = [

@@ -1,0 +1,17 @@
+name: Verify
+on: push
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@main
+      - uses: cachix/install-nix-action@master
+
+      - name: Check
+        run: nix flake check --impure --option keep-going true
+
+      - name: Lint
+        run: nix run nixpkgs#statix -- check

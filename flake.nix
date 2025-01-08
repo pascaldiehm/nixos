@@ -1,21 +1,21 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs;
-    impermanence.url = github:nix-community/impermanence;
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    impermanence.url = "github:nix-community/impermanence";
 
     home-manager = {
-      url = github:nix-community/home-manager;
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     plasma-manager = {
-      url = github:nix-community/plasma-manager;
+      url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
 
     sops-nix = {
-      url = github:Mic92/sops-nix;
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
