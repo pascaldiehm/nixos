@@ -77,9 +77,9 @@
             cob = "checkout -b";
 
             d = "diff";
-            dm = "rev-list --left-right --oneline main...";
+            dm = "rev-list --left-right --oneline '...main'";
             ds = "diff --staged";
-            du = "rev-list --left-right --oneline @{u}...";
+            du = "rev-list --left-right --oneline '...@{u}'";
 
             f = "fetch";
 
@@ -109,7 +109,7 @@
 
             rt = "reset";
             rth = "reset --hard";
-            rtu = "reset --hard @{u}";
+            rtu = "reset --hard '@{u}'";
 
             rv = "revert";
             rva = "revert --abort";
