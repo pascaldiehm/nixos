@@ -644,6 +644,11 @@
       alsa.enable = true;
       pulse.enable = true;
     };
+
+    udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.systemd}/bin/loginctl unlock-sessions"
+      ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
+    '';
   };
 
   sops = {
