@@ -161,6 +161,7 @@
         zsh = {
           enable = true;
           autosuggestion.enable = true;
+          completionInit = "autoload -U compinit && compinit -d '${config.home-manager.users.pascal.xdg.stateHome}/.zcompdump'";
           dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
           history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
