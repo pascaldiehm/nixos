@@ -1,6 +1,6 @@
 { config, lib, pkgs, helpers, ... }: {
-  imports = [ ./common.nix ../extra/university.nix ];
   fonts.packages = [ pkgs.fira-code ];
+  imports = [ ../extra/university.nix ];
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
   boot.initrd = {

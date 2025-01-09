@@ -35,6 +35,7 @@
 
             # Modules
             /etc/nixos/hardware.nix
+            config/base/common.nix
             config/base/${type}.nix
             config/machines/${name}.nix
 

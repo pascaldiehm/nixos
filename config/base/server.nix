@@ -1,5 +1,4 @@
 { config, helpers, ... }: {
-  imports = [ ./common.nix ];
   security.sudo.wheelNeedsPassword = false;
 
   fileSystems."/" = {
