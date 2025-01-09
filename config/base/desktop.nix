@@ -500,6 +500,7 @@
           "explorer.compactFolders" = false;
           "extensions.experimental.affinity" = { "vscodevim.vim" = 1; };
           "extensions.ignoreRecommendations" = true;
+          "files.enableTrash" = false;
           "files.insertFinalNewline" = true;
           "files.trimFinalNewlines" = true;
           "files.trimTrailingWhitespace" = true;
