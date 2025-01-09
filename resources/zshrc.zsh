@@ -107,7 +107,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias py="python3"
   alias vsc="codium"
 
-  function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops "~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml"; }
+  function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
   function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
   compdef _nixos-secrets nixos-secrets
