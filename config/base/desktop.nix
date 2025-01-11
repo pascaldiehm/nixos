@@ -92,6 +92,7 @@
         pkgs.cmake
         pkgs.cryptsetup
         pkgs.exfat
+        pkgs.ffmpeg
         pkgs.gcc
         pkgs.gdb
         pkgs.gnumake
