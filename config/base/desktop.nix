@@ -499,7 +499,7 @@
           "editor.linkedEditing" = true;
           "editor.tabSize" = 2;
           "explorer.compactFolders" = false;
-          "extensions.experimental.affinity" = { "vscodevim.vim" = 1; };
+          "extensions.experimental.affinity"."vscode.vim" = 1;
           "extensions.ignoreRecommendations" = true;
           "files.enableTrash" = false;
           "files.insertFinalNewline" = true;
@@ -508,7 +508,7 @@
           "terminal.integrated.persistentSessionReviveProcess" = "never";
           "terminal.integrated.showExitAlert" = false;
           "update.showReleaseNotes" = false;
-          "workbench.editorAssociations" = { "*.pdf" = "latex-workshop-pdf-hook"; };
+          "workbench.editorAssociations"."*.pdf" = "latex-workshop-pdf-hook";
           "workbench.iconTheme" = "material-icon-theme";
           "workbench.startupEditor" = "none";
 
@@ -542,6 +542,11 @@
           # LaTeX
           "latex-workshop.latex.autoClean.run" = "onSucceeded";
 
+          # Nix
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "${pkgs.nil}/bin/nil";
+          "nix.serverSettings".nil.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
+
           # PHP
           "intelephense.format.braces" = "k&r";
 
@@ -562,7 +567,6 @@
           "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
           "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
           "[typescriptreact]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-          "nix.formatterPath" = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
           "shellformat.path" = "${pkgs.shfmt}/bin/shfmt";
         };
       };
