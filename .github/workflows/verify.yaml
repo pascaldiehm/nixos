@@ -7,6 +7,9 @@ jobs:
     name: Verify
     runs-on: ubuntu-latest
 
+    env:
+      failed: "false"
+
     steps:
       - uses: actions/checkout@main
       - uses: cachix/install-nix-action@master
@@ -16,7 +19,19 @@ jobs:
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
-          nix flake check --impure --option keep-going true
+          nix flake check --impure --option keep-going true || echo "failed=true" >> "$GITHUB_ENV"
 
       - name: Lint
-        run: nix run nixpkgs#statix -- check
+        run: |
+          find . -name "*.nix" | while read -r file; do
+            diagnostics="$(nix run nixpkgs#nil -- diagnostics "$file")"
+
+            if [ -n "$diagnostics" ]; then
+              echo "$diagnostics"
+              echo "failed=true" >> "$GITHUB_ENV"
+            fi
+          done
+
+      - name: Fail
+        if: env.failed == 'true'
+        run: exit 1
