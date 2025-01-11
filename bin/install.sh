@@ -16,7 +16,7 @@ while [ "$TYPE" != "D" ] && [ "$TYPE" != "S" ]; do
   echo "D) Desktop"
   echo "S) Server"
   echo
-  read -p "> " -N 1 TYPE
+  read -r -p "> " -N 1 TYPE
 done
 
 MACHINE=""
@@ -24,7 +24,7 @@ while [ -z "$MACHINE" ]; do
   clear
   echo "Which machine should I install?"
   echo
-  read -p "> " MACHINE
+  read -r -p "> " MACHINE
 done
 
 DEV=""
@@ -34,7 +34,7 @@ while [ ! -b "$DEV" ]; do
   echo
   lsblk
   echo
-  read -p "> " DEV
+  read -r -p "> " DEV
   [ -b "$DEV" ] || DEV="/dev/$DEV"
 done
 
@@ -120,15 +120,18 @@ elif [ "$TYPE" = "S" ]; then
 fi
 
 echo "Preparing GnuPG..."
-mkdir -p -m 700 ~/.gnupg
+mkdir -p ~/.gnupg
+chmod 700 ~/.gnupg
 echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 
 echo "Setting up GnuPG..."
 if [ "$TYPE" = "D" ]; then
-  mkdir -p -m 700 /mnt/perm/etc/nixos/.gnupg
+  mkdir -p /mnt/perm/etc/nixos/.gnupg
+  chmod 700 /mnt/perm/etc/nixos/.gnupg
   echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 elif [ "$TYPE" = "S" ]; then
-  mkdir -p -m 700 /mnt/etc/nixos/.gnupg
+  mkdir -p /mnt/etc/nixos/.gnupg
+  chmod 700 /mnt/etc/nixos/.gnupg
   echo "disable-scdaemon" >/mnt/etc/nixos/.gnupg/gpg-agent.conf
 fi
 

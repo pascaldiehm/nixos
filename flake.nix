@@ -21,6 +21,28 @@
   };
 
   outputs = { nixpkgs, home-manager, impermanence, plasma-manager, sops-nix, ... }: {
+    apps.x86_64-linux =
+      let
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+        mkScript = name: runtimeInputs: pkgs.writeShellApplication {
+          inherit name runtimeInputs;
+          text = builtins.readFile bin/${name}.sh;
+        };
+
+        mkScripts = set: builtins.mapAttrs
+          (name: value: {
+            program = "${mkScript name value}/bin/${name}";
+            type = "app";
+          })
+          set;
+      in
+      mkScripts {
+        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
+        update = [ pkgs.git ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
+      };
+
     nixosConfigurations =
       let
         mkSystems = set: builtins.mapAttrs (name: value: mkSystem name set.${name}) set;
@@ -53,28 +75,6 @@
         goomba = "server";
         pascal-laptop = "desktop";
         pascal-pc = "desktop";
-      };
-
-    packages.x86_64-linux =
-      let
-        mkScripts = set: builtins.mapAttrs (name: value: mkScript name set.${name}) set;
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-
-        mkScript = name: deps: pkgs.stdenv.mkDerivation {
-          name = "${name}.sh";
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          src = ./bin;
-
-          installPhase = ''
-            install -Dt $out/bin "${name}.sh"
-            wrapProgram "$out/bin/${name}.sh" --prefix PATH : "${pkgs.lib.makeBinPath deps}"
-          '';
-        };
-      in
-      mkScripts {
-        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
-        update = [ pkgs.git ];
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
       };
   };
 }
