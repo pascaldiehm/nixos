@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      changed: "false"
+      changed: "true"
       valid: "true"
 
     permissions:
@@ -25,7 +25,7 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        run: '[ -n "$(git status --porcelain)" ] && echo "changed=true" >> "$GITHUB_ENV"'
+        run: '[ -n "$(git status --porcelain)" ] || echo "changed=false" >> "$GITHUB_ENV"'
 
       - name: Verify
         if: env.changed == 'true'
