@@ -21,15 +21,23 @@ jobs:
 
           nix flake check --impure --option keep-going true || echo "failed=true" >> "$GITHUB_ENV"
 
-      - name: Lint
+      - name: Lint Nix
         run: |
           find . -name "*.nix" | while read -r file; do
+            echo "Checking $file"
             diagnostics="$(nix run nixpkgs#nil -- diagnostics "$file")"
 
             if [ -n "$diagnostics" ]; then
               echo "$diagnostics"
               echo "failed=true" >> "$GITHUB_ENV"
             fi
+          done
+
+      - name: Lint Shell
+        run: |
+          find . -name "*.sh" | while read -r file; do
+            echo "Checking $file"
+            nix run nixpkgs#shellcheck -- "$file" || echo "failed=true" >> "$GITHUB_ENV"
           done
 
       - name: Fail
