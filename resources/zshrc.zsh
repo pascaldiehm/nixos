@@ -87,9 +87,9 @@ bindkey "^Z" undo                                # Ctrl+Z
 bindkey "^Y" redo                                # Ctrl+Y
 
 # Aliases and functions
-alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias l="ls -alh"
+alias ls="ls --color=auto"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
