@@ -53,7 +53,7 @@ jobs:
           _failed="false"
           find . -name "*.sh" | while read -r file; do
             echo "Checking $file"
-            nix run nixpkgs#shellcheck -- "$file" || echo _failed="true"
+            nix run nixpkgs#shellcheck -- "$file" || _failed="true"
           done
 
           if [ "$_failed" = "true" ]; then
