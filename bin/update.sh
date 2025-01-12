@@ -2,7 +2,7 @@
 
 set -e
 pushd ~/.config/nixos >/dev/null
-stashed=0
+stashed="false"
 
 # Make sure the working directory is clean
 if [ -n "$(git status --porcelain)" ]; then
@@ -17,7 +17,7 @@ if [ -n "$(git status --porcelain)" ]; then
   echo
 
   if [ "$res" = "S" ]; then
-    stashed=1
+    stashed="true"
     git stash push --include-untracked
   elif [ "$res" = "R" ]; then
     git restore .
@@ -48,7 +48,7 @@ if [ -n "$ahead" ] && [ -n "$behind" ]; then
   elif [ "$res" = "P" ]; then
     git push --force
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = 1 ] && git stash pop
+    [ "$stashed" = "true" ] && git stash pop
     exit 1
   fi
 elif [ -n "$ahead" ]; then
@@ -68,7 +68,7 @@ elif [ -n "$ahead" ]; then
   elif [ "$res" = "R" ]; then
     git reset --hard "@{u}"
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = 1 ] && git stash pop
+    [ "$stashed" = "true" ] && git stash pop
     exit 1
   fi
 elif [ -n "$behind" ]; then
@@ -85,7 +85,7 @@ elif [ -n "$behind" ]; then
   if [ "$res" = "P" ]; then
     git pull
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = 1 ] && git stash pop
+    [ "$stashed" = "true" ] && git stash pop
     exit 1
   fi
 fi
@@ -104,5 +104,5 @@ fi
 sudo nixos-rebuild --impure --flake . switch
 git rev-parse HEAD | sudo tee /etc/nixos/commit
 
-[ "$stashed" = 1 ] && git stash pop
+[ "$stashed" = "true" ] && git stash pop
 popd >/dev/null
