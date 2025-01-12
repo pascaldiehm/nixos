@@ -56,8 +56,8 @@
       wants = [ "cups.service" ];
 
       script = ''
-        ${pkgs.cups}/bin/lpadmin -D "Brother DCP-J1050DW" -m everywhere -o "ColorMode=Gray" -o "Duplex=DuplexNoTumble" -o "PageSize=A4" -p "Brother_DCP-J1050DW" -v "ipp://localhost:60000/ipp/print" -E || true
-        ${pkgs.cups}/bin/lpadmin -d "Brother_DCP-J1050DW"
+        ${pkgs.cups}/bin/lpadmin -D "Brother DCP-J1050DW" -m everywhere -o "ColorMode=Gray" -o "Duplex=DuplexNoTumble" -o "PageSize=A4" -p Brother_DCP-J1050DW -v "ipp://localhost:60000/ipp/print" -E || true
+        ${pkgs.cups}/bin/lpadmin -d Brother_DCP-J1050DW
         systemctl stop cups.service
       '';
     };

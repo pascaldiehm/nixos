@@ -33,7 +33,7 @@
       xdg.enable = true;
 
       home = {
-        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' \\;";
+        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' ';'";
         homeDirectory = config.users.users.pascal.home;
         packages = [ pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
         stateVersion = config.system.stateVersion;
