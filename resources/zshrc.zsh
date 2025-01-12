@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Prompt
 function _prompt_git() {
   # Abort if not in a git repository
