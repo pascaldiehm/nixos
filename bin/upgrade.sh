@@ -3,7 +3,8 @@
 set -e
 
 echo "Upgrading system..."
-nix flake update
+# nix flake update
+nix flake update nixpkgs home-manager plasma-manager impermanence
 
 echo "Upgrading Firefox extensions..."
 tmp="$(mktemp -d)"
