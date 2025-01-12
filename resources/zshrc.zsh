@@ -86,14 +86,9 @@ bindkey "^L" clear-screen                        # Ctrl+L
 bindkey "^Z" undo                                # Ctrl+Z
 bindkey "^Y" redo                                # Ctrl+Y
 
-bindkey "${key[Home]}" beginning-of-line
-bindkey "${key[End]}" end-of-line
-bindkey "${key[Up]}" up-line-or-history
-bindkey "${key[Down]}" down-line-or-history
-bindkey "${key[Left]}" backward-char
-bindkey "${key[Right]}" forward-char
-
 # Aliases and functions
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
 alias l="ls -alh"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }

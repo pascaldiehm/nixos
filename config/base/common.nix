@@ -1,6 +1,7 @@
 { config, lib, pkgs, nixpkgs, helpers, ... }: {
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
+  programs.nano.enable = false;
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
 
@@ -190,11 +191,6 @@
     };
   };
 
-  programs = {
-    nano.enable = false;
-    zsh.enable = true;
-  };
-
   services = {
     fwupd.enable = true;
     xserver.xkb.layout = config.console.keyMap;
@@ -215,6 +211,7 @@
     extraGroups = [ "docker" "wheel" ];
     hashedPasswordFile = config.sops.secrets.password.path;
     home = "/home/pascal";
+    ignoreShellProgramCheck = true;
     isNormalUser = true;
     shell = pkgs.zsh;
     uid = 1000;
