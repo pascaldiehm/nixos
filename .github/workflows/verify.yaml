@@ -15,30 +15,51 @@ jobs:
       - uses: cachix/install-nix-action@master
 
       - name: Check
+        continue-on-error: true
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
-          nix flake check --impure --option keep-going true || echo "failed=true" >> "$GITHUB_ENV"
+          _failed="false"
+          nix flake check --impure --option keep-going true || _failed="true"
+
+          if [ "$_failed" = "true" ]; then
+            echo "failed=true" >> "$GITHUB_ENV"
+            exit 1
+          fi
 
       - name: Lint Nix
+        continue-on-error: true
         run: |
+          _failed="false"
           find . -name "*.nix" | while read -r file; do
             echo "Checking $file"
             diagnostics="$(nix run nixpkgs#nil -- diagnostics "$file")"
 
             if [ -n "$diagnostics" ]; then
               echo "$diagnostics"
-              echo "failed=true" >> "$GITHUB_ENV"
+              _failed="true"
             fi
           done
 
+          if [ "$_failed" = "true" ]; then
+            echo "failed=true" >> "$GITHUB_ENV"
+            exit 1
+          fi
+
       - name: Lint Shell
+        continue-on-error: true
         run: |
+          _failed="false"
           find . -name "*.sh" | while read -r file; do
             echo "Checking $file"
-            nix run nixpkgs#shellcheck -- "$file" || echo "failed=true" >> "$GITHUB_ENV"
+            nix run nixpkgs#shellcheck -- "$file" || echo _failed="true"
           done
+
+          if [ "$_failed" = "true" ]; then
+            echo "failed=true" >> "$GITHUB_ENV"
+            exit 1
+          fi
 
       - name: Fail
         if: env.failed == 'true'
