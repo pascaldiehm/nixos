@@ -56,9 +56,18 @@ function _prompt_git() {
   fi
 }
 
+function _prompt_host() {
+  [ "$NIXOS_MACHINE_TYPE" = "server" ] && echo -n " %F{14}%n@%M%f"
+}
+
+function _prompt_pyenv() {
+  [ -n "$VIRTUAL_ENV" ] && echo -n " %F{13}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
+}
+
 setopt PROMPT_SUBST
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
-[ "$NIXOS_MACHINE_TYPE" = "server" ] && export RPROMPT='%F{14}%n@%M%f'
+export RPROMPT='$(_prompt_pyenv)$(_prompt_host)'
 
 # Keybindings
 bindkey -rp ""
@@ -104,8 +113,14 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias py="python3"
   alias vsc="codium"
 
+  function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
   function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
-  function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
+  function pyenv() {
+    [ -d .venv ] || py -m venv .venv
+    source .venv/bin/activate
+  }
+
   compdef _nixos-secrets nixos-secrets
+  compdef _nothing pyenv
 fi
