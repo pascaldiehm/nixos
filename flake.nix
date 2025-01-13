@@ -50,7 +50,7 @@
         mkSystem = name: type: nixpkgs.lib.nixosSystem {
           modules = [
             # Libraries
-            config/helpers.nix
+            config/globals.nix
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
@@ -63,11 +63,15 @@
 
             # Extra
             {
-              _module.args = { inherit nixpkgs; };
               home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
               networking.hostName = name;
             }
           ];
+
+          specialArgs = {
+            _glb = { inherit nixpkgs type; };
+            lib = nixpkgs.lib.extend (self: super: home-manager.lib);
+          };
         };
       in
       mkSystems {

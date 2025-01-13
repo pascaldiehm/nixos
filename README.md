@@ -57,7 +57,7 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 - [flake.nix](flake.nix): Entry point
 - [bin](bin/): Scripts that are exported as apps by [flake.nix](flake.nix)
 - [config](config/): Nix configuration files
-  - [helpers.nix](config/helpers.nix): Helper functions used throughout the configuration
+  - [globals.nix](config/globals.nix): Helper functions and constants used throughout the configuration
   - [base](config/base/): Common configuration (shared between machines)
   - [extra](config/extra/): Additional (temporary) modules
   - [machines](config/machines/): Machine-specific configuration

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, helpers, ... }: {
+{ config, lib, glb, pkgs, ... }: {
   boot.initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
   fonts.packages = [ pkgs.fira-code ];
   imports = [ ../extra/university.nix ];
@@ -113,7 +113,7 @@
 
         policies = {
           DisableFirefoxAccounts = true;
-          ExtensionSettings = helpers.mkMozillaExtensions ../../resources/extensions/firefox.json;
+          ExtensionSettings = glb.mkMozillaExtensions ../../resources/extensions/firefox.json;
           OverrideFirstRunPage = "";
           OverridePostUpdatePage = "";
           PasswordManagerEnabled = false;
@@ -435,7 +435,10 @@
 
       thunderbird = {
         enable = true;
-        package = pkgs.thunderbird.override { extraPolicies.ExtensionSettings = helpers.mkMozillaExtensions ../../resources/extensions/thunderbird.json; };
+
+        package = pkgs.thunderbird.override {
+          extraPolicies.ExtensionSettings = glb.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
+        };
 
         profiles.default = {
           isDefault = true;

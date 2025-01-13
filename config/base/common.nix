@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nixpkgs, helpers, ... }: {
+{ config, lib, glb, pkgs, ... }: {
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
   programs.nano.enable = false;
@@ -21,7 +21,7 @@
   environment = {
     etc = {
       hosts.mode = "0644";
-      "nix/inputs/nixpkgs".source = "${nixpkgs}";
+      "nix/inputs/nixpkgs".source = "${glb.nixpkgs}";
     };
 
     persistence."/perm" = {
@@ -47,7 +47,7 @@
       xdg.enable = true;
 
       home = {
-        activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' ';'";
+        activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' ';'";
         homeDirectory = config.users.users.pascal.home;
         packages = [ pkgs.btrfs-progs pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
         stateVersion = config.system.stateVersion;
@@ -188,7 +188,7 @@
 
   nix = {
     channel.enable = false;
-    registry.nixpkgs.flake = nixpkgs;
+    registry.nixpkgs.flake = glb.nixpkgs;
 
     gc = {
       automatic = true;
