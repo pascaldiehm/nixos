@@ -32,10 +32,31 @@
     };
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-partlabel/ESP";
-    fsType = "vfat";
-    options = [ "dmask=0077" "fmask=0077" ];
+  fileSystems = {
+    "/" = {
+      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      options = [ "subvol=root" ];
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-partlabel/ESP";
+      fsType = "vfat";
+      options = [ "dmask=0077" "fmask=0077" ];
+    };
+
+    "/nix" = {
+      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
+
+    "/perm" = {
+      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "subvol=perm" ];
+    };
   };
 
   home-manager = {
@@ -179,6 +200,7 @@
           dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
           history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
+          localVariables.NIXOS_MACHINE_TYPE = glb.machineType;
           plugins = [{ name = "zsh-completions"; src = pkgs.zsh-completions; }];
           syntaxHighlighting.enable = true;
         };
@@ -209,9 +231,19 @@
     xserver.xkb.layout = config.console.keyMap;
   };
 
-  sops.secrets = {
-    hosts.sopsFile = ../../resources/secrets/common/store.yaml;
-    password.neededForUsers = true;
+  sops = {
+    age.sshKeyPaths = [ ];
+    defaultSopsFile = ../../resources/secrets/${glb.machineType}/store.yaml;
+
+    gnupg = {
+      home = "/perm/etc/nixos/.gnupg";
+      sshKeyPaths = [ ];
+    };
+
+    secrets = {
+      hosts.sopsFile = ../../resources/secrets/common/store.yaml;
+      password.neededForUsers = true;
+    };
   };
 
   system.activationScripts.addSecretHosts = {

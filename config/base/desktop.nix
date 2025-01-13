@@ -22,27 +22,6 @@
     };
   };
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/mapper/nixos";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
-
-    "/nix" = {
-      device = "/dev/mapper/nixos";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-    "/perm" = {
-      device = "/dev/mapper/nixos";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=perm" ];
-    };
-  };
-
   home-manager.users.pascal = {
     accounts.email.accounts.default = {
       address = "pdiehm8@gmail.com";
@@ -105,8 +84,6 @@
     };
 
     programs = {
-      zsh.localVariables.NIXOS_MACHINE_TYPE = "desktop";
-
       firefox = {
         enable = true;
         package = pkgs.firefox.override { nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ]; };
@@ -648,20 +625,15 @@
     '';
   };
 
-  sops = {
-    defaultSopsFile = ../../resources/secrets/desktop/store.yaml;
-    gnupg.home = "/perm/etc/nixos/.gnupg";
+  sops.secrets = {
+    network.restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
+    "ssh/bowser".owner = "pascal";
+    "ssh/github".owner = "pascal";
+    "ssh/goomba".owner = "pascal";
 
-    secrets = {
-      network.restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
-      "ssh/bowser".owner = "pascal";
-      "ssh/github".owner = "pascal";
-      "ssh/goomba".owner = "pascal";
-
-      u2f_keys = {
-        owner = "pascal";
-        path = "${config.home-manager.users.pascal.xdg.configHome}/Yubico/u2f_keys";
-      };
+    u2f_keys = {
+      owner = "pascal";
+      path = "${config.home-manager.users.pascal.xdg.configHome}/Yubico/u2f_keys";
     };
   };
 

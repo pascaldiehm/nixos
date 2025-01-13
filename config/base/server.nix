@@ -1,4 +1,5 @@
 { config, glb, ... }: {
+  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   security.sudo.wheelNeedsPassword = false;
 
   environment.persistence."/perm" = {
@@ -11,32 +12,6 @@
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
     ];
-  };
-
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
-
-    "/nix" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-    "/perm" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=perm" ];
-    };
-  };
-
-  home-manager.users.pascal.programs = {
-    ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
-    zsh.localVariables.NIXOS_MACHINE_TYPE = "server";
   };
 
   networking = {
@@ -60,20 +35,10 @@
     };
   };
 
-  sops = {
-    age.sshKeyPaths = [ ];
-    defaultSopsFile = ../../resources/secrets/server/store.yaml;
-
-    gnupg = {
-      home = "/etc/nixos/.gnupg";
-      sshKeyPaths = [ ];
-    };
-
-    secrets = {
-      "${config.system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
-      "${config.system.name}/ssh".owner = "pascal";
-      github.owner = "pascal";
-    };
+  sops.secrets = {
+    "${config.system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
+    "${config.system.name}/ssh".owner = "pascal";
+    github.owner = "pascal";
   };
 
   systemd.services.journalwatch = {
