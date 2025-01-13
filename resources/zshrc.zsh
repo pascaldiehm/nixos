@@ -117,7 +117,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
   function pyenv() {
-    [ -d .venv ] || py -m venv .venv
+    [ -d .venv ] || python3 -m venv .venv
     source .venv/bin/activate
   }
 
