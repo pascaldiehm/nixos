@@ -1,36 +1,24 @@
 { config, lib, pkgs, helpers, ... }: {
+  boot.initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
   fonts.packages = [ pkgs.fira-code ];
   imports = [ ../extra/university.nix ];
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
-  boot.initrd = {
-    luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
-    postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
-  };
-
   environment = {
     plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate pkgs.kdePackages.krdp ];
 
-    persistence."/perm" = {
-      directories = [ "/etc/nixos" "/var/lib/nixos" ];
-      files = [ "/etc/machine-id" ];
-      hideMounts = true;
+    persistence."/perm".users.pascal = {
+      files = [ ".config/VSCodium/User/globalStorage/state.vscdb" ".config/kwinoutputconfig.json" ];
 
-      users.pascal = {
-        files = [ ".config/VSCodium/User/globalStorage/state.vscdb" ".config/kwinoutputconfig.json" ];
-
-        directories = [
-          ".config/kdeconnect"
-          ".config/nixos"
-          ".local/share/kwalletd"
-          ".local/state/wireplumber"
-          ".mozilla/firefox/default"
-          ".thunderbird/default"
-          "Documents"
-          { directory = ".local/share/gnupg"; mode = "0700"; }
-          { directory = ".ssh"; mode = "0700"; }
-        ];
-      };
+      directories = [
+        ".config/kdeconnect"
+        ".local/share/kwalletd"
+        ".local/state/wireplumber"
+        ".mozilla/firefox/default"
+        ".thunderbird/default"
+        "Documents"
+        { directory = ".local/share/gnupg"; mode = "0700"; }
+      ];
     };
   };
 
@@ -88,7 +76,6 @@
       };
 
       packages = [
-        pkgs.btrfs-progs
         pkgs.cmake
         pkgs.cryptsetup
         pkgs.exfat

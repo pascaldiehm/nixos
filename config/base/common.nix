@@ -5,18 +5,31 @@
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
 
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
+  boot = {
+    initrd.postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
 
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 8;
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 8;
+      };
     };
   };
 
-  environment.etc = {
-    hosts.mode = "0644";
-    "nix/inputs/nixpkgs".source = "${nixpkgs}";
+  environment = {
+    etc = {
+      hosts.mode = "0644";
+      "nix/inputs/nixpkgs".source = "${nixpkgs}";
+    };
+
+    persistence."/perm" = {
+      directories = [ "/etc/nixos" "/var/lib/nixos" ];
+      files = [ "/etc/machine-id" ];
+      hideMounts = true;
+      users.pascal.directories = [ ".config/nixos" { directory = ".ssh"; mode = "0700"; } ];
+    };
   };
 
   fileSystems."/boot" = {
@@ -36,7 +49,7 @@
       home = {
         activation.deleteBackups = helpers.mkHMActivation [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' ';'";
         homeDirectory = config.users.users.pascal.home;
-        packages = [ pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
+        packages = [ pkgs.btrfs-progs pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
         stateVersion = config.system.stateVersion;
         username = "pascal";
       };

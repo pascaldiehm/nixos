@@ -1,9 +1,37 @@
 { config, helpers, ... }: {
   security.sudo.wheelNeedsPassword = false;
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-partlabel/nixos";
-    fsType = "ext4";
+  environment.persistence."/perm" = {
+    directories = [ "/var/lib/docker" "/var/lib/fail2ban" ];
+    users.pascal.directories = [ "docker" ];
+
+    files = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      options = [ "subvol=root" ];
+    };
+
+    "/nix" = {
+      device = "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
+
+    "/perm" = {
+      device = "/dev/disk/by-partlabel/nixos";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "subvol=perm" ];
+    };
   };
 
   home-manager.users.pascal.programs = {
@@ -18,11 +46,6 @@
 
   services = {
     fail2ban.enable = true;
-
-    cron = {
-      enable = true;
-      systemCronJobs = [ "0 3 * * * pascal rm '${config.home-manager.users.pascal.programs.zsh.history.path}'" ];
-    };
 
     openssh = {
       enable = true;

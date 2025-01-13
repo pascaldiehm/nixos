@@ -21,7 +21,7 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 | Component           | Desktop              | Server           |
 | ------------------- | -------------------- | ---------------- |
 | Boot manager        | systemd-boot         | systemd-boot     |
-| Filesystem          | btrfs + LUKS         | ext4             |
+| Filesystem          | btrfs + LUKS         | btrfs            |
 | Networking          | NetworkManager       | systemd-networkd |
 | Display manager     | SDDM                 |                  |
 | Desktop environment | KDE Plasma (Wayland) |                  |
