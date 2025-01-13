@@ -132,6 +132,7 @@
               name = "NixOS Manuals";
               bookmarks = [
                 { name = "Home Manager Manual"; url = "https://nix-community.github.io/home-manager"; }
+                { name = "Nix Manual"; url = "https://nixos.org/manual/nix/stable"; }
                 { name = "NixOS Manual"; url = "https://nixos.org/manual/nixos/stable"; }
                 { name = "Nixpkgs Manual"; url = "https://nixos.org/manual/nixpkgs/stable"; }
                 { name = "Plasma Manager Manual"; url = "https://nix-community.github.io/plasma-manager"; }
