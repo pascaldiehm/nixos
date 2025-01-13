@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 tmp="$(mktemp -d)"
-mount /dev/mapper/nixos "$tmp"
+mount "$DISK" "$tmp"
 
 mkdir -p "$tmp/history"
 [ -d "$tmp/root" ] && mv "$tmp/root" "$tmp/history/$(date -d "@$(stat -c "%Y" "$tmp/root")" "+%Y-%m-%d_%H:%M:%S")"

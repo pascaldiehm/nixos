@@ -6,7 +6,10 @@
   time.timeZone = "Europe/Berlin";
 
   boot = {
-    initrd.postDeviceCommands = lib.mkAfter (builtins.readFile ../../resources/scripts/wipe-root.sh);
+    initrd.postDeviceCommands = lib.mkAfter ''
+      DISK="${config.fileSystems."/".device}"
+      ${builtins.readFile ../../resources/scripts/wipe-root.sh}
+    '';
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -46,13 +49,13 @@
     };
 
     "/nix" = {
-      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      device = config.fileSystems."/".device;
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
     "/perm" = {
-      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      device = config.fileSystems."/".device;
       fsType = "btrfs";
       neededForBoot = true;
       options = [ "subvol=perm" ];
