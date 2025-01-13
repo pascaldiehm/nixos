@@ -28,7 +28,7 @@
     };
 
     persistence."/perm" = {
-      directories = [ "/etc/nixos" "/var/lib/nixos" ];
+      directories = [ "/etc/nixos" "/var/lib/nixos" "/var/lib/systemd" ];
       files = [ "/etc/machine-id" ];
       hideMounts = true;
       users.pascal.directories = [ ".config/nixos" { directory = ".ssh"; mode = "0700"; } ];
@@ -231,6 +231,7 @@
 
   services = {
     fwupd.enable = true;
+    journald.storage = "volatile";
     xserver.xkb.layout = config.console.keyMap;
   };
 
