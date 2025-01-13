@@ -20,13 +20,14 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, impermanence, plasma-manager, sops-nix, ... }: {
+  outputs = { home-manager, impermanence, nixpkgs, plasma-manager, sops-nix, ... }: {
     apps.x86_64-linux =
       let
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
         mkScript = name: runtimeInputs: pkgs.writeShellApplication {
           inherit name runtimeInputs;
+          runtimeEnv.MACHINES_FILE = "${./machines.json}";
           text = builtins.readFile bin/${name}.sh;
         };
 
@@ -38,7 +39,7 @@
           set;
       in
       mkScripts {
-        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
+        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.jq pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
         update = [ pkgs.git ];
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
       };
@@ -74,11 +75,6 @@
           };
         };
       in
-      mkSystems {
-        bowser = "server";
-        goomba = "server";
-        pascal-laptop = "desktop";
-        pascal-pc = "desktop";
-      };
+      mkSystems (nixpkgs.lib.importJSON ./machines.json);
   };
 }

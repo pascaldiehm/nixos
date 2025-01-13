@@ -8,23 +8,14 @@ if ! ping -c 1 1.1.1.1 &>/dev/null; then
   exit 1
 fi
 
-TYPE=""
-while [ "$TYPE" != "D" ] && [ "$TYPE" != "S" ]; do
-  clear
-  echo "Which type should I install?"
-  echo
-  echo "D) Desktop"
-  echo "S) Server"
-  echo
-  read -r -p "> " -N 1 TYPE
-done
-
 MACHINE=""
-while [ -z "$MACHINE" ]; do
+TYPE="null"
+while [ "$TYPE" = "null" ]; do
   clear
   echo "Which machine should I install?"
   echo
   read -r -p "> " MACHINE
+  TYPE="$(jq -r ".\"$MACHINE\"" "$MACHINES_FILE")"
 done
 
 DEV=""
@@ -51,7 +42,7 @@ while [ ! -b "$PART_NIXOS" ]; do sleep 1; done
 PART_ESP="/dev/disk/by-partlabel/ESP"
 while [ ! -b "$PART_ESP" ]; do sleep 1; done
 
-if [ "$TYPE" = "D" ]; then
+if [ "$TYPE" = "desktop" ]; then
   echo "Encrypting root partition..."
   cryptsetup luksFormat "$PART_NIXOS"
   cryptsetup open "$PART_NIXOS" nixos
@@ -83,7 +74,7 @@ ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
 echo "Cloning NixOS configuration"
 git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
-[ "$TYPE" = "D" ] && git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+[ "$TYPE" = "desktop" ] && git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
 git --git-dir /mnt/perm/home/pascal/.config/nixos/.git rev-parse HEAD >/mnt/perm/etc/nixos/commit
 chown -R 1000:100 /mnt/perm/home/pascal
 chmod 700 /mnt/perm/home/pascal
@@ -100,8 +91,7 @@ chmod 700 /mnt/perm/etc/nixos/.gnupg
 echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
-[ "$TYPE" = "D" ] && gpg --decrypt /home/pascal/.config/nixos/resources/secrets/desktop/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
-[ "$TYPE" = "S" ] && gpg --decrypt /home/pascal/.config/nixos/resources/secrets/server/key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
+gpg --decrypt "/home/pascal/.config/nixos/resources/secrets/$TYPE/key.gpg" | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
 nixos-install --impure --no-channel-copy --no-root-password --flake "/home/pascal/.config/nixos#$MACHINE"
