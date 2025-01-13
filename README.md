@@ -55,6 +55,7 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 ## Structure
 
 - [flake.nix](flake.nix): Entry point
+- [machines.json](machines.json): Lists defined machines and their type
 - [bin](bin/): Scripts that are exported as apps by [flake.nix](flake.nix)
 - [config](config/): Nix configuration files
   - [globals.nix](config/globals.nix): Helper functions and constants used throughout the configuration
