@@ -33,7 +33,7 @@ jobs:
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
-          jq -r 'keys.[]' machines.json | while read -r machine; do
+          jq -r "keys.[]" machines.json | while read -r machine; do
             if ! timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel"; then
               echo "valid=false" >> "$GITHUB_ENV"
               break
