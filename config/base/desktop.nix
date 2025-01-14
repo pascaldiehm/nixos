@@ -89,6 +89,7 @@
         pkgs.poppler_utils
         pkgs.python3
         pkgs.quickemu
+        pkgs.smartmontools
         pkgs.sops
         pkgs.sshfs
         pkgs.texlive.combined.scheme-full
