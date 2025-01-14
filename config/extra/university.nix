@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, lib, ... }:
+{
   home-manager.users.pascal = {
     accounts.email.accounts.university = {
       address = "pascal.diehm@stud-mail.uni-wuerzburg.de";
@@ -18,16 +19,15 @@
     };
 
     programs = {
-      ssh.matchBlocks."gitlab.informatik.uni-wuerzburg.de".identityFile = config.sops.secrets."university/gitlab-ssh-key".path;
-
       firefox.profiles.default.bookmarks = [
         {
           name = "Uni Würzburg";
-          bookmarks = [
-            { name = "GitLab"; url = "https://gitlab.informatik.uni-wuerzburg.de"; }
-            { name = "WueCampus"; url = "https://wuecampus.uni-wuerzburg.de"; }
-            { name = "WueStudy"; url = "https://wuestudy.zv.uni-wuerzburg.de"; }
-          ];
+
+          bookmarks = lib.mapAttrsToList (name: url: { inherit name url; }) {
+            GitLab = "https://gitlab.informatik.uni-wuerzburg.de";
+            WueCampus = "https://wuecampus.uni-wuerzburg.de";
+            WueStudy = "https://wuestudy.zv.uni-wuerzburg.de";
+          };
         }
       ];
 
@@ -35,6 +35,9 @@
         "git@gitlab.informatik.uni-wuerzburg.de:".insteadOf = "uni:";
         "git@gitlab.informatik.uni-wuerzburg.de:s457719/".insteadOf = "uni:/";
       };
+
+      ssh.matchBlocks."gitlab.informatik.uni-wuerzburg.de".identityFile =
+        config.sops.secrets."university/gitlab-ssh-key".path;
     };
   };
 
@@ -84,8 +87,12 @@
   sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network".restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
     "university/eduroam/private-key" = { };
     "university/gitlab-ssh-key".owner = "pascal";
+
+    "university/eduroam/network".restartUnits = [
+      "NetworkManager.service"
+      "NetworkManager-ensure-profiles.service"
+    ];
   };
 }

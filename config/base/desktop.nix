@@ -1,25 +1,39 @@
-{ config, lib, glb, pkgs, ... }: {
+{
+  config,
+  lib,
+  glb,
+  pkgs,
+  ...
+}:
+{
   boot.initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
   fonts.packages = [ pkgs.fira-code ];
   imports = [ ../extra/university.nix ];
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
   environment = {
-    plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate pkgs.kdePackages.krdp ];
-
     persistence."/perm".users.pascal = {
-      files = [ ".config/VSCodium/User/globalStorage/state.vscdb" ".config/kwinoutputconfig.json" ];
+      directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
+        ".config/kdeconnect" = "0755";
+        ".local/share/gnupg" = "0700";
+        ".local/share/kwalletd" = "0755";
+        ".local/state/wireplumber" = "0755";
+        ".mozilla/firefox/default" = "0755";
+        ".thunderbird/default" = "0755";
+        "Documents" = "0755";
+      };
 
-      directories = [
-        ".config/kdeconnect"
-        ".local/share/kwalletd"
-        ".local/state/wireplumber"
-        ".mozilla/firefox/default"
-        ".thunderbird/default"
-        "Documents"
-        { directory = ".local/share/gnupg"; mode = "0700"; }
+      files = [
+        ".config/VSCodium/User/globalStorage/state.vscdb"
+        ".config/kwinoutputconfig.json"
       ];
     };
+
+    plasma6.excludePackages = [
+      pkgs.kdePackages.elisa
+      pkgs.kdePackages.kate
+      pkgs.kdePackages.krdp
+    ];
   };
 
   home-manager.users.pascal = {
@@ -100,53 +114,60 @@
           name = "Default";
           settings."browser.translations.automaticallyPopup" = false;
 
-          bookmarks = [
-            {
-              name = "Toolbar";
-              toolbar = true;
-              bookmarks = [
-                {
-                  name = "Google";
-                  bookmarks = [
-                    { name = "Account"; url = "https://myaccount.google.com"; }
-                    { name = "Calendar"; url = "https://calendar.google.com"; }
-                    { name = "Contacts"; url = "https://contacts.google.com"; }
-                    { name = "Drive"; url = "https://drive.google.com"; }
-                    { name = "Keep"; url = "https://keep.google.com"; }
-                    { name = "Maps"; url = "https://google.com/maps"; }
-                    { name = "Photos"; url = "https://photos.google.com"; }
-                    { name = "Tasks"; url = "https://tasks.google.com"; }
-                    { name = "YouTube"; url = "https://youtube.com"; }
-                    { name = "YouTube Music"; url = "https://music.youtube.com"; }
-                  ];
-                }
+          bookmarks =
+            [
+              {
+                name = "Toolbar";
+                toolbar = true;
 
-                { name = "Element"; url = "https://app.element.io"; }
-                { name = "GitHub"; url = "https://github.com"; }
-                { name = "Home Assistant"; url = "http://192.168.1.89:8123"; }
-                { name = "WhatsApp"; url = "https://web.whatsapp.com"; }
-              ];
-            }
+                bookmarks =
+                  [
+                    {
+                      name = "Google";
 
-            {
-              name = "NixOS Manuals";
-              bookmarks = [
-                { name = "Home Manager Manual"; url = "https://nix-community.github.io/home-manager"; }
-                { name = "Nix Manual"; url = "https://nixos.org/manual/nix/stable"; }
-                { name = "NixOS Manual"; url = "https://nixos.org/manual/nixos/stable"; }
-                { name = "Nixpkgs Manual"; url = "https://nixos.org/manual/nixpkgs/stable"; }
-                { name = "Plasma Manager Manual"; url = "https://nix-community.github.io/plasma-manager"; }
-              ];
-            }
+                      bookmarks = lib.mapAttrsToList (name: url: { inherit name url; }) {
+                        Account = "https://myaccount.google.com";
+                        Calendar = "https://calendar.google.com";
+                        Contacts = "https://contacts.google.com";
+                        Drive = "https://drive.google.com";
+                        Keep = "https://keep.google.com";
+                        Maps = "https://google.com/maps";
+                        Photos = "https://photos.google.com";
+                        Tasks = "https://tasks.google.com";
+                        YouTube = "https://youtube.com";
+                        "YouTube Music" = "https://music.youtube.com";
+                      };
+                    }
+                  ]
+                  ++ lib.mapAttrsToList (name: url: { inherit name url; }) {
+                    Element = "https://app.element.io";
+                    GitHub = "https://github.com";
+                    "Home Assistant" = "http://192.168.1.89:8123";
+                    WhatsApp = "https://web.whatsapp.com";
+                  };
+              }
 
-            { name = "Amazon"; url = "https://amazon.de"; }
-            { name = "ChatGPT"; url = "https://chatgpt.com"; }
-            { name = "Cloudflare"; url = "https://dash.cloudflare.com"; }
-            { name = "Hetzner"; url = "https://console.hetzner.cloud"; }
-            { name = "Matrix Admin"; url = "https://matrix-admin.pdiehm.dev"; }
-            { name = "PayPal"; url = "https://paypal.com"; }
-            { name = "Sparkasse"; url = "https://sparkasse-mainfranken.de"; }
-          ];
+              {
+                name = "NixOS Manuals";
+
+                bookmarks = lib.mapAttrsToList (name: url: { inherit name url; }) {
+                  "Home Manager Manual" = "https://nix-community.github.io/home-manager";
+                  "Nix Manual" = "https://nixos.org/manual/nix/stable";
+                  "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
+                  "Nixpkgs Manual" = "https://nixos.org/manual/nixpkgs/stable";
+                  "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
+                };
+              }
+            ]
+            ++ lib.mapAttrsToList (name: url: { inherit name url; }) {
+              Amazon = "https://amazon.de";
+              ChatGPT = "https://chatgpt.com";
+              Cloudflare = "https://dash.cloudflare.com";
+              Hetzner = "https://console.hetzner.cloud";
+              "Matrix Admin" = "https://matrix-admin.pdiehm.dev";
+              PayPal = "https://paypal.com";
+              Sparkasse = "https://sparkasse-mainfranken.de";
+            };
 
           search = {
             default = "Google";
@@ -158,42 +179,42 @@
               "Wikipedia (en)".metaData.hidden = true;
 
               "Docker Hub" = {
-                urls = [{ template = "https://hub.docker.com/search?q={searchTerms}"; }];
+                urls = [ { template = "https://hub.docker.com/search?q={searchTerms}"; } ];
                 definedAliases = [ "@docker" ];
               };
 
               "MDN" = {
-                urls = [{ template = "https://developer.mozilla.org/search?q={searchTerms}"; }];
+                urls = [ { template = "https://developer.mozilla.org/search?q={searchTerms}"; } ];
                 definedAliases = [ "@mdn" ];
               };
 
               "NixOS Options" = {
-                urls = [{ template = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query={searchTerms}"; }];
+                urls = [ { template = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query={searchTerms}"; } ];
                 definedAliases = [ "@nixopts" ];
               };
 
               "NixOS Packages" = {
-                urls = [{ template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}"; }];
+                urls = [ { template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}"; } ];
                 definedAliases = [ "@nixpkgs" ];
               };
 
               "NixOS Wiki" = {
-                urls = [{ template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; }];
+                urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
                 definedAliases = [ "@nixwiki" ];
               };
 
               "NPM" = {
-                urls = [{ template = "https://npmjs.com/search?q={searchTerms}"; }];
+                urls = [ { template = "https://npmjs.com/search?q={searchTerms}"; } ];
                 definedAliases = [ "@npm" ];
               };
 
               "YouTube" = {
-                urls = [{ template = "https://youtube.com/results?search_query={searchTerms}"; }];
+                urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
                 definedAliases = [ "@youtube" ];
               };
 
               "YouTube Music" = {
-                urls = [{ template = "https://music.youtube.com/search?q={searchTerms}"; }];
+                urls = [ { template = "https://music.youtube.com/search?q={searchTerms}"; } ];
                 definedAliases = [ "@music" ];
               };
             };
@@ -279,7 +300,7 @@
           };
 
           kwalletrc = {
-            "Auto Allow".kdewallet = builtins.concatStringsSep "," [ "kded6" "KDE System" "kwalletmanager" "VSCodium" ];
+            "Auto Allow".kdewallet = "kded6,KDE System,kwalletmanager,VSCodium";
             Wallet."Prompt on Open" = true;
           };
         };
@@ -293,34 +314,53 @@
           cornerBarrier = false;
           edgeBarrier = 0;
           effects.dimAdminMode.enable = true;
-          titlebarButtons.left = [ "more-window-actions" "on-all-desktops" "keep-above-windows" ];
+
+          titlebarButtons.left = [
+            "more-window-actions"
+            "on-all-desktops"
+            "keep-above-windows"
+          ];
 
           virtualDesktops = {
-            names = [ "Primary" "Secondary" "Tertiary" ];
             rows = 1;
+
+            names = [
+              "Primary"
+              "Secondary"
+              "Tertiary"
+            ];
           };
         };
 
-        panels = [{
-          screen = 0;
-          widgets = [
-            { name = "org.kde.plasma.kickoff"; config.General.icon = "${../../resources/flake.png}"; }
+        panels = [
+          {
+            screen = 0;
+            widgets = [
+              {
+                name = "org.kde.plasma.kickoff";
+                config.General.icon = "${../../resources/flake.png}";
+              }
 
-            {
-              name = "org.kde.plasma.icontasks";
+              {
+                name = "org.kde.plasma.icontasks";
 
-              config.General.launchers = [
-                "applications:org.kde.dolphin.desktop"
-                "applications:firefox.desktop"
-                "applications:thunderbird.desktop"
-              ];
-            }
+                config.General.launchers = [
+                  "applications:org.kde.dolphin.desktop"
+                  "applications:firefox.desktop"
+                  "applications:thunderbird.desktop"
+                ];
+              }
 
-            { name = "org.kde.plasma.marginsseparator"; }
-            { name = "org.kde.plasma.systemtray"; }
-            { name = "org.kde.plasma.digitalclock"; config.Appearance.showSeconds = 2; }
-          ];
-        }];
+              { name = "org.kde.plasma.marginsseparator"; }
+              { name = "org.kde.plasma.systemtray"; }
+
+              {
+                name = "org.kde.plasma.digitalclock";
+                config.Appearance.showSeconds = 2;
+              }
+            ];
+          }
+        ];
 
         powerdevil = {
           battery.autoSuspend.action = "nothing";
@@ -384,7 +424,6 @@
             "stop current activity" = "none";
           };
 
-
           "services/org.kde.krunner.desktop" = {
             _launch = "Meta+Space";
             RunClipboard = "none";
@@ -433,30 +472,36 @@
         enable = true;
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
-        keybindings = [{ key = "shift+enter"; command = "-python.execSelectionInTerminal"; }];
         package = pkgs.vscodium;
 
-        extensions = with pkgs.vscode-extensions; [
-          aaron-bond.better-comments
-          bradlc.vscode-tailwindcss
-          dbaeumer.vscode-eslint
-          esbenp.prettier-vscode
-          foxundermoon.shell-format
-          github.vscode-github-actions
-          james-yu.latex-workshop
-          jnoortheen.nix-ide
-          llvm-vs-code-extensions.vscode-clangd
-          ms-azuretools.vscode-docker
-          ms-python.isort
-          ms-python.python
-          ms-vscode.cmake-tools
-          pkief.material-icon-theme
-          streetsidesoftware.code-spell-checker
-          twxs.cmake
-          redhat.java
-          usernamehw.errorlens
-          vscodevim.vim
-        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
+        extensions =
+          with pkgs.vscode-extensions;
+          [
+            aaron-bond.better-comments
+            bradlc.vscode-tailwindcss
+            dbaeumer.vscode-eslint
+            esbenp.prettier-vscode
+            foxundermoon.shell-format
+            github.vscode-github-actions
+            james-yu.latex-workshop
+            jnoortheen.nix-ide
+            llvm-vs-code-extensions.vscode-clangd
+            ms-azuretools.vscode-docker
+            ms-python.isort
+            ms-python.python
+            ms-vscode.cmake-tools
+            pkief.material-icon-theme
+            streetsidesoftware.code-spell-checker
+            twxs.cmake
+            redhat.java
+            usernamehw.errorlens
+            vscodevim.vim
+          ]
+          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
+
+        keybindings = lib.mapAttrsToList (key: command: { inherit key command; }) {
+          "shift+enter" = "-python.execSelectionInTerminal";
+        };
 
         userSettings = {
           # Editor
@@ -495,8 +540,15 @@
           "git.inputValidation" = true;
           "git.openRepositoryInParentFolders" = "always";
           "material-icon-theme.activeIconPack" = "react";
-          "vim.handleKeys" = { "<C-i>" = false; "<C-k>" = false; "<C-p>" = false; "<C-s>" = true; "<C-z>" = true; };
           "vim.useSystemClipboard" = true;
+
+          "vim.handleKeys" = {
+            "<C-i>" = false;
+            "<C-k>" = false;
+            "<C-p>" = false;
+            "<C-s>" = true;
+            "<C-z>" = true;
+          };
 
           # C++
           "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
@@ -513,8 +565,18 @@
 
           # Nix
           "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "${pkgs.nil}/bin/nil";
-          "nix.serverSettings".nil.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
+          "nix.serverPath" = "${pkgs.nixd}/bin/nixd";
+
+          "nix.serverSettings".nixd = {
+            nixpkgs.expr = "import (builtins.getFlake \"\${workspaceFolder}\").inputs.nixpkgs {}";
+            options.nixos.expr = "(builtins.getFlake \"${config.home-manager.users.pascal.xdg.configHome}/nixos\").nixosConfigurations.${config.system.name}.options";
+
+            formatting.command = [
+              "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
+              "-w"
+              "120"
+            ];
+          };
 
           # PHP
           "intelephense.format.braces" = "k&r";
@@ -525,7 +587,10 @@
           "prettier.printWidth" = 120;
 
           # Python
-          "autopep8.args" = [ "--indent-size=2" "--max-line-length=120" ];
+          "autopep8.args" = [
+            "--indent-size=2"
+            "--max-line-length=120"
+          ];
 
           # Formatters
           "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -582,8 +647,15 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [ 1234 1716 1739 1740 1741 ];
       allowedUDPPorts = [ 1716 ];
+
+      allowedTCPPorts = [
+        1234
+        1716
+        1739
+        1740
+        1741
+      ];
     };
 
     networkmanager = {
@@ -627,10 +699,14 @@
   };
 
   sops.secrets = {
-    network.restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
     "ssh/bowser".owner = "pascal";
     "ssh/github".owner = "pascal";
     "ssh/goomba".owner = "pascal";
+
+    network.restartUnits = [
+      "NetworkManager.service"
+      "NetworkManager-ensure-profiles.service"
+    ];
 
     u2f_keys = {
       owner = "pascal";

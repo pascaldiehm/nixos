@@ -1,6 +1,5 @@
-{ pkgs, ... }: {
-  users.users.pascal.extraGroups = [ "lp" "scanner" ];
-
+{ pkgs, ... }:
+{
   hardware = {
     graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
     sane.enable = true;
@@ -62,4 +61,9 @@
       '';
     };
   };
+
+  users.users.pascal.extraGroups = [
+    "lp"
+    "scanner"
+  ];
 }

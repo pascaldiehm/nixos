@@ -1,4 +1,5 @@
-{ config, glb, ... }: {
+{ config, glb, ... }:
+{
   boot.swraid = {
     enable = true;
 
@@ -31,16 +32,22 @@
       settings = {
         NOTIFYCMD = "${glb.mkNtfy "ups" "$1"}";
 
-        NOTIFYFLAG = [
-          [ "ONLINE" "SYSLOG+EXEC" ]
-          [ "ONBATT" "SYSLOG+EXEC" ]
-          [ "LOWBATT" "SYSLOG+EXEC" ]
-          [ "FSD" "SYSLOG+EXEC" ]
-          [ "SHUTDOWN" "SYSLOG+EXEC" ]
-          [ "REPLBATT" "SYSLOG+EXEC" ]
-          [ "NOCOMM" "SYSLOG+EXEC" ]
-          [ "NOPARENT" "SYSLOG+EXEC" ]
-        ];
+        NOTIFYFLAG =
+          builtins.map
+            (event: [
+              event
+              "SYSLOG+EXEC"
+            ])
+            [
+              "ONLINE"
+              "ONBATT"
+              "LOWBATT"
+              "FSD"
+              "SHUTDOWN"
+              "REPLBATT"
+              "NOCOMM"
+              "NOPARENT"
+            ];
       };
     };
 
@@ -53,9 +60,13 @@
   };
 
   sops.secrets = {
-    "bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba".owner = "systemd-network";
+
+    "bowser/nut".restartUnits = [
+      "upsd.service"
+      "upsmon.service"
+    ];
   };
 
   systemd.network = {
@@ -67,13 +78,15 @@
         Name = "wg0";
       };
 
-      wireguardPeers = [{
-        AllowedIPs = [ "10.42.0.0/24" ];
-        Endpoint = "goomba:51820";
-        PersistentKeepalive = 25;
-        PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
-        PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";
-      }];
+      wireguardPeers = [
+        {
+          AllowedIPs = [ "10.42.0.0/24" ];
+          Endpoint = "goomba:51820";
+          PersistentKeepalive = 25;
+          PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
+          PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";
+        }
+      ];
     };
 
     networks = {

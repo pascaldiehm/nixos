@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
   sops.secrets = {
@@ -22,9 +23,13 @@
 
       wireguardPeers = [
         {
-          AllowedIPs = [ "10.42.0.2/32" "192.168.0.0/24" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/bowser".path;
           PublicKey = "DGhb5LNEW6X+WhVhzkuUi3wpyYuDDDNq1TQDze4cCTk=";
+
+          AllowedIPs = [
+            "10.42.0.2/32"
+            "192.168.0.0/24"
+          ];
         }
 
         {

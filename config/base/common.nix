@@ -1,4 +1,11 @@
-{ config, lib, glb, pkgs, ... }: {
+{
+  config,
+  lib,
+  glb,
+  pkgs,
+  ...
+}:
+{
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
   programs.nano.enable = false;
@@ -28,10 +35,19 @@
     };
 
     persistence."/perm" = {
-      directories = [ "/etc/nixos" "/var/lib/nixos" "/var/lib/systemd" ];
       files = [ "/etc/machine-id" ];
       hideMounts = true;
-      users.pascal.directories = [ ".config/nixos" { directory = ".ssh"; mode = "0700"; } ];
+
+      directories = [
+        "/etc/nixos"
+        "/var/lib/nixos"
+        "/var/lib/systemd"
+      ];
+
+      users.pascal.directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
+        ".config/nixos" = "0755";
+        ".ssh" = "0700";
+      };
     };
   };
 
@@ -45,7 +61,11 @@
     "/boot" = {
       device = "/dev/disk/by-partlabel/ESP";
       fsType = "vfat";
-      options = [ "dmask=0077" "fmask=0077" ];
+
+      options = [
+        "dmask=0077"
+        "fmask=0077"
+      ];
     };
 
     "/nix" = {
@@ -71,11 +91,21 @@
       xdg.enable = true;
 
       home = {
-        activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] "run find '${config.users.users.pascal.home}' -name '*.${config.home-manager.backupFileExtension}' -exec rm -rf '{}' ';'";
         homeDirectory = config.users.users.pascal.home;
-        packages = [ pkgs.btrfs-progs pkgs.jq pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
         stateVersion = config.system.stateVersion;
         username = "pascal";
+
+        activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run find "${config.users.users.pascal.home}" -name "*.${config.home-manager.backupFileExtension}" -exec rm -rf "{}" ";"
+        '';
+
+        packages = [
+          pkgs.btrfs-progs
+          pkgs.jq
+          pkgs.unzip
+          pkgs.wireguard-tools
+          pkgs.zip
+        ];
       };
 
       programs = {
@@ -204,7 +234,7 @@
           history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           localVariables.NIXOS_MACHINE_TYPE = glb.machineType;
-          plugins = [{ name = "zsh-completions"; src = pkgs.zsh-completions; }];
+          plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { zsh-completions = pkgs.zsh-completions; };
           syntaxHighlighting.enable = true;
         };
       };
@@ -223,9 +253,13 @@
 
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "flakes" "nix-command" ];
       nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
       use-xdg-base-directories = true;
+
+      experimental-features = [
+        "flakes"
+        "nix-command"
+      ];
     };
   };
 
@@ -251,19 +285,27 @@
   };
 
   system.activationScripts.addSecretHosts = {
-    deps = [ "etc" "setupSecrets" ];
     text = "cat '${config.sops.secrets.hosts.path}' >> /etc/hosts";
+
+    deps = [
+      "etc"
+      "setupSecrets"
+    ];
   };
 
   users.users.pascal = {
     description = "Pascal Diehm";
-    extraGroups = [ "docker" "wheel" ];
     hashedPasswordFile = config.sops.secrets.password.path;
     home = "/home/pascal";
     ignoreShellProgramCheck = true;
     isNormalUser = true;
     shell = pkgs.zsh;
     uid = 1000;
+
+    extraGroups = [
+      "docker"
+      "wheel"
+    ];
   };
 
   virtualisation.docker = {

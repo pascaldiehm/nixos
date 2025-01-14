@@ -20,61 +20,89 @@
     };
   };
 
-  outputs = { home-manager, impermanence, nixpkgs, plasma-manager, sops-nix, ... }: {
-    apps.x86_64-linux =
-      let
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+  outputs =
+    {
+      home-manager,
+      impermanence,
+      nixpkgs,
+      plasma-manager,
+      sops-nix,
+      ...
+    }:
+    {
+      apps.x86_64-linux =
+        let
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-        mkScript = name: runtimeInputs: pkgs.writeShellApplication {
-          inherit name runtimeInputs;
-          runtimeEnv.MACHINES_FILE = "${./machines.json}";
-          text = builtins.readFile bin/${name}.sh;
-        };
+          mkScript =
+            name: runtimeInputs:
+            pkgs.writeShellApplication {
+              inherit name runtimeInputs;
+              runtimeEnv.MACHINES_FILE = "${./machines.json}";
+              text = builtins.readFile bin/${name}.sh;
+            };
 
-        mkScripts = set: builtins.mapAttrs
-          (name: value: {
-            program = "${mkScript name value}/bin/${name}";
-            type = "app";
-          })
-          set;
-      in
-      mkScripts {
-        install = [ pkgs.btrfs-progs pkgs.cryptsetup pkgs.git pkgs.jq pkgs.gnupg pkgs.parted pkgs.pinentry-tty ];
-        update = [ pkgs.git ];
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
-      };
+          mkScripts =
+            set:
+            builtins.mapAttrs (name: value: {
+              program = "${mkScript name value}/bin/${name}";
+              type = "app";
+            }) set;
+        in
+        mkScripts {
+          update = [ pkgs.git ];
 
-    nixosConfigurations =
-      let
-        mkSystems = set: builtins.mapAttrs (name: value: mkSystem name set.${name}) set;
-
-        mkSystem = name: type: nixpkgs.lib.nixosSystem {
-          modules = [
-            # Libraries
-            config/globals.nix
-            home-manager.nixosModules.home-manager
-            impermanence.nixosModules.impermanence
-            sops-nix.nixosModules.sops
-
-            # Modules
-            /etc/nixos/hardware.nix
-            config/base/common.nix
-            config/base/${type}.nix
-            config/machines/${name}.nix
-
-            # Extra
-            {
-              home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
-              networking.hostName = name;
-            }
+          install = [
+            pkgs.btrfs-progs
+            pkgs.cryptsetup
+            pkgs.git
+            pkgs.jq
+            pkgs.gnupg
+            pkgs.parted
+            pkgs.pinentry-tty
           ];
 
-          specialArgs = {
-            _glb = { inherit nixpkgs type; };
-            lib = nixpkgs.lib.extend (self: super: home-manager.lib);
-          };
+          upgrade = [
+            pkgs.curl
+            pkgs.jq
+            pkgs.unzip
+            pkgs.vim
+          ];
         };
-      in
-      mkSystems (nixpkgs.lib.importJSON ./machines.json);
-  };
+
+      nixosConfigurations =
+        let
+          mkSystems = set: builtins.mapAttrs (name: value: mkSystem name set.${name}) set;
+
+          mkSystem =
+            name: type:
+            nixpkgs.lib.nixosSystem {
+              modules = [
+                # Libraries
+                config/globals.nix
+                home-manager.nixosModules.home-manager
+                impermanence.nixosModules.impermanence
+                sops-nix.nixosModules.sops
+
+                # Modules
+                /etc/nixos/hardware.nix
+                config/base/common.nix
+                config/base/${type}.nix
+                config/machines/${name}.nix
+
+                # Extra
+                {
+                  home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+                  networking.hostName = name;
+                }
+              ];
+
+              specialArgs = {
+                _glb = { inherit nixpkgs type; };
+                lib = nixpkgs.lib.extend (self: super: home-manager.lib);
+              };
+            };
+        in
+        mkSystems (nixpkgs.lib.importJSON ./machines.json);
+    };
 }
