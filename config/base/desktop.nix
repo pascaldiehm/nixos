@@ -482,6 +482,7 @@
             aaron-bond.better-comments
             bradlc.vscode-tailwindcss
             dbaeumer.vscode-eslint
+            editorconfig.editorconfig
             esbenp.prettier-vscode
             foxundermoon.shell-format
             github.vscode-github-actions
@@ -493,9 +494,9 @@
             ms-python.python
             ms-vscode.cmake-tools
             pkief.material-icon-theme
+            redhat.java
             streetsidesoftware.code-spell-checker
             twxs.cmake
-            redhat.java
             usernamehw.errorlens
             vscodevim.vim
           ]
