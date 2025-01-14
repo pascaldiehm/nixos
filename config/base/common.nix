@@ -232,9 +232,9 @@
         zsh = {
           enable = true;
           autosuggestion.enable = true;
-          completionInit = "autoload -U compinit && compinit -d '${config.home-manager.users.pascal.xdg.stateHome}/.zcompdump'";
+          completionInit = "autoload -U compinit && compinit -d '${config.home-manager.users.pascal.xdg.stateHome}/zsh/.zcompdump'";
           dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
-          history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
+          history.path = "${config.home-manager.users.pascal.xdg.stateHome}/zsh/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           localVariables.NIXOS_MACHINE_TYPE = system.type;
           plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { zsh-completions = pkgs.zsh-completions; };
