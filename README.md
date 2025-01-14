@@ -58,7 +58,7 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 - [machines.json](machines.json): Lists defined machines and their type
 - [bin](bin/): Scripts that are exported as apps by [flake.nix](flake.nix)
 - [config](config/): Nix configuration files
-  - [globals.nix](config/globals.nix): Helper functions and constants used throughout the configuration
+  - [lib.nix](config/lib.nix): Helper functions used throughout the configuration
   - [base](config/base/): Common configuration (shared between machines)
   - [extra](config/extra/): Additional (temporary) modules
   - [machines](config/machines/): Machine-specific configuration

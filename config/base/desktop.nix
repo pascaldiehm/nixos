@@ -1,8 +1,9 @@
 {
   config,
   lib,
-  glb,
+  libx,
   pkgs,
+  system,
   ...
 }:
 {
@@ -104,7 +105,7 @@
 
         policies = {
           DisableFirefoxAccounts = true;
-          ExtensionSettings = glb.mkMozillaExtensions ../../resources/extensions/firefox.json;
+          ExtensionSettings = libx.mkMozillaExtensions ../../resources/extensions/firefox.json;
           OverrideFirstRunPage = "";
           OverridePostUpdatePage = "";
           PasswordManagerEnabled = false;
@@ -454,7 +455,7 @@
         enable = true;
 
         package = pkgs.thunderbird.override {
-          extraPolicies.ExtensionSettings = glb.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
+          extraPolicies.ExtensionSettings = libx.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
         };
 
         profiles.default = {
@@ -569,7 +570,7 @@
 
           "nix.serverSettings".nixd = {
             nixpkgs.expr = "import (builtins.getFlake \"\${workspaceFolder}\").inputs.nixpkgs {}";
-            options.nixos.expr = "(builtins.getFlake \"${config.home-manager.users.pascal.xdg.configHome}/nixos\").nixosConfigurations.${config.system.name}.options";
+            options.nixos.expr = "(builtins.getFlake \"${config.home-manager.users.pascal.xdg.configHome}/nixos\").nixosConfigurations.${system.name}.options";
 
             formatting.command = [
               "${pkgs.nixfmt-rfc-style}/bin/nixfmt"

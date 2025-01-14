@@ -21,14 +21,7 @@
   };
 
   outputs =
-    {
-      home-manager,
-      impermanence,
-      nixpkgs,
-      plasma-manager,
-      sops-nix,
-      ...
-    }:
+    { nixpkgs, ... }@inputs:
     {
       apps.x86_64-linux =
         let
@@ -79,27 +72,22 @@
             nixpkgs.lib.nixosSystem {
               modules = [
                 # Libraries
-                config/globals.nix
-                home-manager.nixosModules.home-manager
-                impermanence.nixosModules.impermanence
-                sops-nix.nixosModules.sops
+                config/lib.nix
+                inputs.home-manager.nixosModules.home-manager
+                inputs.impermanence.nixosModules.impermanence
+                inputs.sops-nix.nixosModules.sops
 
                 # Modules
                 /etc/nixos/hardware.nix
                 config/base/common.nix
                 config/base/${type}.nix
                 config/machines/${name}.nix
-
-                # Extra
-                {
-                  home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
-                  networking.hostName = name;
-                }
               ];
 
               specialArgs = {
-                _glb = { inherit nixpkgs type; };
-                lib = nixpkgs.lib.extend (self: super: home-manager.lib);
+                inherit inputs;
+                lib = nixpkgs.lib.extend (self: super: inputs.home-manager.lib);
+                system = { inherit name type; };
               };
             };
         in

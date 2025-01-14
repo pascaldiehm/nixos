@@ -1,10 +1,10 @@
-{ config, glb, ... }:
+{ config, libx, ... }:
 {
   boot.swraid = {
     enable = true;
 
     mdadmConf = ''
-      PROGRAM ${glb.mkNtfy "raid" "$1: $2\${3:+ ($3)}"}
+      PROGRAM ${libx.mkNtfy "raid" "$1: $2\${3:+ ($3)}"}
       ARRAY /dev/md/0 metadata=1.2 name=bowser:0 UUID=d56224b5:9d97fe09:73ab00f5:631ed84c
     '';
   };
@@ -30,7 +30,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "${glb.mkNtfy "ups" "$1"}";
+        NOTIFYCMD = "${libx.mkNtfy "ups" "$1"}";
 
         NOTIFYFLAG =
           builtins.map

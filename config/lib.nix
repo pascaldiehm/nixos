@@ -1,15 +1,12 @@
 {
-  _glb,
   config,
   lib,
   pkgs,
+  system,
   ...
 }:
 {
-  _module.args.glb = {
-    machineType = _glb.type;
-    nixpkgs = _glb.nixpkgs;
-
+  _module.args.libx = {
     mkMozillaExtensions =
       path:
       {
@@ -28,8 +25,8 @@
     mkNtfy =
       channel: message:
       pkgs.writeShellScript "ntfy" ''
-        TOKEN="$(cat "${config.sops.secrets."${config.system.name}/ntfy".path}")"
-        ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${config.system.name}-${channel}"
+        TOKEN="$(cat "${config.sops.secrets."${system.name}/ntfy".path}")"
+        ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${system.name}-${channel}"
       '';
   };
 }

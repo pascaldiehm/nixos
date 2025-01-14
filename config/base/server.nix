@@ -1,4 +1,9 @@
-{ config, glb, ... }:
+{
+  config,
+  libx,
+  system,
+  ...
+}:
 {
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   security.sudo.wheelNeedsPassword = false;
@@ -29,7 +34,7 @@
 
     openssh = {
       enable = true;
-      authorizedKeysFiles = [ config.sops.secrets."${config.system.name}/ssh".path ];
+      authorizedKeysFiles = [ config.sops.secrets."${system.name}/ssh".path ];
       ports = [ 1970 ];
 
       settings = {
@@ -41,15 +46,15 @@
   };
 
   sops.secrets = {
-    "${config.system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
-    "${config.system.name}/ssh".owner = "pascal";
+    "${system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
+    "${system.name}/ssh".owner = "pascal";
     github.owner = "pascal";
   };
 
   systemd.services.journalwatch = {
     after = [ "network-online.target" ];
     description = "Watch journalctl and report security-relevant events to ntfy";
-    environment.NTFY_CMD = "${glb.mkNtfy "journal" "$1"}";
+    environment.NTFY_CMD = "${libx.mkNtfy "journal" "$1"}";
     script = builtins.readFile ../../resources/scripts/journalwatch.sh;
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];

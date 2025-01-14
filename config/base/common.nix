@@ -1,13 +1,15 @@
 {
   config,
+  inputs,
   lib,
-  glb,
   pkgs,
+  system,
   ...
 }:
 {
   console.keyMap = "de";
   i18n.defaultLocale = "en_US.UTF-8";
+  networking.hostName = system.name;
   programs.nano.enable = false;
   system.stateVersion = "24.11";
   time.timeZone = "Europe/Berlin";
@@ -31,7 +33,7 @@
   environment = {
     etc = {
       hosts.mode = "0644";
-      "nix/inputs/nixpkgs".source = "${glb.nixpkgs}";
+      "nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
     };
 
     persistence."/perm" = {
@@ -53,7 +55,7 @@
 
   fileSystems = {
     "/" = {
-      device = if glb.machineType == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      device = if system.type == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
@@ -84,6 +86,7 @@
 
   home-manager = {
     backupFileExtension = "hm-bak";
+    sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
     useGlobalPkgs = true;
     useUserPackages = true;
 
@@ -233,7 +236,7 @@
           dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
           history.path = "${config.home-manager.users.pascal.xdg.stateHome}/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
-          localVariables.NIXOS_MACHINE_TYPE = glb.machineType;
+          localVariables.NIXOS_MACHINE_TYPE = system.type;
           plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { zsh-completions = pkgs.zsh-completions; };
           syntaxHighlighting.enable = true;
         };
@@ -243,7 +246,7 @@
 
   nix = {
     channel.enable = false;
-    registry.nixpkgs.flake = glb.nixpkgs;
+    registry.nixpkgs.flake = inputs.nixpkgs;
 
     gc = {
       automatic = true;
@@ -271,7 +274,7 @@
 
   sops = {
     age.sshKeyPaths = [ ];
-    defaultSopsFile = ../../resources/secrets/${glb.machineType}/store.yaml;
+    defaultSopsFile = ../../resources/secrets/${system.type}/store.yaml;
 
     gnupg = {
       home = "/perm/etc/nixos/.gnupg";
