@@ -42,7 +42,7 @@
       address = "pdiehm8@gmail.com";
       flavor = "gmail.com";
       primary = true;
-      realName = config.users.users.pascal.description;
+      realName = "Pascal Diehm";
       thunderbird.enable = true;
 
       gpg = {
@@ -231,7 +231,7 @@
 
       gpg = {
         enable = true;
-        homedir = "${config.home-manager.users.pascal.xdg.dataHome}/gnupg";
+        homedir = "/home/pascal/.local/share/gnupg";
         scdaemonSettings.disable-ccid = true;
       };
 
@@ -571,7 +571,7 @@
 
           "nix.serverSettings".nixd = {
             nixpkgs.expr = "import (builtins.getFlake \"\${workspaceFolder}\").inputs.nixpkgs {}";
-            options.nixos.expr = "(builtins.getFlake \"${config.home-manager.users.pascal.xdg.configHome}/nixos\").nixosConfigurations.${system.name}.options";
+            options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${system.name}.options";
 
             formatting.command = [
               "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
@@ -712,7 +712,7 @@
 
     u2f_keys = {
       owner = "pascal";
-      path = "${config.home-manager.users.pascal.xdg.configHome}/Yubico/u2f_keys";
+      path = "/home/pascal/.config/Yubico/u2f_keys";
     };
   };
 

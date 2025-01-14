@@ -95,11 +95,11 @@
 
       home = {
         inherit (config.system) stateVersion;
-        homeDirectory = config.users.users.pascal.home;
+        homeDirectory = "/home/pascal";
         username = "pascal";
 
         activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run find "${config.users.users.pascal.home}" -name "*.${config.home-manager.backupFileExtension}" -exec rm -rf "{}" ";"
+          run find /home/pascal -name "*.${config.home-manager.backupFileExtension}" -exec rm -rf "{}" ";"
         '';
 
         packages = [
@@ -118,7 +118,7 @@
         git = {
           enable = true;
           userEmail = "pdiehm8@gmail.com";
-          userName = config.users.users.pascal.description;
+          userName = "Pascal Diehm";
 
           aliases = {
             a = "add";
@@ -232,9 +232,9 @@
         zsh = {
           enable = true;
           autosuggestion.enable = true;
-          completionInit = "autoload -U compinit && compinit -d '${config.home-manager.users.pascal.xdg.stateHome}/zsh/.zcompdump'";
-          dotDir = "${lib.removePrefix "${config.users.users.pascal.home}/" config.home-manager.users.pascal.xdg.configHome}/zsh";
-          history.path = "${config.home-manager.users.pascal.xdg.stateHome}/zsh/.zsh_history";
+          completionInit = "autoload -U compinit && compinit -d '/home/pascal/.local/state/zsh/.zcompdump'";
+          dotDir = ".config/zsh";
+          history.path = "/home/pascal/.local/state/zsh/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           localVariables.NIXOS_MACHINE_TYPE = system.type;
           plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { inherit (pkgs) zsh-completions; };

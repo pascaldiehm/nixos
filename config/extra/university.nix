@@ -3,7 +3,7 @@
   home-manager.users.pascal = {
     accounts.email.accounts.university = {
       address = "pascal.diehm@stud-mail.uni-wuerzburg.de";
-      realName = config.users.users.pascal.description;
+      realName = "Pascal Diehm";
       thunderbird.enable = true;
       userName = "s457719";
 
