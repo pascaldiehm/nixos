@@ -71,13 +71,13 @@
     };
 
     "/nix" = {
-      device = config.fileSystems."/".device;
+      inherit (config.fileSystems."/") device;
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
     "/perm" = {
-      device = config.fileSystems."/".device;
+      inherit (config.fileSystems."/") device;
       fsType = "btrfs";
       neededForBoot = true;
       options = [ "subvol=perm" ];
@@ -94,8 +94,8 @@
       xdg.enable = true;
 
       home = {
+        inherit (config.system) stateVersion;
         homeDirectory = config.users.users.pascal.home;
-        stateVersion = config.system.stateVersion;
         username = "pascal";
 
         activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -237,7 +237,7 @@
           history.path = "${config.home-manager.users.pascal.xdg.stateHome}/zsh/.zsh_history";
           initExtra = builtins.readFile ../../resources/zshrc.zsh;
           localVariables.NIXOS_MACHINE_TYPE = system.type;
-          plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { zsh-completions = pkgs.zsh-completions; };
+          plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { inherit (pkgs) zsh-completions; };
           syntaxHighlighting.enable = true;
         };
       };
