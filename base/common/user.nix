@@ -5,7 +5,6 @@
   users.users.pascal = {
     description = "Pascal Diehm";
     hashedPasswordFile = config.sops.secrets.password.path;
-    home = "/home/pascal";
     ignoreShellProgramCheck = true;
     isNormalUser = true;
     shell = pkgs.zsh;
