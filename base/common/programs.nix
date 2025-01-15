@@ -5,8 +5,6 @@
   ...
 }:
 {
-  programs.nano.enable = false;
-
   home-manager.users.pascal = {
     home.packages = [
       pkgs.btrfs-progs
@@ -36,5 +34,10 @@
         syntaxHighlighting.enable = true;
       };
     };
+  };
+
+  programs = {
+    command-not-found.enable = false;
+    nano.enable = false;
   };
 }
