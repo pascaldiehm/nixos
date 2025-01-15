@@ -440,7 +440,6 @@
 
       ssh.matchBlocks = {
         "github.com".identityFile = config.sops.secrets."ssh/github".path;
-        installer.identityFile = config.sops.secrets."ssh/installer".path;
 
         bowser = {
           identityFile = config.sops.secrets."ssh/bowser".path;
@@ -450,6 +449,12 @@
         goomba = {
           identityFile = config.sops.secrets."ssh/goomba".path;
           port = 1970;
+        };
+
+        installer = {
+          hostname = "0.0.0.0";
+          identityFile = config.sops.secrets."ssh/installer".path;
+          user = "nixos";
         };
       };
 
