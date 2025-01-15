@@ -44,7 +44,7 @@ For starters, the flake exports 3 apps:
 - [`update`](bin/update.sh) should be run from an installed system. It ensures that the config repository is up-to-date and then calls `nixos-rebuild switch` with the necessary flags to rebuild the system.
 - [`upgrade`](bin/upgrade.sh) can be run from any system. It updates the system flake and [extensions](resources/extensions/).
 
-The [zshrc](resources/zshrc.zsh) also defines 3 helpers:
+The [zshrc](resources/zshrc.zsh) also defines 4 helper functions:
 
 - `nixos-iso` builds a customized [NixOS installer image](config/installer.nix).
 - `nixos-secrets` opens the sops editor for the specified [subdirectory](resources/secrets/).

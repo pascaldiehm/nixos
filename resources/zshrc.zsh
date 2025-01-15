@@ -99,12 +99,17 @@ bindkey "^Y" redo                                # Ctrl+Y
 alias grep="grep --color=auto"
 alias l="ls -alh"
 alias ls="ls --color=auto"
-alias nixos-iso="nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage && cp result/iso/*.iso nixos.iso && rm result"
-alias nixos-test="sudo nixos-rebuild --impure --flake ~/.config/nixos test"
-alias nixos-update="nix run ~/.config/nixos#update"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
+function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos test; }
+function nixos-update() { nix run ~/.config/nixos#update; }
+
+function nixos-iso() {
+  nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
+  cp result/iso/*.iso nixos.iso
+  rm result
+}
 
 compdef _nothing nixos-iso
 compdef _nothing nixos-test
