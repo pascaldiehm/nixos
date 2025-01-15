@@ -268,7 +268,6 @@
 
   services = {
     fwupd.enable = true;
-    journald.storage = "volatile";
     xserver.xkb.layout = config.console.keyMap;
   };
 
