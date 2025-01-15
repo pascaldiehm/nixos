@@ -30,23 +30,19 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 | Shell               | ZSH                  | ZSH              |
 | Text editor         | VSCodium, vim        | vim              |
 
-Additionally, all systems are set up for **docker** and **git**, configure an **ssh** client and share a common `/etc/hosts` file.
-Desktop systems also install **Firefox**, **Thunderbird**, **VLC** and **quickemu** and setup **Yubikey** authentication.
-Server systems run an **ssh** server secured by **fail2ban** and a custom **journalwatch** service, that reports security-relevant events to my own [ntfy](https://ntfy.sh) instance.
-
 ## Tools
 
 This project contains a few tools to make my life a little easier.
 
 For starters, the flake exports 3 apps:
 
-- [`install`](bin/install.sh) should be run from a NixOS installer. It guides the user through installing one of the machines.
-- [`update`](bin/update.sh) should be run from an installed system. It ensures that the config repository is up-to-date and then calls `nixos-rebuild switch` with the necessary flags to rebuild the system.
-- [`upgrade`](bin/upgrade.sh) can be run from any system. It updates the system flake and [extensions](resources/extensions/).
+- [`install`](apps/install.sh) should be run from a NixOS installer. It guides the user through installing one of the machines.
+- [`update`](apps/update.sh) should be run from an installed system. It ensures that the config repository is up-to-date and then calls `nixos-rebuild switch` with the necessary flags to rebuild the system.
+- [`upgrade`](apps/upgrade.sh) can be run from any system. It updates the system flake and [extensions](resources/extensions/).
 
-The [zshrc](resources/zshrc.zsh) also defines 4 helper functions:
+Also, the [zshrc](resources/zshrc.zsh) defines 4 helper functions:
 
-- `nixos-iso` builds a customized [NixOS installer image](config/installer.nix).
+- `nixos-iso` builds a customized [NixOS installer image](extra/installer.nix).
 - `nixos-secrets` opens the sops editor for the specified [subdirectory](resources/secrets/).
 - `nixos-test` runs `nixos-rebuild test` with the necessary flags to test a modified system configuration.
 - `nixos-update` runs the `update` app provided by the system flake.
@@ -56,13 +52,12 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 ## Structure
 
 - [flake.nix](flake.nix): Entry point
+- [lib.nix](lib.nix): Helper functions used through the configuration
 - [machines.json](machines.json): Lists defined machines and their type
-- [bin](bin/): Scripts that are exported as apps by [flake.nix](flake.nix)
-- [config](config/): Nix configuration files
-  - [lib.nix](config/lib.nix): Helper functions used throughout the configuration
-  - [base](config/base/): Common configuration (shared between machines)
-  - [extra](config/extra/): Additional (temporary) modules
-  - [machines](config/machines/): Machine-specific configuration
+- [apps](apps/): Scripts that are exported as apps by [flake.nix](flake.nix)
+- [base](base/): Common configuration shared between machines
+- [extra](extra/): Additional modules
+- [machines](machines/): Machine-specific configuration
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs
   - [scripts](resources/scripts/): Outsourced shell scripts

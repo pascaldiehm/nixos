@@ -1,7 +1,4 @@
-{ pkgs, ... }:
 {
-  hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
-
   networking.networkmanager.ensureProfiles.profiles = {
     home = {
       wireguard.private-key = "$WIREGUARD_PASCAL_LAPTOP_KEY";

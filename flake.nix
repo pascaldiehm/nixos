@@ -32,7 +32,7 @@
             pkgs.writeShellApplication {
               inherit name runtimeInputs;
               runtimeEnv.MACHINES_FILE = "${./machines.json}";
-              text = builtins.readFile bin/${name}.sh;
+              text = builtins.readFile apps/${name}.sh;
             };
 
           mkScripts =
@@ -72,16 +72,16 @@
             nixpkgs.lib.nixosSystem {
               modules = [
                 # Libraries
-                config/lib.nix
+                ./lib.nix
                 inputs.home-manager.nixosModules.home-manager
                 inputs.impermanence.nixosModules.impermanence
                 inputs.sops-nix.nixosModules.sops
 
                 # Modules
                 /etc/nixos/hardware.nix
-                config/base/common.nix
-                config/base/${type}.nix
-                config/machines/${name}.nix
+                base/common
+                base/${type}
+                machines/${name}
               ];
 
               specialArgs = {
@@ -93,7 +93,7 @@
         in
         mkSystems (nixpkgs.lib.importJSON ./machines.json)
         // {
-          installer = nixpkgs.lib.nixosSystem { modules = [ config/extra/installer.nix ]; };
+          installer = nixpkgs.lib.nixosSystem { modules = [ extra/installer.nix ]; };
         };
     };
 }
