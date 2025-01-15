@@ -9,7 +9,7 @@
   environment.systemPackages = [ (pkgs.writeShellScriptBin "install-nixos" "nix run github:pascaldiehm/nixos#install") ];
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
   nixpkgs.hostPlatform = "x86_64-linux";
-  services.getty.helpLine = lib.mkAfter "Install custom configuration (github:pascaldiehm/nixos) using install-nixos.";
+  services.getty.helpLine = lib.mkAfter "Run 'install-nixos' to install nixos.";
 
   nix.settings.experimental-features = [
     "flakes"
