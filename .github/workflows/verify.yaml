@@ -19,6 +19,26 @@ jobs:
 
           nix flake check --impure --option keep-going true
 
+      - name: Check default.nix imports
+        if: ${{ !cancelled() }}
+        run: |
+          failed="false"
+
+          find . -name "default.nix" | while read -r default; do
+            echo "Checking $default"
+
+            ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do
+              if [ -z "$(nix eval --json --file "$default" imports | jq -r ".[]" | grep "$module")" ]; then
+                echo "  - $module (missing)"
+                failed="true"
+              else
+                echo "  - $module"
+              fi
+            done
+          done
+
+          test "$failed" = "false"
+
       - name: Lint Nix
         if: ${{ !cancelled() }}
         run: |
@@ -41,6 +61,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           failed="false"
+
           find . -name "*.sh" | while read -r file; do
             echo "Checking $file"
             nix run nixpkgs#shellcheck -- "$file" || failed="true"
