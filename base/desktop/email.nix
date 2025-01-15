@@ -10,15 +10,5 @@
       key = "E85EB0566C779A2F";
       signByDefault = true;
     };
-
-    imap = {
-      host = "imap.gmail.com";
-      port = 993;
-    };
-
-    smtp = {
-      host = "smtp.gmail.com";
-      port = 465;
-    };
   };
 }
