@@ -93,7 +93,7 @@
         in
         mkSystems (nixpkgs.lib.importJSON ./machines.json)
         // {
-          installer = nixpkgs.lib.nixosSystem { modules = [ config/installer.nix ]; };
+          installer = nixpkgs.lib.nixosSystem { modules = [ config/extra/installer.nix ]; };
         };
     };
 }
