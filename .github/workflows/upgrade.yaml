@@ -25,7 +25,7 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        run: '[ -z "$(git status --porcelain)" ] || echo "changed=true" >> "$GITHUB_ENV"'
+        run: '[ -z "$(git status --porcelain)" ] || echo changed=true >> "$GITHUB_ENV"'
 
       - name: Verify
         if: env.changed == 'true'
@@ -35,7 +35,7 @@ jobs:
 
           jq -r "keys[]" machines.json | while read -r machine; do
             if ! timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel"; then
-              echo "valid=false" >> "$GITHUB_ENV"
+              echo valid=false >> "$GITHUB_ENV"
               break
             fi
           done
@@ -43,7 +43,7 @@ jobs:
       - name: Commit
         if: env.changed == 'true' && env.valid == 'true'
         run: |
-          CHANGES_FLAKE="$(git diff flake.lock | grep "repo" | cut -d '"' -f 4)"
+          CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4)"
           [ -n "$CHANGES_FLAKE" ] && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
           git add flake.lock
 

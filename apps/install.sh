@@ -88,7 +88,7 @@ echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 echo "Setting up GnuPG..."
 mkdir -p /mnt/perm/etc/nixos/.gnupg
 chmod 700 /mnt/perm/etc/nixos/.gnupg
-echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
+echo disable-scdaemon >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
 gpg --decrypt "/home/pascal/.config/nixos/resources/secrets/$TYPE/key.gpg" | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import

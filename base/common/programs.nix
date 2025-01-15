@@ -25,7 +25,7 @@
       zsh = {
         enable = true;
         autosuggestion.enable = true;
-        completionInit = "autoload -U compinit && compinit -d '/home/pascal/.local/state/zsh/.zcompdump'";
+        completionInit = "autoload -U compinit && compinit -d /home/pascal/.local/state/zsh/.zcompdump";
         dotDir = ".config/zsh";
         history.path = "/home/pascal/.local/state/zsh/.zsh_history";
         initExtra = builtins.readFile ../../resources/zshrc.zsh;

@@ -24,7 +24,7 @@ jobs:
         run: |
           failed="false"
 
-          find . -name "default.nix" | while read -r default; do
+          find . -name default.nix | while read -r default; do
             echo "Checking $default"
 
             ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do

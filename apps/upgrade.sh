@@ -14,14 +14,14 @@ jq -c ".[]" resources/extensions/firefox.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
-  name="$(echo "$ext" | jq -r ".name")"
+  name="$(echo "$ext" | jq -r .name)"
   echo "  - $name"
 
   curl -s -i "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
   curl -s -o "$tmp/$name.xpi" "$source"
-  id="$(unzip -q -c "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  id="$(unzip -q -c "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
 done
@@ -39,14 +39,14 @@ jq -c ".[]" resources/extensions/thunderbird.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
-  name="$(echo "$ext" | jq -r ".name")"
+  name="$(echo "$ext" | jq -r .name)"
   echo "  - $name"
 
   curl -s -i "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
   curl -s -o "$tmp/$name.xpi" "$source"
-  id="$(unzip -q -c "$tmp/$name.xpi" "manifest.json" | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  id="$(unzip -q -c "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
 done
@@ -64,13 +64,13 @@ jq -c ".[]" resources/extensions/vscode.json | while read -r ext; do
   [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
   first=0
 
-  publisher="$(echo "$ext" | jq -r ".publisher")"
-  name="$(echo "$ext" | jq -r ".name")"
+  publisher="$(echo "$ext" | jq -r .publisher)"
+  name="$(echo "$ext" | jq -r .name)"
   id="$publisher.$name"
   echo "  - $id"
 
   curl -s -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-  version="$(unzip -qc "$tmp/$id.vsix" "extension/package.json" | jq -r ".version")"
+  version="$(unzip -qc "$tmp/$id.vsix" extension/package.json | jq -r .version)"
 
   curl -s -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/$version/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
   hash="sha256-$(sha256sum "$tmp/$id.vsix" | cut -d " " -f 1 | xxd -r -p | base64 -w 0)"
