@@ -91,6 +91,9 @@
               };
             };
         in
-        mkSystems (nixpkgs.lib.importJSON ./machines.json);
+        mkSystems (nixpkgs.lib.importJSON ./machines.json)
+        // {
+          installer = nixpkgs.lib.nixosSystem { modules = [ config/installer.nix ]; };
+        };
     };
 }

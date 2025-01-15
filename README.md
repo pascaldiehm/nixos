@@ -46,9 +46,10 @@ For starters, the flake exports 3 apps:
 
 The [zshrc](resources/zshrc.zsh) also defines 3 helpers:
 
+- `nixos-iso` builds a customized [NixOS installer image](config/installer.nix).
+- `nixos-secrets` opens the sops editor for the specified [subdirectory](resources/secrets/).
 - `nixos-test` runs `nixos-rebuild test` with the necessary flags to test a modified system configuration.
 - `nixos-update` runs the `update` app provided by the system flake.
-- `nixos-secrets` opens the sops editor for the specified [subdirectory](resources/secrets/).
 
 Last but not least, the repository contains a nightly [workflow](.github/workflows/upgrade.yaml) that runs the `upgrade` app, makes sure all machines compile and commits the changes to the repository.
 

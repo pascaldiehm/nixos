@@ -440,6 +440,7 @@
 
       ssh.matchBlocks = {
         "github.com".identityFile = config.sops.secrets."ssh/github".path;
+        installer.identityFile = config.sops.secrets."ssh/installer".path;
 
         bowser = {
           identityFile = config.sops.secrets."ssh/bowser".path;
@@ -705,6 +706,7 @@
     "ssh/bowser".owner = "pascal";
     "ssh/github".owner = "pascal";
     "ssh/goomba".owner = "pascal";
+    "ssh/installer".owner = "pascal";
 
     network.restartUnits = [
       "NetworkManager.service"
