@@ -26,19 +26,5 @@
         TOKEN="$(cat "${config.sops.secrets."${system.name}/ntfy".path}")"
         ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${system.name}-${channel}"
       '';
-
-    mkScript =
-      {
-        env ? { },
-        name ? null,
-        path ? ./script,
-        text ? null,
-      }:
-      pkgs.writeShellApplication {
-        name = if name == null then builtins.baseNameOf path else name;
-        runtimeEnv = env;
-        text = if text == null then builtins.readFile path else text;
-      }
-      |> (app: "${app}/bin/${app.name}");
   };
 }
