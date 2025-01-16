@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+test -x "$NTFY_CMD"
+
 PAT_SSHD_PASSWORD="^(Accepted|Failed) password for (\w+) from (\S+) port ([0-9]+) ssh2$"
 PAT_SSHD_PUBLICKEY="^(Accepted|Failed) publickey for (\w+) from (\S+) port ([0-9]+) ssh2: (\S+) SHA256:(\S+)$"
 PAT_SSHD_USER="^Invalid user (\w+) from (\S+) port ([0-9]+)$"

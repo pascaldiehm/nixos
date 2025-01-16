@@ -1,15 +1,18 @@
 {
   config,
   lib,
+  libx,
   system,
   ...
 }:
 {
   boot = {
-    initrd.postDeviceCommands = lib.mkAfter ''
-      DISK="${config.fileSystems."/".device}"
-      ${builtins.readFile ../../resources/scripts/wipe-root.sh}
-    '';
+    initrd.postDeviceCommands =
+      libx.mkScript {
+        env.DISK = config.fileSystems."/".device;
+        path = ../../resources/scripts/wipe-root.sh;
+      }
+      |> lib.mkAfter;
 
     loader = {
       efi.canTouchEfiVariables = true;

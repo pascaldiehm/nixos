@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+test -b "$DISK"
+
 tmp="$(mktemp -d)"
 mount "$DISK" "$tmp"
 
