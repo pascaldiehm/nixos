@@ -15,7 +15,8 @@ while [ "$TYPE" = "null" ]; do
   echo "Which machine should I install?"
   echo
   read -r -p "> " MACHINE
-  TYPE="$(jq -r ".\"$MACHINE\"" "$MACHINES_FILE")"
+  # TYPE="$(jq -r ".\"$MACHINE\"" "$MACHINES_FILE")"
+  TYPE="$(machines | jq -r ".\"$MACHINE\"")"
 done
 
 DEV=""

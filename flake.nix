@@ -51,6 +51,7 @@
             pkgs.gnupg
             pkgs.parted
             pkgs.pinentry-tty
+            (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
           ];
 
           upgrade = [
