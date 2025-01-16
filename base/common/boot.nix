@@ -1,18 +1,7 @@
-{
-  config,
-  lib,
-  libx,
-  system,
-  ...
-}:
+{ lib, ... }:
 {
   boot = {
-    initrd.postDeviceCommands =
-      libx.mkScript {
-        env.DISK = config.fileSystems."/".device;
-        path = ../../resources/scripts/wipe-root.sh;
-      }
-      |> lib.mkAfter;
+    initrd.postDeviceCommands = builtins.readFile ../../resources/scripts/wipe-root.sh |> lib.mkAfter;
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -26,13 +15,13 @@
 
   fileSystems = {
     "/" = {
-      device = if system.type == "desktop" then "/dev/mapper/nixos" else "/dev/disk/by-partlabel/nixos";
+      label = "nixos";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/ESP";
+      label = "ESP";
       fsType = "vfat";
 
       options = [
@@ -42,13 +31,13 @@
     };
 
     "/nix" = {
-      inherit (config.fileSystems."/") device;
+      label = "nixos";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
     "/perm" = {
-      inherit (config.fileSystems."/") device;
+      label = "nixos";
       fsType = "btrfs";
       neededForBoot = true;
       options = [ "subvol=perm" ];

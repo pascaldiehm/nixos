@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-test -b "$DISK"
-
 tmp="$(mktemp -d)"
-mount "$DISK" "$tmp"
+mount /dev/disk/by-label/nixos "$tmp"
 
 mkdir -p "$tmp/history"
 [ -d "$tmp/root" ] && mv "$tmp/root" "$tmp/history/$(date -d "@$(stat -c "%Y" "$tmp/root")" "+%Y-%m-%d_%H:%M:%S")"
