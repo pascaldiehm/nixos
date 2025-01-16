@@ -9,18 +9,16 @@
   _module.args.libx = {
     mkMozillaExtensions =
       path:
-      {
-        "*".installation_mode = "blocked";
-      }
-      // builtins.listToAttrs (
-        builtins.map (ext: {
+      lib.importJSON path
+      |> builtins.map (ext: {
           name = ext.id;
           value = {
             installation_mode = "force_installed";
             install_url = ext.source;
           };
-        }) (lib.importJSON path)
-      );
+      })
+      |> builtins.listToAttrs
+      |> (extensions: { "*".installation_mode = "blocked"; } // extensions);
 
     mkNtfy =
       channel: message:

@@ -27,20 +27,18 @@
         let
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-          mkScript =
-            name: runtimeInputs:
-            pkgs.writeShellApplication {
-              inherit name runtimeInputs;
-              runtimeEnv.MACHINES_FILE = "${./machines.json}";
-              text = builtins.readFile apps/${name}.sh;
-            };
-
-          mkScripts =
-            set:
-            builtins.mapAttrs (name: value: {
-              program = "${mkScript name value}/bin/${name}";
+          mkScripts = builtins.mapAttrs (
+            name: runtimeDependencies: {
               type = "app";
-            }) set;
+
+              program =
+                pkgs.writeShellApplication {
+                  inherit name runtimeDependencies;
+                  text = builtins.readFile apps/${name}.sh;
+                }
+                |> (app: "${app}/bin/${name}");
+            }
+          );
         in
         mkScripts {
           update = [ pkgs.git ];
@@ -65,9 +63,7 @@
 
       nixosConfigurations =
         let
-          mkSystems = set: builtins.mapAttrs (name: value: mkSystem name set.${name}) set;
-
-          mkSystem =
+          mkSystems = builtins.mapAttrs (
             name: type:
             nixpkgs.lib.nixosSystem {
               modules = [
@@ -89,11 +85,11 @@
                 lib = nixpkgs.lib.extend (self: super: inputs.home-manager.lib);
                 system = { inherit name type; };
               };
-            };
+            }
+          );
         in
-        mkSystems (nixpkgs.lib.importJSON ./machines.json)
-        // {
-          installer = nixpkgs.lib.nixosSystem { modules = [ extra/installer.nix ]; };
-        };
+        nixpkgs.lib.importJSON ./machines.json
+        |> mkSystems
+        |> (systems: systems // { installer = nixpkgs.lib.nixosSystem { modules = [ extra/installer.nix ]; }; });
     };
 }

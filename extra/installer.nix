@@ -14,6 +14,7 @@
   nix.settings.experimental-features = [
     "flakes"
     "nix-command"
+    "pipe-operators"
   ];
 
   users.users.nixos.openssh.authorizedKeys.keys = [
