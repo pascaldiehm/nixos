@@ -16,6 +16,8 @@
     userDirs = {
       enable = true;
       createDirectories = true;
+      publicShare = null;
+      templates = null;
     };
   };
 }
