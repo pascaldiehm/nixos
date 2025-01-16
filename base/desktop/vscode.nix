@@ -111,6 +111,7 @@
 
         formatting.command = [
           "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
+          "-s"
           "-w"
           "120"
         ];
