@@ -28,12 +28,12 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
           mkScripts = builtins.mapAttrs (
-            name: runtimeDependencies: {
+            name: runtimeInputs: {
               type = "app";
 
               program =
                 pkgs.writeShellApplication {
-                  inherit name runtimeDependencies;
+                  inherit name runtimeInputs;
                   text = builtins.readFile apps/${name}.sh;
                 }
                 |> (app: "${app}/bin/${name}");
