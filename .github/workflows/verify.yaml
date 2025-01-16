@@ -26,9 +26,10 @@ jobs:
 
           find . -name default.nix | while read -r default; do
             echo "Checking $default"
+            used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
             ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do
-              if [ -z "$(nix eval --json --file "$default" imports | jq -r ".[]" | grep "$module")" ]; then
+              if [ -z "$(echo "$used" | grep "$module")" ]; then
                 echo "  - $module (missing)"
                 failed="true"
               else
