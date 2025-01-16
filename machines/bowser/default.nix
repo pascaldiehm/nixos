@@ -1,7 +1,1 @@
-{
-  imports = [
-    ./networking.nix
-    ./raid.nix
-    ./ups.nix
-  ];
-}
+{ imports = [ ./networking.nix ./raid.nix ./ups.nix ]; }

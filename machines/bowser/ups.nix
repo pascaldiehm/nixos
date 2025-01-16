@@ -1,5 +1,6 @@
-{ config, libx, ... }:
-{
+{ config, libx, ... }: {
+  sops.secrets."bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
+
   power.ups = {
     enable = true;
 
@@ -18,22 +19,16 @@
       settings = {
         NOTIFYCMD = "${libx.mkNtfy "ups" "$1"}";
 
-        NOTIFYFLAG =
-          builtins.map
-            (event: [
-              event
-              "SYSLOG+EXEC"
-            ])
-            [
-              "ONLINE"
-              "ONBATT"
-              "LOWBATT"
-              "FSD"
-              "SHUTDOWN"
-              "REPLBATT"
-              "NOCOMM"
-              "NOPARENT"
-            ];
+        NOTIFYFLAG = builtins.map (event: [ event "SYSLOG+EXEC" ]) [
+          "ONLINE"
+          "ONBATT"
+          "LOWBATT"
+          "FSD"
+          "SHUTDOWN"
+          "REPLBATT"
+          "NOCOMM"
+          "NOPARENT"
+        ];
       };
     };
 
@@ -44,9 +39,4 @@
       upsmon = "primary";
     };
   };
-
-  sops.secrets."bowser/nut".restartUnits = [
-    "upsd.service"
-    "upsmon.service"
-  ];
 }

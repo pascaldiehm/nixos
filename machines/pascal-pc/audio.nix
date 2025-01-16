@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   systemd.services.disable-auto-mute = {
     after = [ "sound.target" ];
     description = "Disable auto-mute";

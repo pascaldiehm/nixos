@@ -1,5 +1,4 @@
-{ libx, ... }:
-{
+{ libx, ... }: {
   boot.swraid = {
     enable = true;
 

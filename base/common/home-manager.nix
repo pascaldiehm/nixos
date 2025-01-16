@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
   home-manager = {
     backupFileExtension = "hm-bak";
     useGlobalPkgs = true;

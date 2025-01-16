@@ -1,14 +1,8 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   environment.persistence."/perm" = {
+    directories = [ "/etc/nixos" "/var/lib/nixos" "/var/lib/systemd" ];
     files = [ "/etc/machine-id" ];
     hideMounts = true;
-
-    directories = [
-      "/etc/nixos"
-      "/var/lib/nixos"
-      "/var/lib/systemd"
-    ];
 
     users.pascal.directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
       ".config/nixos" = "0755";

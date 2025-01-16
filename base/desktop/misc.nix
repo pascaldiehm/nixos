@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   boot.initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
   fonts.packages = [ pkgs.fira-code ];
 

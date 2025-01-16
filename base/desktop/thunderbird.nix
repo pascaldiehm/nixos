@@ -1,5 +1,4 @@
-{ libx, pkgs, ... }:
-{
+{ libx, pkgs, ... }: {
   home-manager.users.pascal.programs.thunderbird = {
     enable = true;
 

@@ -1,21 +1,12 @@
-{ inputs, pkgs, ... }:
-{
+{ inputs, lib, pkgs, ... }: {
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.krdp ];
   services.desktopManager.plasma6.enable = true;
-
-  environment.plasma6.excludePackages = [
-    pkgs.kdePackages.elisa
-    pkgs.kdePackages.krdp
-  ];
 
   home-manager = {
     sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
     users.pascal = {
-      home.packages = [
-        pkgs.kdePackages.filelight
-        pkgs.kdePackages.kdeconnect-kde
-        pkgs.kdePackages.partitionmanager
-      ];
+      home.packages = [ pkgs.kdePackages.filelight pkgs.kdePackages.kdeconnect-kde pkgs.kdePackages.partitionmanager ];
 
       programs = {
         konsole = {
@@ -99,54 +90,42 @@
             cornerBarrier = false;
             edgeBarrier = 0;
             effects.dimAdminMode.enable = true;
-
-            titlebarButtons.left = [
-              "more-window-actions"
-              "on-all-desktops"
-              "keep-above-windows"
-            ];
+            titlebarButtons.left = [ "more-window-actions" "on-all-desktops" "keep-above-windows" ];
 
             virtualDesktops = {
+              names = [ "Primary" "Secondary" "Tertiary" ];
               rows = 1;
-
-              names = [
-                "Primary"
-                "Secondary"
-                "Tertiary"
-              ];
             };
           };
 
-          panels = [
-            {
-              screen = 0;
+          panels = lib.singleton {
+            screen = 0;
 
-              widgets = [
-                {
-                  name = "org.kde.plasma.kickoff";
-                  config.General.icon = "${../../resources/flake.png}";
-                }
+            widgets = [
+              {
+                name = "org.kde.plasma.kickoff";
+                config.General.icon = "${../../resources/flake.png}";
+              }
 
-                {
-                  name = "org.kde.plasma.icontasks";
+              {
+                name = "org.kde.plasma.icontasks";
 
-                  config.General.launchers = [
-                    "applications:org.kde.dolphin.desktop"
-                    "applications:firefox.desktop"
-                    "applications:thunderbird.desktop"
-                  ];
-                }
+                config.General.launchers = [
+                  "applications:org.kde.dolphin.desktop"
+                  "applications:firefox.desktop"
+                  "applications:thunderbird.desktop"
+                ];
+              }
 
-                { name = "org.kde.plasma.marginsseparator"; }
-                { name = "org.kde.plasma.systemtray"; }
+              { name = "org.kde.plasma.marginsseparator"; }
+              { name = "org.kde.plasma.systemtray"; }
 
-                {
-                  name = "org.kde.plasma.digitalclock";
-                  config.Appearance.showSeconds = 2;
-                }
-              ];
-            }
-          ];
+              {
+                name = "org.kde.plasma.digitalclock";
+                config.Appearance.showSeconds = 2;
+              }
+            ];
+          };
 
           powerdevil = {
             battery.autoSuspend.action = "nothing";

@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [ config.sops.secrets."university/eduroam/network".path ];
 
@@ -46,11 +45,7 @@
   sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
+    "university/eduroam/network".restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
     "university/eduroam/private-key" = { };
-
-    "university/eduroam/network".restartUnits = [
-      "NetworkManager.service"
-      "NetworkManager-ensure-profiles.service"
-    ];
   };
 }

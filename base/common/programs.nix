@@ -1,17 +1,6 @@
-{
-  lib,
-  pkgs,
-  system,
-  ...
-}:
-{
+{ lib, pkgs, system, ... }: {
   home-manager.users.pascal = {
-    home.packages = [
-      pkgs.btrfs-progs
-      pkgs.jq
-      pkgs.unzip
-      pkgs.zip
-    ];
+    home.packages = [ pkgs.btrfs-progs pkgs.jq pkgs.unzip pkgs.zip ];
 
     programs = {
       ssh.enable = true;

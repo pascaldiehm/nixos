@@ -1,5 +1,4 @@
-{ config, system, ... }:
-{
+{ config, system, ... }: {
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
 
   services.openssh = {

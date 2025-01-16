@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home-manager.users.pascal = {
     home = {
       sessionVariables.CMAKE_GENERATOR = "Ninja";

@@ -21,8 +21,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
-    {
+    { nixpkgs, ... }@inputs: {
       apps.x86_64-linux =
         let
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -42,6 +41,7 @@
         in
         mkScripts {
           update = [ pkgs.git ];
+          upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
 
           install = [
             pkgs.btrfs-progs
@@ -52,13 +52,6 @@
             pkgs.parted
             pkgs.pinentry-tty
             (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
-          ];
-
-          upgrade = [
-            pkgs.curl
-            pkgs.jq
-            pkgs.unzip
-            pkgs.vim
           ];
         };
 
@@ -76,6 +69,7 @@
 
                 # Modules
                 /etc/nixos/hardware.nix
+                ./patches
                 base/common
                 base/${type}
                 machines/${name}

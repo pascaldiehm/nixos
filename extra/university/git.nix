@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   sops.secrets."university/gitlab-ssh-key".owner = "pascal";
 
   home-manager.users.pascal.programs = {

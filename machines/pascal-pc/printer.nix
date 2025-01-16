@@ -1,13 +1,9 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   hardware.sane.enable = true;
+  users.users.pascal.extraGroups = [ "lp" "scanner" ];
 
   home-manager.users.pascal = {
-    home.packages = [
-      pkgs.kdePackages.skanlite
-      pkgs.prusa-slicer
-      pkgs.system-config-printer
-    ];
+    home.packages = [ pkgs.kdePackages.skanlite pkgs.prusa-slicer pkgs.system-config-printer ];
 
     xdg.configFile = {
       "PrusaSlicer/filament/PLA.ini".source = ../../resources/prusa/PLA.ini;
@@ -35,9 +31,4 @@
       systemctl stop cups.service
     '';
   };
-
-  users.users.pascal.extraGroups = [
-    "lp"
-    "scanner"
-  ];
 }

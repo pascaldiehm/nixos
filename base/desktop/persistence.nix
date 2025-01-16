@@ -1,6 +1,7 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   environment.persistence."/perm".users.pascal = {
+    files = [ ".config/VSCodium/User/globalStorage/state.vscdb" ".config/kwinoutputconfig.json" ];
+
     directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
       ".config/kdeconnect" = "0755";
       ".local/share/gnupg" = "0700";
@@ -14,10 +15,5 @@
       Pictures = "0755";
       Videos = "0755";
     };
-
-    files = [
-      ".config/VSCodium/User/globalStorage/state.vscdb"
-      ".config/kwinoutputconfig.json"
-    ];
   };
 }

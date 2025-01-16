@@ -1,11 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  system,
-  ...
-}:
-{
+{ config, lib, pkgs, system, ... }: {
   _module.args.libx = rec {
     mkFirefoxBookmarks = lib.mapAttrsToList (
       name: value:

@@ -1,0 +1,23 @@
+diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
+index 4f99661..6d1c3dd 100644
+--- a/src/Nixfmt/Pretty.hs
++++ b/src/Nixfmt/Pretty.hs
+@@ -105,6 +105,9 @@ instance (Pretty a) => Pretty (Item a) where
+ prettyItems :: (Pretty a) => Items a -> Doc
+ prettyItems (Items items) = sepBy hardline items
+ 
++prettyListItems :: (Pretty a) => Items a -> Doc
++prettyListItems (Items items) = sepBy line items
++
+ instance Pretty [Trivium] where
+   pretty [] = mempty
+   pretty trivia = hardline <> hcat trivia
+@@ -223,7 +226,7 @@ prettyTerm (List paropen@Ann{trailComment = Nothing} (Items []) parclose@Ann{pre
+ -- Always expand if len > 1
+ prettyTerm (List paropen@Ann{trailComment = post} items parclose) =
+   pretty (paropen{trailComment = Nothing})
+-    <> surroundWith sur (nest $ pretty post <> prettyItems items)
++    <> surroundWith sur (nest $ pretty post <> prettyListItems items)
+     <> pretty parclose
+   where
+     -- If the brackets are on different lines, keep them like that

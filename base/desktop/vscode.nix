@@ -1,10 +1,4 @@
-{
-  lib,
-  pkgs,
-  system,
-  ...
-}:
-{
+{ lib, pkgs, system, ... }: {
   home-manager.users.pascal.programs.vscode = {
     enable = true;
     enableExtensionUpdateCheck = false;
@@ -106,15 +100,9 @@
       "nix.serverPath" = "${pkgs.nixd}/bin/nixd";
 
       "nix.serverSettings".nixd = {
+        formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" "-s" "-w" "120" ];
         nixpkgs.expr = "import (builtins.getFlake \"\${workspaceFolder}\").inputs.nixpkgs {}";
         options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${system.name}.options";
-
-        formatting.command = [
-          "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
-          "-s"
-          "-w"
-          "120"
-        ];
       };
 
       # PHP
@@ -126,10 +114,7 @@
       "prettier.printWidth" = 120;
 
       # Python
-      "autopep8.args" = [
-        "--indent-size=2"
-        "--max-line-length=120"
-      ];
+      "autopep8.args" = [ "--indent-size=2" "--max-line-length=120" ];
 
       # Formatters
       "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";

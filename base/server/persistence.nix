@@ -1,11 +1,7 @@
 {
   environment.persistence."/perm" = {
+    directories = [ "/var/lib/docker" "/var/lib/fail2ban" ];
     users.pascal.directories = [ "docker" ];
-
-    directories = [
-      "/var/lib/docker"
-      "/var/lib/fail2ban"
-    ];
 
     files = [
       "/etc/ssh/ssh_host_ed25519_key"

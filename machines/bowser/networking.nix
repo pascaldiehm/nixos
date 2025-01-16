@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   sops.secrets = {
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba".owner = "systemd-network";

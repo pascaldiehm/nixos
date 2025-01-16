@@ -1,5 +1,4 @@
-{ system, ... }:
-{
+{ system, ... }: {
   sops = {
     age.sshKeyPaths = [ ];
     defaultSopsFile = ../../resources/secrets/${system.type}/store.yaml;

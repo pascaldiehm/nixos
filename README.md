@@ -58,6 +58,7 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 - [base](base/): Common configuration shared between machines
 - [extra](extra/): Additional modules
 - [machines](machines/): Machine-specific configuration
+- [patches](patches/): Custom patch files
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs
   - [scripts](resources/scripts/): Outsourced shell scripts

@@ -1,10 +1,4 @@
-{
-  config,
-  libx,
-  pkgs,
-  ...
-}:
-{
+{ config, libx, pkgs, ... }: {
   home-manager.users.pascal.programs.firefox = {
     enable = true;
     package = pkgs.firefox.override { nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ]; };

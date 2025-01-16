@@ -1,5 +1,4 @@
-{ system, ... }:
-{
+{ system, ... }: {
   home-manager.users.pascal.xdg.enable = true;
   networking.hostName = system.name;
   services.fwupd.enable = true;

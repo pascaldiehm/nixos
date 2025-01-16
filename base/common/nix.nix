@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
 
   nix = {
@@ -14,14 +13,9 @@
 
     settings = {
       auto-optimise-store = true;
+      experimental-features = [ "flakes" "nix-command" "pipe-operators" ];
       nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
       use-xdg-base-directories = true;
-
-      experimental-features = [
-        "flakes"
-        "nix-command"
-        "pipe-operators"
-      ];
     };
   };
 }
