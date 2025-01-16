@@ -15,7 +15,7 @@
 
     installer = {
       extraOptions.UserKnownHostsFile = "/dev/null";
-      hostname = "0.0.0.0";
+      hostname = "nixos";
       identityFile = config.sops.secrets."ssh/installer".path;
       user = "nixos";
     };
