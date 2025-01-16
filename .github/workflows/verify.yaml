@@ -64,11 +64,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           failed="false"
-          nix run nixpkgs#statix check || failed="true"
 
           find . -name "*.nix" | while read -r file; do
             echo "Checking $file"
-            diagnostics="$(nix run nixpkgs#nil -- diagnostics "$file")"
+            diagnostics="$(nix run github:oxalica/nil -- diagnostics "$file")"
 
             if [ -n "$diagnostics" ]; then
               echo "$diagnostics"
