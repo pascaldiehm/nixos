@@ -1,13 +1,7 @@
-{
-  config,
-  inputs,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 {
   home-manager = {
     backupFileExtension = "hm-bak";
-    sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
     useGlobalPkgs = true;
     useUserPackages = true;
 
