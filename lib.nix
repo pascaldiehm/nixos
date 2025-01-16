@@ -6,7 +6,22 @@
   ...
 }:
 {
-  _module.args.libx = {
+  _module.args.libx = rec {
+    mkFirefoxBookmarks = lib.mapAttrsToList (
+      name: value:
+      if builtins.isAttrs value then
+        {
+          inherit name;
+          toolbar = (name == "_toolbar");
+          bookmarks = mkFirefoxBookmarks value;
+        }
+      else
+        {
+          inherit name;
+          url = value;
+        }
+    );
+
     mkMozillaExtensions =
       path:
       lib.importJSON path

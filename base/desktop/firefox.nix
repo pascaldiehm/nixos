@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   libx,
   pkgs,
   ...
@@ -22,60 +21,43 @@
       name = "Default";
       settings."browser.translation.automaticallyPopup" = false;
 
-      bookmarks =
-        [
-          {
-            name = "Toolbar";
-            toolbar = true;
+      bookmarks = libx.mkFirefoxBookmarks {
+        Amazon = "https://amazon.de";
+        ChatGPT = "https://chatgpt.com";
+        Cloudflare = "https://dash.cloudflare.com";
+        Hetzner = "https://console.hetzner.cloud";
+        "Matrix Admin" = "https://matrix-admin.pdiehm.dev";
+        PayPal = "https://paypal.com";
+        Sparkasse = "https://sparkasse-mainfranken.de";
 
-            bookmarks =
-              [
-                {
-                  name = "Google";
+        _toolbar = {
+          Element = "https://app.element.io";
+          GitHub = "https://github.com";
+          "Home Assistant" = "http://192.168.1.89:8123";
+          WhatsApp = "https://web.whatsapp.com";
 
-                  bookmarks = lib.mapAttrsToList (name: url: { inherit name url; }) {
-                    Account = "https://myaccount.google.com";
-                    Calendar = "https://calendar.google.com";
-                    Contacts = "https://contacts.google.com";
-                    Drive = "https://drive.google.com";
-                    Keep = "https://keep.google.com";
-                    Maps = "https://google.com/maps";
-                    Photos = "https://photos.google.com";
-                    Tasks = "https://tasks.google.com";
-                    YouTube = "https://youtube.com";
-                    "YouTube Music" = "https://music.youtube.com";
-                  };
-                }
-              ]
-              ++ lib.mapAttrsToList (name: url: { inherit name url; }) {
-                Element = "https://app.element.io";
-                GitHub = "https://github.com";
-                "Home Assistant" = "http://192.168.1.89:8123";
-                WhatsApp = "https://web.whatsapp.com";
-              };
-          }
-
-          {
-            name = "NixOS Manuals";
-
-            bookmarks = lib.mapAttrsToList (name: url: { inherit name url; }) {
-              "Home Manager Manual" = "https://nix-community.github.io/home-manager";
-              "Nix Manual" = "https://nixos.org/manual/nix/stable";
-              "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
-              "Nixpkgs Manual" = "https://nixos.org/manual/nixpkgs/stable";
-              "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
-            };
-          }
-        ]
-        ++ lib.mapAttrsToList (name: url: { inherit name url; }) {
-          Amazon = "https://amazon.de";
-          ChatGPT = "https://chatgpt.com";
-          Cloudflare = "https://dash.cloudflare.com";
-          Hetzner = "https://console.hetzner.cloud";
-          "Matrix Admin" = "https://matrix-admin.pdiehm.dev";
-          PayPal = "https://paypal.com";
-          Sparkasse = "https://sparkasse-mainfranken.de";
+          Google = {
+            Account = "https://myaccount.google.com";
+            Calendar = "https://calendar.google.com";
+            Contacts = "https://contacts.google.com";
+            Drive = "https://drive.google.com";
+            Keep = "https://keep.google.com";
+            Maps = "https://google.com/maps";
+            Photos = "https://photos.google.com";
+            Tasks = "https://tasks.google.com";
+            YouTube = "https://youtube.com";
+            "YouTube Music" = "https://music.youtube.com";
+          };
         };
+
+        "NixOS Manuals" = {
+          "Home Manager Manual" = "https://nix-community.github.io/home-manager";
+          "Nix Manual" = "https://nixos.org/manual/nix/stable";
+          "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
+          "Nixpkgs Manual" = "https://nixos.org/manual/nixpkgs/stable";
+          "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
+        };
+      };
 
       search = {
         default = "Google";
