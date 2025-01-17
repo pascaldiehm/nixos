@@ -32,11 +32,11 @@ jobs:
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
             ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do
-              if [ -z "$(echo "$used" | grep "$module")" ]; then
+              if [ -n "$(echo "$used" | grep "$module")" ]; then
+                echo "  - $module"
+              else
                 echo "  - $module (missing)"
                 failed="true"
-              else
-                echo "  - $module"
               fi
             done
           done
@@ -50,11 +50,11 @@ jobs:
           used="$(find . -type f | grep -E -v "(.git|resources)" | xargs cat | grep "resources")"
 
           find resources -type f | grep -v "secrets" | while read -r file; do
-            if [ -z "$(echo "$used" | grep "$file")" ]; then
+            if [ -n "$(echo "$used" | grep "$file")" ]; then
+              echo "Checking $file"
+            else
               echo "Checking $file - failed"
               failed="true"
-            else
-              echo "Checking $file"
             fi
           done
 

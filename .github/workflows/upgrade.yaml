@@ -43,6 +43,31 @@ jobs:
             fi
           done
 
+      - name: Validate patches
+        continue-on-error: true
+        if: env.changed == 'true'
+        id: validate-patches
+        run: |
+          failed="false"
+
+          find patches -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";" | while read -r package; do
+            echo "Checking $package"
+            nix build ".#nixosConfigurations.installer.pkgs.$package.src"
+
+            ls "patches/$package" | while read -r patch; do
+              if patch -d result -p 1 --dry-run < "patches/$package/$patch" > /dev/null; then
+                echo "  - $patch"
+              else
+                echo "  - $patch (failed)"
+                failed="true"
+              fi
+            done
+
+            rm result
+          done
+
+          test "$failed" = "false"
+
       - name: Commit
         if: env.changed == 'true' && env.valid == 'true'
         run: |
@@ -66,3 +91,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD" -m "$CHANGES_EXTENSIONS_VSCODE"
           git push
+
+      - name: Fail
+        if: steps.validate-patches.conclusion == 'failure'
+        run: exit 1
