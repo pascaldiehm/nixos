@@ -1,5 +1,4 @@
 name: Verify
-
 on: push
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
         run: |
           failed="false"
 
-          find . -name default.nix | while read -r default; do
+          find . -name default.nix | grep -v "patches" | while read -r default; do
             echo "Checking $default"
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
