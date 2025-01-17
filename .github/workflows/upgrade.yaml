@@ -9,10 +9,6 @@ jobs:
     name: Upgrade
     runs-on: ubuntu-latest
 
-    env:
-      changed: "false"
-      valid: "true"
-
     permissions:
       contents: write
 
@@ -28,25 +24,26 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        run: '[ -z "$(git status --porcelain)" ] || echo changed=true >> "$GITHUB_ENV"'
+        continue-on-error: true
+        id: detect-changes
+        run: test -n "$(git status --porcelain)"
 
       - name: Verify
-        if: env.changed == 'true'
+        continue-on-error: true
+        id: verify
+        if: steps.detect-changes.outcome == 'success'
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
           jq -r "keys[]" machines.json | while read -r machine; do
-            if ! timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel"; then
-              echo valid=false >> "$GITHUB_ENV"
-              break
-            fi
+            timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel" || exit 1
           done
 
       - name: Validate patches
         continue-on-error: true
-        if: env.changed == 'true'
         id: validate-patches
+        if: steps.detect-changes.outcome == 'success'
         run: |
           failed="false"
 
@@ -69,7 +66,7 @@ jobs:
           test "$failed" = "false"
 
       - name: Commit
-        if: env.changed == 'true' && env.valid == 'true'
+        if: steps.verify.outcome == 'success'
         run: |
           CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4)"
           [ -n "$CHANGES_FLAKE" ] && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
@@ -93,5 +90,5 @@ jobs:
           git push
 
       - name: Fail
-        if: steps.validate-patches.conclusion == 'failure'
+        if: steps.validate-patches.outcome == 'failure'
         run: exit 1
