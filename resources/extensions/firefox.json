@@ -6,5 +6,5 @@
   { "name": "plasma-integration", "id": "plasma-browser-integration@kde.org", "source": "https://addons.mozilla.org/firefox/downloads/file/4298512/plasma_integration-1.9.1.xpi" },
   { "name": "react-devtools", "id": "@react-devtools", "source": "https://addons.mozilla.org/firefox/downloads/file/4360002/react_devtools-6.0.0.xpi" },
   { "name": "return-youtube-dislikes", "id": "{762f9885-5a13-4abd-9c77-433dcd38b8fd}", "source": "https://addons.mozilla.org/firefox/downloads/file/4371820/return_youtube_dislikes-3.0.0.18.xpi" },
-  { "name": "ublock-origin", "id": "uBlock0@raymondhill.net", "source": "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-1.61.2.xpi" }
+  { "name": "ublock-origin", "id": "uBlock0@raymondhill.net", "source": "https://addons.mozilla.org/firefox/downloads/file/4412673/ublock_origin-1.62.0.xpi" }
 ]
