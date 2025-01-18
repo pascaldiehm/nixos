@@ -20,7 +20,7 @@
         ChatGPT = "https://chatgpt.com";
         Cloudflare = "https://dash.cloudflare.com";
         Hetzner = "https://console.hetzner.cloud";
-        "Matrix Admin" = "https://matrix-admin.pdiehm.dev";
+        "Matrix Admin" = "https://admin.etke.cc";
         PayPal = "https://paypal.com";
         Sparkasse = "https://sparkasse-mainfranken.de";
 
