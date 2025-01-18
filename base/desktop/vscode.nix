@@ -5,31 +5,28 @@
     enableUpdateCheck = false;
     package = pkgs.vscodium;
 
-    extensions =
-      with pkgs.vscode-extensions;
-      [
-        aaron-bond.better-comments
-        bradlc.vscode-tailwindcss
-        dbaeumer.vscode-eslint
-        editorconfig.editorconfig
-        esbenp.prettier-vscode
-        foxundermoon.shell-format
-        github.vscode-github-actions
-        james-yu.latex-workshop
-        jnoortheen.nix-ide
-        llvm-vs-code-extensions.vscode-clangd
-        ms-azuretools.vscode-docker
-        ms-python.isort
-        ms-python.python
-        ms-vscode.cmake-tools
-        pkief.material-icon-theme
-        redhat.java
-        streetsidesoftware.code-spell-checker
-        twxs.cmake
-        usernamehw.errorlens
-        vscodevim.vim
-      ]
-      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
+    extensions = [
+      pkgs.vscode-extensions.aaron-bond.better-comments
+      pkgs.vscode-extensions.bradlc.vscode-tailwindcss
+      pkgs.vscode-extensions.dbaeumer.vscode-eslint
+      pkgs.vscode-extensions.editorconfig.editorconfig
+      pkgs.vscode-extensions.esbenp.prettier-vscode
+      pkgs.vscode-extensions.foxundermoon.shell-format
+      pkgs.vscode-extensions.github.vscode-github-actions
+      pkgs.vscode-extensions.james-yu.latex-workshop
+      pkgs.vscode-extensions.jnoortheen.nix-ide
+      pkgs.vscode-extensions.llvm-vs-code-extensions.vscode-clangd
+      pkgs.vscode-extensions.ms-azuretools.vscode-docker
+      pkgs.vscode-extensions.ms-python.isort
+      pkgs.vscode-extensions.ms-python.python
+      pkgs.vscode-extensions.ms-vscode.cmake-tools
+      pkgs.vscode-extensions.pkief.material-icon-theme
+      pkgs.vscode-extensions.redhat.java
+      pkgs.vscode-extensions.streetsidesoftware.code-spell-checker
+      pkgs.vscode-extensions.twxs.cmake
+      pkgs.vscode-extensions.usernamehw.errorlens
+      pkgs.vscode-extensions.vscodevim.vim
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace (lib.importJSON ../../resources/extensions/vscode.json);
 
     keybindings = lib.mapAttrsToList (key: command: { inherit key command; }) {
       "shift+enter" = "-python.execSelectionInTerminal";
