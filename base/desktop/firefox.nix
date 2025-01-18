@@ -67,6 +67,11 @@
             definedAliases = [ "@docker" ];
           };
 
+          "GitHub" = {
+            urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
+            definedAliases = [ "@github" ];
+          };
+
           "MDN" = {
             urls = [ { template = "https://developer.mozilla.org/search?q={searchTerms}"; } ];
             definedAliases = [ "@mdn" ];
