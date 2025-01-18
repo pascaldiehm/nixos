@@ -14,8 +14,11 @@
     pcscd.enable = true;
 
     udev.extraRules = ''
-      ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.systemd}/bin/loginctl unlock-sessions"
       ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
+
+      ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-unlock" ''
+        [ -n "$(${pkgs.yubikey-manager}/bin/ykman list --serials | grep '16869449')" ] && ${pkgs.systemd}/bin/loginctl unlock-sessions
+      ''}"
     '';
   };
 
