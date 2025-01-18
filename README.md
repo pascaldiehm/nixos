@@ -72,7 +72,7 @@ Here are _my_ reasons, why I think NixOS is awesome:
 2. **NixOS is declarative.** I know, this is like the main selling point of NixOS, but having all your system configuration in a single place makes it easy to read through and know what you've changed.
 3. **The NixOS ecosystem.** This mainly refers to the [impermanence](https://github.com/nix-community/impermanence) module that allows you to keep your system clean between reboots. This is not directly a feature of NixOS, but is made possible by its unique way of handling packages and system configurations.
 4. **A NixOS system is up and running in no time.** Using NixOS you don't have to care about broken installs. Just reinstall the system and your entire configuration is already there. If you store all your data in some kind of cloud solution (e.g. GitHub), you literally have nothing to loose. I've already managed to break the LUKS header on my laptop one day - the system was fully back up and running in 15 minutes.
-5. **The NixOS repository.** According to [repology](https://repology.org/repositories/graphs), the nixpkgs repository is by far the largest and most up-to-date Linux package repository.
+5. **The NixOS repository.** According to [repology](https://repology.org/repositories/graphs), the nixpkgs repository is by far the largest and most up-to-date Linux package repository. And their way of handling packages makes it incredibly easy to add custom packages or patches for existing ones.
 6. **NixOS is great for tinkering.** This might be a weird point to make, but NixOS is really fun to play around with.
 
 That being said, NixOS is definitely not the solution for everyone.
