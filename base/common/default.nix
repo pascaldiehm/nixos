@@ -11,5 +11,6 @@
     ./programs.nix
     ./sops.nix
     ./user.nix
+    ./zsh.nix
   ];
 }
