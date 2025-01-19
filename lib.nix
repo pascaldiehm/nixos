@@ -26,7 +26,7 @@
         };
       })
       |> builtins.listToAttrs
-      |> (extensions: { "*".installation_mode = "blocked"; } // extensions);
+      |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
 
     mkNtfy =
       channel: message:

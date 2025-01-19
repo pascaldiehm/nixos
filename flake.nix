@@ -20,71 +20,72 @@
     };
   };
 
-  outputs =
-    { nixpkgs, ... }@inputs: {
-      apps.x86_64-linux =
-        let
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+  outputs = inputs: {
+    apps.x86_64-linux =
+      let
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 
-          mkScripts = builtins.mapAttrs (
-            name: runtimeInputs: {
-              type = "app";
+        mkScripts = builtins.mapAttrs (
+          name: runtimeInputs: {
+            type = "app";
 
-              program =
-                pkgs.writeShellApplication {
-                  inherit name runtimeInputs;
-                  text = builtins.readFile apps/${name}.sh;
-                }
-                |> (app: "${app}/bin/${name}");
-            }
-          );
-        in
-        mkScripts {
-          update = [ pkgs.git ];
-          upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
+            program =
+              pkgs.writeShellApplication {
+                inherit name runtimeInputs;
+                text = builtins.readFile apps/${name}.sh;
+              }
+              |> (app: "${app}/bin/${name}");
+          }
+        );
+      in
+      mkScripts {
+        update = [ pkgs.git ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
 
-          install = [
-            pkgs.btrfs-progs
-            pkgs.cryptsetup
-            pkgs.git
-            pkgs.jq
-            pkgs.gnupg
-            pkgs.parted
-            pkgs.pinentry-tty
-            (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
-          ];
-        };
+        install = [
+          pkgs.btrfs-progs
+          pkgs.cryptsetup
+          pkgs.git
+          pkgs.jq
+          pkgs.gnupg
+          pkgs.parted
+          pkgs.pinentry-tty
+          (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
+        ];
+      };
 
-      nixosConfigurations =
-        let
-          mkSystems = builtins.mapAttrs (
-            name: type:
-            nixpkgs.lib.nixosSystem {
-              modules = [
-                # Libraries
-                ./lib.nix
-                inputs.home-manager.nixosModules.home-manager
-                inputs.impermanence.nixosModules.impermanence
-                inputs.sops-nix.nixosModules.sops
+    nixosConfigurations =
+      let
+        lib = inputs.nixpkgs.lib;
 
-                # Modules
-                /etc/nixos/hardware.nix
-                ./patches
-                base/common
-                base/${type}
-                machines/${name}
-              ];
+        mkSystems = builtins.mapAttrs (
+          name: type:
+          lib.nixosSystem {
+            modules = [
+              # Libraries
+              ./lib.nix
+              inputs.home-manager.nixosModules.home-manager
+              inputs.impermanence.nixosModules.impermanence
+              inputs.sops-nix.nixosModules.sops
 
-              specialArgs = {
-                inherit inputs;
-                lib = nixpkgs.lib.extend (self: super: inputs.home-manager.lib);
-                system = { inherit name type; };
-              };
-            }
-          );
-        in
-        nixpkgs.lib.importJSON ./machines.json
-        |> mkSystems
-        |> (systems: systems // { installer = nixpkgs.lib.nixosSystem { modules = [ extra/installer.nix ]; }; });
-    };
+              # Modules
+              /etc/nixos/hardware.nix
+              ./patches
+              base/common
+              base/${type}
+              machines/${name}
+            ];
+
+            specialArgs = {
+              inherit inputs;
+              lib = lib.extend (self: super: inputs.home-manager.lib);
+              system = { inherit name type; };
+            };
+          }
+        );
+      in
+      lib.importJSON ./machines.json
+      |> mkSystems
+      |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
+  };
 }
