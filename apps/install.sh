@@ -72,7 +72,7 @@ mkdir -p /mnt/perm/etc/nixos
 nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
-echo "Cloning NixOS configuration"
+echo "Cloning NixOS configuration..."
 git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
 [ "$TYPE" = "desktop" ] && git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
 git --git-dir /mnt/perm/home/pascal/.config/nixos/.git rev-parse HEAD >/mnt/perm/etc/nixos/commit

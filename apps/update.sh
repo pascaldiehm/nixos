@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-pushd ~/.config/nixos >/dev/null
+pushd ~/.config/nixos
 stashed="false"
 
 # Make sure the working directory is clean
@@ -105,4 +105,4 @@ sudo nixos-rebuild --impure --flake . switch
 git rev-parse HEAD | sudo tee /etc/nixos/commit
 
 [ "$stashed" = "true" ] && git stash pop
-popd >/dev/null
+popd

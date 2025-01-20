@@ -31,7 +31,7 @@ jobs:
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
             ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do
-              if [ -n "$(echo "$used" | grep "$module")" ]; then
+              if echo "$used" | grep "$module" > /dev/null; then
                 echo "  - $module"
               else
                 echo "  - $module (missing)"
@@ -49,7 +49,7 @@ jobs:
           used="$(find . -type f | grep -E -v "(.git|resources)" | xargs cat | grep "resources")"
 
           find resources -type f | grep -v "secrets" | while read -r file; do
-            if [ -n "$(echo "$used" | grep "$file")" ]; then
+            if echo "$used" | grep "$file" > /dev/null; then
               echo "Checking $file"
             else
               echo "Checking $file - failed"
