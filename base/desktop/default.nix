@@ -1,4 +1,4 @@
-{
+{ inputs, ... }: {
   imports = [
     ./boot.nix
     ./development.nix
@@ -17,5 +17,6 @@
     ./xdg.nix
     ./yubikey.nix
     ../../extra/university
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 }

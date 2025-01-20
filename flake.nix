@@ -72,7 +72,6 @@
               ./lib.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
-              inputs.lanzaboote.nixosModules.lanzaboote
               inputs.sops-nix.nixosModules.sops
 
               # Modules
