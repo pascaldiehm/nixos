@@ -8,6 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,10 +51,11 @@
           pkgs.btrfs-progs
           pkgs.cryptsetup
           pkgs.git
-          pkgs.jq
           pkgs.gnupg
+          pkgs.jq
           pkgs.parted
           pkgs.pinentry-tty
+          pkgs.sbctl
           (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
         ];
       };
@@ -66,6 +72,7 @@
               ./lib.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
+              inputs.lanzaboote.nixosModules.lanzaboote
               inputs.sops-nix.nixosModules.sops
 
               # Modules

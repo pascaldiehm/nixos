@@ -7,6 +7,7 @@
       pkgs.imagemagickBig
       pkgs.poppler_utils
       pkgs.quickemu
+      pkgs.sbctl
       pkgs.smartmontools
       pkgs.sops
       pkgs.sshfs

@@ -29,6 +29,13 @@ while [ ! -b "$DEV" ]; do
   [ -b "$DEV" ] || DEV="/dev/$DEV"
 done
 
+if [ "$TYPE" = "desktop" ]; then
+  if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
+    echo "ERROR: Secure boot is disabled or not in setup mode"
+    exit 1
+  fi
+fi
+
 echo "Formatting $DEV..."
 parted "$DEV" -- mklabel gpt
 parted "$DEV" -- mkpart nixos btrfs 512MB 100%
@@ -66,6 +73,14 @@ mkdir /mnt/{nix,perm,boot}
 mount -o subvol=nix "$PART_NIXOS" /mnt/nix
 mount -o subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_ESP" /mnt/boot
+
+if [ "$TYPE" = "desktop" ]; then
+  echo "Setting up secure boot..."
+  mkdir -p /mnt/perm/var/lib/sbctl
+  ln -s /mnt/perm/var/lib/sbctl /var/lib/sbctl
+  sbctl create-keys
+  sbctl enroll-keys --microsoft
+fi
 
 echo "Generating hardware configuration..."
 mkdir -p /mnt/perm/etc/nixos

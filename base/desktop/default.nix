@@ -1,5 +1,6 @@
 {
   imports = [
+    ./boot.nix
     ./development.nix
     ./email.nix
     ./firefox.nix
