@@ -13,7 +13,7 @@
 
     profiles.default = {
       name = "Default";
-      settings."browser.translation.automaticallyPopup" = false;
+      settings."browser.translations.automaticallyPopup" = false;
 
       bookmarks = libx.mkFirefoxBookmarks {
         Amazon = "https://amazon.de";
