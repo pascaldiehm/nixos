@@ -17,4 +17,9 @@
     command-not-found.enable = false;
     nano.enable = false;
   };
+
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings.log-driver = "local";
+  };
 }
