@@ -1,5 +1,6 @@
 { config, system, ... }: {
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
+  services.fail2ban.enable = true;
 
   services.openssh = {
     enable = true;
