@@ -54,30 +54,3 @@ done
 echo -e "\n]" >>"$tmp/extensions.json"
 mv "$tmp/extensions.json" resources/extensions/thunderbird.json
 rm -rf "$tmp"
-
-echo "Upgrading VSCode extensions..."
-tmp="$(mktemp -d)"
-echo "[" >"$tmp/extensions.json"
-
-first=1
-jq -c ".[]" resources/extensions/vscode.json | while read -r ext; do
-  [ "$first" -eq 0 ] && echo "," >>"$tmp/extensions.json"
-  first=0
-
-  publisher="$(echo "$ext" | jq -r .publisher)"
-  name="$(echo "$ext" | jq -r .name)"
-  id="$publisher.$name"
-  echo "  - $id"
-
-  curl -s -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-  version="$(unzip -qc "$tmp/$id.vsix" extension/package.json | jq -r .version)"
-
-  curl -s -o "$tmp/$id.vsix" "https://$publisher.gallery.vsassets.io/_apis/public/gallery/publisher/$publisher/extension/$name/$version/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-  hash="sha256-$(sha256sum "$tmp/$id.vsix" | cut -d " " -f 1 | xxd -r -p | base64 -w 0)"
-
-  echo -n "  { \"publisher\": \"$publisher\", \"name\": \"$name\", \"version\": \"$version\", \"hash\": \"$hash\" }" >>"$tmp/extensions.json"
-done
-
-echo -e "\n]" >>"$tmp/extensions.json"
-mv "$tmp/extensions.json" resources/extensions/vscode.json
-rm -rf "$tmp"

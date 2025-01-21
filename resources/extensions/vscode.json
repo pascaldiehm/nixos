@@ -1,5 +1,0 @@
-[
-  { "publisher": "bmewburn", "name": "vscode-intelephense-client", "version": "1.13.1", "hash": "sha256-eVm4x8WK9aRjKWQH2XaXCHHpc1f6qCn+PKmhyIpPJpk=" },
-  { "publisher": "ms-python", "name": "autopep8", "version": "2024.1.13171014", "hash": "sha256-TMbSKa/7XmnHCHgjC2RQ6OppV7UvdZ4vCOSYixETVok=" },
-  { "publisher": "streetsidesoftware", "name": "code-spell-checker-german", "version": "2.3.2", "hash": "sha256-40Oc6ycNog9cxG4G5gCps2ADrM/wLuKWFrD4lnd91Z4=" }
-]
