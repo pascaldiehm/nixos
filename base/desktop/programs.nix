@@ -27,5 +27,10 @@
         scdaemonSettings.disable-ccid = true;
       };
     };
+
+    services.gpg-agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-qt;
+    };
   };
 }
