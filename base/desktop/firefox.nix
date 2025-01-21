@@ -1,7 +1,6 @@
-{ config, libx, pkgs, ... }: {
+{ config, libx, ... }: {
   home-manager.users.pascal.programs.firefox = {
     enable = true;
-    package = pkgs.firefox.override { nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ]; };
 
     policies = {
       DisableFirefoxAccounts = true;
@@ -49,7 +48,6 @@
           "Nix Manual" = "https://nixos.org/manual/nix/stable";
           "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
           "Nixpkgs Manual" = "https://nixos.org/manual/nixpkgs/stable";
-          "Plasma Manager Manual" = "https://nix-community.github.io/plasma-manager";
         };
       };
 

@@ -8,9 +8,7 @@
     ./misc.nix
     ./networking.nix
     ./persistence.nix
-    ./plasma.nix
     ./programs.nix
-    ./sddm.nix
     ./ssh.nix
     ./thunderbird.nix
     ./vscode.nix

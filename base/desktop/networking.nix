@@ -3,10 +3,7 @@
   users.users.pascal.extraGroups = [ "networkmanager" ];
 
   networking = {
-    firewall = {
-      allowedTCPPorts = [ 1234 1716 1739 1740 1741 ];
-      allowedUDPPorts = [ 1719 ];
-    };
+    firewall.allowedTCPPorts = [ 1234 ];
 
     networkmanager = {
       enable = true;

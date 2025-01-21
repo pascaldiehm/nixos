@@ -1,6 +1,4 @@
 {
-  services.xserver.xkb.layout = "de";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
     LC_IDENTIFICATION = "de_DE.UTF-8";
