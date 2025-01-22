@@ -10,6 +10,7 @@
     ./persistence.nix
     ./programs.nix
     ./ssh.nix
+    ./stylix.nix
     ./thunderbird.nix
     ./xdg.nix
     ./yubikey.nix
