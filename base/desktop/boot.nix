@@ -1,4 +1,6 @@
-{
+{ inputs, ... }: {
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
+
   boot = {
     initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
 

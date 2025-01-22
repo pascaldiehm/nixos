@@ -1,6 +1,5 @@
-{ inputs, ... }: {
+{
   imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
     ../../extra/university
     ./boot.nix
     ./development.nix
