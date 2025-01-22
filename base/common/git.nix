@@ -6,6 +6,7 @@
 
     aliases = {
       a = "add";
+      ap = "add --patch";
 
       b = "branch";
       bc = "branch --copy";
