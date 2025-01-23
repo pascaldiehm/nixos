@@ -59,6 +59,7 @@
       rbc = "rebase --continue";
       rbi = "rebase --interactive";
       rbr = "rebase --interactive --root";
+      rbs = "rebase --interactive '@{1 day ago}'";
 
       rs = "restore";
       rss = "restore --staged";
