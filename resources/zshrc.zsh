@@ -99,7 +99,6 @@ bindkey "^Y" redo                                # Ctrl+Y
 alias grep="grep --color=auto"
 alias l="ls -alh"
 alias ls="ls --color=auto"
-alias nv="nvim"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
@@ -120,6 +119,20 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
     cp result/iso/*.iso nixos.iso
     rm result
+  }
+
+  function nv() {
+    if [ -z "$1" ]; then
+      nvim
+    elif [ -d "$1" ]; then
+      pushd "$1"
+      nvim .
+      popd
+    else
+      pushd "$(dirname "$1")"
+      nvim "$(basename "$1")"
+      popd
+    fi
   }
 
   function pyenv() {
