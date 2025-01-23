@@ -13,6 +13,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +31,7 @@
       url = "github:danth/stylix";
 
       inputs = {
-        base16-vim.url = "github:tinted-theming/tinted-vim?rev=577fe8125d74ff456cf942c733a85d769afe58b7"; # FIXME: templates/config.yaml is broken on the latest commit
+        base16-vim.url = "github:tinted-theming/tinted-vim?rev=577fe8125d74ff456cf942c733a85d769afe58b7"; # FIXME templates/config.yaml is broken on the latest commit
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };

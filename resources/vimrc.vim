@@ -1,14 +1,13 @@
 set autoindent
-set clipboard=unnamedplus
 set expandtab
 set ignorecase
+set mouse=""
 set nowrap
 set number
 set relativenumber
-set scrolloff=10
+set scrolloff=8
 set shiftwidth=2
 set smartcase
+set softtabstop=2
 set tabstop=2
 set viminfo=""
-
-autocmd FileType * call timer_start(1, { -> execute("set shiftwidth=2 tabstop=2") })

@@ -7,6 +7,7 @@
     ./firefox.nix
     ./locale.nix
     ./networking.nix
+    ./nvim.nix
     ./persistence.nix
     ./programs.nix
     ./ssh.nix
