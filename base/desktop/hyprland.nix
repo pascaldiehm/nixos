@@ -52,6 +52,11 @@
       };
     };
 
+    services.dunst = {
+      enable = true;
+      settings.global.follow = "mouse";
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
 
