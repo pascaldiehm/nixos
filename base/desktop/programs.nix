@@ -3,7 +3,7 @@
     home.packages = [
       pkgs.cryptsetup
       pkgs.exfat
-      pkgs.ffmpeg
+      pkgs.ffmpeg-full
       pkgs.imagemagickBig
       pkgs.poppler_utils
       pkgs.quickemu
