@@ -36,12 +36,6 @@
         }
 
         {
-          action = "<Cmd>close<Return>";
-          key = "<A-q>";
-          mode = [ "n" "t" "x" ];
-        }
-
-        {
           action = "<Cmd>new<Return>";
           key = "<A-S-w>";
           mode = [ "n" "t" "x" ];
@@ -50,12 +44,6 @@
         {
           action = "<Cmd>tab new<Return>";
           key = "<A-t>";
-          mode = [ "n" "t" "x" ];
-        }
-
-        {
-          action = "<Cmd>tabclose<Return>";
-          key = "<A-c>";
           mode = [ "n" "t" "x" ];
         }
 
