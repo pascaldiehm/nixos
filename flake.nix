@@ -89,7 +89,7 @@
 
               # Modules
               /etc/nixos/hardware.nix
-              ./patches
+              ./pkgs
               base/common
               base/${type}
               machines/${name}
