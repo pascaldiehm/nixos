@@ -168,6 +168,7 @@
 
       plugins = {
         comment.enable = true;
+        gitsigns.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
         web-devicons.enable = true;
@@ -189,11 +190,6 @@
               "<Tab>" = "cmp.mapping.select_next_item()";
             };
           };
-        };
-
-        gitgutter = {
-          enable = true;
-          settings.map_keys = false;
         };
 
         lsp = {
