@@ -38,25 +38,25 @@
         {
           action = "<Cmd>new<Return>";
           key = "<A-S-w>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>tab new<Return>";
           key = "<A-t>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>tabnext<Return>";
           key = "<A-Tab>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>tabprevious<Return>";
           key = "<A-S-Tab>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
@@ -68,55 +68,55 @@
         {
           action = "<Cmd>vertical new<Return>";
           key = "<A-w>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd H<Return>";
           key = "<A-S-h>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd J<Return>";
           key = "<A-S-j>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd K<Return>";
           key = "<A-S-k>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd L<Return>";
           key = "<A-S-l>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd h<Return>";
           key = "<A-h>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd j<Return>";
           key = "<A-j>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd k<Return>";
           key = "<A-k>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
           action = "<Cmd>wincmd l<Return>";
           key = "<A-l>";
-          mode = [ "n" "t" "x" ];
+          mode = [ "n" "x" ];
         }
 
         {
