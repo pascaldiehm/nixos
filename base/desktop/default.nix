@@ -5,6 +5,7 @@
     ./development.nix
     ./email.nix
     ./firefox.nix
+    ./hyprland.nix
     ./locale.nix
     ./networking.nix
     ./nvim.nix

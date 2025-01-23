@@ -11,9 +11,21 @@
       package = pkgs.quintom-cursor-theme;
     };
 
-    fonts.monospace = {
-      name = "Fira Code";
-      package = pkgs.fira-code;
+    fonts = {
+      monospace = {
+        name = "Fira Code";
+        package = pkgs.fira-code;
+      };
+
+      sansSerif = {
+        name = "Ubuntu";
+        package = pkgs.nerd-fonts.ubuntu;
+      };
+
+      serif = {
+        name = "Ubuntu";
+        package = pkgs.nerd-fonts.ubuntu;
+      };
     };
   };
 }
