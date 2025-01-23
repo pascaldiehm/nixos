@@ -217,7 +217,7 @@
               enable = true;
 
               settings = {
-                formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" "-s" "-w" "120" ];
+                formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
                 nixpkgs.expr = "import (builtins.getFlake (builtins.toString ./.)).inputs.nixpkgs {}";
                 options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${system.name}.options";
               };

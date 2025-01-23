@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   hardware.sane.enable = true;
   programs.system-config-printer.enable = true;
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
@@ -25,10 +25,10 @@
     wants = [ "cups.service" ];
 
     script = ''
-      while ! ${pkgs.curl}/bin/curl "localhost:60000/ipp/print" 2> /dev/null; do sleep 10; done
+      while ! ${lib.getExe pkgs.curl} "localhost:60000/ipp/print" 2> /dev/null; do sleep 10; done
 
-      ${pkgs.cups}/bin/lpadmin -D "Brother DCP-J1050DW" -m everywhere -o ColorMode=Gray -o Duplex=DuplexNoTumble -o PageSize=A4 -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
-      ${pkgs.cups}/bin/lpadmin -d Brother_DCP-J1050DW
+      ${lib.getExe' pkgs.cups "lpadmin"} -D "Brother DCP-J1050DW" -m everywhere -o ColorMode=Gray -o Duplex=DuplexNoTumble -o PageSize=A4 -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
+      ${lib.getExe' pkgs.cups "lpadmin"} -d Brother_DCP-J1050DW
       systemctl stop cups.service
     '';
   };

@@ -32,7 +32,7 @@
       channel: message:
       pkgs.writeShellScript "ntfy" ''
         TOKEN="$(cat "${config.sops.secrets."${system.name}/ntfy".path}")"
-        ${pkgs.curl}/bin/curl -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${system.name}-${channel}"
+        ${lib.getExe pkgs.curl} -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${system.name}-${channel}"
       '';
   };
 }

@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
   imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
   boot = {
@@ -14,7 +14,7 @@
     enable = true;
 
     settings.default_session = {
-      command = "${pkgs.uwsm}/bin/uwsm start ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop";
+      command = "${lib.getExe pkgs.uwsm} start ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop";
       user = "pascal";
     };
   };

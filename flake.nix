@@ -52,7 +52,7 @@
                 inherit name runtimeInputs;
                 text = builtins.readFile apps/${name}.sh;
               }
-              |> (app: "${app}/bin/${name}");
+              |> pkgs.lib.getExe;
           }
         );
       in
