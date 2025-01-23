@@ -1,7 +1,11 @@
 { pkgs, ... }: {
   home-manager.users.pascal = {
-    home.packages = [ pkgs.btrfs-progs pkgs.jq pkgs.unzip pkgs.zip ];
-    programs.ssh.enable = true;
+    home.packages = [ pkgs.btrfs-progs pkgs.unzip pkgs.zip ];
+
+    programs = {
+      jq.enable = true;
+      ssh.enable = true;
+    };
   };
 
   programs = {

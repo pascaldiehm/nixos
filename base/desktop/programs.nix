@@ -12,10 +12,11 @@
       pkgs.sops
       pkgs.sshfs
       pkgs.vlc
-      pkgs.yt-dlp
     ];
 
     programs = {
+      yt-dlp.enable = true;
+
       git.signing = {
         key = "E85EB0566C779A2F";
         signByDefault = true;
