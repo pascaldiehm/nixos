@@ -184,6 +184,7 @@
             gd = "definition";
             gh = "hover";
             gi = "implementation";
+            gs = "signature_help";
           };
 
           onAttach = ''
