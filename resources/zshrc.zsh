@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Options
+setopt PUSHDSILENT
+
 # Prompt
 function _prompt_git() {
   # Abort if not in a git repository
