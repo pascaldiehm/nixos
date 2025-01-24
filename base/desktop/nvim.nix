@@ -5,6 +5,7 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
+      extraPackages = [ pkgs.ripgrep ];
       nixpkgs.useGlobalPackages = true;
 
       autoCmd = lib.singleton {
@@ -240,7 +241,6 @@
 
         telescope = {
           enable = true;
-          extensions.live-grep-args.enable = true;
 
           keymaps = {
             "<Space>f" = "find_files hidden=true";
