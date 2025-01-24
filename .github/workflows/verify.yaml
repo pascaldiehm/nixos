@@ -26,7 +26,7 @@ jobs:
         run: |
           failed="false"
 
-          find . -name default.nix | grep -v "patches" | while read -r default; do
+          find . -name default.nix | grep -v "./pkgs" | while read -r default; do
             echo "Checking $default"
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
@@ -40,7 +40,7 @@ jobs:
             done
           done
 
-          test "$failed" = "false"
+          [ "$failed" = "false" ] || exit 1
 
       - name: Check unused resources
         if: ${{ !cancelled() }}
@@ -57,7 +57,7 @@ jobs:
             fi
           done
 
-          test "$failed" = "false"
+          [ "$failed" = "false" ] || exit 1
 
       - name: Lint Nix
         if: ${{ !cancelled() }}
@@ -74,7 +74,7 @@ jobs:
             fi
           done
 
-          test "$failed" = "false"
+          [ "$failed" = "false" ] || exit 1
 
       - name: Lint Shell
         if: ${{ !cancelled() }}
@@ -86,4 +86,4 @@ jobs:
             nix run nixpkgs#shellcheck -- "$file" || failed="true"
           done
 
-          test "$failed" = "false"
+          [ "$failed" = "false" ] || exit 1

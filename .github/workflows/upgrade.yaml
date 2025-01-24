@@ -8,6 +8,7 @@ jobs:
   upgrade:
     name: Upgrade
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     permissions:
       contents: write
@@ -24,14 +25,10 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        continue-on-error: true
         id: detect-changes
-        run: test -n "$(git status --porcelain)"
+        run: '[ -n "$(git status --porcelain)" ] || exit 1'
 
       - name: Verify
-        continue-on-error: true
-        id: verify
-        if: steps.detect-changes.outcome == 'success'
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
@@ -41,9 +38,6 @@ jobs:
           done
 
       - name: Validate patches
-        continue-on-error: true
-        id: validate-patches
-        if: steps.detect-changes.outcome == 'success'
         run: |
           failed="false"
 
@@ -63,10 +57,9 @@ jobs:
             rm result
           done
 
-          test "$failed" = "false"
+          [ "$failed" = "false" ] || exit 1
 
       - name: Commit
-        if: steps.verify.outcome == 'success'
         run: |
           CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4)"
           [ -n "$CHANGES_FLAKE" ] && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
@@ -88,7 +81,3 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD" -m "$CHANGES_EXTENSIONS_VSCODE"
           git push
-
-      - name: Fail
-        if: steps.validate-patches.outcome == 'failure'
-        run: exit 1
