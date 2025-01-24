@@ -132,7 +132,7 @@
 
         general = {
           border_size = 2;
-          "col.active_border" = lib.mkForce "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.active_border" = lib.mkForce "rgb(00dbde) rgb(fc00ff) 45deg";
         };
 
         input = {
