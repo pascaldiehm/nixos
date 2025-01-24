@@ -1,15 +1,33 @@
 { config, lib, ... }: {
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-  };
-
   home-manager.users.pascal = {
     home.sessionVariables.NIXOS_OZONE_WL = 1;
 
     programs = {
       kitty.enable = true;
       wofi.enable = true;
+
+      hyprlock = {
+        enable = true;
+
+        settings = {
+          general.hide_cursor = true;
+
+          background = lib.mkForce {
+            blur_passes = 2;
+            blur_size = 4;
+            path = "screenshot";
+          };
+
+          label = {
+            font_size = 64;
+            halign = "center";
+            shadow_passes = 2;
+            shadow_size = 4;
+            text = "$TIME";
+            valign = "center";
+          };
+        };
+      };
 
       waybar = {
         enable = true;
@@ -52,9 +70,30 @@
       };
     };
 
-    services.dunst = {
-      enable = true;
-      settings.global.follow = "mouse";
+    services = {
+      dunst = {
+        enable = true;
+        settings.global.follow = "mouse";
+      };
+
+      hypridle = {
+        enable = true;
+
+        settings = {
+          general = {
+            lock_cmd = "pidof hyprlock || hyprlock";
+            unlock_cmd = "pkill -USR1 hyprlock";
+            before_sleep_cmd = "loginctl lock-session";
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+          };
+
+          listener = lib.singleton {
+            timeout = 600;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          };
+        };
+      };
     };
 
     wayland.windowManager.hyprland = {
@@ -141,6 +180,13 @@
           repeat_delay = 200;
         };
       };
+    };
+  };
+
+  programs = {
+    hyprland = {
+      enable = true;
+      withUWSM = true;
     };
   };
 }
