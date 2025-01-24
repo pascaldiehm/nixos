@@ -5,7 +5,7 @@
     ./development.nix
     ./email.nix
     ./firefox.nix
-    ./hyprland.nix
+    ./hypr.nix
     ./locale.nix
     ./networking.nix
     ./nvim.nix
@@ -14,6 +14,7 @@
     ./ssh.nix
     ./stylix.nix
     ./thunderbird.nix
+    ./waybar.nix
     ./xdg.nix
     ./yubikey.nix
   ];
