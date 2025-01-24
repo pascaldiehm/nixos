@@ -24,9 +24,9 @@ jobs:
       - name: Check default.nix imports
         if: ${{ !cancelled() }}
         run: |
-          failed="false"
+          rm -f failed
 
-          find . -name default.nix | grep -v "./pkgs" | while read -r default; do
+          find . -name default.nix | grep -v "\./pkgs" | while read -r default; do
             echo "Checking $default"
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
@@ -35,34 +35,34 @@ jobs:
                 echo "  - $module"
               else
                 echo "  - $module (missing)"
-                failed="true"
+                touch failed
               fi
             done
           done
 
-          [ "$failed" = "false" ] || exit 1
+          test ! -f failed
 
       - name: Check unused resources
         if: ${{ !cancelled() }}
         run: |
-          failed="false"
-          used="$(find . -type f | grep -E -v "(.git|resources)" | xargs cat | grep "resources")"
+          rm -f failed
+          used="$(find . -type f | grep -Ev "(.git|resources)" | xargs cat | grep resources)"
 
-          find resources -type f | grep -v "secrets" | while read -r file; do
+          find resources -type f | grep -v secrets | while read -r file; do
             if echo "$used" | grep "$file" > /dev/null; then
               echo "Checking $file"
             else
               echo "Checking $file - failed"
-              failed="true"
+              touch failed
             fi
           done
 
-          [ "$failed" = "false" ] || exit 1
+          test ! -f failed
 
       - name: Lint Nix
         if: ${{ !cancelled() }}
         run: |
-          failed="false"
+          rm -f failed
 
           find . -name "*.nix" | while read -r file; do
             echo "Checking $file"
@@ -70,20 +70,20 @@ jobs:
 
             if [ -n "$diagnostics" ]; then
               echo "$diagnostics"
-              failed="true"
+              touch failed
             fi
           done
 
-          [ "$failed" = "false" ] || exit 1
+          test ! -f failed
 
       - name: Lint Shell
         if: ${{ !cancelled() }}
         run: |
-          failed="false"
+          rm -f failed
 
           find . -name "*.sh" | while read -r file; do
             echo "Checking $file"
-            nix run nixpkgs#shellcheck -- "$file" || failed="true"
+            nix run nixpkgs#shellcheck -- "$file" || touch failed
           done
 
-          [ "$failed" = "false" ] || exit 1
+          test ! -f failed

@@ -26,7 +26,7 @@ jobs:
 
       - name: Detect changes
         id: detect-changes
-        run: '[ -n "$(git status --porcelain)" ] || exit 1'
+        run: test -n "$(git status --porcelain)"
 
       - name: Verify
         run: |
@@ -37,27 +37,15 @@ jobs:
             timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel" || exit 1
           done
 
-      - name: Validate patches
+      - name: Validate custom packages
         run: |
-          failed="false"
+          rm -f failed
 
-          find patches -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";" | while read -r package; do
-            echo "Checking $package"
-            nix build ".#nixosConfigurations.installer.pkgs.$package.src"
-
-            ls "patches/$package" | while read -r patch; do
-              if patch -d result -p 1 --dry-run < "patches/$package/$patch" > /dev/null; then
-                echo "  - $patch"
-              else
-                echo "  - $patch (failed)"
-                failed="true"
-              fi
-            done
-
-            rm result
+          find pkgs -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";" | while read -r package; do
+            nix build ".#$package" || touch failed
           done
 
-          [ "$failed" = "false" ] || exit 1
+          test ! -f failed
 
       - name: Commit
         run: |

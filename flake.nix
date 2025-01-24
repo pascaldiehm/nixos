@@ -73,6 +73,11 @@
         ];
       };
 
+    legacyPackages.x86_64-linux = import inputs.nixpkgs {
+      overlays = (import ./pkgs).nixpkgs.overlays;
+      system = "x86_64-linux";
+    };
+
     nixosConfigurations =
       let
         lib = inputs.nixpkgs.lib;
