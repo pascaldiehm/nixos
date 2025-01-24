@@ -176,6 +176,7 @@
 
         input = {
           kb_layout = config.console.keyMap;
+          kb_options = "caps:escape";
           numlock_by_default = true;
           repeat_delay = 200;
         };
