@@ -209,6 +209,7 @@
             sqls.enable = true;
             texlab.enable = true;
             ts_ls.enable = true;
+            yamlls.enable = true;
 
             nixd = {
               enable = true;
