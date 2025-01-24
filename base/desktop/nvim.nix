@@ -120,7 +120,7 @@
         }
 
         {
-          action = "\"_dP";
+          action = "P";
           key = "p";
           mode = "x";
         }
