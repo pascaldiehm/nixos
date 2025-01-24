@@ -102,6 +102,7 @@
       settings = {
         bindm = [ "SUPER, mouse:272, movewindow" ];
         decoration.rounding = 10;
+        workspace = [ "w[t1], gapsout:0, border:false, rounding:false" ];
 
         animations = {
           animation = [
