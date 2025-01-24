@@ -1,16 +1,16 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     impermanence.url = "github:nix-community/impermanence";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/lanzaboote";
     };
 
     nixvim = {
@@ -23,8 +23,8 @@
     };
 
     sops-nix = {
-      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:Mic92/sops-nix";
     };
 
     stylix = {
