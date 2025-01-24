@@ -242,11 +242,26 @@
           extensions.live-grep-args.enable = true;
 
           keymaps = {
-            "<Space>f" = "find_files";
+            "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>p" = "diagnostics";
             "<Space>r" = "lsp_references";
             "<Space>s" = "lsp_workspace_symbols";
+          };
+
+          settings.defaults = {
+            file_ignore_patterns = [ "^.git/" ];
+
+            vimgrep_arguments = [
+              "rg"
+              "--color=never"
+              "--column"
+              "--hidden"
+              "--line-number"
+              "--no-heading"
+              "--smart-case"
+              "--with-filename"
+            ];
           };
         };
 
