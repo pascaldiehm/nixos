@@ -21,6 +21,7 @@
           label = {
             font_size = 64;
             halign = "center";
+            position = "0, 20%";
             shadow_passes = 2;
             shadow_size = 4;
             text = "$TIME";
