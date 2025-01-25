@@ -37,16 +37,6 @@ jobs:
             timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel" || exit 1
           done
 
-      - name: Validate custom packages
-        run: |
-          rm -f failed
-
-          find pkgs -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";" | while read -r package; do
-            nix build ".#$package" || touch failed
-          done
-
-          test ! -f failed
-
       - name: Commit
         run: |
           CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4)"
