@@ -157,6 +157,7 @@
 
       plugins = {
         autoclose.enable = true;
+        colorizer.enable = true;
         comment.enable = true;
         gitsigns.enable = true;
         lualine.enable = true;
@@ -201,6 +202,7 @@
             bashls.enable = true;
             clangd.enable = true;
             cmake.enable = true;
+            cssls.enable = true;
             docker_compose_language_service.enable = true;
             dockerls.enable = true;
             eslint.enable = true;
