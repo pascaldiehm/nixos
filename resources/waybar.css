@@ -1,0 +1,105 @@
+* {
+  font-family: "Ubuntu";
+  font-size: 12pt;
+}
+
+window#waybar {
+  background: @window_bg_color;
+  color: @window_fg_color;
+}
+
+box#workspaces,
+label#clock,
+box#hardware,
+box#screen,
+label#wireplumber,
+label#network,
+label#battery,
+box#session {
+  background: @card_bg_color;
+  border-radius: 10rem;
+  margin: 4px;
+}
+
+box#workspaces button,
+box#hardware label,
+box#screen label,
+label#wireplumber,
+label#network,
+label#battery,
+box#session label {
+  padding: 2px 8px;
+}
+
+box#workspaces button {
+  border-radius: 0;
+}
+
+box#workspaces button:first-child {
+  border-bottom-left-radius: 10rem;
+  border-top-left-radius: 10rem;
+}
+
+box#workspaces button:last-child {
+  border-bottom-right-radius: 10rem;
+  border-top-right-radius: 10rem;
+}
+
+box#workspaces button.active {
+  background: alpha(@accent_color, 0.5);
+}
+
+box#workspaces button:hover {
+  background: @accent_color;
+}
+
+label#clock {
+  padding: 4px 16px;
+}
+
+box#screen label#idle_inhibitor,
+label#wireplumber.muted,
+label#network:not(.ethernet):not(.wifi),
+label#battery.full,
+box#session label {
+  font-size: 14pt;
+}
+
+box#screen label#idle_inhibitor:hover,
+label#wireplumber:hover,
+box#session label:hover {
+  background-color: @accent_color;
+  border-radius: 10rem;
+}
+
+label#battery.full {
+  background: @success_color;
+}
+
+label#battery.charging {
+  background: @accent_color;
+}
+
+label#battery.discharging.warning {
+  background: @warning_color;
+}
+
+label#battery.discharging.critical {
+  background: @error_color;
+}
+
+label#cpu.load {
+  color: @accent_color;
+}
+
+label#cpu.high {
+  color: @error_color;
+}
+
+label#network:not(.disconnected):not(.ethernet):not(.wifi) {
+  background: @warning_color;
+}
+
+label#network.disconnected {
+  background: @error_color;
+}

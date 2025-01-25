@@ -1,9 +1,9 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal.programs.waybar = {
     enable = true;
+    style = lib.mkForce ../../resources/waybar.css;
     systemd.enable = true;
 
-    # TODO https://github.com/Alexays/Waybar/wiki/Styling
     settings.bar = {
       clock.tooltip-format = "<tt>{calendar}</tt>";
       modules-center = [ "clock" ];
@@ -22,9 +22,9 @@
       battery = {
         format = "{icon} {capacity}%";
         format-charging = "󰂄 {capacity}%";
+        format-full = "󱟢";
         format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
         interval = 10;
-        tooltip-format = "{timeTo}";
 
         states = {
           warning = 30;
