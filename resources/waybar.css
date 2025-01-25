@@ -10,6 +10,7 @@ window#waybar {
 
 label#clock,
 box#workspaces,
+label#mpris,
 box#hardware,
 box#screen,
 label#wireplumber,
@@ -22,6 +23,7 @@ box#session {
 }
 
 box#workspaces button,
+label#mpris,
 box#hardware label,
 box#screen label,
 label#wireplumber,
@@ -74,20 +76,16 @@ box#session label:hover {
   border-radius: 10rem;
 }
 
-label#battery.full {
-  background: @success_color;
+label#mpris.playing {
+  border: 2px solid @green_1;
 }
 
-label#battery.charging {
-  background: @accent_color;
+label#mpris.paused {
+  border: 2px solid @yellow_1;
 }
 
-label#battery.discharging.warning {
-  background: @warning_color;
-}
-
-label#battery.discharging.critical {
-  background: @error_color;
+label#mpris.stopped {
+  border: 2px solid @red_1;
 }
 
 label#cpu.load {
@@ -103,5 +101,21 @@ label#network:not(.disconnected):not(.ethernet):not(.wifi) {
 }
 
 label#network.disconnected {
+  background: @error_color;
+}
+
+label#battery.full {
+  background: @success_color;
+}
+
+label#battery.charging {
+  background: @accent_color;
+}
+
+label#battery.discharging.warning {
+  background: @warning_color;
+}
+
+label#battery.discharging.critical {
   background: @error_color;
 }
