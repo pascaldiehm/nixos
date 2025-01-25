@@ -6,8 +6,7 @@
 
     settings.bar = {
       clock.tooltip-format = "<tt>{calendar}</tt>";
-      modules-center = [ "clock" ];
-      modules-left = [ "privacy" "hyprland/workspaces" ];
+      modules-left = [ "privacy" "clock" "hyprland/workspaces" ];
       modules-right = [ "group/hardware" "group/screen" "wireplumber" "network" "battery" "group/session" ];
 
       backlight = {

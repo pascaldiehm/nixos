@@ -8,8 +8,8 @@ window#waybar {
   color: @window_fg_color;
 }
 
-box#workspaces,
 label#clock,
+box#workspaces,
 box#hardware,
 box#screen,
 label#wireplumber,
@@ -29,6 +29,10 @@ label#network,
 label#battery,
 box#session label {
   padding: 2px 8px;
+}
+
+label#clock {
+  padding: 4px 16px;
 }
 
 box#workspaces button {
@@ -51,10 +55,6 @@ box#workspaces button.active {
 
 box#workspaces button:hover {
   background: @accent_color;
-}
-
-label#clock {
-  padding: 4px 16px;
 }
 
 box#screen label#idle_inhibitor,
