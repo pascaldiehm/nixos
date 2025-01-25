@@ -40,10 +40,22 @@
         };
       };
 
+      "custom/dpms" = {
+        format = "󰶐";
+        on-click = "sleep 1 && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
+        tooltip-format = "Turn off screen";
+      };
+
       "custom/lock" = {
         format = "󰌾";
         on-click = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
         tooltip-format = "Lock screen";
+      };
+
+      "custom/quit" = {
+        format = "󰈆";
+        on-click = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch exit";
+        tooltip-format = "Quit Hyprland";
       };
 
       "custom/reboot" = {
@@ -77,19 +89,20 @@
 
       "group/screen" = {
         drawer.transition-left-to-right = false;
-        modules = [ "backlight" "idle_inhibitor" ];
+        modules = [ "backlight" "custom/dpms" "idle_inhibitor" ];
         orientation = "inherit";
       };
 
       "group/session" = {
         drawer.transition-left-to-right = false;
-        modules = [ "custom/shutdown" "custom/lock" "custom/sleep" "custom/reboot" ];
+        modules = [ "custom/shutdown" "custom/lock" "custom/quit" "custom/sleep" "custom/reboot" ];
         orientation = "inherit";
       };
 
       idle_inhibitor = {
         format = "{icon}";
-        tooltip = false;
+        tooltip-format-activated = "Keep screen unlocked";
+        tooltip-format-deactivated = "Keep screen unlocked";
 
         format-icons = {
           activated = "󰒳";

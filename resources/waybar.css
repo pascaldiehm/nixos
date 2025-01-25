@@ -57,6 +57,7 @@ box#workspaces button:hover {
   background: @accent_color;
 }
 
+box#screen label#custom-dpms,
 box#screen label#idle_inhibitor,
 label#wireplumber.muted,
 label#network:not(.ethernet):not(.wifi),
@@ -65,6 +66,7 @@ box#session label {
   font-size: 14pt;
 }
 
+box#screen label#custom-dpms:hover,
 box#screen label#idle_inhibitor:hover,
 label#wireplumber:hover,
 box#session label:hover {
