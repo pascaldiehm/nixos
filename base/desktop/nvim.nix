@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, system, ... }: {
+{ inputs, lib, pkgs, ... }: {
   home-manager.users.pascal = {
     imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
@@ -172,6 +172,68 @@
           };
         };
 
+        conform-nvim = {
+          enable = true;
+
+          settings = {
+            format_on_save.lsp_format = "never";
+
+            formatters = {
+              clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
+              google-java-format.command = lib.getExe pkgs.google-java-format;
+              latexindent.command = lib.getExe' pkgs.texlivePackages.latexindent "latexindent";
+
+              black = {
+                command = lib.getExe pkgs.python3Packages.black;
+                prepend_args = [ "-l" "120" ];
+              };
+
+              cmake_format = {
+                command = lib.getExe pkgs.cmake-format;
+                prepend_args = [ "--line-width" "120" "--tab-size" "2" ];
+              };
+
+              nixfmt = {
+                command = lib.getExe pkgs.nixfmt-rfc-style;
+                prepend_args = [ "-w" "120" "-s" ];
+              };
+
+              prettier = {
+                command = lib.getExe pkgs.nodePackages.prettier;
+                prepend_args = [ "--arrow-parens" "avoid" "--print-width" "120" ];
+              };
+
+              shfmt = {
+                command = lib.getExe pkgs.shfmt;
+                prepend_args = [ "-i" "2" ];
+              };
+            };
+
+            formatters_by_ft = {
+              c = [ "clang-format" ];
+              cmake = [ "cmake_format" ];
+              cpp = [ "clang-format" ];
+              css = [ "prettier" ];
+              html = [ "prettier" ];
+              java = [ "google-java-format" ];
+              javascript = [ "prettier" ];
+              javascriptreact = [ "prettier" ];
+              json = [ "prettier" ];
+              markdown = [ "prettier" ];
+              nix = [ "nixfmt" ];
+              plaintex = [ "latexindent" ];
+              python = [ "black" ];
+              scss = [ "prettier" ];
+              sh = [ "shfmt" ];
+              tex = [ "latexindent" ];
+              typescript = [ "prettier" ];
+              typescriptreact = [ "prettier" ];
+              yaml = [ "prettier" ];
+              zsh = [ "shfmt" ];
+            };
+          };
+        };
+
         lsp = {
           enable = true;
 
@@ -183,15 +245,6 @@
             gs = "signature_help";
           };
 
-          onAttach = ''
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format { async = false, id = client.id }
-              end
-            });
-          '';
-
           servers = {
             bashls.enable = true;
             clangd.enable = true;
@@ -201,22 +254,13 @@
             dockerls.enable = true;
             eslint.enable = true;
             html.enable = true;
-            jsonls.enable = true;
+            java_language_server.enable = true;
+            nixd.enable = true;
+            phpactor.enable = true;
             pylsp.enable = true;
-            sqls.enable = true;
+            tailwindcss.enable = true;
             texlab.enable = true;
             ts_ls.enable = true;
-            yamlls.enable = true;
-
-            nixd = {
-              enable = true;
-
-              settings = {
-                formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
-                nixpkgs.expr = "import (builtins.getFlake (builtins.toString ./.)).inputs.nixpkgs {}";
-                options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${system.name}.options";
-              };
-            };
           };
         };
 
