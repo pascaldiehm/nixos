@@ -58,7 +58,7 @@
       in
       mkScripts {
         update = [ pkgs.git ];
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip pkgs.vim ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 
         install = [
           pkgs.btrfs-progs
