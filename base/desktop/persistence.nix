@@ -9,9 +9,6 @@
       ".thunderbird/default" = "0755";
       Desktop = "0755";
       Documents = "0755";
-      Music = "0755";
-      Pictures = "0755";
-      Videos = "0755";
     };
   };
 }
