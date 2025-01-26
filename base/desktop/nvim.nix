@@ -237,12 +237,19 @@
         lsp = {
           enable = true;
 
-          keymaps.lspBuf = {
-            "<F2>" = "rename";
-            gd = "definition";
-            gh = "hover";
-            gi = "implementation";
-            gs = "signature_help";
+          keymaps = {
+            diagnostic = {
+              gP = "goto_prev";
+              gp = "goto_next";
+            };
+
+            lspBuf = {
+              "<F2>" = "rename";
+              gd = "definition";
+              gh = "hover";
+              gi = "implementation";
+              gs = "signature_help";
+            };
           };
 
           servers = {
