@@ -63,6 +63,7 @@
       settings = {
         bindm = [ "SUPER, mouse:272, movewindow" ];
         decoration.rounding = 10;
+        gestures.workspace_swipe = true;
         workspace = [ "w[t1], gapsout:0, border:false, rounding:false" ];
 
         animations = {
