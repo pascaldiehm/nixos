@@ -8,11 +8,6 @@
       extraPackages = [ pkgs.ripgrep ];
       nixpkgs.useGlobalPackages = true;
 
-      autoCmd = lib.singleton {
-        command = "setlocal formatoptions-=o shiftwidth< softtabstop< tabstop< textwidth<";
-        event = "FileType";
-      };
-
       clipboard = {
         providers.wl-copy.enable = true;
         register = "unnamedplus";
@@ -157,7 +152,6 @@
 
       plugins = {
         autoclose.enable = true;
-        colorizer.enable = true;
         comment.enable = true;
         gitsigns.enable = true;
         lualine.enable = true;
