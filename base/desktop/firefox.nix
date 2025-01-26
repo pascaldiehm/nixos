@@ -48,6 +48,8 @@
           "Nix Manual" = "https://nixos.org/manual/nix/stable";
           "NixOS Manual" = "https://nixos.org/manual/nixos/stable";
           "Nixpkgs Manual" = "https://nixos.org/manual/nixpkgs/stable";
+          "Nixvim Manual" = "https://nix-community.github.io/nixvim";
+          "Stylix Manual" = "https://stylix.danth.me";
         };
       };
 
