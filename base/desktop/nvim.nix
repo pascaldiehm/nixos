@@ -288,6 +288,7 @@
 
         telescope = {
           enable = true;
+          extensions.fzf-native.enable = true;
 
           keymaps = {
             "<Space>f" = "find_files hidden=true";
