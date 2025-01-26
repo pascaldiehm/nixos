@@ -1,1 +1,1 @@
-{ imports = [ ./misc.nix ./networking.nix ../common/amdgpu.nix ]; }
+{ imports = [ ./misc.nix ./networking.nix ]; }

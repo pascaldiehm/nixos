@@ -1,1 +1,1 @@
-{ imports = [ ./audio.nix ./networking.nix ./printer.nix ./programs.nix ../common/amdgpu.nix ]; }
+{ imports = [ ./audio.nix ./misc.nix ./networking.nix ./printer.nix ./programs.nix ]; }
