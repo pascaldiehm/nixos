@@ -68,8 +68,7 @@ box#session label {
   font-size: 14pt;
 }
 
-box#screen label#custom-dpms:hover,
-box#screen label#idle_inhibitor:hover,
+box#screen label:hover,
 label#wireplumber:hover,
 box#session label:hover {
   background-color: @accent_color;
