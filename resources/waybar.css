@@ -76,15 +76,15 @@ box#session label:hover {
 }
 
 label#mpris.playing {
-  border: 2px solid @green_1;
+  border: 2px solid @accent_color;
 }
 
-label#mpris.paused {
-  border: 2px solid @yellow_1;
+label#cpu.load {
+  color: @accent_color;
 }
 
-label#mpris.stopped {
-  border: 2px solid @red_1;
+label#cpu.high {
+  color: @error_color;
 }
 
 label#cpu.load {
