@@ -15,7 +15,7 @@
         backlight = {
           format = "{icon} {percent}%";
           format-icons = [ "󰃞" "󰃟" "󰃠" ];
-          on-click = "${lib.getExe pkgs.brightnessctl} s 50%";
+          on-click-right = "${lib.getExe pkgs.brightnessctl} s 50%";
           on-scroll-down = "${lib.getExe pkgs.brightnessctl} s 1%-";
           on-scroll-up = "${lib.getExe pkgs.brightnessctl} s +1%";
           tooltip = false;
