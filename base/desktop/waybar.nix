@@ -29,8 +29,8 @@
           interval = 10;
 
           states = {
-            warning = 30;
-            critical = 15;
+            warning = 20;
+            critical = 10;
           };
         };
 
