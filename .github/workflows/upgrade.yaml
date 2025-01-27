@@ -8,7 +8,6 @@ jobs:
   upgrade:
     name: Upgrade
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     permissions:
       contents: write
@@ -51,11 +50,7 @@ jobs:
           [ -n "$CHANGES_EXTENSIONS_THUNDERBIRD" ] && CHANGES_EXTENSIONS_THUNDERBIRD="$(echo "Thunderbird extension changes:" && echo "$CHANGES_EXTENSIONS_THUNDERBIRD" | sed -E "s/^/- /")"
           git add resources/extensions/thunderbird.json
 
-          CHANGES_EXTENSIONS_VSCODE="$(git diff resources/extensions/vscode.json | grep "^+ " | cut -d '"' -f 4,8 --output-delimiter .)"
-          [ -n "$CHANGES_EXTENSIONS_VSCODE" ] && CHANGES_EXTENSIONS_VSCODE="$(echo "VSCode extension changes:" && echo "$CHANGES_EXTENSIONS_VSCODE" | sed -E "s/^/- /")"
-          git add resources/extensions/vscode.json
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD" -m "$CHANGES_EXTENSIONS_VSCODE"
+          git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD"
           git push
