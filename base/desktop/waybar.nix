@@ -83,6 +83,11 @@
           format = " {percentage_used}%";
           tooltip-format = "{specific_used:.1f} / {specific_total:.1f} GiB";
           unit = "GiB";
+
+          states = {
+            warning = 80;
+            critical = 95;
+          };
         };
 
         "group/hardware" = {
@@ -122,6 +127,11 @@
           format = " {percentage}%";
           interval = 10;
           tooltip-format = "{used:.1f} / {total:.1f} GiB";
+
+          states = {
+            warning = 50;
+            critical = 80;
+          };
         };
 
         mpris = {

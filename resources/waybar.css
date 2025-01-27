@@ -87,11 +87,23 @@ label#cpu.high {
   color: @error_color;
 }
 
-label#cpu.load {
-  color: @accent_color;
+label#disk.warning {
+  color: @warning_color;
 }
 
-label#cpu.high {
+label#disk.critical {
+  color: @error_color;
+}
+
+label#memory.warning {
+  color: @warning_color;
+}
+
+label#memory.critical {
+  color: @error_color;
+}
+
+label#temperature.critical {
   color: @error_color;
 }
 
