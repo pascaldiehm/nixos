@@ -24,7 +24,6 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
-        id: detect-changes
         run: test -n "$(git status --porcelain)"
 
       - name: Verify
