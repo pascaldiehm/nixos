@@ -2,7 +2,8 @@
 
 NixOS is a fully declarative Linux distribution - and this repository contains the files required to make _my version_ of NixOS.
 
-![Screenshot](resources/screenshot.png)
+<!-- TODO: Update screenshot -->
+<!-- ![Screenshot](resources/screenshot.png) -->
 
 > [!IMPORTANT]
 > This is _my_ configuration, containing _my_ secrets and requiring _my_ password to install.
@@ -10,31 +11,34 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 
 ## Inputs
 
-- [Nixpkgs (unstable)](https://github.com/NixOS/nixpkgs/tree/nixos-unstable) - all your packages are belong to us
 - [Home Manager](https://github.com/nix-community/home-manager) - they say not to let them in your home
-- [Plasma Manager](https://github.com/nix-community/plasma-manager) - one tool to manage them all
-- [SOPS Nix](https://github.com/Mic92/sops-nix) - they built a wall around infinity, separated all the infinite values from all the infinite values nobody should know
 - [Impermanence](https://github.com/nix-community/impermanence) - `rm -rf --no-preserve-root /`
+- [Lanzaboote](https://github.com/nix-community/lanzaboote) - an island of security in a sea of unknown hardware
+- [Nixpkgs (unstable)](https://github.com/NixOS/nixpkgs/tree/nixos-unstable) - all your packages are belong to us
+- [Nixvim](https://github.com/nix-community/nixvim) - who needs lua when you have nix
+- [SOPS Nix](https://github.com/Mic92/sops-nix) - they built a wall around infinity, separated all the infinite values from all the infinite values nobody should know
+- [Stylix](https://github.com/danth/stylix) - one tool to style them all, one file to declare them, one command to apply them all and in dark themes reside
 
 ## Components
 
-| Component           | Desktop              | Server           |
-| ------------------- | -------------------- | ---------------- |
-| Boot manager        | systemd-boot         | systemd-boot     |
-| Filesystem          | btrfs + LUKS         | btrfs            |
-| Networking          | NetworkManager       | systemd-networkd |
-| Display manager     | SDDM                 |                  |
-| Desktop environment | KDE Plasma (Wayland) |                  |
-| Audio server        | pipewire             |                  |
-| Terminal emulator   | Konsole              |                  |
-| Shell               | ZSH                  | ZSH              |
-| Text editor         | VSCodium, vim        | vim              |
+| Component         | Desktop        | Server           |
+| ----------------- | -------------- | ---------------- |
+| Boot manager      | systemd-boot   | systemd-boot     |
+| Secure boot       | Lanzaboote     |                  |
+| Filesystem        | btrfs + LUKS   | btrfs            |
+| Networking        | NetworkManager | systemd-networkd |
+| Display manager   | greetd         |                  |
+| Window manager    | Hyprland       |                  |
+| Audio server      | pipewire       |                  |
+| Terminal emulator | kitty          |                  |
+| Shell             | ZSH            | ZSH              |
+| Editor            | nvim           | vim              |
 
 ## Tools
 
 This project contains a few tools to make my life a little easier.
 
-For starters, the flake exports 3 apps:
+For starters, the flake provides 3 apps:
 
 - [`install`](apps/install.sh) should be run from a NixOS installer. It guides the user through installing one of the machines.
 - [`update`](apps/update.sh) should be run from an installed system. It ensures that the config repository is up-to-date and then calls `nixos-rebuild switch` with the necessary flags to rebuild the system.
@@ -58,7 +62,7 @@ Last but not least, the repository contains a nightly [workflow](.github/workflo
 - [base](base/): Common configuration shared between machines
 - [extra](extra/): Additional modules
 - [machines](machines/): Machine-specific configuration
-- [patches](patches/): Custom patch files
+- [pkgs](pkgs/): Custom patch files
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs
   - [scripts](resources/scripts/): Outsourced shell scripts
