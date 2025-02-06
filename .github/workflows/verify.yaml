@@ -26,12 +26,12 @@ jobs:
         run: |
           rm -f failed
 
-          find . -name default.nix | grep -v "\./pkgs" | while read -r default; do
+          find . -name default.nix | grep -Fv ./pkgs | while read -r default; do
             echo "Checking $default"
             used="$(nix eval --json --file "$default" imports | jq -r ".[]")"
 
-            ls "$(dirname "$default")" | grep -v default.nix | while read -r module; do
-              if echo "$used" | grep "$module" > /dev/null; then
+            ls "$(dirname "$default")" | grep -Fv default.nix | while read -r module; do
+              if echo "$used" | grep -Fq "$module"; then
                 echo "  - $module"
               else
                 echo "  - $module (missing)"
@@ -46,10 +46,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           rm -f failed
-          used="$(find . -type f | grep -Ev "(.git|resources)" | xargs cat | grep resources)"
+          used="$(find . -type f | grep -Ev "(\.git|resources)" | xargs cat | grep resources)"
 
           find resources -type f | grep -v secrets | while read -r file; do
-            if echo "$used" | grep "$file" > /dev/null; then
+            if echo "$used" | grep -Fq "$file"; then
               echo "Checking $file"
             else
               echo "Checking $file - failed"

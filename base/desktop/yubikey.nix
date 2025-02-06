@@ -17,7 +17,7 @@
       ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${lib.getExe' pkgs.systemd "loginctl"} lock-sessions"
 
       ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-unlock" ''
-        ${lib.getExe pkgs.yubikey-manager} list --serials | grep "16869449" > /dev/null && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions
+        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions
       ''}"
     '';
   };

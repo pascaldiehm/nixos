@@ -17,11 +17,11 @@ jq -c ".[]" resources/extensions/firefox.json | while read -r ext; do
   name="$(echo "$ext" | jq -r .name)"
   echo "  - $name"
 
-  curl -s -i "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+  curl -is "https://addons.mozilla.org/firefox/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
   curl -s -o "$tmp/$name.xpi" "$source"
-  id="$(unzip -q -c "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  id="$(unzip -cq "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
 done
@@ -42,11 +42,11 @@ jq -c ".[]" resources/extensions/thunderbird.json | while read -r ext; do
   name="$(echo "$ext" | jq -r .name)"
   echo "  - $name"
 
-  curl -s -i "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
+  curl -is "https://addons.thunderbird.net/thunderbird/downloads/latest/$name/latest.xpi" >"$tmp/$name.txt"
   source="$(grep "^location:" "$tmp/$name.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
   curl -s -o "$tmp/$name.xpi" "$source"
-  id="$(unzip -q -c "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  id="$(unzip -cq "$tmp/$name.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$name\", \"id\": \"$id\", \"source\": \"$source\" }" >>"$tmp/extensions.json"
 done

@@ -13,19 +13,19 @@ journalctl -f | while read -r line; do
   message="$(echo "$line" | cut -d : -f 4- | tail -c +2)"
 
   if [ "$service" = "sshd" ]; then
-    if echo "$message" | grep -q -E "$PAT_SSHD_PASSWORD"; then
+    if echo "$message" | grep -Eq "$PAT_SSHD_PASSWORD"; then
       $NTFY_CMD "$(echo "$message" | sed -E "s/$PAT_SSHD_PASSWORD/[sshd] \\1 password for \\2 (\\3:\\4)/")"
-    elif echo "$message" | grep -q -E "$PAT_SSHD_PUBLICKEY"; then
+    elif echo "$message" | grep -Eq "$PAT_SSHD_PUBLICKEY"; then
       $NTFY_CMD "$(echo "$message" | sed -E "s/$PAT_SSHD_PUBLICKEY/[sshd] \\1 publickey (\\5) for \\2 (\\3:\\4): \\6/")"
-    elif echo "$message" | grep -q -E "$PAT_SSHD_USER"; then
+    elif echo "$message" | grep -Eq "$PAT_SSHD_USER"; then
       $NTFY_CMD "$(echo "$message" | sed -E "s/$PAT_SSHD_USER/[sshd] Invalid user \\1 (\\2:\\3)/")"
     fi
   elif [ "$service" = "systemd-login" ]; then
-    if echo "$message" | grep -q -E "$PAT_SYSTEMD_SESSION"; then
+    if echo "$message" | grep -Eq "$PAT_SYSTEMD_SESSION"; then
       $NTFY_CMD "$(echo "$message" | sed -E "s/$PAT_SYSTEMD_SESSION/[systemd] New session for \\2/")"
     fi
   elif [ "$service" = "sudo" ]; then
-    if echo "$message" | grep -q -E "$PAT_SUDO_COMMAND"; then
+    if echo "$message" | grep -Eq "$PAT_SUDO_COMMAND"; then
       $NTFY_CMD "$(echo "$message" | sed -E "s/$PAT_SUDO_COMMAND/[sudo] \\1 as \\2: \\3/")"
     fi
   fi
