@@ -130,6 +130,15 @@
           "SUPER, RETURN, exec, kitty"
           "SUPER, SPACE, exec, wofi --show drun"
           "SUPER, f, fullscreen"
+
+          ", XF86AudioLowerVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%-"
+          ", XF86AudioMute, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle"
+          ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
+          ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
+          ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
+          ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
+          ", XF86HomePage, exec, firefox"
+          ", XF86Mail, exec, thunderbird"
         ];
 
         general = {

@@ -30,9 +30,13 @@
       };
     };
 
-    services.gpg-agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-tty;
+    services = {
+      playerctld.enable = true;
+
+      gpg-agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-tty;
+      };
     };
   };
 }
