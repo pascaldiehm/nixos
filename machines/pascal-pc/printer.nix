@@ -26,6 +26,7 @@
 
     script = ''
       while ! ${lib.getExe pkgs.curl} "localhost:60000/ipp/print" 2> /dev/null; do sleep 10; done
+      sleep 10
 
       ${lib.getExe' pkgs.cups "lpadmin"} -D "Brother DCP-J1050DW" -m everywhere -o Duplex=DuplexNoTumble -o PageSize=A4 -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
       ${lib.getExe' pkgs.cups "lpadmin"} -d Brother_DCP-J1050DW
