@@ -238,11 +238,10 @@
             };
 
             lspBuf = {
-              "<F2>" = "rename";
               gd = "definition";
               gh = "hover";
               gi = "implementation";
-              gs = "signature_help";
+              gr = "rename";
             };
           };
 
