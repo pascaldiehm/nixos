@@ -114,12 +114,6 @@
           key = "<A-l>";
           mode = [ "n" "x" ];
         }
-
-        {
-          action = "P";
-          key = "p";
-          mode = "x";
-        }
       ];
 
       opts = {
