@@ -135,6 +135,7 @@
         };
 
         mpris = {
+          dynamic-len = 42;
           dynamic-order = [ "title" "artist" ];
           format = "{status_icon} {dynamic} ({player})";
           tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
