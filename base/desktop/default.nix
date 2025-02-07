@@ -7,6 +7,7 @@
     ./firefox.nix
     ./hypr.nix
     ./locale.nix
+    ./music.nix
     ./networking.nix
     ./nvim.nix
     ./persistence.nix
