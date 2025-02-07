@@ -21,8 +21,7 @@
   systemd.services.ensure-printer = {
     after = [ "cups.service" ];
     description = "Add printer without failing if it is not connected";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "cups.service" ];
+    wantedBy = [ "cups.service" ];
 
     script = ''
       while ! ${lib.getExe pkgs.curl} "localhost:60000/ipp/print" 2> /dev/null; do sleep 10; done

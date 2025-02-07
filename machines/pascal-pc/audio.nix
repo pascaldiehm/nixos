@@ -3,7 +3,6 @@
     after = [ "sound.target" ];
     description = "Disable auto-mute";
     script = "${lib.getExe' pkgs.alsa-utils "amixer"} -c 2 sset 'Auto-Mute Mode' Disabled";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "sound.target" ];
+    wantedBy = [ "sound.target" ];
   };
 }
