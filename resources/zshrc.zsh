@@ -118,6 +118,51 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
   function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
+  function mnt() {
+    local dir="$(mktemp -d)"
+
+    if [ "$1" = "android" ]; then
+      aft-mtp-mount "$dir"
+      pushd "$dir"
+      $SHELL
+
+      popd
+      umount "$dir"
+    elif echo "$1" | grep -q "^ftp://"; then
+      curlftpfs "$1" "$dir"
+      pushd "$dir"
+      $SHELL
+
+      popd
+      umount "$dir"
+    elif echo "$1" | grep -q "^ssh://"; then
+      sshfs "$(echo "$1" | sed -E "s|ssh://(.*)|\1|")" "$dir"
+      pushd "$dir"
+      $SHELL
+
+      popd
+      umount "$dir"
+    elif [ -b "$1" ]; then
+      sudo mount "$1" "$dir"
+      pushd "$dir"
+      $SHELL
+
+      popd
+      sudo umount "$dir"
+    elif [ -b "/dev/$1" ]; then
+      sudo mount "/dev/$1" "$dir"
+      pushd "$dir"
+      $SHELL
+
+      popd
+      sudo umount "$dir"
+    else
+      echo "Cannot mount $1"
+    fi
+
+    rmdir "$dir"
+  }
+
   function nixos-iso() {
     nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
     cp result/iso/*.iso nixos.iso
@@ -144,6 +189,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   compdef _nixos-secrets nixos-secrets
+  compdef _nothing mnt
   compdef _nothing nixos-iso
   compdef _nothing pyenv
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then

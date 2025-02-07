@@ -1,7 +1,9 @@
 { pkgs, ... }: {
   home-manager.users.pascal = {
     home.packages = [
+      pkgs.android-file-transfer
       pkgs.cryptsetup
+      pkgs.curlftpfs
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.imagemagickBig
