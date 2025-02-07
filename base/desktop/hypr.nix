@@ -139,6 +139,7 @@
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
           ", XF86HomePage, exec, firefox"
           ", XF86Mail, exec, thunderbird"
+          "SHIFT, XF86HomePage, exec, firefox --private-window"
         ];
 
         general = {
