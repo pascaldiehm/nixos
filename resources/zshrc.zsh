@@ -104,6 +104,7 @@ alias l="ls -alh"
 alias ls="ls --color=auto"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
+function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos test; }
 function nixos-update() { nix run ~/.config/nixos#update; }
 
@@ -114,7 +115,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
   alias py="python3"
 
-  function mked() { mkdir -p "$(dirname "$1")" && nv "$1"; }
   function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
   function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
@@ -191,6 +191,4 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _nixos-secrets nixos-secrets
   compdef _nothing nixos-iso
   compdef _nothing pyenv
-elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
-  function mked() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 fi

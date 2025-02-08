@@ -2,6 +2,7 @@ set autoindent
 set expandtab
 set ignorecase
 set mouse=""
+set nohlsearch
 set nowrap
 set number
 set relativenumber

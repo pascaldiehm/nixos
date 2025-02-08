@@ -7,6 +7,7 @@
       defaultEditor = true;
       extraPackages = [ pkgs.ripgrep ];
       nixpkgs.useGlobalPackages = true;
+      vimAlias = true;
 
       clipboard = {
         providers.wl-copy.enable = true;

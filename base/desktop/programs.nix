@@ -13,7 +13,6 @@
       pkgs.smartmontools
       pkgs.sops
       pkgs.sshfs
-      pkgs.tinyxxd
       pkgs.vlc
     ];
 

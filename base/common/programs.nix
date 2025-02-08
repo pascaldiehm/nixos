@@ -11,6 +11,12 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
+
+    vim = {
+      enable = true;
+      defaultEditor = true;
+      package = pkgs.vim.override { vimrc = ../../resources/vimrc.vim; };
+    };
   };
 
   virtualisation.docker = {
