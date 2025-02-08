@@ -142,7 +142,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 
       popd
       umount "$dir"
-    elif [ -b "$1" ]; then
+    elif [ -b "$1" ] || [ -f "$1" ]; then
       sudo mount "$1" "$dir"
       pushd "$dir"
       $SHELL
@@ -189,7 +189,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   compdef _nixos-secrets nixos-secrets
-  compdef _nothing mnt
   compdef _nothing nixos-iso
   compdef _nothing pyenv
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
