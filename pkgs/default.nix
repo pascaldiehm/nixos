@@ -7,7 +7,7 @@
 
       vimPlugins = super.vimPlugins // {
         oil-nvim = super.vimPlugins.oil-nvim.overrideAttrs (prev: {
-          postPatch = (prev.postPatch or "") + "rm -f doc/recipes.md";
+          postPatch = (prev.postPatch or "") + "\nrm -f doc/recipes.md";
         });
       };
     })
