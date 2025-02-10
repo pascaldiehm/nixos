@@ -29,7 +29,6 @@
 
       ${lib.getExe' pkgs.cups "lpadmin"} -D "Brother DCP-J1050DW" -m everywhere -o Duplex=DuplexNoTumble -o PageSize=A4 -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
       ${lib.getExe' pkgs.cups "lpadmin"} -d Brother_DCP-J1050DW
-      systemctl stop cups.service
     '';
   };
 }
