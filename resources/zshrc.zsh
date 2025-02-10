@@ -123,43 +123,25 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 
     if [ "$1" = "android" ]; then
       aft-mtp-mount "$dir"
-      pushd "$dir"
-      $SHELL
-
-      popd
-      umount "$dir"
+    elif [ "$1" = "tmpfs" ]; then
+      sudo mount -t tmpfs /dev/null "$dir"
     elif echo "$1" | grep -q "^ftp://"; then
       curlftpfs "$1" "$dir"
-      pushd "$dir"
-      $SHELL
-
-      popd
-      umount "$dir"
     elif echo "$1" | grep -q "^ssh://"; then
       sshfs "$(echo "$1" | sed -E "s|ssh://(.*)|\1|")" "$dir"
-      pushd "$dir"
-      $SHELL
-
-      popd
-      umount "$dir"
     elif [ -b "$1" ] || [ -f "$1" ]; then
       sudo mount "$1" "$dir"
-      pushd "$dir"
-      $SHELL
-
-      popd
-      sudo umount "$dir"
     elif [ -b "/dev/$1" ]; then
       sudo mount "/dev/$1" "$dir"
-      pushd "$dir"
-      $SHELL
-
-      popd
-      sudo umount "$dir"
     else
       echo "Cannot mount $1"
     fi
 
+    pushd "$dir"
+    $SHELL
+    popd
+
+    umount "$dir" 2>/dev/null || sudo umount "$dir"
     rmdir "$dir"
   }
 
