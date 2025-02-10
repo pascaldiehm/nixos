@@ -31,7 +31,6 @@
       url = "github:danth/stylix";
 
       inputs = {
-        base16-vim.url = "github:tinted-theming/tinted-vim?rev=577fe8125d74ff456cf942c733a85d769afe58b7"; # FIXME templates/config.yaml is broken on the latest commit
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };
