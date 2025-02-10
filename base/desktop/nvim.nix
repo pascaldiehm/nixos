@@ -177,7 +177,6 @@
             formatters = {
               clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
               google-java-format.command = lib.getExe pkgs.google-java-format;
-              latexindent.command = lib.getExe' pkgs.texlivePackages.latexindent "latexindent";
 
               black = {
                 command = lib.getExe pkgs.python3Packages.black;
@@ -187,6 +186,11 @@
               cmake_format = {
                 command = lib.getExe pkgs.cmake-format;
                 prepend_args = [ "--line-width" "120" "--tab-size" "2" ];
+              };
+
+              latexindent = {
+                command = lib.getExe' pkgs.texlivePackages.latexindent "latexindent";
+                prepend_args = [ "--logfile" "/dev/null" ];
               };
 
               nixfmt = {
