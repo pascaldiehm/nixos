@@ -15,6 +15,12 @@
       bm = "branch --move";
       bu = "branch --set-upstream-to";
 
+      bsb = "bisect bad";
+      bsg = "bisect good";
+      bsr = "bisect reset";
+      bss = "bisect start";
+      bsv = "bisect view";
+
       c = "commit";
       ca = "commit --all";
       cac = "commit --all --amend --no-edit";
