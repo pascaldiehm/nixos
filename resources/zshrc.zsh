@@ -137,11 +137,16 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
       sudo mount "/dev/$1" "$dir"
     else
       echo "Cannot mount $1"
+      rmdir "$dir"
+      exit 1
     fi
 
     pushd "$dir"
     $SHELL
     popd
+
+    echo "Syncing..."
+    sync
 
     umount "$dir" 2>/dev/null || sudo umount "$dir"
     rmdir "$dir"
