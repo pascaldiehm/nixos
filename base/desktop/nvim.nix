@@ -6,6 +6,7 @@
       enable = true;
       defaultEditor = true;
       extraPackages = [ pkgs.ripgrep ];
+      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ]; # FIXME: Telescope complained about missing plenary.strings; could have been a bug
       nixpkgs.useGlobalPackages = true;
       vimAlias = true;
 
