@@ -68,10 +68,10 @@ btrfs subvolume create /mnt/perm
 umount /mnt
 
 echo "Mounting partitions..."
-mount -o subvol=root "$PART_NIXOS" /mnt
+mount -o compress=zstd,subvol=root "$PART_NIXOS" /mnt
 mkdir /mnt/{nix,perm,boot}
-mount -o subvol=nix "$PART_NIXOS" /mnt/nix
-mount -o subvol=perm "$PART_NIXOS" /mnt/perm
+mount -o compress=zstd,noatime,subvol=nix "$PART_NIXOS" /mnt/nix
+mount -o compress=zstd,subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_ESP" /mnt/boot
 
 if [ "$TYPE" = "desktop" ]; then

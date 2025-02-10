@@ -12,7 +12,7 @@
     "/" = {
       fsType = "btrfs";
       label = "nixos";
-      options = [ "subvol=root" ];
+      options = [ "compress=zstd" "subvol=root" ];
     };
 
     "/boot" = {
@@ -24,14 +24,14 @@
     "/nix" = {
       fsType = "btrfs";
       label = "nixos";
-      options = [ "subvol=nix" ];
+      options = [ "compress=zstd" "noatime" "subvol=nix" ];
     };
 
     "/perm" = {
       fsType = "btrfs";
       label = "nixos";
       neededForBoot = true;
-      options = [ "subvol=perm" ];
+      options = [ "compress=zstd" "subvol=perm" ];
     };
   };
 }
