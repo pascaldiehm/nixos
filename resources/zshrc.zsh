@@ -51,7 +51,9 @@ function _prompt_git() {
   if [ -f "$git_dir/MERGE_HEAD" ]; then
     echo -n " %F{1}(merge)%f"
   elif [ -f "$git_dir/REVERT_HEAD" ]; then
-    echo -n "$ %F{1}(revert)%f"
+    echo -n " %F{1}(revert)%f"
+  elif [ -f "$git_dir/BISECT_LOG" ]; then
+    echo -n " %F{1}(bisect)%f"
   elif [ -f "$git_dir/rebase-merge/interactive" ]; then
     local step="$(cat "$git_dir/rebase-merge/msgnum")"
     local total="$(cat "$git_dir/rebase-merge/end")"
