@@ -24,9 +24,12 @@ jobs:
         run: nix run .#upgrade
 
       - name: Detect changes
+        continue-on-error: true
+        id: detect-changes
         run: test -n "$(git status --porcelain)"
 
       - name: Verify
+        if: ${{ steps.detect-changes.outcome == "success" }}
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
@@ -36,6 +39,7 @@ jobs:
           done
 
       - name: Commit
+        if: ${{ steps.detect-changes.outcome == "success" }}
         run: |
           CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4)"
           [ -n "$CHANGES_FLAKE" ] && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"

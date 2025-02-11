@@ -46,7 +46,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           rm -f failed
-          used="$(find . -type f | grep -Ev "(\.git|resources)" | xargs cat | grep resources)"
+          used="$(find . -type f | grep -Fv ./.git | grep -Fv ./resources | xargs cat | grep resources)"
 
           find resources -type f | grep -v secrets | while read -r file; do
             if echo "$used" | grep -Fq "$file"; then
@@ -61,7 +61,7 @@ jobs:
 
       - name: Lint Nix
         if: ${{ !cancelled() }}
-        run: |
+        run: | # TODO: Once pipe operator is stable, switch to nixpkgs#nil and use statix
           rm -f failed
 
           find . -name "*.nix" | while read -r file; do
