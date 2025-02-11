@@ -1,7 +1,25 @@
 { lib, pkgs, ... }: {
-  hardware.sane.enable = true;
   programs.system-config-printer.enable = true;
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
+
+  hardware = {
+    sane.enable = true;
+
+    printers = {
+      ensureDefaultPrinter = "Brother_DCP-J1050DW";
+
+      ensurePrinters = lib.singleton {
+        deviceUri = "ipp://localhost:60000/ipp/print";
+        model = "Brother_DCP-J1050DW";
+        name = "Brother_DCP-J1050DW";
+
+        ppdOptions = {
+          Duplex = "DuplexNoTumble";
+          PageSize = "A4";
+        };
+      };
+    };
+  };
 
   home-manager.users.pascal = {
     home.packages = [ pkgs.prusa-slicer ];
@@ -15,20 +33,13 @@
 
   services = {
     ipp-usb.enable = true;
-    printing.enable = true;
-  };
 
-  systemd.services.ensure-printer = {
-    after = [ "cups.service" ];
-    description = "Add printer without failing if it is not connected";
-    wantedBy = [ "cups.service" ];
+    printing = {
+      enable = true;
 
-    script = ''
-      while ! ${lib.getExe pkgs.curl} "localhost:60000/ipp/print" 2> /dev/null; do sleep 10; done
-      sleep 10
-
-      ${lib.getExe' pkgs.cups "lpadmin"} -D "Brother DCP-J1050DW" -m everywhere -o Duplex=DuplexNoTumble -o PageSize=A4 -p Brother_DCP-J1050DW -v ipp://localhost:60000/ipp/print -E || true
-      ${lib.getExe' pkgs.cups "lpadmin"} -d Brother_DCP-J1050DW
-    '';
+      drivers = [
+        (builtins.readFile ../../resources/Brother_DCP-J1050DW.ppd |> pkgs.writeTextDir "share/cups/model/Brother_DCP-J1050DW")
+      ];
+    };
   };
 }
