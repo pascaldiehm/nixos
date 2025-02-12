@@ -5,6 +5,7 @@
     ./development.nix
     ./email.nix
     ./firefox.nix
+    ./gpg.nix
     ./hypr.nix
     ./locale.nix
     ./music.nix
