@@ -131,6 +131,10 @@
           "SUPER, RETURN, exec, kitty"
           "SUPER, SPACE, exec, wofi --show drun"
 
+          ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
+          "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m region"
+          "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m window"
+
           ", XF86AudioLowerVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%-"
           ", XF86AudioMute, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle"
           ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
