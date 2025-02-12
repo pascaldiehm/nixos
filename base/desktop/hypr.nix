@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }: {
   home-manager.users.pascal = {
-    home.sessionVariables.NIXOS_OZONE_WL = 1;
-
     programs = {
       kitty.enable = true;
       wofi.enable = true;
