@@ -166,6 +166,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
       nvim .
       popd
     else
+      mkdir -p "$(dirname "$1")"
       pushd "$(dirname "$1")"
       nvim "$(basename "$1")"
       popd
