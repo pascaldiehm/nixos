@@ -126,11 +126,12 @@
           "SUPER SHIFT, l, movewindow, r"
 
           "CTRL SUPER SHIFT, q, forcekillactive"
+          "SUPER SHIFT, Space, togglefloating"
           "SUPER SHIFT, q, killactive"
           "SUPER, f, fullscreen"
 
-          "SUPER, RETURN, exec, kitty"
-          "SUPER, SPACE, exec, wofi --show drun"
+          "SUPER, Return, exec, kitty"
+          "SUPER, Space, exec, wofi --show drun"
 
           ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
           "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m region"
