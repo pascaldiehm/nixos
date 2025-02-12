@@ -34,6 +34,18 @@
         }
 
         {
+          action = "<Cmd>cnext<Return>";
+          key = "gq";
+          mode = "n";
+        }
+
+        {
+          action = "<Cmd>cprev<Return>";
+          key = "gQ";
+          mode = "n";
+        }
+
+        {
           action = "<Cmd>new<Return>";
           key = "<A-S-w>";
           mode = [ "n" "x" ];
@@ -294,12 +306,20 @@
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>p" = "diagnostics";
+            "<Space>q" = "quickfix";
             "<Space>r" = "lsp_references";
             "<Space>s" = "lsp_workspace_symbols";
           };
 
           settings.defaults = {
             file_ignore_patterns = [ "^.git/" ];
+
+            mappings.i = {
+              "<A-S-q>".__raw = "require('telescope.actions').smart_add_to_qflist";
+              "<A-q>".__raw = "require('telescope.actions').smart_send_to_qflist";
+              "<Esc>".__raw = "require('telescope.actions').close";
+              "<S-Return>".__raw = "require('telescope.actions').file_tab";
+            };
 
             vimgrep_arguments = [
               "rg"
