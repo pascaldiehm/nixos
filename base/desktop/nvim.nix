@@ -244,6 +244,7 @@
             };
 
             lspBuf = {
+              gc = "code_action";
               gd = "definition";
               gh = "hover";
               gi = "implementation";
