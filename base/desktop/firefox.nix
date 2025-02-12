@@ -4,15 +4,13 @@
 
     policies = {
       DisableFirefoxAccounts = true;
+      DisablePocket = true;
       ExtensionSettings = libx.mkMozillaExtensions ../../resources/extensions/firefox.json;
-      OverrideFirstRunPage = "";
-      OverridePostUpdatePage = "";
       PasswordManagerEnabled = false;
     };
 
     profiles.default = {
       name = "Default";
-      settings."browser.translations.automaticallyPopup" = false;
 
       bookmarks = libx.mkFirefoxBookmarks {
         Amazon = "https://amazon.de";
@@ -107,6 +105,25 @@
             definedAliases = [ "@music" ];
           };
         };
+      };
+
+      settings = {
+        "browser.formfill.enable" = false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.newtabpage.activity-stream.newtabWallpapers.wallpaper-dark" = "dark-beach";
+        "browser.search.suggest.enabled" = false;
+        "browser.toolbars.bookmarks.visibility" = "always";
+        "browser.translations.automaticallyPopup" = false;
+        "browser.urlbar.suggest.bookmark" = false;
+        "browser.urlbar.suggest.engines" = false;
+        "browser.urlbar.suggest.openpage" = false;
+        "browser.urlbar.suggest.searches" = false;
+        "browser.urlbar.suggest.topsites" = false;
+        "dom.security.https_only_mode" = true;
+        "media.eme.enabled" = true;
+        "privacy.history.custom" = true;
       };
     };
   };
