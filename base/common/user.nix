@@ -3,7 +3,7 @@
 
   users.users.pascal = {
     description = "Pascal Diehm";
-    extraGroups = [ "docker" "wheel" ];
+    extraGroups = [ "wheel" ];
     hashedPasswordFile = config.sops.secrets.password.path;
     ignoreShellProgramCheck = true;
     isNormalUser = true;

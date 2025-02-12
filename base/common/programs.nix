@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  users.users.pascal.extraGroups = [ "docker" ];
+
   home-manager.users.pascal = {
     home.packages = [ pkgs.btrfs-progs pkgs.unzip pkgs.zip ];
 
