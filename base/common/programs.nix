@@ -1,6 +1,4 @@
 { pkgs, ... }: {
-  users.users.pascal.extraGroups = [ "docker" ];
-
   home-manager.users.pascal = {
     home.packages = [ pkgs.btrfs-progs ];
 
@@ -19,10 +17,5 @@
       defaultEditor = true;
       package = pkgs.vim.override { vimrc = ../../resources/vimrc.vim; };
     };
-  };
-
-  virtualisation.docker = {
-    enable = true;
-    daemon.settings.log-driver = "local";
   };
 }

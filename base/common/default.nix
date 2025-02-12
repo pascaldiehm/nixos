@@ -1,6 +1,7 @@
 {
   imports = [
     ./boot.nix
+    ./docker.nix
     ./git.nix
     ./home-manager.nix
     ./hosts.nix
