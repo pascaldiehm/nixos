@@ -124,10 +124,12 @@
           "SUPER SHIFT, k, movewindow, u"
           "SUPER SHIFT, l, movewindow, r"
 
+          "CTRL SUPER SHIFT, q, forcekillactive"
           "SUPER SHIFT, q, killactive"
+          "SUPER, f, fullscreen"
+
           "SUPER, RETURN, exec, kitty"
           "SUPER, SPACE, exec, wofi --show drun"
-          "SUPER, f, fullscreen"
 
           ", XF86AudioLowerVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%-"
           ", XF86AudioMute, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle"
