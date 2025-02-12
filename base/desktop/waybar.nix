@@ -54,7 +54,7 @@
 
       "custom/quit" = {
         format = "󰈆";
-        on-click = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch exit";
+        on-click = "${lib.getExe pkgs.uwsm} stop";
         tooltip-format = "Quit Hyprland";
       };
 
