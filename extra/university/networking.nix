@@ -45,7 +45,7 @@
   sops.secrets = {
     "university/eduroam/ca-cert" = { };
     "university/eduroam/client-cert" = { };
-    "university/eduroam/network".restartUnits = [ "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
+    "university/eduroam/network".restartUnits = [ "NetworkManager-ensure-profiles.service" ];
     "university/eduroam/private-key" = { };
   };
 }
