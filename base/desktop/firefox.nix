@@ -118,11 +118,16 @@
         "browser.translations.automaticallyPopup" = false;
         "browser.urlbar.suggest.bookmark" = false;
         "browser.urlbar.suggest.engines" = false;
+        "browser.urlbar.suggest.history" = false;
         "browser.urlbar.suggest.openpage" = false;
+        "browser.urlbar.suggest.recentsearches" = false;
         "browser.urlbar.suggest.searches" = false;
         "browser.urlbar.suggest.topsites" = false;
         "dom.security.https_only_mode" = true;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
         "media.eme.enabled" = true;
+        "places.history.enabled" = false;
         "privacy.history.custom" = true;
       };
     };
