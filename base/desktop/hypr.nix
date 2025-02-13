@@ -126,7 +126,7 @@
           "SUPER SHIFT, l, movewindow, r"
 
           "CTRL SUPER SHIFT, q, forcekillactive"
-          "SUPER SHIFT, Space, togglefloating"
+          "SUPER SHIFT, f, togglefloating"
           "SUPER SHIFT, q, killactive"
           "SUPER, f, fullscreen"
 
