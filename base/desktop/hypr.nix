@@ -144,6 +144,7 @@
           "SUPER, Space, exec, wofi --show drun"
 
           ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
+          "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} -a"
           "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m region"
           "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m window"
 

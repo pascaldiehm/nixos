@@ -17,6 +17,7 @@
       pkgs.sops
       pkgs.sshfs
       pkgs.vlc
+      pkgs.wl-clipboard
     ];
 
     programs = {
