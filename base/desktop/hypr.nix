@@ -115,6 +115,16 @@
           "SUPER SHIFT, 8, movetoworkspace, 8"
           "SUPER SHIFT, 9, movetoworkspace, 9"
 
+          "CTRL SUPER, 1, movetoworkspacesilent, 1"
+          "CTRL SUPER, 2, movetoworkspacesilent, 2"
+          "CTRL SUPER, 3, movetoworkspacesilent, 3"
+          "CTRL SUPER, 4, movetoworkspacesilent, 4"
+          "CTRL SUPER, 5, movetoworkspacesilent, 5"
+          "CTRL SUPER, 6, movetoworkspacesilent, 6"
+          "CTRL SUPER, 7, movetoworkspacesilent, 7"
+          "CTRL SUPER, 8, movetoworkspacesilent, 8"
+          "CTRL SUPER, 9, movetoworkspacesilent, 9"
+
           "SUPER, h, movefocus, l"
           "SUPER, j, movefocus, d"
           "SUPER, k, movefocus, u"
