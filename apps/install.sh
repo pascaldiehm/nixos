@@ -51,8 +51,12 @@ while [ ! -b "$PART_ESP" ]; do sleep 1; done
 
 if [ "$TYPE" = "desktop" ]; then
   echo "Encrypting root partition..."
-  cryptsetup luksFormat "$PART_NIXOS"
-  cryptsetup open "$PART_NIXOS" nixos
+  read -rs -p "Enter disk encryption password: " FDE_PASS
+
+  echo -n "$FDE_PASS" | cryptsetup luksFormat "$PART_NIXOS"
+  echo -n "$FDE_PASS" | cryptsetup open "$PART_NIXOS" nixos
+
+  unset FDE_PASS
   PART_NIXOS="/dev/mapper/nixos"
 fi
 
