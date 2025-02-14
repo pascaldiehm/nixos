@@ -148,7 +148,10 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     echo "Syncing..."
     sync
 
+    echo "Unmounting..."
     umount "$dir" 2>/dev/null || sudo umount "$dir"
+
+    echo "Done."
     rmdir "$dir"
   }
 
