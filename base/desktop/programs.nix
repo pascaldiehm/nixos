@@ -15,6 +15,7 @@
       pkgs.sbctl
       pkgs.smartmontools
       pkgs.sops
+      pkgs.sqlitebrowser
       pkgs.sshfs
       pkgs.vlc
       pkgs.wl-clipboard
