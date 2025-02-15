@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: {
-  home-manager.users.pascal.home.packages = [ pkgs.yubioath-flutter ];
+  home-manager.users.pascal.home.packages = [ pkgs.yubikey-manager ];
 
   security.pam.u2f = {
     enable = true;
