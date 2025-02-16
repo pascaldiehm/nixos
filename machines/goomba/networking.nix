@@ -22,7 +22,7 @@
 
       wireguardPeers = [
         {
-          AllowedIPs = [ "10.42.0.2/32" "192.168.0.0/24" ];
+          AllowedIPs = [ "10.42.0.2/32" "192.168.0.0/16" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/bowser".path;
           PublicKey = "DGhb5LNEW6X+WhVhzkuUi3wpyYuDDDNq1TQDze4cCTk=";
         }
