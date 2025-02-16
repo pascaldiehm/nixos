@@ -8,13 +8,6 @@ if ! ping -c 1 1.1.1.1 &>/dev/null; then
   exit 1
 fi
 
-if [ "$TYPE" = "desktop" ]; then
-  if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
-    echo "Secure boot is disabled or not in setup mode"
-    exit 1
-  fi
-fi
-
 MACHINE=""
 TYPE="null"
 while [ "$TYPE" = "null" ]; do
@@ -35,6 +28,13 @@ while [ ! -b "$DEV" ]; do
   read -r -p "> " DEV
   [ -b "$DEV" ] || DEV="/dev/$DEV"
 done
+
+if [ "$TYPE" = "desktop" ]; then
+  if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
+    echo "ERROR: Secure boot is disabled or not in setup mode"
+    exit 1
+  fi
+fi
 
 echo "Formatting $DEV..."
 parted "$DEV" -- mklabel gpt
