@@ -1,7 +1,7 @@
-{ system, ... }: {
+{ machine, ... }: {
   sops = {
     age.sshKeyPaths = [ ];
-    defaultSopsFile = ../../resources/secrets/${system.type}/store.yaml;
+    defaultSopsFile = ../../resources/secrets/${machine.type}/store.yaml;
 
     gnupg = {
       home = "/perm/etc/nixos/.gnupg";

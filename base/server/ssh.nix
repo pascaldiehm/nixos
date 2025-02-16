@@ -1,10 +1,10 @@
-{ config, system, ... }: {
+{ config, machine, ... }: {
   home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   services.fail2ban.enable = true;
 
   services.openssh = {
     enable = true;
-    authorizedKeysFiles = [ config.sops.secrets."${system.name}/ssh".path ];
+    authorizedKeysFiles = [ config.sops.secrets."${machine.name}/ssh".path ];
     ports = [ 1970 ];
 
     settings = {
@@ -15,7 +15,7 @@
   };
 
   sops.secrets = {
-    "${system.name}/ssh".owner = "pascal";
+    "${machine.name}/ssh".owner = "pascal";
     github.owner = "pascal";
   };
 }

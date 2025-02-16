@@ -1,5 +1,5 @@
-{ libx, system, ... }: {
-  sops.secrets."${system.name}/ntfy".restartUnits = [ "journalwatch.service" ];
+{ libx, machine, ... }: {
+  sops.secrets."${machine.name}/ntfy".restartUnits = [ "journalwatch.service" ];
 
   systemd.services.journalwatch = {
     after = [ "network-online.target" ];

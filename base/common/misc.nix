@@ -1,6 +1,6 @@
-{ system, ... }: {
+{ machine, ... }: {
   home-manager.users.pascal.xdg.enable = true;
-  networking.hostName = system.name;
+  networking.hostName = machine.name;
   services.fwupd.enable = true;
   system.stateVersion = "24.11";
 }

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, ... }: {
+{ config, lib, machine, pkgs, ... }: {
   _module.args.libx = rec {
     mkFirefoxBookmarks = lib.mapAttrsToList (
       name: value:
@@ -31,8 +31,8 @@
     mkNtfy =
       channel: message:
       pkgs.writeShellScript "ntfy" ''
-        TOKEN="$(cat "${config.sops.secrets."${system.name}/ntfy".path}")"
-        ${lib.getExe pkgs.curl} -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${system.name}-${channel}"
+        TOKEN="$(cat "${config.sops.secrets."${machine.name}/ntfy".path}")"
+        ${lib.getExe pkgs.curl} -s -H "Authorization: Bearer $TOKEN" -d "${message}" "https://ntfy.pdiehm.dev/${machine.name}-${channel}"
       '';
   };
 }

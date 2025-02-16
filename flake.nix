@@ -97,7 +97,7 @@
             specialArgs = {
               inherit inputs;
               lib = lib.extend (self: super: inputs.home-manager.lib);
-              system = { inherit name type; };
+              machine = { inherit name type; };
             };
           }
         );
