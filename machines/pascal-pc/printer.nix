@@ -22,7 +22,7 @@
   };
 
   home-manager.users.pascal = {
-    home.packages = [ pkgs.prusa-slicer ];
+    home.packages = [ pkgs.prusa-slicer pkgs.simple-scan ];
 
     xdg.configFile = {
       "PrusaSlicer/filament/PLA.ini".source = ../../resources/prusa/PLA.ini;
