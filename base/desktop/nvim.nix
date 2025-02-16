@@ -190,6 +190,11 @@
               clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
               google-java-format.command = lib.getExe pkgs.google-java-format;
 
+              bibtex-tidy = {
+                command = lib.getExe pkgs.bibtex-tidy;
+                prepend_args = [ "--wrap" "120" ];
+              };
+
               black = {
                 command = lib.getExe pkgs.python3Packages.black;
                 prepend_args = [ "-l" "120" ];
@@ -222,6 +227,7 @@
             };
 
             formatters_by_ft = {
+              bib = [ "bibtex-tidy" ];
               c = [ "clang-format" ];
               cmake = [ "cmake_format" ];
               cpp = [ "clang-format" ];
