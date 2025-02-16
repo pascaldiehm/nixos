@@ -1,5 +1,4 @@
 { lib, pkgs, ... }: {
-  programs.system-config-printer.enable = true;
   users.users.pascal.extraGroups = [ "lp" "scanner" ];
 
   hardware = {
@@ -22,7 +21,7 @@
   };
 
   home-manager.users.pascal = {
-    home.packages = [ pkgs.prusa-slicer pkgs.simple-scan ];
+    home.packages = [ pkgs.prusa-slicer pkgs.simple-scan pkgs.system-config-printer ];
 
     xdg.configFile = {
       "PrusaSlicer/filament/PLA.ini".source = ../../resources/prusa/PLA.ini;
