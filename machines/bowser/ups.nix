@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, pkgs, ... }: {
   sops.secrets."bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
 
   power.ups = {
@@ -17,7 +17,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "ntfy ups";
+        NOTIFYCMD = "${lib.getExe pkgs.scripts.ntfy} ups";
 
         NOTIFYFLAG = builtins.map (event: [ event "SYSLOG+EXEC" ]) [
           "ONLINE"
