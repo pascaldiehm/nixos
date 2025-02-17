@@ -1,3 +1,9 @@
 { pkgs, ... }: {
-  home-manager.users.pascal.home.packages = [ pkgs.freecad-wayland pkgs.kdenlive pkgs.krita pkgs.tenacity ];
+  home-manager.users.pascal.home.packages = [
+    pkgs.freecad-wayland
+    pkgs.kdenlive
+    pkgs.krita
+    pkgs.prismlauncher
+    pkgs.tenacity
+  ];
 }
