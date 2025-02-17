@@ -23,8 +23,7 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 
 | Component         | Desktop        | Server           |
 | ----------------- | -------------- | ---------------- |
-| Boot manager      | systemd-boot   | systemd-boot     |
-| Secure boot       | Lanzaboote     |                  |
+| Boot loader       | Lanzaboote     | systemd-boot     |
 | Filesystem        | btrfs + LUKS   | btrfs            |
 | Networking        | NetworkManager | systemd-networkd |
 | Display manager   | greetd         |                  |
@@ -32,37 +31,18 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 | Audio server      | pipewire       |                  |
 | Terminal emulator | kitty          |                  |
 | Shell             | ZSH            | ZSH              |
-| Editor            | nvim           | vim              |
-
-## Tools
-
-This project contains a few tools to make my life a little easier.
-
-For starters, the flake provides 3 apps:
-
-- [`install`](apps/install.sh) should be run from a NixOS installer. It guides the user through installing one of the machines.
-- [`update`](apps/update.sh) should be run from an installed system. It ensures that the config repository is up-to-date and then calls `nixos-rebuild switch` with the necessary flags to rebuild the system.
-- [`upgrade`](apps/upgrade.sh) can be run from any system. It updates the system flake and [extensions](resources/extensions/).
-
-Also, the [zshrc](resources/zshrc.zsh) defines 4 helper functions:
-
-- `nixos-iso` builds a customized [NixOS installer image](extra/installer.nix).
-- `nixos-secrets` opens the sops editor for the specified [subdirectory](resources/secrets/).
-- `nixos-test` runs `nixos-rebuild test` with the necessary flags to test a modified system configuration.
-- `nixos-update` runs the `update` app provided by the system flake.
-
-Last but not least, the repository contains a nightly [workflow](.github/workflows/upgrade.yaml) that runs the `upgrade` app, makes sure all machines compile and commits the changes to the repository.
+| Editor            | neovim         | vim              |
 
 ## Structure
 
 - [flake.nix](flake.nix): Entry point
-- [lib.nix](lib.nix): Helper functions used through the configuration
-- [machines.json](machines.json): Lists defined machines and their type
+- [lib.nix](lib.nix): Additional library functions
+- [machines.json](machines.json): List of defined machines and their type
 - [apps](apps/): Scripts that are exported as apps by [flake.nix](flake.nix)
 - [base](base/): Common configuration shared between machines
 - [extra](extra/): Additional modules
 - [machines](machines/): Machine-specific configuration
-- [pkgs](pkgs/): Custom patch files
+- [pkgs](pkgs/): Custom nixpkgs patches
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs
   - [scripts](resources/scripts/): Outsourced shell scripts
