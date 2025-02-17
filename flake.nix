@@ -55,21 +55,7 @@
           }
         );
       in
-      mkScripts {
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
-
-        install = [
-          pkgs.btrfs-progs
-          pkgs.cryptsetup
-          pkgs.git
-          pkgs.gnupg
-          pkgs.jq
-          pkgs.parted
-          pkgs.pinentry-tty
-          pkgs.sbctl
-          (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
-        ];
-      };
+      mkScripts { upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ]; };
 
     nixosConfigurations =
       let
