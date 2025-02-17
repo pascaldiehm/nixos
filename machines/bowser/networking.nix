@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   sops.secrets = {
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba".owner = "systemd-network";
@@ -13,15 +13,13 @@
         Name = "wg0";
       };
 
-      wireguardPeers = [
-        {
-          AllowedIPs = [ "10.42.0.0/24" ];
-          Endpoint = "goomba:51820";
-          PersistentKeepalive = 25;
-          PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
-          PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";
-        }
-      ];
+      wireguardPeers = lib.singleton {
+        AllowedIPs = [ "10.42.0.0/24" ];
+        Endpoint = "goomba:51820";
+        PersistentKeepalive = 25;
+        PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
+        PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";
+      };
     };
 
     networks = {
