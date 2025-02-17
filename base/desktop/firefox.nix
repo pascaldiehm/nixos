@@ -1,18 +1,18 @@
-{ config, libx, ... }: {
+{ config, lib, ... }: {
   home-manager.users.pascal.programs.firefox = {
     enable = true;
 
     policies = {
       DisableFirefoxAccounts = true;
       DisablePocket = true;
-      ExtensionSettings = libx.mkMozillaExtensions ../../resources/extensions/firefox.json;
+      ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/firefox.json;
       PasswordManagerEnabled = false;
     };
 
     profiles.default = {
       name = "Default";
 
-      bookmarks = libx.mkFirefoxBookmarks {
+      bookmarks = lib.mkFirefoxBookmarks {
         Amazon = "https://amazon.de";
         ChatGPT = "https://chatgpt.com";
         Cloudflare = "https://dash.cloudflare.com";

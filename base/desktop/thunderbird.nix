@@ -1,9 +1,9 @@
-{ libx, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   home-manager.users.pascal.programs.thunderbird = {
     enable = true;
 
     package = pkgs.thunderbird.override {
-      extraPolicies.ExtensionSettings = libx.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
+      extraPolicies.ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
     };
 
     profiles.default = {

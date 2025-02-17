@@ -1,5 +1,5 @@
-{ libx, ... }: {
-  home-manager.users.pascal.programs.firefox.profiles.default.bookmarks = libx.mkFirefoxBookmarks {
+{ lib, ... }: {
+  home-manager.users.pascal.programs.firefox.profiles.default.bookmarks = lib.mkFirefoxBookmarks {
     "Uni Würzburg" = {
       GitLab = "https://gitlab.informatik.uni-wuerzburg.de";
       WueCampus = "https://wuecampus.uni-wuerzburg.de";

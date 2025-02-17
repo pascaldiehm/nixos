@@ -1,4 +1,4 @@
-{ config, libx, ... }: {
+{ config, ... }: {
   sops.secrets."bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
 
   power.ups = {
@@ -17,7 +17,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "${libx.mkNtfy "ups" "$1"}";
+        NOTIFYCMD = "ntfy ups";
 
         NOTIFYFLAG = builtins.map (event: [ event "SYSLOG+EXEC" ]) [
           "ONLINE"

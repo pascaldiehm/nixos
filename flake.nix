@@ -81,7 +81,6 @@
           lib.nixosSystem {
             modules = [
               # Libraries
-              ./lib.nix
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
               inputs.sops-nix.nixosModules.sops
@@ -96,7 +95,7 @@
 
             specialArgs = {
               inherit inputs;
-              lib = lib.extend (self: super: inputs.home-manager.lib);
+              lib = lib.extend (import ./lib.nix) |> (lib: lib.extend (self: super: inputs.home-manager.lib));
               machine = { inherit name type; };
             };
           }
