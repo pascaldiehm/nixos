@@ -3,7 +3,7 @@
     Unit.Description = "Play music";
 
     Service = {
-      ExecCondition = pkgs.writeShellScript "music-exists" "test -d /home/pascal/Documents/personal/Music/Favorites";
+      ExecCondition = "${pkgs.coreutils}/bin/test -d /home/pascal/Documents/personal/Music/Favorites";
       ExecStart = "${lib.getExe' pkgs.vlc "cvlc"} -LZ /home/pascal/Documents/personal/Music/Favorites";
     };
   };
