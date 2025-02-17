@@ -3,6 +3,10 @@
 
   virtualisation.docker = {
     enable = true;
-    daemon.settings.log-driver = "local";
+
+    autoPrune = {
+      enable = true;
+      flags = [ "--all" ];
+    };
   };
 }
