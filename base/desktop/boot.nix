@@ -14,7 +14,7 @@
     enable = true;
 
     settings = {
-      default_session.command = "${lib.getExe pkgs.greetd.tuigreet} --cmd ${pkgs.writeShellScript "exec-shell" "exec $SHELL"}";
+      default_session.command = lib.getExe pkgs.greetd.tuigreet;
 
       initial_session = {
         command = "${lib.getExe pkgs.uwsm} start ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop";
