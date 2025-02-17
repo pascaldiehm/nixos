@@ -1,6 +1,13 @@
 { pkgs, ... }: {
   home-manager.users.pascal = {
-    home.packages = [ pkgs.btrfs-progs ];
+    home.packages = [
+      pkgs.btrfs-progs
+
+      (pkgs.writeShellApplication {
+        name = "nixos-update";
+        text = builtins.readFile ../../resources/scripts/update.sh;
+      })
+    ];
 
     programs = {
       jq.enable = true;

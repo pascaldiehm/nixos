@@ -56,7 +56,6 @@
         );
       in
       mkScripts {
-        update = [ pkgs.git ];
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 
         install = [

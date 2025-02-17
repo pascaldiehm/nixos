@@ -108,10 +108,8 @@ alias ls="ls --color=auto"
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos test; }
-function nixos-update() { nix run ~/.config/nixos#update; }
 
 compdef _nothing nixos-test
-compdef _nothing nixos-update
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"

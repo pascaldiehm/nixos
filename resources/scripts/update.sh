@@ -17,8 +17,8 @@ if [ -n "$(git status --porcelain)" ]; then
   echo
 
   if [ "$res" = "S" ]; then
-    stashed="true"
     git stash push --include-untracked
+    stashed="true"
   elif [ "$res" = "R" ]; then
     git restore .
   else
