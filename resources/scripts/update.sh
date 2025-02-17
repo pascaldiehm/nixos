@@ -4,7 +4,6 @@ set -e
 pushd ~/.config/nixos
 stashed="false"
 
-# Make sure the working directory is clean
 if [ -n "$(git status --porcelain)" ]; then
   clear
   echo "There are uncommitted changes."
@@ -26,7 +25,6 @@ if [ -n "$(git status --porcelain)" ]; then
   fi
 fi
 
-# Make sure the branch is up-to-date
 git fetch
 ahead="$(git rev-list "@{u}..")"
 behind="$(git rev-list "..@{u}")"
@@ -90,7 +88,6 @@ elif [ -n "$behind" ]; then
   fi
 fi
 
-# Check if configuration changed
 if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
   clear
   echo "The configuration has not changed. Continue anyway?"
@@ -100,7 +97,6 @@ if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
   [ "$res" = "n" ] && exit 1
 fi
 
-# Rebuild system
 sudo nixos-rebuild --impure --flake . switch
 git rev-parse HEAD | sudo tee /etc/nixos/commit
 

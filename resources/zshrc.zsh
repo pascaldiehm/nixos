@@ -1,18 +1,14 @@
 #!/usr/bin/env zsh
 
-# Options
+setopt PROMPT_SUBST
 setopt PUSHDSILENT
 
-# Prompt
 function _prompt_git() {
-  # Abort if not in a git repository
   git rev-parse HEAD &>/dev/null || return
 
-  # Branch
   local branch="$(git rev-parse --abbrev-ref HEAD)"
   [ "$branch" = "HEAD" ] && echo -n " %F{3}$(git rev-parse --short HEAD)%f" || echo -n " %F{8}$branch%f"
 
-  # Changes
   local changed="$(git diff --name-only && git ls-files --others --exclude-standard)"
   local staged="$(git diff --cached --name-only)"
 
@@ -24,10 +20,8 @@ function _prompt_git() {
     echo -n "%F{6}!%f"
   fi
 
-  # Stash
   [ -n "$(git stash list)" ] && echo -n " %F{6}\U2026%f"
 
-  # Commits
   if [ -n "$(git remote show)" ] && [ "$branch" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
       local ahead="$(git rev-list "@{u}..")"
@@ -45,7 +39,6 @@ function _prompt_git() {
     fi
   fi
 
-  # Action
   local git_dir="$(git rev-parse --git-dir)"
 
   if [ -f "$git_dir/MERGE_HEAD" ]; then
@@ -69,12 +62,10 @@ function _prompt_pyenv() {
   [ -n "$VIRTUAL_ENV" ] && echo -n " %F{13}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
 }
 
-setopt PROMPT_SUBST
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
 export RPROMPT='$(_prompt_pyenv)$(_prompt_host)'
 
-# Keybindings
 bindkey -rp ""
 bindkey -R " "-"~" self-insert
 bindkey -R "\M-^@"-"\M-^?" self-insert
@@ -100,7 +91,6 @@ bindkey "^L" clear-screen                        # Ctrl+L
 bindkey "^Z" undo                                # Ctrl+Z
 bindkey "^Y" redo                                # Ctrl+Y
 
-# Aliases and functions
 alias grep="grep --color=auto"
 alias l="ls -alh"
 alias ls="ls --color=auto"
