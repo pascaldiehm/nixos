@@ -97,10 +97,10 @@ alias ls="ls --color=auto"
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
-function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos test; }
+function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos ${1:-test}; }
 function v() { [ -d "$1" ] && l "$1" || cat "$1"; }
 
-compdef _nothing nixos-test
+compdef "_arguments ':mode:(boot build build-vm switch test)'" nixos-test
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
