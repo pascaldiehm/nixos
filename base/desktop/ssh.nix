@@ -1,22 +1,26 @@
 { config, ... }: {
-  home-manager.users.pascal.programs.ssh.matchBlocks = {
-    "github.com".identityFile = config.sops.secrets."ssh/github".path;
+  home-manager.users.pascal.programs.ssh = {
+    extraConfig = "SetEnv TERM=xterm-256color";
 
-    bowser = {
-      identityFile = config.sops.secrets."ssh/bowser".path;
-      port = 1970;
-    };
+    matchBlocks = {
+      "github.com".identityFile = config.sops.secrets."ssh/github".path;
 
-    goomba = {
-      identityFile = config.sops.secrets."ssh/goomba".path;
-      port = 1970;
-    };
+      bowser = {
+        identityFile = config.sops.secrets."ssh/bowser".path;
+        port = 1970;
+      };
 
-    installer = {
-      extraOptions.UserKnownHostsFile = "/dev/null";
-      hostname = "nixos";
-      identityFile = config.sops.secrets."ssh/installer".path;
-      user = "nixos";
+      goomba = {
+        identityFile = config.sops.secrets."ssh/goomba".path;
+        port = 1970;
+      };
+
+      installer = {
+        extraOptions.UserKnownHostsFile = "/dev/null";
+        hostname = "nixos";
+        identityFile = config.sops.secrets."ssh/installer".path;
+        user = "nixos";
+      };
     };
   };
 
