@@ -22,6 +22,12 @@
 
       keymaps = [
         {
+          action = "<C-h>";
+          key = "<C-Bs>";
+          mode = "t";
+        }
+
+        {
           action = "<C-w>";
           key = "<C-Bs>";
           mode = "!";
