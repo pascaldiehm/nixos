@@ -61,7 +61,7 @@ if [ "$TYPE" = "desktop" ]; then
 fi
 
 echo "Creating filesystems..."
-mkfs.btrfs -L nixos "$PART_NIXOS"
+mkfs.btrfs -f -L nixos "$PART_NIXOS"
 mkfs.fat -F 32 -n ESP "$PART_ESP"
 
 echo "Creating subvolumes..."
