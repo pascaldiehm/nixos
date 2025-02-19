@@ -174,7 +174,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _nothing nixos-iso
   compdef _nothing pyenv
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
-  function service() { docker compose -f "~/docker/$1/compose.yaml" "${@:2}"; }
+  function service() { docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"; }
 
-  compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";"))"' service
+  compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename "{}" ";"))"' service
 fi
