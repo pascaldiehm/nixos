@@ -100,13 +100,13 @@ function mkvim() { mkdir -p "$(dirname "$1")" && vim "$1"; }
 function nixos-test() { sudo nixos-rebuild --impure --flake ~/.config/nixos ${1:-test}; }
 function v() { [ -d "$1" ] && l "$1" || cat "$1"; }
 
-compdef "_arguments ':mode:(boot build build-vm switch test)'" nixos-test
+compdef '_arguments ":mode:(boot build build-vm switch test)"' nixos-test
+compdef _nothing nixos-update
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
   alias py="python3"
 
-  function _nixos-secrets() { _arguments ":type:($(ls ~/.config/nixos/resources/secrets))"; }
   function nixos-secrets() { sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml; }
 
   function mnt() {
@@ -170,7 +170,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     source .venv/bin/activate
   }
 
-  compdef _nixos-secrets nixos-secrets
+  compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing nixos-iso
   compdef _nothing pyenv
 fi
