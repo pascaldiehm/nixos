@@ -119,7 +119,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     elif echo "$1" | grep -q "^ftp://"; then
       curlftpfs "$1" "$dir"
     elif echo "$1" | grep -q "^ssh://"; then
-      sshfs "$(echo "$1" | sed -E "s|ssh://(.*)|\1|")" "$dir"
+      sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3|")" "$dir"
     elif [ -b "$1" ] || [ -f "$1" ]; then
       sudo mount "$1" "$dir"
     elif [ -b "/dev/$1" ]; then
