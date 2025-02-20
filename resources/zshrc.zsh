@@ -6,32 +6,32 @@ setopt PUSHDSILENT
 function _prompt_git() {
   git rev-parse HEAD &>/dev/null || return
 
-  local branch="$(git rev-parse --abbrev-ref HEAD)"
-  [ "$branch" = "HEAD" ] && echo -n " %F{3}$(git rev-parse --short HEAD)%f" || echo -n " %F{8}$branch%f"
+  local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+  [ "$BRANCH" = "HEAD" ] && echo -n " %F{3}$(git rev-parse --short HEAD)%f" || echo -n " %F{8}$BRANCH%f"
 
-  local changed="$(git diff --name-only && git ls-files --others --exclude-standard)"
-  local staged="$(git diff --cached --name-only)"
+  local CHANGED="$(git diff --name-only && git ls-files --others --exclude-standard)"
+  local STAGED="$(git diff --cached --name-only)"
 
-  if [ -n "$changed" ] && [ -n "$staged" ]; then
+  if [ -n "$CHANGED" ] && [ -n "$STAGED" ]; then
     echo -n "%F{6}\U203D%f"
-  elif [ -n "$changed" ]; then
+  elif [ -n "$CHANGED" ]; then
     echo -n "%F{6}?%f"
-  elif [ -n "$staged" ]; then
+  elif [ -n "$STAGED" ]; then
     echo -n "%F{6}!%f"
   fi
 
   [ -n "$(git stash list)" ] && echo -n " %F{6}\U2026%f"
 
-  if [ -n "$(git remote show)" ] && [ "$branch" != "HEAD" ]; then
+  if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
-      local ahead="$(git rev-list "@{u}..")"
-      local behind="$(git rev-list "..@{u}")"
+      local AHEAD="$(git rev-list "@{u}..")"
+      local BEHIND="$(git rev-list "..@{u}")"
 
-      if [ -n "$ahead" ] && [ -n "$behind" ]; then
+      if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
         echo -n " %F{6}\U296F%f"
-      elif [ -n "$ahead" ]; then
+      elif [ -n "$AHEAD" ]; then
         echo -n " %F{6}\U2191%f"
-      elif [ -n "$behind" ]; then
+      elif [ -n "$BEHIND" ]; then
         echo -n " %F{6}\U2193%f"
       fi
     else
@@ -39,18 +39,18 @@ function _prompt_git() {
     fi
   fi
 
-  local git_dir="$(git rev-parse --git-dir)"
+  local GIT_DIR="$(git rev-parse --git-dir)"
 
-  if [ -f "$git_dir/MERGE_HEAD" ]; then
+  if [ -f "$GIT_DIR/MERGE_HEAD" ]; then
     echo -n " %F{1}(merge)%f"
-  elif [ -f "$git_dir/REVERT_HEAD" ]; then
+  elif [ -f "$GIT_DIR/REVERT_HEAD" ]; then
     echo -n " %F{1}(revert)%f"
-  elif [ -f "$git_dir/BISECT_LOG" ]; then
+  elif [ -f "$GIT_DIR/BISECT_LOG" ]; then
     echo -n " %F{1}(bisect)%f"
-  elif [ -f "$git_dir/rebase-merge/interactive" ]; then
-    local step="$(cat "$git_dir/rebase-merge/msgnum")"
-    local total="$(cat "$git_dir/rebase-merge/end")"
-    echo -n " %F{1}(rebase)%f %F{6}$step%F{8}/%F{6}$total%f"
+  elif [ -f "$GIT_DIR/rebase-merge/interactive" ]; then
+    local STEP="$(cat "$GIT_DIR/rebase-merge/msgnum")"
+    local TOTAL="$(cat "$GIT_DIR/rebase-merge/end")"
+    echo -n " %F{1}(rebase)%f %F{6}$STEP%F{8}/%F{6}$TOTAL%f"
   fi
 }
 

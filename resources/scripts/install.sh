@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
 [ "$EUID" = 0 ] || exec sudo "$0" "$@"
 
 if ! ping -c 1 1.1.1.1 &>/dev/null; then

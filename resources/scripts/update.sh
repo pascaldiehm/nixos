@@ -2,7 +2,7 @@
 
 set -e
 pushd ~/.config/nixos
-stashed="false"
+STASHED="false"
 
 if [ -n "$(git status --porcelain)" ]; then
   clear
@@ -17,7 +17,7 @@ if [ -n "$(git status --porcelain)" ]; then
 
   if [ "$res" = "S" ]; then
     git stash push --include-untracked
-    stashed="true"
+    STASHED="true"
   elif [ "$res" = "R" ]; then
     git restore .
   else
@@ -26,10 +26,10 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 git fetch
-ahead="$(git rev-list "@{u}..")"
-behind="$(git rev-list "..@{u}")"
+AHEAD="$(git rev-list "@{u}..")"
+BEHIND="$(git rev-list "..@{u}")"
 
-if [ -n "$ahead" ] && [ -n "$behind" ]; then
+if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   clear
   echo "The local branch is diverged from the remote branch."
   echo
@@ -46,10 +46,10 @@ if [ -n "$ahead" ] && [ -n "$behind" ]; then
   elif [ "$res" = "P" ]; then
     git push --force
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = "true" ] && git stash pop
+    [ "$STASHED" = "true" ] && git stash pop
     exit 1
   fi
-elif [ -n "$ahead" ]; then
+elif [ -n "$AHEAD" ]; then
   clear
   echo "The local branch is ahead of the remote branch."
   echo
@@ -66,10 +66,10 @@ elif [ -n "$ahead" ]; then
   elif [ "$res" = "R" ]; then
     git reset --hard "@{u}"
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = "true" ] && git stash pop
+    [ "$STASHED" = "true" ] && git stash pop
     exit 1
   fi
-elif [ -n "$behind" ]; then
+elif [ -n "$BEHIND" ]; then
   clear
   echo "The local branch is behind the remote branch."
   echo
@@ -83,7 +83,7 @@ elif [ -n "$behind" ]; then
   if [ "$res" = "P" ]; then
     git pull
   elif [ "$res" != "I" ]; then
-    [ "$stashed" = "true" ] && git stash pop
+    [ "$STASHED" = "true" ] && git stash pop
     exit 1
   fi
 fi
@@ -100,5 +100,5 @@ fi
 sudo nixos-rebuild --impure --flake . switch
 git rev-parse HEAD | sudo tee /etc/nixos/commit
 
-[ "$stashed" = "true" ] && git stash pop
+[ "$STASHED" = "true" ] && git stash pop
 popd

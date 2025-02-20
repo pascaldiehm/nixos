@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-tmp="$(mktemp -d)"
-mount /dev/disk/by-label/nixos "$tmp"
+TMP="$(mktemp -d)"
+mount /dev/disk/by-label/nixos "$TMP"
 
-mkdir -p "$tmp/history"
-[ -d "$tmp/root" ] && mv "$tmp/root" "$tmp/history/$(date -d "@$(stat -c "%Y" "$tmp/root")" "+%Y-%m-%d_%H:%M:%S")"
-btrfs subvolume create "$tmp/root"
+mkdir -p "$TMP/history"
+[ -d "$TMP/root" ] && mv "$TMP/root" "$TMP/history/$(date -d "@$(stat -c "%Y" "$TMP/root")" "+%Y-%m-%d_%H:%M:%S")"
+btrfs subvolume create "$TMP/root"
 
-find "$tmp/history" -mindepth 1 -maxdepth 1 -mtime +30 | while read -r dir; do
+find "$TMP/history" -mindepth 1 -maxdepth 1 -mtime +30 | while read -r dir; do
   chattr -i "$dir/var/empty"
   rm -rf "$dir"
 done
 
-umount "$tmp"
-rmdir "$tmp"
+umount "$TMP"
+rmdir "$TMP"
