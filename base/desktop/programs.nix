@@ -18,6 +18,11 @@
       pkgs.wl-clipboard
 
       (pkgs.writeShellApplication {
+        name = "letter";
+        text = builtins.readFile ../../resources/scripts/letter.sh;
+      })
+
+      (pkgs.writeShellApplication {
         name = "mnt";
         runtimeInputs = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
         text = builtins.readFile ../../resources/scripts/mount.sh;
