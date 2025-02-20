@@ -3,9 +3,7 @@
     services.playerctld.enable = true;
 
     home.packages = [
-      pkgs.android-file-transfer
       pkgs.cryptsetup
-      pkgs.curlftpfs
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.imagemagickBig
@@ -16,9 +14,14 @@
       pkgs.smartmontools
       pkgs.sops
       pkgs.sqlitebrowser
-      pkgs.sshfs
       pkgs.vlc
       pkgs.wl-clipboard
+
+      (pkgs.writeShellApplication {
+        name = "mnt";
+        runtimeInputs = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
+        text = builtins.readFile ../../resources/scripts/mount.sh;
+      })
     ];
 
     programs = {
