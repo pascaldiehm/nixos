@@ -3,6 +3,7 @@
 
   virtualisation.docker = {
     enable = true;
+    logDriver = "local";
 
     autoPrune = {
       enable = true;
