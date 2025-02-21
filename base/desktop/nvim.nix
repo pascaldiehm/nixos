@@ -150,9 +150,17 @@
               gd = "definition";
               gh = "hover";
               gi = "implementation";
-              gr = "rename";
+              gr = "empty_rename";
             };
           };
+
+          postConfig = ''
+            vim.lsp.buf.empty_rename = function()
+              vim.ui.input({ prompt = "New Name: " }, function(name)
+                vim.lsp.buf.rename(name)
+              end)
+            end
+          '';
 
           servers = {
             bashls.enable = true;
