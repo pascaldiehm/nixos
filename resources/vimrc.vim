@@ -1,7 +1,7 @@
 set autoindent
 set expandtab
 set ignorecase
-set mouse=""
+set mouse=
 set nohlsearch
 set nowrap
 set number
@@ -11,4 +11,4 @@ set shiftwidth=2
 set smartcase
 set softtabstop=2
 set tabstop=2
-set viminfo=""
+set viminfo=
