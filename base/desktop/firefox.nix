@@ -14,10 +14,12 @@
 
       bookmarks = lib.mkFirefoxBookmarks {
         Amazon = "https://amazon.de";
+        Brilliant = "https://brilliant.org";
         ChatGPT = "https://chatgpt.com";
         Cloudflare = "https://dash.cloudflare.com";
         Hetzner = "https://console.hetzner.cloud";
         "Matrix Admin" = "https://admin.etke.cc";
+        Netflix = "https://netflix.com";
         PayPal = "https://paypal.com";
         Sparkasse = "https://sparkasse-mainfranken.de";
 
