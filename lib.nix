@@ -27,6 +27,13 @@ lib: prev: {
     |> builtins.listToAttrs
     |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
 
+  mkNvimFormatters = builtins.mapAttrs (
+    key: value: {
+      command = builtins.head value;
+      prepend_args = builtins.tail value;
+    }
+  );
+
   mkNvimKeymaps = lib.mapAttrsToList (
     action: value: {
       inherit action;

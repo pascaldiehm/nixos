@@ -98,44 +98,16 @@
           settings = {
             format_on_save.lsp_format = "never";
 
-            formatters = {
-              clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
-              google-java-format.command = lib.getExe pkgs.google-java-format;
-
-              bibtex-tidy = {
-                command = lib.getExe pkgs.bibtex-tidy;
-                prepend_args = [ "--wrap" "120" ];
-              };
-
-              black = {
-                command = lib.getExe pkgs.python3Packages.black;
-                prepend_args = [ "-l" "120" ];
-              };
-
-              cmake_format = {
-                command = lib.getExe pkgs.cmake-format;
-                prepend_args = [ "--line-width" "120" "--tab-size" "2" ];
-              };
-
-              latexindent = {
-                command = lib.getExe' pkgs.texlivePackages.latexindent "latexindent";
-                prepend_args = [ "--logfile" "/dev/null" ];
-              };
-
-              nixfmt = {
-                command = lib.getExe pkgs.nixfmt-rfc-style;
-                prepend_args = [ "-w" "120" "-s" ];
-              };
-
-              prettier = {
-                command = lib.getExe pkgs.nodePackages.prettier;
-                prepend_args = [ "--arrow-parens" "avoid" "--print-width" "120" ];
-              };
-
-              shfmt = {
-                command = lib.getExe pkgs.shfmt;
-                prepend_args = [ "-i" "2" ];
-              };
+            formatters = lib.mkNvimFormatters {
+              bibtex-tidy = [ (lib.getExe pkgs.bibtex-tidy) "--wrap" "120" ];
+              black = [ (lib.getExe pkgs.python3Packages.black) "-l" "120" ];
+              clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
+              cmake_format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
+              google-java-format = [ (lib.getExe pkgs.google-java-format) ];
+              latexindent = [ (lib.getExe' pkgs.texlivePackages.latexindent "latexindent") "--logfile" "/dev/null" ];
+              nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-w" "120" "-s" ];
+              prettier = [ (lib.getExe pkgs.nodePackages.prettier) "--arrow-parens" "avoid" "--print-width" "120" ];
+              shfmt = [ (lib.getExe pkgs.shfmt) "-i" "2" ];
             };
 
             formatters_by_ft = {
