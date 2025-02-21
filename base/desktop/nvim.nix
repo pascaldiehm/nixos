@@ -20,121 +20,27 @@
         update_in_insert = true;
       };
 
-      keymaps = [
-        {
-          action = "<C-h>";
-          key = "<C-Bs>";
-          mode = "t";
-        }
-
-        {
-          action = "<C-w>";
-          key = "<C-Bs>";
-          mode = "!";
-        }
-
-        {
-          action = "<Cmd>Oil<Return>";
-          key = "<Space><Space>";
-          mode = "n";
-        }
-
-        {
-          action = "<Cmd>cnext<Return>";
-          key = "gq";
-          mode = "n";
-        }
-
-        {
-          action = "<Cmd>cprev<Return>";
-          key = "gQ";
-          mode = "n";
-        }
-
-        {
-          action = "<Cmd>new<Return>";
-          key = "<A-S-w>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>tab new<Return>";
-          key = "<A-t>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>tabnext<Return>";
-          key = "<A-Tab>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>tabprevious<Return>";
-          key = "<A-S-Tab>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>terminal<Return>i";
-          key = "<Space><Return>";
-          mode = "n";
-        }
-
-        {
-          action = "<Cmd>vertical new<Return>";
-          key = "<A-w>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd H<Return>";
-          key = "<A-S-h>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd J<Return>";
-          key = "<A-S-j>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd K<Return>";
-          key = "<A-S-k>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd L<Return>";
-          key = "<A-S-l>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd h<Return>";
-          key = "<A-h>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd j<Return>";
-          key = "<A-j>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd k<Return>";
-          key = "<A-k>";
-          mode = [ "n" "x" ];
-        }
-
-        {
-          action = "<Cmd>wincmd l<Return>";
-          key = "<A-l>";
-          mode = [ "n" "x" ];
-        }
-      ];
+      keymaps = lib.mkNvimKeymaps {
+        "<C-h>" = [ "<C-Bs>" "t" ];
+        "<C-w>" = [ "<C-Bs>" "!" ];
+        "<Cmd>Oil<Return>" = [ "<Space><Space>" "n" ];
+        "<Cmd>cnext<Return>" = [ "gq" "n" ];
+        "<Cmd>cprevious<Return>" = [ "gQ" "n" ];
+        "<Cmd>new<Return>" = [ "<A-S-w>" "n" ];
+        "<Cmd>tab new<Return>" = [ "<A-t>" "n" ];
+        "<Cmd>tabnext<Return>" = [ "<A-Tab>" "n" ];
+        "<Cmd>tabprevious<Return>" = [ "<A-S-Tab>" "n" ];
+        "<Cmd>terminal<Return>i" = [ "<Space><Return>" "n" ];
+        "<Cmd>vertical new<Return>" = [ "<A-w>" "n" ];
+        "<Cmd>wincmd H<Return>" = [ "<A-S-h>" "n" ];
+        "<Cmd>wincmd J<Return>" = [ "<A-S-j>" "n" ];
+        "<Cmd>wincmd K<Return>" = [ "<A-S-k>" "n" ];
+        "<Cmd>wincmd L<Return>" = [ "<A-S-l>" "n" ];
+        "<Cmd>wincmd h<Return>" = [ "<A-h>" "n" ];
+        "<Cmd>wincmd j<Return>" = [ "<A-j>" "n" ];
+        "<Cmd>wincmd k<Return>" = [ "<A-k>" "n" ];
+        "<Cmd>wincmd l<Return>" = [ "<A-l>" "n" ];
+      };
 
       opts = {
         expandtab = true;
