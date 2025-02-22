@@ -76,6 +76,7 @@
         gitsigns.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
+        ts-autotag.enable = true;
         web-devicons.enable = true;
 
         cmp = {

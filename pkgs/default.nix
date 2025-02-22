@@ -6,8 +6,12 @@
       });
 
       vimPlugins = super.vimPlugins // {
+        conform-nvim = super.vimPlugins.conform-nvim.overrideAttrs (prev: {
+          postPatch = (prev.postPatch or "") + "\nrm doc/recipes.md";
+        });
+
         oil-nvim = super.vimPlugins.oil-nvim.overrideAttrs (prev: {
-          postPatch = (prev.postPatch or "") + "\nrm -f doc/recipes.md";
+          postPatch = (prev.postPatch or "") + "\nrm doc/recipes.md";
         });
       };
     })
