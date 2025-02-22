@@ -52,6 +52,8 @@ cat <<EOF >letter.tex
 
 \usepackage[ngerman]{babel}
 
+\renewcommand{\raggedsignature}{\raggedright}
+
 ${FROM_NAME:+"\\setkomavar\{fromname}{$FROM_NAME}"}
 ${FROM_ADDRESS:+"\\setkomavar{fromaddress}{$FROM_ADDRESS}"}
 ${SUBJECT:+"\\setkomavar{subject}{$SUBJECT}"}
