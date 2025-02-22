@@ -1,5 +1,6 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
+  home-manager.users.pascal.nixpkgs.overlays = lib.mkForce null; # FIXME: Remove after github:danth/stylix#866 is merged
 
   stylix = {
     enable = true;
