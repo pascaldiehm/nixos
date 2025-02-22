@@ -98,6 +98,11 @@
             definedAliases = [ "@npm" ];
           };
 
+          "Speedguide" = {
+            urls = [ { template = "https://speedguide.net/port.php?port={searchTerms}"; } ];
+            definedAliases = [ "@port" ];
+          };
+
           "YouTube" = {
             urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
             definedAliases = [ "@youtube" ];
