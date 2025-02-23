@@ -7,7 +7,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-old";
+      options = "--delete-older-than +8";
     };
 
     settings = {
