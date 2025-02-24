@@ -1,6 +1,6 @@
 { config, machine, ... }: {
-  home-manager.users.pascal.programs.ssh.matchBlocks."github.com".identityFile = config.sops.secrets.github.path;
   services.fail2ban.enable = true;
+  sops.secrets."${machine.name}/ssh".owner = "pascal";
 
   services.openssh = {
     enable = true;
@@ -12,10 +12,5 @@
       KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
     };
-  };
-
-  sops.secrets = {
-    "${machine.name}/ssh".owner = "pascal";
-    github.owner = "pascal";
   };
 }

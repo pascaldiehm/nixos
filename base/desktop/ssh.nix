@@ -6,11 +6,13 @@
       "github.com".identityFile = config.sops.secrets."ssh/github".path;
 
       bowser = {
+        forwardAgent = true;
         identityFile = config.sops.secrets."ssh/bowser".path;
         port = 1970;
       };
 
       goomba = {
+        forwardAgent = true;
         identityFile = config.sops.secrets."ssh/goomba".path;
         port = 1970;
       };
