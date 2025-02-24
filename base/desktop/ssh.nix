@@ -1,28 +1,40 @@
-{ config, ... }: {
-  home-manager.users.pascal.programs.ssh = {
-    extraConfig = "SetEnv TERM=xterm-256color";
+{ config, lib, pkgs, ... }: {
+  home-manager.users.pascal = {
+    services.ssh-agent.enable = true;
 
-    matchBlocks = {
-      "github.com".identityFile = config.sops.secrets."ssh/github".path;
+    programs.ssh = {
+      extraConfig = "SetEnv TERM=xterm-256color";
 
-      bowser = {
-        forwardAgent = true;
-        identityFile = config.sops.secrets."ssh/bowser".path;
-        port = 1970;
+      matchBlocks = {
+        "github.com".identityFile = config.sops.secrets."ssh/github".path;
+
+        bowser = {
+          forwardAgent = true;
+          identityFile = config.sops.secrets."ssh/bowser".path;
+          port = 1970;
+        };
+
+        goomba = {
+          forwardAgent = true;
+          identityFile = config.sops.secrets."ssh/goomba".path;
+          port = 1970;
+        };
+
+        installer = {
+          extraOptions.UserKnownHostsFile = "/dev/null";
+          hostname = "nixos";
+          identityFile = config.sops.secrets."ssh/installer".path;
+          user = "nixos";
+        };
       };
+    };
 
-      goomba = {
-        forwardAgent = true;
-        identityFile = config.sops.secrets."ssh/goomba".path;
-        port = 1970;
-      };
+    systemd.user.services.ssh-agent.Service = {
+      Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
 
-      installer = {
-        extraOptions.UserKnownHostsFile = "/dev/null";
-        hostname = "nixos";
-        identityFile = config.sops.secrets."ssh/installer".path;
-        user = "nixos";
-      };
+      ExecStartPost = pkgs.writeShellScript "add-ssh-keys" ''
+        ${lib.getExe' pkgs.openssh "ssh-add"} ${config.sops.secrets."ssh/github".path}
+      '';
     };
   };
 
