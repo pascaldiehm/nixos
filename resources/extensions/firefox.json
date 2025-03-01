@@ -1,5 +1,5 @@
 [
-  { "name": "bitwarden-password-manager", "id": "{446900e4-71c2-419f-a6a7-df9c091e268b}", "source": "https://addons.mozilla.org/firefox/downloads/file/4410896/bitwarden_password_manager-2024.12.4.xpi" },
+  { "name": "bitwarden-password-manager", "id": "{446900e4-71c2-419f-a6a7-df9c091e268b}", "source": "https://addons.mozilla.org/firefox/downloads/file/4440363/bitwarden_password_manager-2025.2.0.xpi" },
   { "name": "dictionary-german", "id": "de-DE@dictionaries.addons.mozilla.org", "source": "https://addons.mozilla.org/firefox/downloads/file/4034565/dictionary_german-2.1.xpi" },
   { "name": "dont-track-me-google1", "id": "dont-track-me-google@robwu.nl", "source": "https://addons.mozilla.org/firefox/downloads/file/4132891/dont_track_me_google1-4.28.xpi" },
   { "name": "flagfox", "id": "{1018e4d6-728f-4b20-ad56-37578a4de76b}", "source": "https://addons.mozilla.org/firefox/downloads/file/4428652/flagfox-6.1.83.xpi" },
