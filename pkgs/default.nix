@@ -14,6 +14,11 @@
           postPatch = (prev.postPatch or "") + "\nrm doc/recipes.md";
         });
       };
+
+      # FIXME: Remove after github:Alexays/Waybar#3956 is closed
+      waybar = super.waybar.overrideAttrs (prev: {
+        patches = (prev.patches or [ ]) ++ [ waybar/restore-ipv4.patch ];
+      });
     })
   ];
 }
