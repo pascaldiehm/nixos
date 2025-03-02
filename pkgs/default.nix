@@ -1,6 +1,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
+      # HACK(github:NixOS/nixfmt#206)
       nixfmt-rfc-style = super.nixfmt-rfc-style.overrideAttrs (prev: {
         patches = (prev.patches or [ ]) ++ [ nixfmt-rfc-style/compact-lists.patch nixfmt-rfc-style/compact-params.patch ];
       });
@@ -15,7 +16,7 @@
         });
       };
 
-      # FIXME: Remove after github:Alexays/Waybar#3956 is closed
+      # HACK(github:Alexays/Waybar#3956)
       waybar = super.waybar.overrideAttrs (prev: {
         patches = (prev.patches or [ ]) ++ [ waybar/restore-ipv4.patch ];
       });

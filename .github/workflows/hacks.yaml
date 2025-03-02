@@ -1,0 +1,42 @@
+name: Hacks
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  upgrade:
+    name: Hacks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Check for resolved hacks
+        run: |
+          find . -type f | grep -Fv ./.git | while read -r file; do
+            echo "Checking $file"
+
+            grep "HACK(.*)" "$file" | while read -r line; do
+              hack="$(echo "$line" | sed -E "s/.*HACK\((.*)\)/\1/")"
+
+              if [ "$(echo "$hack" | sed -E "s/(.*):.*/\1/")" = "github" ]; then
+                owner="$(echo "$hack" | sed -E "s|github:(.*)/(.*)#(.*)|\1|")"
+                repo="$(echo "$hack" | sed -E "s|github:(.*)/(.*)#(.*)|\2|")"
+                id="$(echo "$hack" | sed -E "s|github:(.*)/(.*)#(.*)|\3|")"
+                state="$(curl -s "https://api.github.com/repos/$owner/$repo/issues/$id" | jq -r .state)"
+
+                if [ "$state" = "open" ]; then
+                  echo "  - $hack"
+                else
+                  echo "  - $hack (resolved)"
+                  touch failed
+                fi
+              else
+                echo "  - $hack (unknown)"
+                touch failed
+              fi
+            done
+          done
+
+          test ! -f failed
