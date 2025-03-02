@@ -13,7 +13,7 @@ elif [ "$1" = "tmpfs" ]; then
 elif echo "$1" | grep -q "^ftp://"; then
   curlftpfs "$1" "$DIR"
 elif echo "$1" | grep -q "^ssh://"; then
-  sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3")" "$DIR"
+  sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3|")" "$DIR"
 elif [ -b "$1" ] || [ -f "$1" ]; then
   sudo mount "$1" "$DIR"
   ROOT="true"
