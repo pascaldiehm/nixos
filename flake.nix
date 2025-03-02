@@ -14,12 +14,8 @@
     };
 
     nixvim = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/nixvim";
-
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
     };
 
     sops-nix = {
