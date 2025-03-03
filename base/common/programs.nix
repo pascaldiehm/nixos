@@ -2,6 +2,9 @@
   home-manager.users.pascal = {
     home.packages = [
       pkgs.btrfs-progs
+      pkgs.rsync
+      pkgs.unzip
+      pkgs.zip
 
       (pkgs.writeShellApplication {
         name = "nixos-update";
