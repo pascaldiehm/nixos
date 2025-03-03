@@ -5,7 +5,6 @@ PAT_SSHD_PUBLICKEY="^(Accepted|Failed) publickey for (\w+) from (\S+) port ([0-9
 PAT_SSHD_USER_DENIED="^User (\w+) from (\S+) not allowed because not listed in AllowUsers$"
 PAT_SSHD_USER_INVALID="^Invalid user (\w+) from (\S+) port ([0-9]+)$"
 PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
-PAT_SYSTEMD_SESSION="^New session ([0-9]+) of user (\w+).$"
 
 journalctl -f | while read -r line; do
   SERVICE="$(echo "$line" | cut -d "[" -f 1 | cut -d " " -f 5)"
@@ -24,10 +23,6 @@ journalctl -f | while read -r line; do
   elif [ "$SERVICE" = "sudo" ]; then
     if echo "$MESSAGE" | grep -Eq "$PAT_SUDO_COMMAND"; then
       ntfy journal "$(echo "$MESSAGE" | sed -E "s/$PAT_SUDO_COMMAND/[sudo] \\1 as \\2: \\3/")"
-    fi
-  elif [ "$SERVICE" = "systemd-logind" ]; then
-    if echo "$MESSAGE" | grep -Eq "$PAT_SYSTEMD_SESSION"; then
-      ntfy journal "$(echo "$MESSAGE" | sed -E "s/$PAT_SYSTEMD_SESSION/[systemd] New session for \\2/")"
     fi
   fi
 done
