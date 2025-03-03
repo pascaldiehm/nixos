@@ -39,6 +39,23 @@
           ssid = "eduroam";
         };
       };
+
+      university = {
+        connection = {
+          id = "University";
+          type = "vpn";
+        };
+
+        vpn = {
+          authtype = "password";
+          cookie-flags = 2;
+          gateway = "vpngw.uni-wuerzburg.de";
+          gateway-flags = 2;
+          gwcert-flags = 2;
+          protocol = "anyconnect";
+          service-type = "org.freedesktop.NetworkManager.openconnect";
+        };
+      };
     };
   };
 
