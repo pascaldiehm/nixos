@@ -3,7 +3,10 @@
     services.ssh-agent.enable = true;
 
     programs.ssh = {
-      extraConfig = "SetEnv TERM=xterm-256color";
+      extraConfig = ''
+        IdentitiesOnly yes
+        SetEnv TERM=xterm-256color
+      '';
 
       matchBlocks = {
         "github.com".identityFile = config.sops.secrets."ssh/github".path;
