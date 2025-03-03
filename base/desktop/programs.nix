@@ -9,11 +9,8 @@
       pkgs.imagemagickBig
       pkgs.poppler_utils
       pkgs.pwvucontrol
-      pkgs.quickemu
       pkgs.sbctl
-      pkgs.smartmontools
       pkgs.sops
-      pkgs.sqlitebrowser
       pkgs.vlc
       pkgs.wl-clipboard
 

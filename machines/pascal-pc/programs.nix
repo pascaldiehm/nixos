@@ -4,6 +4,7 @@
     pkgs.kdePackages.kdenlive
     pkgs.krita
     pkgs.prismlauncher
+    pkgs.quickemu
     pkgs.tenacity
   ];
 }
