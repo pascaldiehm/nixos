@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home-manager.users.pascal.home.packages = [
+    pkgs.blender-hip
     pkgs.freecad-wayland
     pkgs.kdePackages.kdenlive
     pkgs.krita
