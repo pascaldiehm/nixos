@@ -34,23 +34,23 @@ jobs:
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
 
-          jq -r "keys[]" machines.json | while read -r machine; do
-            timeout 20m nix build --impure ".#nixosConfigurations.$machine.config.system.build.toplevel" || exit 1
+          jq -r "keys[]" machines.json | while read -r MACHINE; do
+            timeout 20m nix build --impure ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done
 
       - name: Commit
         if: steps.detect-changes.outcome == 'success'
         run: |
-          CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4 | sort | uniq)"
-          [ -n "$CHANGES_FLAKE" ] && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
+          CHANGES_FLAKE="$(git diff flake.lock | grep repo | sed -E 's/^\s+"repo": "([^"]+)",$/\1/' | sort | uniq)"
+          test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
           git add flake.lock
 
-          CHANGES_EXTENSIONS_FIREFOX="$(git diff resources/extensions/firefox.json | grep "^+ " | cut -d '"' -f 4 | sort | uniq)"
-          [ -n "$CHANGES_EXTENSIONS_FIREFOX" ] && CHANGES_EXTENSIONS_FIREFOX="$(echo "Firefox extension changes:" && echo "$CHANGES_EXTENSIONS_FIREFOX" | sed -E "s/^/- /")"
+          CHANGES_EXTENSIONS_FIREFOX="$(git diff resources/extensions/firefox.json | grep "^+ " | sed -E 's/.*"name": "([^"]+)".*/\1/' | sort | uniq)"
+          test -n "$CHANGES_EXTENSIONS_FIREFOX" && CHANGES_EXTENSIONS_FIREFOX="$(echo "Firefox extension changes:" && echo "$CHANGES_EXTENSIONS_FIREFOX" | sed -E "s/^/- /")"
           git add resources/extensions/firefox.json
 
-          CHANGES_EXTENSIONS_THUNDERBIRD="$(git diff resources/extensions/thunderbird.json | grep "^+ " | cut -d '"' -f 4 | sort | uniq)"
-          [ -n "$CHANGES_EXTENSIONS_THUNDERBIRD" ] && CHANGES_EXTENSIONS_THUNDERBIRD="$(echo "Thunderbird extension changes:" && echo "$CHANGES_EXTENSIONS_THUNDERBIRD" | sed -E "s/^/- /")"
+          CHANGES_EXTENSIONS_THUNDERBIRD="$(git diff resources/extensions/thunderbird.json | grep "^+ " | sed 's/.*"name": "([^"]+)".*/\1/' | sort | uniq)"
+          test -n "$CHANGES_EXTENSIONS_THUNDERBIRD" && CHANGES_EXTENSIONS_THUNDERBIRD="$(echo "Thunderbird extension changes:" && echo "$CHANGES_EXTENSIONS_THUNDERBIRD" | sed -E "s/^/- /")"
           git add resources/extensions/thunderbird.json
 
           git config user.name "github-actions[bot]"

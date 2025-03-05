@@ -7,23 +7,23 @@ function readline() {
 }
 
 function readmultiline() {
-  local BUILD=""
+  local RES=""
   local READ=""
 
   while true; do
     read -r -p "$1" READ
-    [ "$READ" = "" ] && break
-    BUILD="$BUILD${BUILD:+$3}$READ"
+    test "$READ" = "" && break
+    RES="$RES${RES:+$3}$READ"
   done
 
-  export "$2"="$BUILD"
+  export "$2=$RES"
 }
 
 readline "From name: " FROM_NAME
-readmultiline "From address: " FROM_ADDRESS "\\\\"
+readmultiline "From address: " FROM_ADDRESS \\\\
 echo
 
-readmultiline "Recipient: " RECIPIENT "\\\\"
+readmultiline "Recipient: " RECIPIENT \\\\
 echo
 
 readline "Subject: " SUBJECT
@@ -44,8 +44,8 @@ if [ "$RECIPIENT" = "" ]; then
   exit 1
 fi
 
-DIR="$(mktemp -d)"
-pushd "$DIR"
+TMP="$(mktemp -d)"
+pushd "$TMP"
 
 cat <<EOF >letter.tex
 \documentclass[parskip=half]{scrlttr2}
@@ -54,7 +54,7 @@ cat <<EOF >letter.tex
 
 \renewcommand{\raggedsignature}{\raggedright}
 
-${FROM_NAME:+"\\setkomavar\{fromname}{$FROM_NAME}"}
+${FROM_NAME:+"\\setkomavar{fromname}{$FROM_NAME}"}
 ${FROM_ADDRESS:+"\\setkomavar{fromaddress}{$FROM_ADDRESS}"}
 ${SUBJECT:+"\\setkomavar{subject}{$SUBJECT}"}
 ${DATE:+"\\setkomavar{date}{$DATE}"}
@@ -73,5 +73,5 @@ EOF
 pdflatex letter.tex
 popd
 
-mv "$DIR/letter.pdf" .
-rm -rf "$DIR"
+mv "$TMP/letter.pdf" .
+rm -rf "$TMP"

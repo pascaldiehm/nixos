@@ -1,33 +1,32 @@
 #!/usr/bin/env bash
 
 set -e
-
-DIR="$(mktemp -d)"
+TMP="$(mktemp -d)"
 ROOT="false"
 
 if [ "$1" = "android" ]; then
-  aft-mtp-mount "$DIR"
+  aft-mtp-mount "$TMP"
 elif [ "$1" = "tmpfs" ]; then
-  sudo mount -t tmpfs /dev/null "$DIR"
+  sudo mount -t tmpfs /dev/null "$TMP"
   ROOT="true"
 elif echo "$1" | grep -q "^ftp://"; then
-  curlftpfs "$1" "$DIR"
+  curlftpfs "$1" "$TMP"
 elif echo "$1" | grep -q "^ssh://"; then
-  sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3|")" "$DIR"
+  sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3|")" "$TMP"
 elif [ -b "$1" ] || [ -f "$1" ]; then
-  sudo mount "$1" "$DIR"
+  sudo mount "$1" "$TMP"
   ROOT="true"
 elif [ -b "/dev/$1" ]; then
-  sudo mount "/dev/$1" "$DIR"
+  sudo mount "/dev/$1" "$TMP"
   ROOT="true"
 else
   echo "Cannot mount $1"
-  rmdir "$DIR"
+  rmdir "$TMP"
   exit 1
 fi
 
-pushd "$DIR"
-$SHELL
+pushd "$TMP"
+$SHELL || true
 popd
 
 echo "Syncing..."
@@ -35,10 +34,10 @@ sync
 
 echo "Unmounting..."
 if [ "$ROOT" = "true" ]; then
-  sudo umount "$DIR"
+  sudo umount "$TMP"
 else
-  umount "$DIR"
+  umount "$TMP"
 fi
 
 echo "Done."
-rmdir "$DIR"
+rmdir "$TMP"

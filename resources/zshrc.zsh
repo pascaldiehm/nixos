@@ -7,7 +7,11 @@ function _prompt_git() {
   git rev-parse HEAD &>/dev/null || return
 
   local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-  [ "$BRANCH" = "HEAD" ] && echo -n " %F{3}$(git rev-parse --short HEAD)%f" || echo -n " %F{8}$BRANCH%f"
+  if [ "$BRANCH" = "HEAD" ]; then
+    echo -n " %F{3}$(git rev-parse --short HEAD)%f"
+  else
+    echo -n " %F{8}$BRANCH%f"
+  fi
 
   local CHANGED="$(git diff --name-only && git ls-files --others --exclude-standard)"
   local STAGED="$(git diff --cached --name-only)"
@@ -20,7 +24,7 @@ function _prompt_git() {
     echo -n "%F{6}!%f"
   fi
 
-  [ -n "$(git stash list)" ] && echo -n " %F{6}\U2026%f"
+  test -n "$(git stash list)" && echo -n " %F{6}\U2026%f"
 
   if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
@@ -55,11 +59,11 @@ function _prompt_git() {
 }
 
 function _prompt_host() {
-  [ "$NIXOS_MACHINE_TYPE" = "server" ] && echo -n " %F{14}%n@%M%f"
+  test "$NIXOS_MACHINE_TYPE" = "server" && echo -n " %F{14}%n@%M%f"
 }
 
 function _prompt_pyenv() {
-  [ -n "$VIRTUAL_ENV" ] && echo -n " %F{13}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
+  test -n "$VIRTUAL_ENV" && echo -n " %F{13}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
 }
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -111,7 +115,7 @@ function nixos-test() {
 
 function v() {
   if [ -d "$1" ]; then
-    l "$1"
+    ls -alh "$1"
   else
     cat "$1"
   fi
@@ -150,7 +154,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   function pyenv() {
-    [ -d .venv ] || python3 -m venv .venv
+    test -d .venv || python3 -m venv .venv
     source .venv/bin/activate
   }
 
@@ -162,5 +166,5 @@ elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
     docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
   }
 
-  compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename "{}" ";"))"' service
+  compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename "{}" \;))"' service
 fi

@@ -9,7 +9,7 @@
         runtimeInputs = [ self.curl ];
 
         text = ''
-          TOKEN="$(cat "${config.sops.secrets."${machine.name}/ntfy".path}")"
+          TOKEN="$(cat ${config.sops.secrets."${machine.name}/ntfy".path})"
           curl -s -H "Authorization: Bearer $TOKEN" -d "$2" "https://ntfy.pdiehm.dev/${machine.name}-$1"
         '';
       };

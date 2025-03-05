@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ "$EUID" = 0 ] || exec sudo "$0" "$@"
+test "$EUID" = "0" || exec sudo "$0" "$@"
 
 if ! ping -c 1 1.1.1.1 &>/dev/null; then
   echo "No internet connection"
@@ -25,12 +25,12 @@ while [ ! -b "$DEV" ]; do
   lsblk
   echo
   read -r -p "> " DEV
-  [ -b "$DEV" ] || DEV="/dev/$DEV"
+  test -b "$DEV" || DEV="/dev/$DEV"
 done
 
 if [ "$TYPE" = "desktop" ]; then
   if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
-    echo "ERROR: Secure boot is disabled or not in setup mode"
+    echo "Secure boot is disabled or not in setup mode"
     exit 1
   fi
 fi
@@ -65,14 +65,12 @@ mkfs.fat -F 32 -n ESP "$PART_ESP"
 
 echo "Creating subvolumes..."
 mount "$PART_NIXOS" /mnt
-btrfs subvolume create /mnt/nix
-btrfs subvolume create /mnt/root
-btrfs subvolume create /mnt/perm
+btrfs subvolume create /mnt/{nix,perm,root}
 umount /mnt
 
 echo "Mounting partitions..."
 mount -o compress=zstd,subvol=root "$PART_NIXOS" /mnt
-mkdir /mnt/{nix,perm,boot}
+mkdir /mnt/{boot,nix,perm}
 mount -o compress=zstd,noatime,subvol=nix "$PART_NIXOS" /mnt/nix
 mount -o compress=zstd,subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_ESP" /mnt/boot

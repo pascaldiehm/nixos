@@ -12,13 +12,13 @@ if [ -n "$(git status --porcelain)" ]; then
   echo "R) Restore"
   echo "Q) Quit"
   echo
-  read -r -n 1 -p "> " res
+  read -r -n 1 -p "> " RES
   echo
 
-  if [ "$res" = "S" ]; then
+  if [ "$RES" = "S" ]; then
     git stash push --include-untracked
     STASHED="true"
-  elif [ "$res" = "R" ]; then
+  elif [ "$RES" = "R" ]; then
     git restore .
   else
     exit 1
@@ -38,15 +38,15 @@ if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   echo "I) Ignore"
   echo "Q) Quit"
   echo
-  read -r -n 1 -p "> " res
+  read -r -n 1 -p "> " RES
   echo
 
-  if [ "$res" = "R" ]; then
+  if [ "$RES" = "R" ]; then
     git reset --hard "@{u}"
-  elif [ "$res" = "P" ]; then
+  elif [ "$RES" = "P" ]; then
     git push --force
-  elif [ "$res" != "I" ]; then
-    [ "$STASHED" = "true" ] && git stash pop
+  elif [ "$RES" != "I" ]; then
+    test "$STASHED" = "true" && git stash pop
     exit 1
   fi
 elif [ -n "$AHEAD" ]; then
@@ -58,15 +58,15 @@ elif [ -n "$AHEAD" ]; then
   echo "I) Ignore"
   echo "Q) Quit"
   echo
-  read -r -n 1 -p "> " res
+  read -r -n 1 -p "> " RES
   echo
 
-  if [ "$res" = "P" ]; then
+  if [ "$RES" = "P" ]; then
     git push
-  elif [ "$res" = "R" ]; then
+  elif [ "$RES" = "R" ]; then
     git reset --hard "@{u}"
-  elif [ "$res" != "I" ]; then
-    [ "$STASHED" = "true" ] && git stash pop
+  elif [ "$RES" != "I" ]; then
+    test "$STASHED" = "true" && git stash pop
     exit 1
   fi
 elif [ -n "$BEHIND" ]; then
@@ -77,13 +77,13 @@ elif [ -n "$BEHIND" ]; then
   echo "I) Ignore"
   echo "Q) Quit"
   echo
-  read -r -n 1 -p "> " res
+  read -r -n 1 -p "> " RES
   echo
 
-  if [ "$res" = "P" ]; then
+  if [ "$RES" = "P" ]; then
     git pull
-  elif [ "$res" != "I" ]; then
-    [ "$STASHED" = "true" ] && git stash pop
+  elif [ "$RES" != "I" ]; then
+    test "$STASHED" = "true" && git stash pop
     exit 1
   fi
 fi
@@ -92,13 +92,13 @@ if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
   clear
   echo "The configuration has not changed. Continue anyway?"
   echo
-  read -r -n 1 -p "[Y/n] " res
+  read -r -n 1 -p "[Y/n] " RES
   echo
-  [ "$res" = "n" ] && exit 1
+  test "$RES" = "n" && exit 1
 fi
 
 sudo nixos-rebuild --impure --flake . switch
 git rev-parse HEAD | sudo tee /etc/nixos/commit
 
-[ "$STASHED" = "true" ] && git stash pop
+test "$STASHED" = "true" && git stash pop
 popd

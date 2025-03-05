@@ -4,6 +4,6 @@
 
   system.activationScripts.addSecretHosts = {
     deps = [ "etc" "setupSecrets" ];
-    text = "cat '${config.sops.secrets.hosts.path}' >> /etc/hosts";
+    text = "cat ${config.sops.secrets.hosts.path} >> /etc/hosts";
   };
 }

@@ -24,10 +24,14 @@
         };
 
         installer = {
-          extraOptions.UserKnownHostsFile = "/dev/null";
           hostname = "nixos";
           identityFile = config.sops.secrets."ssh/installer".path;
           user = "nixos";
+
+          extraOptions = {
+            StrictHostKeyChecking = "no";
+            UserKnownHostsFile = "/dev/null";
+          };
         };
       };
     };

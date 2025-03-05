@@ -17,7 +17,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "${lib.getExe pkgs.scripts.ntfy} ups";
+        NOTIFYCMD = "${pkgs.writeShellScript "ntfy-ups" "${lib.getExe pkgs.scripts.ntfy} ups \"$1\""}";
 
         NOTIFYFLAG = builtins.map (event: [ event "SYSLOG+EXEC" ]) [
           "ONLINE"

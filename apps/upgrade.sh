@@ -7,12 +7,12 @@ echo "Upgrading Firefox extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
-FIRST=1
-jq -c ".[]" resources/extensions/firefox.json | while read -r ext; do
-  [ "$FIRST" -eq 0 ] && echo "," >>"$TMP/extensions.json"
-  FIRST=0
+FIRST="true"
+jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
+  test "$FIRST" = "false" && echo "," >>"$TMP/extensions.json"
+  FIRST="false"
 
-  NAME="$(echo "$ext" | jq -r .name)"
+  NAME="$(echo "$EXT" | jq -r .name)"
   echo "  - $NAME"
 
   curl -is "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
@@ -32,12 +32,12 @@ echo "Upgrading Thunderbird extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
-FIRST=1
-jq -c ".[]" resources/extensions/thunderbird.json | while read -r ext; do
-  [ "$FIRST" -eq 0 ] && echo "," >>"$TMP/extensions.json"
-  FIRST=0
+FIRST="true"
+jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
+  test "$FIRST" = "false" && echo "," >>"$TMP/extensions.json"
+  FIRST="false"
 
-  NAME="$(echo "$ext" | jq -r .name)"
+  NAME="$(echo "$EXT" | jq -r .name)"
   echo "  - $NAME"
 
   curl -is "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
