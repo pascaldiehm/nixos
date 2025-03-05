@@ -6,9 +6,9 @@ PAT_SSHD_USER_DENIED="^User (\w+) from (\S+) not allowed because not listed in A
 PAT_SSHD_USER_INVALID="^Invalid user (\w+) from (\S+) port ([0-9]+)$"
 PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
 
-journalctl -f | while read -r line; do
-  SERVICE="$(echo "$line" | cut -d "[" -f 1 | cut -d " " -f 5)"
-  MESSAGE="$(echo "$line" | cut -d : -f 4- | tail -c +2)"
+journalctl -f -o json | while read -r line; do
+  SERVICE="$(echo "$line" | jq -r .SYSLOG_IDENTIFIER)"
+  MESSAGE="$(echo "$line" | jq -r .MESSAGE)"
 
   if [ "$SERVICE" = "sshd-session" ]; then
     if echo "$MESSAGE" | grep -Eq "$PAT_SSHD_PASSWORD"; then
