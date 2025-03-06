@@ -1,6 +1,6 @@
 { inputs, lib, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
-  home-manager.users.pascal.nixpkgs.overlays = lib.mkForce null; # HACK(github:danth/stylix#866): Replace with home manager patch disable option
+  home-manager.users.pascal.nixpkgs.overlays = lib.mkForce null; # HACK(github:danth/stylix#865): Replace with home manager patch disable option
 
   stylix = {
     enable = true;
