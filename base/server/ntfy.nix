@@ -3,10 +3,10 @@
   sops.secrets."${machine.name}/ntfy".owner = "pascal";
 
   nixpkgs.overlays = [
-    (self: super: {
-      scripts.ntfy = self.writeShellApplication {
+    (pkgs: prev: {
+      scripts.ntfy = pkgs.writeShellApplication {
         name = "ntfy";
-        runtimeInputs = [ self.curl ];
+        runtimeInputs = [ pkgs.curl ];
 
         text = ''
           TOKEN="$(cat ${config.sops.secrets."${machine.name}/ntfy".path})"
