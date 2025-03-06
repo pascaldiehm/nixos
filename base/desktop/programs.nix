@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   home-manager.users.pascal = {
     services.playerctld.enable = true;
 
@@ -16,13 +16,13 @@
 
       (pkgs.writeShellApplication {
         name = "letter";
-        text = builtins.readFile ../../resources/scripts/letter.sh;
+        text = lib.readFile ../../resources/scripts/letter.sh;
       })
 
       (pkgs.writeShellApplication {
         name = "mnt";
         runtimeInputs = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
-        text = builtins.readFile ../../resources/scripts/mount.sh;
+        text = lib.readFile ../../resources/scripts/mount.sh;
       })
     ];
 

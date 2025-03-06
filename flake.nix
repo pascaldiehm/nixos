@@ -36,16 +36,17 @@
   outputs = inputs: {
     apps.x86_64-linux =
       let
+        lib = inputs.nixpkgs.lib;
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 
-        mkScripts = builtins.mapAttrs (
+        mkScripts = lib.mapAttrs (
           name: runtimeInputs: {
             type = "app";
 
             program =
               pkgs.writeShellApplication {
                 inherit name runtimeInputs;
-                text = builtins.readFile apps/${name}.sh;
+                text = lib.readFile apps/${name}.sh;
               }
               |> pkgs.lib.getExe;
           }
@@ -71,7 +72,7 @@
       let
         lib = inputs.nixpkgs.lib;
 
-        mkSystems = builtins.mapAttrs (
+        mkSystems = lib.mapAttrs (
           name: type:
           lib.nixosSystem {
             modules = [

@@ -7,7 +7,7 @@
     completionInit = "autoload -U compinit && compinit -d /home/pascal/.local/state/zsh/.zcompdump";
     dotDir = ".config/zsh";
     history.path = "/home/pascal/.local/state/zsh/.zsh_history";
-    initExtra = builtins.readFile ../../resources/zshrc.zsh;
+    initExtra = lib.readFile ../../resources/zshrc.zsh;
     localVariables.NIXOS_MACHINE_TYPE = machine.type;
     plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { inherit (pkgs) zsh-completions; };
     syntaxHighlighting.enable = true;

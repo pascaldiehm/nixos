@@ -1,7 +1,7 @@
 lib: prev: {
   mkFirefoxBookmarks = lib.mapAttrsToList (
     name: value:
-    if builtins.isAttrs value then
+    if lib.isAttrs value then
       {
         inherit name;
         toolbar = (name == "_toolbar");
@@ -17,28 +17,28 @@ lib: prev: {
   mkMozillaExtensions =
     path:
     lib.importJSON path
-    |> builtins.map (ext: {
+    |> lib.map (ext: {
       name = ext.id;
       value = {
         installation_mode = "force_installed";
         install_url = ext.source;
       };
     })
-    |> builtins.listToAttrs
+    |> lib.listToAttrs
     |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
 
-  mkNvimFormatters = builtins.mapAttrs (
+  mkNvimFormatters = lib.mapAttrs (
     key: value: {
-      command = builtins.head value;
-      prepend_args = builtins.tail value;
+      command = lib.head value;
+      prepend_args = lib.tail value;
     }
   );
 
   mkNvimKeymaps = lib.mapAttrsToList (
     action: value: {
       inherit action;
-      key = builtins.head value;
-      mode = builtins.tail value;
+      key = lib.head value;
+      mode = lib.tail value;
     }
   );
 }

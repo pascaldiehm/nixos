@@ -1,6 +1,6 @@
 { lib, ... }: {
   boot = {
-    initrd.postDeviceCommands = builtins.readFile ../../resources/scripts/wipe-root.sh |> lib.mkAfter;
+    initrd.postDeviceCommands = lib.readFile ../../resources/scripts/wipe-root.sh |> lib.mkAfter;
 
     loader = {
       efi.canTouchEfiVariables = true;

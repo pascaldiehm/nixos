@@ -37,7 +37,7 @@
       enable = true;
 
       drivers = [
-        (builtins.readFile ../../resources/Brother_DCP-J1050DW.ppd |> pkgs.writeTextDir "share/cups/model/Brother_DCP-J1050DW")
+        (lib.readFile ../../resources/Brother_DCP-J1050DW.ppd |> pkgs.writeTextDir "share/cups/model/Brother_DCP-J1050DW")
       ];
     };
   };
