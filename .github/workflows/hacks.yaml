@@ -31,13 +31,13 @@ jobs:
                 STATE="$(curl -s "https://api.github.com/repos/$OWNER/$REPO/issues/$ID" | jq -r .state)"
 
                 if [ "$STATE" = "open" ]; then
-                  echo "  - $SCHEME:$URI"
+                  echo "  - $HACK"
                 else
-                  echo "  - $SCHEME:$URI (resolved)"
+                  echo "  - $HACK (resolved)"
                   touch failed
                 fi
               else
-                echo "  - $SCHEME:$URI (unknown)"
+                echo "  - $HACK (unknown)"
                 touch failed
               fi
             done
