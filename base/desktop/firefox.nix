@@ -93,6 +93,11 @@
             definedAliases = [ "@nixwiki" ];
           };
 
+          "Noogle" = {
+            urls = [ { template = "https://noogle.dev/q?term={searchTerms}"; } ];
+            definedAliases = [ "@noogle" ];
+          };
+
           "NPM" = {
             urls = [ { template = "https://npmjs.com/search?q={searchTerms}"; } ];
             definedAliases = [ "@npm" ];
