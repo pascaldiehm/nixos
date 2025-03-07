@@ -5,16 +5,15 @@
     systemd.enable = true;
 
     settings.bar = {
-      clock.tooltip-format = "<tt>{calendar}</tt>";
-      modules-left = [ "privacy" "clock" "hyprland/workspaces" "mpris" ];
-      modules-right = [ "group/hardware" "group/screen" "wireplumber" "network" "battery" "group/session" ];
+      modules-center = [ "clock" ];
+      modules-left = [ "privacy" "hyprland/workspaces" "group/hardware" "group/mpris" ];
+      modules-right = [ "network" "backlight" "wireplumber" "battery" "group/power" ];
 
       backlight = {
         format = "{icon} {percent}%";
         format-icons = [ "󰃞" "󰃟" "󰃠" ];
+        on-click = "sleep 1 && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
         on-click-right = "${lib.getExe pkgs.brightnessctl} s 50%";
-        on-scroll-down = "${lib.getExe pkgs.brightnessctl} s 1%-";
-        on-scroll-up = "${lib.getExe pkgs.brightnessctl} s +1%";
         tooltip = false;
       };
 
@@ -31,31 +30,19 @@
         };
       };
 
+      clock = {
+        calendar.format.today = "<b>{}</b>";
+        tooltip-format = "<tt>{calendar}</tt>";
+      };
+
       cpu = {
         format = " {usage}%";
+        interval = 1;
 
         states = {
           load = 10;
           high = 80;
         };
-      };
-
-      "custom/dpms" = {
-        format = "󰶐";
-        on-click = "sleep 1 && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
-        tooltip-format = "Turn off screen";
-      };
-
-      "custom/lock" = {
-        format = "󰌾";
-        on-click = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
-        tooltip-format = "Lock screen";
-      };
-
-      "custom/quit" = {
-        format = "󰈆";
-        on-click = "${lib.getExe pkgs.uwsm} stop";
-        tooltip-format = "Quit Hyprland";
       };
 
       "custom/reboot" = {
@@ -78,6 +65,7 @@
 
       disk = {
         format = " {percentage_used}%";
+        interval = 10;
         tooltip-format = "{specific_used:.1f} / {specific_total:.1f} GiB";
         unit = "GiB";
 
@@ -92,27 +80,16 @@
         orientation = "inherit";
       };
 
-      "group/screen" = {
-        drawer.transition-left-to-right = false;
-        modules = [ "backlight" "custom/dpms" "idle_inhibitor" ];
+      "group/mpris" = {
+        drawer = { };
+        modules = [ "mpris#icon" "mpris#text" ];
         orientation = "inherit";
       };
 
-      "group/session" = {
+      "group/power" = {
         drawer.transition-left-to-right = false;
-        modules = [ "custom/shutdown" "custom/lock" "custom/quit" "custom/sleep" "custom/reboot" ];
+        modules = [ "custom/shutdown" "custom/sleep" "custom/reboot" ];
         orientation = "inherit";
-      };
-
-      idle_inhibitor = rec {
-        format = "{icon}";
-        tooltip-format-activated = "Keep screen unlocked";
-        tooltip-format-deactivated = tooltip-format-activated;
-
-        format-icons = {
-          activated = "󰒳";
-          deactivated = "󰒲";
-        };
       };
 
       "hyprland/workspaces" = {
@@ -121,8 +98,8 @@
       };
 
       memory = {
+        interval = 1;
         format = " {percentage}%";
-        interval = 10;
         tooltip-format = "{used:.1f} / {total:.1f} GiB";
 
         states = {
@@ -131,18 +108,25 @@
         };
       };
 
-      mpris = {
-        artist-len = 42;
-        dynamic-order = [ "title" "artist" ];
-        format = "{status_icon} {dynamic} ({player})";
-        title-len = 42;
+      "mpris#icon" = {
+        format = "{status_icon}";
+        on-click-middle = "${lib.getExe pkgs.playerctl} stop";
         tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
 
         status-icons = {
           playing = "󰐊";
           paused = "󰏤";
-          stopped = "󰓛";
         };
+      };
+
+      "mpris#text" = {
+        artist-len = 16;
+        dynamic-order = [ "title" "artist" ];
+        format = "{dynamic}";
+        on-click = "${lib.getExe pkgs.playerctl} previous";
+        on-click-middle = "${lib.getExe pkgs.playerctl} stop";
+        title-len = 32;
+        tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
       };
 
       network = {
@@ -156,6 +140,11 @@
         tooltip-format-disconnected = "Disconnected";
         tooltip-format-ethernet = "{ifname}: Ethernet";
         tooltip-format-wifi = "{ifname}: {essid} ({frequency}GHz WiFi)";
+      };
+
+      privacy = {
+        icon-size = 14;
+        icon-spacing = 0;
       };
 
       temperature = {

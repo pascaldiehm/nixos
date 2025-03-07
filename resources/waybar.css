@@ -8,36 +8,51 @@ window#waybar {
   color: @window_fg_color;
 }
 
-label#clock,
+box#privacy,
 box#workspaces,
-label#mpris,
 box#hardware,
-box#screen,
-label#wireplumber,
+box#mpris,
+label#clock,
 label#network,
+label#backlight,
+label#wireplumber,
 label#battery,
-box#session {
+box#power {
   background: @card_bg_color;
   border-radius: 1rem;
   margin: 4px;
 }
 
+box#privacy image,
 box#workspaces button,
-label#mpris,
 box#hardware label,
-box#screen label,
-label#wireplumber,
+box#mpris label,
 label#network,
+label#backlight,
+label#wireplumber,
 label#battery,
-box#session label {
+box#power label {
   padding: 2px 8px;
 }
 
-label#clock {
-  padding: 4px 16px;
+label#mpris.icon,
+label#network:not(.ethernet):not(.wifi),
+label#wireplumber.muted,
+label#battery.full,
+box#power label {
+  font-size: 14pt;
 }
 
-box#workspaces {
+label#mpris.icon:hover,
+label#backlight:hover,
+label#wireplumber:hover,
+box#power label:hover {
+  background: @accent_color;
+  border-radius: 1rem;
+}
+
+box#workspaces,
+box#hardware {
   border-radius: 0.5rem;
 }
 
@@ -63,39 +78,11 @@ box#workspaces button:hover {
   background: @accent_color;
 }
 
-box#screen label#custom-dpms,
-box#screen label#idle_inhibitor,
-label#wireplumber.muted,
-label#network:not(.ethernet):not(.wifi),
-label#battery.full,
-box#session label {
-  font-size: 14pt;
-}
-
-box#screen label:hover,
-label#wireplumber:hover,
-box#session label:hover {
-  background-color: @accent_color;
-  border-radius: 1rem;
-}
-
-label#mpris.playing {
-  border: 2px solid @accent_color;
-}
-
 label#cpu.load {
   color: @accent_color;
 }
 
 label#cpu.high {
-  color: @error_color;
-}
-
-label#disk.warning {
-  color: @warning_color;
-}
-
-label#disk.critical {
   color: @error_color;
 }
 
@@ -107,8 +94,20 @@ label#memory.critical {
   color: @error_color;
 }
 
-label#temperature.critical {
+label#disk.warning {
+  color: @warning_color;
+}
+
+label#disk.critical {
   color: @error_color;
+}
+
+label#temperature {
+  color: @error_color;
+}
+
+label#clock {
+  padding: 4px 16px;
 }
 
 label#network:not(.disconnected):not(.ethernet):not(.wifi) {
