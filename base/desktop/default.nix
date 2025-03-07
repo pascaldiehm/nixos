@@ -1,6 +1,7 @@
 {
   imports = [
     ../../extra/university
+    ./audio.nix
     ./boot.nix
     ./development.nix
     ./email.nix
@@ -9,7 +10,6 @@
     ./hypr.nix
     ./locale.nix
     ./misc.nix
-    ./music.nix
     ./networking.nix
     ./nvim.nix
     ./persistence.nix
