@@ -1,7 +1,6 @@
 {
   imports = [
     ../../extra/university
-    ./audio.nix
     ./boot.nix
     ./development.nix
     ./email.nix
