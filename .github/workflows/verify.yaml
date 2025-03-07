@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v4
 
-      - uses: cachix/install-nix-action@master
+      - uses: cachix/install-nix-action@v30
         with:
           extra_nix_config: "experimental-features = flakes nix-command pipe-operators"
 
@@ -98,7 +98,7 @@ jobs:
 
           test ! -f failed
 
-      - name: Lint Nix
+      - name: Lint nix
         if: ${{ !cancelled() }}
         run: | # HACK(github:oppiliappan/statix#88): Add statix check
           rm -f failed
@@ -115,7 +115,7 @@ jobs:
 
           test ! -f failed
 
-      - name: Lint Shell
+      - name: Lint shell
         if: ${{ !cancelled() }}
         run: |
           rm -f failed
