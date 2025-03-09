@@ -17,7 +17,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           sudo mkdir -p /etc/nixos
-          echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix > /dev/null
+          echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix >/dev/null
 
           nix flake check --impure --option keep-going true
 

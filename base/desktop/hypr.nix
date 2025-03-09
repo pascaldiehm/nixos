@@ -140,8 +140,8 @@
           "SUPER SHIFT, q, killactive"
           "SUPER, f, fullscreen"
 
-          "SUPER, Return, exec, kitty"
-          "SUPER, Space, exec, wofi --show drun"
+          "SUPER, Return, exec, ${lib.getExe pkgs.kitty}"
+          "SUPER, Space, exec, ${lib.getExe pkgs.wofi} --show drun"
 
           ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
           "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} -a"
@@ -154,9 +154,9 @@
           ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
           ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
-          ", XF86HomePage, exec, firefox"
-          ", XF86Mail, exec, thunderbird"
-          "SHIFT, XF86HomePage, exec, firefox --private-window"
+          ", XF86HomePage, exec, ${lib.getExe pkgs.firefox}"
+          ", XF86Mail, exec, ${lib.getExe pkgs.thunderbird}"
+          "SHIFT, XF86HomePage, exec, ${lib.getExe pkgs.firefox} --private-window"
         ];
 
         general = {
