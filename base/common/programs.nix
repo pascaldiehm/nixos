@@ -1,16 +1,6 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
-    home.packages = [
-      pkgs.btrfs-progs
-      pkgs.rsync
-      pkgs.unzip
-      pkgs.zip
-
-      (pkgs.writeShellApplication {
-        name = "nixos-update";
-        text = lib.readFile ../../resources/scripts/update.sh;
-      })
-    ];
+    home.packages = [ pkgs.btrfs-progs pkgs.rsync pkgs.scripts.nixos-update pkgs.unzip pkgs.zip ];
 
     programs = {
       jq.enable = true;
@@ -21,6 +11,7 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
+    scripts.nixos-update.text = lib.readFile ../../resources/scripts/update.sh;
 
     vim = {
       enable = true;

@@ -42,6 +42,7 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 - [base](base/): Common configuration shared between machines
 - [extra](extra/): Additional modules
 - [machines](machines/): Machine-specific configuration
+- [modules](modules/): Custom option definitions
 - [pkgs](pkgs/): Custom nixpkgs patches
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs

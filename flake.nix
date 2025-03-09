@@ -81,6 +81,7 @@
               inputs.sops-nix.nixosModules.sops
 
               /etc/nixos/hardware.nix
+              ./modules
               ./pkgs
               base/common
               base/${type}

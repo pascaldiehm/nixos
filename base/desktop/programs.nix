@@ -10,20 +10,11 @@
       pkgs.poppler_utils
       pkgs.pwvucontrol
       pkgs.sbctl
+      pkgs.scripts.letter
+      pkgs.scripts.mnt
       pkgs.sops
       pkgs.vlc
       pkgs.wl-clipboard
-
-      (pkgs.writeShellApplication {
-        name = "letter";
-        text = lib.readFile ../../resources/scripts/letter.sh;
-      })
-
-      (pkgs.writeShellApplication {
-        name = "mnt";
-        runtimeInputs = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
-        text = lib.readFile ../../resources/scripts/mount.sh;
-      })
     ];
 
     programs = {
@@ -33,6 +24,15 @@
         key = "E85EB0566C779A2F";
         signByDefault = true;
       };
+    };
+  };
+
+  programs.scripts = {
+    letter.text = lib.readFile ../../resources/scripts/letter.sh;
+
+    mnt = {
+      deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
+      text = lib.readFile ../../resources/scripts/mount.sh;
     };
   };
 }
