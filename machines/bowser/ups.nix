@@ -5,7 +5,6 @@
     enable = true;
 
     ups.ups = {
-      description = "Main UPS";
       driver = "usbhid-ups";
       port = "auto";
     };
