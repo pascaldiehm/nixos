@@ -33,26 +33,51 @@
     };
   };
 
-  outputs = inputs: {
-    apps.x86_64-linux =
-      let
-        lib = inputs.nixpkgs.lib;
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+  outputs =
+    inputs:
+    let
+      lib = inputs.nixpkgs.lib;
+      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 
-        mkScripts = lib.mapAttrs (
-          name: runtimeInputs: {
-            type = "app";
+      mkScripts = lib.mapAttrs (
+        name: runtimeInputs: {
+          type = "app";
 
-            program =
-              pkgs.writeShellApplication {
-                inherit name runtimeInputs;
-                text = lib.readFile apps/${name}.sh;
-              }
-              |> pkgs.lib.getExe;
-          }
-        );
-      in
-      mkScripts {
+          program =
+            pkgs.writeShellApplication {
+              inherit name runtimeInputs;
+              text = lib.readFile apps/${name}.sh;
+            }
+            |> lib.getExe;
+        }
+      );
+
+      mkSystems = lib.mapAttrs (
+        name: type:
+        lib.nixosSystem {
+          modules = [
+            inputs.home-manager.nixosModules.home-manager
+            inputs.impermanence.nixosModules.impermanence
+            inputs.sops-nix.nixosModules.sops
+
+            /etc/nixos/hardware.nix
+            ./modules
+            ./pkgs
+            base/common
+            base/${type}
+            machines/${name}
+          ];
+
+          specialArgs = {
+            inherit inputs;
+            lib = (lib.extend (import ./lib.nix)).extend (self: super: inputs.home-manager.lib);
+            machine = { inherit name type; };
+          };
+        }
+      );
+    in
+    {
+      apps.x86_64-linux = mkScripts {
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 
         install = [
@@ -68,36 +93,9 @@
         ];
       };
 
-    nixosConfigurations =
-      let
-        lib = inputs.nixpkgs.lib;
-
-        mkSystems = lib.mapAttrs (
-          name: type:
-          lib.nixosSystem {
-            modules = [
-              inputs.home-manager.nixosModules.home-manager
-              inputs.impermanence.nixosModules.impermanence
-              inputs.sops-nix.nixosModules.sops
-
-              /etc/nixos/hardware.nix
-              ./modules
-              ./pkgs
-              base/common
-              base/${type}
-              machines/${name}
-            ];
-
-            specialArgs = {
-              inherit inputs;
-              lib = lib.extend (import ./lib.nix) |> (lib: lib.extend (self: super: inputs.home-manager.lib));
-              machine = { inherit name type; };
-            };
-          }
-        );
-      in
-      lib.importJSON ./machines.json
-      |> mkSystems
-      |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
-  };
+      nixosConfigurations =
+        lib.importJSON ./machines.json
+        |> mkSystems
+        |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
+    };
 }
