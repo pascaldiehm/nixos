@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-test "$EUID" = "0" || exec sudo "$0" "$@"
+test "$UID" = "0" || exec sudo "$0" "$@"
 
 if ! ping -c 1 1.1.1.1 &>/dev/null; then
   echo "No internet connection"
