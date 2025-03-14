@@ -102,7 +102,7 @@ label#disk.critical {
   color: @error_color;
 }
 
-label#temperature {
+label#temperature.critical {
   color: @error_color;
 }
 
