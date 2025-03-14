@@ -6,6 +6,7 @@
 
     users.pascal = {
       programs.home-manager.enable = true;
+      xdg.enable = true;
 
       home = {
         inherit (config.system) stateVersion;
