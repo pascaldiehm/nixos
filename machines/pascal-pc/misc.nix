@@ -1,4 +1,8 @@
 { pkgs, ... }: {
   environment.persistence."/perm".users.pascal.directories = [ ".local/share/PrismLauncher" ];
-  hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
+
+  hardware = {
+    bluetooth.enable = true;
+    graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
+  };
 }
