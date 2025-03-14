@@ -14,10 +14,16 @@
     pcscd.enable = true;
 
     udev.extraRules = ''
-      ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${lib.getExe' pkgs.systemd "loginctl"} lock-sessions"
-
       ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-unlock" ''
-        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions
+        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions || exit 0
+      ''}"
+
+      ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-lock" ''
+        for DEVICE in /dev/input/event*; do
+          ${lib.getExe pkgs.evtest} --query "$DEVICE" EV_KEY KEY_ESC || exit 0
+        done
+
+        ${lib.getExe' pkgs.systemd "loginctl"} lock-sessions
       ''}"
     '';
   };
