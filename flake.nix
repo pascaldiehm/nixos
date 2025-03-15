@@ -83,6 +83,7 @@
         install = [
           pkgs.btrfs-progs
           pkgs.cryptsetup
+          pkgs.dosfstools
           pkgs.git
           pkgs.gnupg
           pkgs.jq
