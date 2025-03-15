@@ -53,6 +53,7 @@
           gateway-flags = 2;
           gwcert-flags = 2;
           protocol = "anyconnect";
+          resolve-flags = 2;
           service-type = "org.freedesktop.NetworkManager.openconnect";
         };
       };
