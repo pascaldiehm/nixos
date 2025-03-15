@@ -1,19 +1,19 @@
-{ config, lib, ... }: let
-  cfg = config.programs.scripts;
-
-  scriptType.options = {
-    text = lib.mkOption { type = lib.types.lines; };
-
-    deps = lib.mkOption {
-      default = [ ];
-      type = lib.types.listOf lib.types.package;
-    };
-  };
-in
-{
+{ config, lib, ... }: {
   options.programs.scripts = lib.mkOption {
     default = { };
-    type = lib.types.attrsOf (lib.types.submodule scriptType);
+
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        options = {
+          text = lib.mkOption { type = lib.types.lines; };
+
+          deps = lib.mkOption {
+            default = [ ];
+            type = lib.types.listOf lib.types.package;
+          };
+        };
+      }
+    );
   };
 
   config.nixpkgs.overlays = [
@@ -25,7 +25,7 @@ in
           inherit (config) text;
           runtimeInputs = config.deps;
         }
-      ) cfg;
+      ) config.programs.scripts;
     })
   ];
 }
