@@ -1,6 +1,4 @@
 { inputs, ... }: {
-  system.stateVersion = "24.11";
-
   nix = {
     channel.enable = false;
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
