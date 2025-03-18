@@ -6,7 +6,7 @@
       enable = true;
       defaultEditor = true;
       extraPackages = [ pkgs.ripgrep ];
-      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ]; # FIXME: Telescope complained about missing plenary.strings; could have been a bug
+      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       nixpkgs.useGlobalPackages = true;
 
       clipboard = {
@@ -39,6 +39,8 @@
         "<Cmd>wincmd j<Return>" = [ "<A-j>" "n" ];
         "<Cmd>wincmd k<Return>" = [ "<A-k>" "n" ];
         "<Cmd>wincmd l<Return>" = [ "<A-l>" "n" ];
+        "<gv" = [ "<S-Tab>" "x" ];
+        ">gv" = [ "<Tab>" "x" ];
       };
 
       opts = {
