@@ -14,6 +14,7 @@
     cursor = {
       name = "Quintom_Ink";
       package = pkgs.quintom-cursor-theme;
+      size = 32;
     };
 
     fonts = {
