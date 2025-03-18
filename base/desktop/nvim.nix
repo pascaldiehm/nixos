@@ -203,7 +203,7 @@
           extensions.fzf-native.enable = true;
 
           keymaps = {
-            "<Space>f" = "find_files hidden=true no_ignore=true";
+            "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
@@ -228,7 +228,6 @@
               "--hidden"
               "--line-number"
               "--no-heading"
-              "--no-ignore"
               "--smart-case"
               "--with-filename"
             ];
