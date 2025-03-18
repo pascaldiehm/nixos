@@ -9,6 +9,7 @@
     ./misc.nix
     ./networking.nix
     ./nix.nix
+    ./ntfy.nix
     ./persistence.nix
     ./programs.nix
     ./sops.nix

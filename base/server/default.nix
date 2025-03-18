@@ -1,1 +1,1 @@
-{ imports = [ ./journalwatch.nix ./misc.nix ./networking.nix ./ntfy.nix ./persistence.nix ]; }
+{ imports = [ ./journalwatch.nix ./misc.nix ./networking.nix ./persistence.nix ]; }
