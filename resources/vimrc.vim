@@ -1,8 +1,9 @@
+let g:skip_default_vim = 1
+
 set autoindent
 set expandtab
 set ignorecase
 set mouse=
-set nohlsearch
 set nowrap
 set number
 set relativenumber
