@@ -12,6 +12,7 @@
     ./persistence.nix
     ./programs.nix
     ./sops.nix
+    ./ssh.nix
     ./user.nix
     ./zsh.nix
   ];

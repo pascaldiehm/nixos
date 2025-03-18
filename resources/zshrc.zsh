@@ -59,7 +59,7 @@ function _prompt_git() {
 }
 
 function _prompt_host() {
-  test "$NIXOS_MACHINE_TYPE" = "server" && echo -n " %F{14}%n@%M%f"
+  test -n "$SSH_TTY" && echo -n " %F{14}%n@%M%f"
 }
 
 function _prompt_pyenv() {

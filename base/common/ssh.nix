@@ -1,10 +1,7 @@
 { config, machine, ... }: {
-  services.fail2ban.enable = true;
-  sops.secrets."${machine.name}/ssh".owner = "pascal";
-
   services.openssh = {
     enable = true;
-    authorizedKeysFiles = [ config.sops.secrets."${machine.name}/ssh".path ];
+    authorizedKeysFiles = [ config.sops.secrets."common/ssh/${machine.name}".path ];
     ports = [ 1970 ];
 
     settings = {
@@ -12,5 +9,10 @@
       KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
     };
+  };
+
+  sops.secrets."common/ssh/${machine.name}" = {
+    owner = "pascal";
+    sopsFile = ../../resources/secrets/common/store.yaml;
   };
 }

@@ -33,6 +33,16 @@
             UserKnownHostsFile = "/dev/null";
           };
         };
+
+        pascal-laptop = {
+          identityFile = config.sops.secrets."ssh/pascal-laptop".path;
+          port = 1970;
+        };
+
+        pascal-pc = {
+          identityFile = config.sops.secrets."ssh/pascal-pc".path;
+          port = 1970;
+        };
       };
     };
 
@@ -50,5 +60,7 @@
     "ssh/github".owner = "pascal";
     "ssh/goomba".owner = "pascal";
     "ssh/installer".owner = "pascal";
+    "ssh/pascal-laptop".owner = "pascal";
+    "ssh/pascal-pc".owner = "pascal";
   };
 }
