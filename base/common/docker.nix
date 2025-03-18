@@ -1,5 +1,6 @@
 {
   users.users.pascal.extraGroups = [ "docker" ];
+  systemd.timers.docker-prune.timerConfig.Persistent = true;
 
   virtualisation.docker = {
     enable = true;
