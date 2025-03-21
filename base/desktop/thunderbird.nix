@@ -1,19 +1,11 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal.programs.thunderbird = {
     enable = true;
+    profiles.default.isDefault = true;
+    settings."mail.collect_email_address_outgoing" = false;
 
     package = pkgs.thunderbird.override {
       extraPolicies.ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
-    };
-
-    profiles.default = {
-      isDefault = true;
-      withExternalGnupg = true;
-    };
-
-    settings = {
-      "mail.collect_email_address_outgoing" = false;
-      "mail.openpgp.fetch_pubkes_from_gnupg" = true;
     };
   };
 }
