@@ -8,7 +8,7 @@
     fi
 
     TOKEN="$(cat ${config.sops.secrets."common/ntfy".path})"
-    ${lib.getExe pkgs.curl} -s -H "Authorization: Bearer $TOKEN" -d "$2" "https://ntfy.pdiehm.dev/${machine.name}-$1"
+    ${lib.getExe pkgs.curl} -Ss -H "Authorization: Bearer $TOKEN" -d "$2" "https://ntfy.pdiehm.dev/${machine.name}-$1"
   '';
 
   sops.secrets."common/ntfy" = {
