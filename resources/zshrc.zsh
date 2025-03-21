@@ -98,6 +98,7 @@ bindkey "^Y" redo                                # Ctrl+Y
 alias grep="grep --color=auto"
 alias l="ls -alh"
 alias ls="ls --color=auto"
+alias lsblk="lsblk -o NAME,TYPE,SIZE,PARTLABEL,LABEL,FSTYPE,MOUNTPOINTS"
 
 function mkcd() {
   mkdir -p "$1"
