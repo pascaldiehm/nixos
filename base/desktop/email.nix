@@ -6,11 +6,6 @@
     thunderbird.enable = true;
     userName = "pdiehm8@gmail.com";
 
-    gpg = {
-      key = "E85EB0566C779A2F";
-      signByDefault = true;
-    };
-
     imap = {
       host = "imap.gmail.com";
       port = 993;
