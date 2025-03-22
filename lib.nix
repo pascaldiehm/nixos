@@ -14,6 +14,17 @@ lib: prev: {
       }
   );
 
+  mkFirefoxSearchEngines = lib.mapAttrs (
+    name: url:
+    if url == null then
+      { metaData.hidden = true; }
+    else
+      {
+        urls = [ { template = lib.replaceStrings [ "%" ] [ "{searchTerms}" ] url; } ];
+        definedAliases = [ "@${name}" ];
+      }
+  );
+
   mkMozillaExtensions =
     path:
     lib.importJSON path
