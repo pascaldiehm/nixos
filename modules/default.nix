@@ -1,1 +1,1 @@
-{ imports = [ ./scripts.nix ]; }
+{ imports = [ ./nixcache.nix ./scripts.nix ]; }

@@ -8,6 +8,7 @@
     ./gpg.nix
     ./hypr.nix
     ./locale.nix
+    ./misc.nix
     ./networking.nix
     ./nvim.nix
     ./persistence.nix
