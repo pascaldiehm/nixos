@@ -7,7 +7,7 @@ ROOT="false"
 if [ "$1" = "android" ]; then
   aft-mtp-mount "$TMP"
 elif [ "$1" = "tmpfs" ]; then
-  sudo mount -t tmpfs /dev/null "$TMP"
+  sudo mount -t tmpfs tmpfs "$TMP"
   ROOT="true"
 elif echo "$1" | grep -q "^ftp://"; then
   curlftpfs "$1" "$TMP"
