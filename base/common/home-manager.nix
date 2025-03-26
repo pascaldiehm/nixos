@@ -13,7 +13,7 @@
         homeDirectory = "/home/pascal";
         username = "pascal";
 
-        activation.deleteBackups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        activation.delete-backups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           run find /home/pascal -name "*.hm-bak" -exec rm -rf "{}" \;
         '';
       };
