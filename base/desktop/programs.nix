@@ -5,6 +5,7 @@
     home.packages = [
       pkgs.cryptsetup
       pkgs.dig
+      pkgs.dmidecode
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.imagemagickBig
