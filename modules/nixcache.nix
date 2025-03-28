@@ -19,7 +19,6 @@
               add_header X-Upstream ${config.nix.cache};
               error_page 502 504 = @fallback;
               proxy_connect_timeout 100ms;
-              proxy_read_timeout 100ms;
             '';
           };
 
