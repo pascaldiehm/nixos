@@ -5,17 +5,18 @@
 
       connection = {
         autoconnect = false;
-        id = "Home";
+        id = "@home";
         interface-name = "wg0";
         type = "wireguard";
       };
 
       ipv4 = {
-        address1 = "10.42.0.3/24";
+        addresses = "10.42.0.3/24";
+        gateway = "10.42.0.1";
         method = "manual";
       };
 
-      "wireguard-peer.8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=" = {
+      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC_KEY" = {
         allowed-ips = "10.42.0.0/24;192.168.0.0/16";
         endpoint = "goomba:51820";
         preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
@@ -26,13 +27,14 @@
     home-wifi = {
       connection = {
         autoconnect-priority = 50;
-        id = "Home WiFi";
+        id = "home-wifi";
         type = "wifi";
       };
 
       ipv4 = {
-        address1 = "192.168.1.91/16,192.168.1.1";
+        addresses = "192.168.1.91/16";
         dns = "192.168.1.88";
+        gateway = "192.168.1.1";
         method = "manual";
       };
 
@@ -50,7 +52,7 @@
     hotspot = {
       connection = {
         autoconnect-priority = 25;
-        id = "Hotspot";
+        id = "hotspot";
         type = "wifi";
       };
 

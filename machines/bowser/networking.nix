@@ -3,11 +3,12 @@
 
   sops.secrets = {
     "bowser/wireguard/key".owner = "systemd-network";
-    "bowser/wireguard/goomba".owner = "systemd-network";
+    "bowser/wireguard/goomba/psk".owner = "systemd-network";
+    "bowser/wireguard/goomba/public".owner = "systemd-network";
   };
 
   systemd.network = {
-    netdevs."50-wg" = {
+    netdevs."50-wireguard" = {
       wireguardConfig.PrivateKeyFile = config.sops.secrets."bowser/wireguard/key".path;
 
       netdevConfig = {
@@ -19,8 +20,8 @@
         AllowedIPs = [ "10.42.0.0/24" ];
         Endpoint = "goomba:51820";
         PersistentKeepalive = 25;
-        PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba".path;
-        PublicKey = "8TEjIXVJSJryKAeB2L3BTZjaiQZ77KVoaIpdceEZoGg=";
+        PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba/psk".path;
+        PublicKeyFile = config.sops.secrets."bowser/wireguard/goomba/public".path;
       };
     };
 
@@ -32,7 +33,7 @@
         matchConfig.Name = "eth0";
       };
 
-      "50-wg" = {
+      "50-wireguard" = {
         address = [ "10.42.0.2/24" ];
         matchConfig.Name = "wg0";
         networkConfig.IPMasquerade = "ipv4";

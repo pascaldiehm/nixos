@@ -10,6 +10,7 @@
       pkgs.ffmpeg-full
       pkgs.imagemagickBig
       pkgs.netcat
+      pkgs.networkmanagerapplet
       pkgs.poppler_utils
       pkgs.pwvucontrol
       pkgs.sbctl
