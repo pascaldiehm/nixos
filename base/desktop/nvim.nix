@@ -107,7 +107,7 @@
               cmake_format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
               latexindent = [ (lib.getExe' pkgs.texlivePackages.latexindent "latexindent") "--logfile" "/dev/null" ];
-              nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-w" "120" "-s" ];
+              nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
               prettier = [ (lib.getExe pkgs.nodePackages.prettier) "--arrow-parens" "avoid" "--print-width" "120" ];
               shfmt = [ (lib.getExe pkgs.shfmt) "-i" "2" ];
             };
@@ -214,10 +214,11 @@
             file_ignore_patterns = [ "^.git/" ];
 
             mappings.i = {
+              "<A-Return>".__raw = "require('telescope.actions').file_tab";
               "<A-S-q>".__raw = "require('telescope.actions').smart_add_to_qflist";
               "<A-q>".__raw = "require('telescope.actions').smart_send_to_qflist";
               "<Esc>".__raw = "require('telescope.actions').close";
-              "<S-Return>".__raw = "require('telescope.actions').file_tab";
+              "<S-Return>".__raw = "require('telescope.actions').file_vsplit";
             };
 
             vimgrep_arguments = [
