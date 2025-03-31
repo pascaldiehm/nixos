@@ -154,9 +154,9 @@
           ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
           ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
-          ", XF86HomePage, exec, firefox"
-          ", XF86Mail, exec, thunderbird"
-          "SHIFT, XF86HomePage, exec, firefox --private-window"
+          ", XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage}"
+          ", XF86Mail, exec, ${lib.getExe config.home-manager.users.pascal.programs.thunderbird.package}"
+          "SHIFT, XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage} --private-window"
         ];
 
         general = {
