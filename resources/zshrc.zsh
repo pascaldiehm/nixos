@@ -3,6 +3,14 @@
 setopt PROMPT_SUBST
 setopt PUSHDSILENT
 
+function _prompt_char() {
+  if expr "$TTY" : "/dev/tty" >/dev/null; then
+    echo -n ">"
+  else
+    echo -n $'\U276F'
+  fi
+}
+
 function _prompt_git() {
   git rev-parse HEAD &>/dev/null || return
 
@@ -67,7 +75,7 @@ function _prompt_pyenv() {
 }
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}\U276F%f '
+export PROMPT=$'%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}$(_prompt_char)%f '
 export RPROMPT='$(_prompt_pyenv)$(_prompt_host)'
 
 bindkey -rp ""
