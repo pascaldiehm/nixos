@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal.systemd.user.services.music = {
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
     Unit.Description = "Play music";
 
     Service = {
