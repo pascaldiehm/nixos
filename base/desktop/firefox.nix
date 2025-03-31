@@ -65,6 +65,7 @@
         engines = lib.mkFirefoxSearchEngines {
           bing = null;
           ddg = null;
+          devhints = "https://devhints.io/%";
           docker = "https://hub.docker.com/search?q=%";
           github = "https://github.com/search?q=%";
           mdn = "https://developer.mozilla.org/search?q=%";
