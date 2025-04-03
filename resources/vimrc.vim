@@ -1,4 +1,6 @@
-let g:skip_default_vim = 1
+" TODO: This should not be necessary...
+runtime defaults.vim
+let g:skip_defaults_vim = 1
 
 set autoindent
 set expandtab
