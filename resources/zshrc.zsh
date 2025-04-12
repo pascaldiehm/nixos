@@ -122,26 +122,12 @@ function nixos-test() {
   sudo nixos-rebuild --impure --flake ~/.config/nixos ${1:-test}
 }
 
-function v() {
-  if [ -d "$1" ]; then
-    ls -alh "$1"
-  else
-    cat "$1"
-  fi
-}
-
 compdef '_arguments ":mode:(boot build build-vm switch test)"' nixos-test
 compdef _nothing nixos-update
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
   alias py="python3"
-
-  function nixos-iso() {
-    nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
-    cp result/iso/*.iso nixos.iso
-    rm result
-  }
 
   function nixos-secrets() {
     sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml
@@ -168,7 +154,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
-  compdef _nothing nixos-iso
+  compdef _nothing letter
   compdef _nothing pyenv
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
