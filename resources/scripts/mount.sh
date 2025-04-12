@@ -9,9 +9,9 @@ if [ "$1" = "android" ]; then
 elif [ "$1" = "tmpfs" ]; then
   sudo mount -t tmpfs tmpfs "$TMP"
   ROOT="true"
-elif echo "$1" | grep -q "^ftp://"; then
+elif expr "$1" : ftp:// >/dev/null; then
   curlftpfs "$1" "$TMP"
-elif echo "$1" | grep -q "^ssh://"; then
+elif expr "$1" : ssh:// >/dev/null; then
   sshfs "$(echo "$1" | sed -E "s|ssh://([^:]+)(:(.*))?|\1:\3|")" "$TMP"
 elif [ -b "$1" ] || [ -f "$1" ]; then
   sudo mount "$1" "$TMP"

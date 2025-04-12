@@ -4,7 +4,7 @@ setopt PROMPT_SUBST
 setopt PUSHDSILENT
 
 function _prompt_char() {
-  if expr "$TTY" : "/dev/tty" >/dev/null; then
+  if expr "$TTY" : /dev/tty >/dev/null; then
     echo -n ">"
   else
     echo -n $'\U276F'
