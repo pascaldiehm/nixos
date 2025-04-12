@@ -7,10 +7,6 @@ mkdir -p "$TMP/history"
 test -d "$TMP/root" && mv "$TMP/root" "$TMP/history/$(date -d "@$(stat -c "%Y" "$TMP/root")" "+%Y-%m-%d_%H:%M:%S")"
 btrfs subvolume create "$TMP/root"
 
-find "$TMP/history" -mindepth 1 -maxdepth 1 -mtime +30 | while read -r DIR; do
-  chattr -i "$DIR/var/empty"
-  rm -rf "$DIR"
-done
-
+find "$TMP/history" -mindepth 1 -maxdepth 1 -mtime +30 -exec btrfs subvolume delete -R "{}" +
 umount "$TMP"
 rmdir "$TMP"
