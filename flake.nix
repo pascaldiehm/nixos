@@ -53,25 +53,30 @@
       );
 
       mkSystems = lib.mapAttrs (
-        name: type:
+        name: info:
         lib.nixosSystem {
           modules = [
             inputs.home-manager.nixosModules.home-manager
             inputs.impermanence.nixosModules.impermanence
+            inputs.lanzaboote.nixosModules.lanzaboote
             inputs.sops-nix.nixosModules.sops
 
             /etc/nixos/hardware.nix
             ./modules
             ./pkgs
             base/common
-            base/${type}
+            base/${info.type}
             machines/${name}
           ];
 
           specialArgs = {
             inherit inputs;
             lib = (lib.extend (import ./lib.nix)).extend (self: super: inputs.home-manager.lib);
-            machine = { inherit name type; };
+
+            machine = {
+              inherit name;
+              inherit (info) boot type;
+            };
           };
         }
       );

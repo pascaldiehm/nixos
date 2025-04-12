@@ -21,17 +21,17 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 
 ## Components
 
-| Component         | Desktop        | Server           |
-| ----------------- | -------------- | ---------------- |
-| Boot loader       | Lanzaboote     | systemd-boot     |
-| Filesystem        | btrfs + LUKS   | btrfs            |
-| Networking        | NetworkManager | systemd-networkd |
-| Display manager   | greetd         |                  |
-| Window manager    | Hyprland       |                  |
-| Audio server      | pipewire       |                  |
-| Terminal emulator | kitty          |                  |
-| Shell             | ZSH            | ZSH              |
-| Editor            | neovim         | vim              |
+| Component         | Desktop        | Server              |
+| ----------------- | -------------- | ------------------- |
+| Boot loader       | Lanzaboote     | systemd-boot / GRUB |
+| Filesystem        | btrfs + LUKS   | btrfs               |
+| Networking        | NetworkManager | systemd-networkd    |
+| Display manager   | greetd         |                     |
+| Window manager    | Hyprland       |                     |
+| Audio server      | pipewire       |                     |
+| Terminal emulator | kitty          |                     |
+| Shell             | ZSH            | ZSH                 |
+| Editor            | neovim         | vim                 |
 
 ## Structure
 

@@ -8,13 +8,15 @@ if ! ping -c 1 1.1.1.1 &>/dev/null; then
 fi
 
 MACHINE=""
+BOOT="null"
 TYPE="null"
 while [ "$TYPE" = "null" ]; do
   clear
   echo "Which machine should I install?"
   echo
   read -r -p "> " MACHINE
-  TYPE="$(machines | jq -r ".\"$MACHINE\"")"
+  BOOT="$(machines | jq -r ".\"$MACHINE\".boot")"
+  TYPE="$(machines | jq -r ".\"$MACHINE\".type")"
 done
 
 DEV=""
@@ -28,25 +30,55 @@ while [ ! -b "$DEV" ]; do
   test -b "$DEV" || DEV="/dev/$DEV"
 done
 
-if [ "$TYPE" = "desktop" ]; then
+if [ "$BOOT" = "secure" ]; then
   if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
     echo "Secure boot is disabled or not in setup mode"
     exit 1
   fi
 fi
 
-echo "Formatting $DEV..."
-parted "$DEV" -- mklabel gpt
-parted "$DEV" -- mkpart nixos btrfs 512MB 100%
-parted "$DEV" -- mkpart ESP fat32 1MB 512MB
-parted "$DEV" -- set 2 esp on
+if [ "$BOOT" = "legacy" ]; then
+  echo "Formatting $DEV..."
+  parted "$DEV" -- mklabel msdos
+  parted "$DEV" -- mkpart primary btrfs 512MB 100%
+  parted "$DEV" -- mkpart primary fat32 1MB 512MB
+  parted "$DEV" -- set 2 boot on
 
-echo "Waiting for partitions..."
-PART_NIXOS="/dev/disk/by-partlabel/nixos"
-while [ ! -b "$PART_NIXOS" ]; do sleep 1; done
+  PART_NIXOS=""
+  while [ ! -b "$PART_NIXOS" ]; do
+    clear
+    echo "Where is the system partition?"
+    echo
+    lsblk
+    echo
+    read -r -p "> " PART_NIXOS
+    test -b "$PART_NIXOS" || PART_NIXOS="/dev/$PART_NIXOS"
+  done
 
-PART_ESP="/dev/disk/by-partlabel/ESP"
-while [ ! -b "$PART_ESP" ]; do sleep 1; done
+  PART_ESP=""
+  while [ ! -b "$PART_ESP" ]; do
+    clear
+    echo "Where is the boot partition?"
+    echo
+    lsblk
+    echo
+    read -r -p "> " PART_ESP
+    test -b "$PART_ESP" || PART_ESP="/dev/$PART_ESP"
+  done
+else
+  echo "Formatting $DEV..."
+  parted "$DEV" -- mklabel gpt
+  parted "$DEV" -- mkpart nixos btrfs 512MB 100%
+  parted "$DEV" -- mkpart ESP fat32 1MB 512MB
+  parted "$DEV" -- set 2 esp on
+
+  echo "Waiting for partitions..."
+  PART_NIXOS="/dev/disk/by-partlabel/nixos"
+  while [ ! -b "$PART_NIXOS" ]; do sleep 1; done
+
+  PART_ESP="/dev/disk/by-partlabel/ESP"
+  while [ ! -b "$PART_ESP" ]; do sleep 1; done
+fi
 
 if [ "$TYPE" = "desktop" ]; then
   echo "Encrypting root partition..."
@@ -75,7 +107,7 @@ mount -o compress=zstd,noatime,subvol=nix "$PART_NIXOS" /mnt/nix
 mount -o compress=zstd,subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_ESP" /mnt/boot
 
-if [ "$TYPE" = "desktop" ]; then
+if [ "$BOOT" = "secure" ]; then
   echo "Setting up secure boot..."
   mkdir -p /mnt/perm/var/lib/sbctl
   ln -s /mnt/perm/var/lib/sbctl /var/lib/sbctl

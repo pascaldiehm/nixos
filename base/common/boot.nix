@@ -1,10 +1,15 @@
-{ lib, ... }: {
+{ lib, machine, ... }: {
   boot = {
     initrd.postDeviceCommands = lib.readFile ../../resources/scripts/wipe-root.sh |> lib.mkAfter;
 
+    lanzaboote = {
+      enable = machine.boot == "secure";
+      pkiBundle = "/perm/var/lib/sbctl";
+    };
+
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot.configurationLimit = 8;
+      systemd-boot.enable = machine.boot == "efi";
     };
   };
 
