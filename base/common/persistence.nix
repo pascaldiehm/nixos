@@ -1,19 +1,8 @@
 { config, lib, ... }: {
   environment.persistence."/perm" = {
     directories = [ "/etc/nixos" "/var/lib/docker" "/var/lib/nixos" "/var/lib/systemd" ];
-
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-    ];
-
-    users.pascal.directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
-      ".config/nixos" = "0755";
-      ".ssh" = "0700";
-    };
+    files = [ "/etc/machine-id" ];
+    users.pascal.directories = [ ".config/nixos" ];
   };
 
   system.activationScripts.clean-perm =
