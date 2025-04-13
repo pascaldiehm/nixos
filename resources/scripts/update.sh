@@ -97,7 +97,7 @@ if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
   test "$RES" = "n" && exit 1
 fi
 
-sudo bash -c "nixos-rebuild --impure --flake . switch && git rev-parse HEAD >/etc/nixos/commit"
+sudo bash -c "nixos-rebuild --impure --flake . ${1:-switch} && git rev-parse HEAD >/etc/nixos/commit"
 
 test "$STASHED" = "true" && git stash pop
 popd
