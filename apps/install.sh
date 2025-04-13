@@ -8,14 +8,14 @@ if ! ping -c 1 1.1.1.1 &>/dev/null; then
 fi
 
 MACHINE=""
-BOOT="null"
+DISK="null"
 TYPE="null"
 while [ "$TYPE" = "null" ]; do
   clear
   echo "Which machine should I install?"
   echo
   read -r -p "> " MACHINE
-  BOOT="$(machines | jq -r ".\"$MACHINE\".boot")"
+  DISK="$(machines | jq -r ".\"$MACHINE\".disk")"
   TYPE="$(machines | jq -r ".\"$MACHINE\".type")"
 done
 
@@ -30,14 +30,14 @@ while [ ! -b "$DEV" ]; do
   test -b "$DEV" || DEV="/dev/$DEV"
 done
 
-if [ "$BOOT" = "secure" ]; then
+if [ "$TYPE" = "desktop" ]; then
   if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
     echo "Secure boot is disabled or not in setup mode"
     exit 1
   fi
 fi
 
-if [ "$BOOT" = "legacy" ]; then
+if [ "$DISK" = "MBR" ]; then
   echo "Formatting $DEV..."
   parted "$DEV" -- mklabel msdos
   parted "$DEV" -- mkpart primary btrfs 512MB 100%
@@ -107,7 +107,7 @@ mount -o compress=zstd,noatime,subvol=nix "$PART_NIXOS" /mnt/nix
 mount -o compress=zstd,subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_ESP" /mnt/boot
 
-if [ "$BOOT" = "secure" ]; then
+if [ "$TYPE" = "desktop" ]; then
   echo "Setting up secure boot..."
   mkdir -p /mnt/perm/var/lib/sbctl
   ln -s /mnt/perm/var/lib/sbctl /var/lib/sbctl

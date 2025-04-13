@@ -1,6 +1,6 @@
 {
-  "bowser": { "boot": "efi", "type": "server" },
-  "goomba": { "boot": "legacy", "type": "server" },
-  "pascal-laptop": { "boot": "secure", "type": "desktop" },
-  "pascal-pc": { "boot": "secure", "type": "desktop" }
+  "bowser": { "disk": "GPT", "type": "server" },
+  "goomba": { "disk": "MBR", "type": "server" },
+  "pascal-laptop": { "disk": "GPT", "type": "desktop" },
+  "pascal-pc": { "disk": "GPT", "type": "desktop" }
 }

@@ -58,7 +58,6 @@
           modules = [
             inputs.home-manager.nixosModules.home-manager
             inputs.impermanence.nixosModules.impermanence
-            inputs.lanzaboote.nixosModules.lanzaboote
             inputs.sops-nix.nixosModules.sops
 
             /etc/nixos/hardware.nix
@@ -75,7 +74,7 @@
 
             machine = {
               inherit name;
-              inherit (info) boot type;
+              inherit (info) disk type;
             };
           };
         }
