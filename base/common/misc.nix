@@ -1,4 +1,8 @@
-{
+{ inputs, ... }: {
   services.fwupd.enable = true;
-  system.stateVersion = "24.11";
+
+  system = {
+    configurationRevision = inputs.self.rev or inputs.self.dirtyRev or "???";
+    stateVersion = "24.11";
+  };
 }

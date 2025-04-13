@@ -88,7 +88,7 @@ elif [ -n "$BEHIND" ]; then
   fi
 fi
 
-if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
+if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   clear
   echo "The configuration has not changed. Continue anyway?"
   echo
@@ -97,7 +97,7 @@ if [ "$(cat /etc/nixos/commit)" = "$(git rev-parse HEAD)" ]; then
   test "$RES" = "n" && exit 1
 fi
 
-sudo bash -c "nixos-rebuild --impure --flake . ${1:-switch} && git rev-parse HEAD >/etc/nixos/commit"
+sudo nixos-rebuild --impure --flake . "${1:-switch}"
 
 test "$STASHED" = "true" && git stash pop
 popd
