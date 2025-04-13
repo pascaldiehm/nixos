@@ -6,7 +6,7 @@
 
     settings.bar = {
       modules-center = [ "clock" ];
-      modules-left = [ "privacy" "hyprland/workspaces" "group/hardware" "group/mpris" ];
+      modules-left = [ "privacy" "hyprland/workspaces" "group/hardware" "mpris" ];
       modules-right = [ "network" "backlight" "wireplumber" "battery" "group/power" ];
 
       backlight = {
@@ -80,12 +80,6 @@
         orientation = "inherit";
       };
 
-      "group/mpris" = {
-        drawer = { };
-        modules = [ "mpris#icon" "mpris#text" ];
-        orientation = "inherit";
-      };
-
       "group/power" = {
         drawer.transition-left-to-right = false;
         modules = [ "custom/shutdown" "custom/sleep" "custom/reboot" ];
@@ -108,25 +102,18 @@
         };
       };
 
-      "mpris#icon" = {
-        format = "{status_icon}";
-        on-click-middle = "${lib.getExe pkgs.playerctl} stop";
+      mpris = {
+        artist-len = 16;
+        dynamic-order = [ "title" "artist" ];
+        format = "{status_icon} {dynamic}";
+        title-len = 32;
         tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
 
         status-icons = {
           playing = "󰐊";
           paused = "󰏤";
+          stopped = "󰓛";
         };
-      };
-
-      "mpris#text" = {
-        artist-len = 16;
-        dynamic-order = [ "title" "artist" ];
-        format = "{dynamic}";
-        on-click = "${lib.getExe pkgs.playerctl} previous";
-        on-click-middle = "${lib.getExe pkgs.playerctl} stop";
-        title-len = 32;
-        tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
       };
 
       network = {

@@ -11,7 +11,7 @@ window#waybar {
 box#privacy,
 box#workspaces,
 box#hardware,
-box#mpris,
+label#mpris,
 label#clock,
 label#network,
 label#backlight,
@@ -26,7 +26,7 @@ box#power {
 box#privacy image,
 box#workspaces button,
 box#hardware label,
-box#mpris label,
+label#mpris,
 label#network,
 label#backlight,
 label#wireplumber,
@@ -35,7 +35,6 @@ box#power label {
   padding: 2px 8px;
 }
 
-label#mpris.icon,
 label#network:not(.ethernet):not(.wifi),
 label#wireplumber.muted,
 label#battery.full,
@@ -43,7 +42,6 @@ box#power label {
   font-size: 14pt;
 }
 
-label#mpris.icon:hover,
 label#backlight:hover,
 label#wireplumber:hover,
 box#power label:hover {
