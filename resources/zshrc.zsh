@@ -119,7 +119,7 @@ function mkvim() {
 }
 
 function nixos-test() {
-  sudo nixos-rebuild --impure --flake ~/.config/nixos ${1:-test}
+  sudo nixos-rebuild --impure --flake ~/.config/nixos "${1:-test}"
 }
 
 compdef '_arguments ":mode:(boot build build-vm switch test)"' nixos-test

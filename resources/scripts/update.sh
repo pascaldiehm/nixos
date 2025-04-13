@@ -2,27 +2,11 @@
 
 set -e
 pushd ~/.config/nixos
+
 STASHED="false"
-
 if [ -n "$(git status --porcelain)" ]; then
-  clear
-  echo "There are uncommitted changes."
-  echo
-  echo "S) Stash"
-  echo "R) Restore"
-  echo "Q) Quit"
-  echo
-  read -r -n 1 -p "> " RES
-  echo
-
-  if [ "$RES" = "S" ]; then
-    git stash push --include-untracked
-    STASHED="true"
-  elif [ "$RES" = "R" ]; then
-    git restore .
-  else
-    exit 1
-  fi
+  STASHED="true"
+  git stash push --include-untracked
 fi
 
 git fetch
