@@ -3,7 +3,6 @@
     ../../extra/university
     ./boot.nix
     ./development.nix
-    ./email.nix
     ./firefox.nix
     ./gpg.nix
     ./hypr.nix
