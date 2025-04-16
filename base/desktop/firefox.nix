@@ -59,15 +59,15 @@
       };
 
       search = {
-        default = "google";
+        default = "ddg";
         force = true;
 
         engines = lib.mkFirefoxSearchEngines {
           bing = null;
-          ddg = null;
           devhints = "https://devhints.io/%s";
           docker = "https://hub.docker.com/search?q=%s";
           github = "https://github.com/search?q=%s";
+          google = null;
           mdn = "https://developer.mozilla.org/search?q=%s";
           music = "https://music.youtube.com/search?q=%s";
           nixopts = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query=%s";
