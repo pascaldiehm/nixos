@@ -65,19 +65,19 @@
         engines = lib.mkFirefoxSearchEngines {
           bing = null;
           ddg = null;
-          devhints = "https://devhints.io/%";
-          docker = "https://hub.docker.com/search?q=%";
-          github = "https://github.com/search?q=%";
-          mdn = "https://developer.mozilla.org/search?q=%";
-          music = "https://music.youtube.com/search?q=%";
-          nixopts = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query=%";
-          nixpkgs = "https://search.nixos.org/packages?channel=unstable&query=%";
-          nixwiki = "https://wiki.nixos.org/w/index.php?search=%";
-          noogle = "https://noogle.dev/q?term=%";
-          npm = "https://npmjs.com/search?q=%";
-          port = "https://speedguide.net/port.php?port=%";
+          devhints = "https://devhints.io/%s";
+          docker = "https://hub.docker.com/search?q=%s";
+          github = "https://github.com/search?q=%s";
+          mdn = "https://developer.mozilla.org/search?q=%s";
+          music = "https://music.youtube.com/search?q=%s";
+          nixopts = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query=%s";
+          nixpkgs = "https://search.nixos.org/packages?channel=unstable&query=%s";
+          nixwiki = "https://wiki.nixos.org/w/index.php?search=%s";
+          noogle = "https://noogle.dev/q?term=%s";
+          npm = "https://npmjs.com/search?q=%s";
+          port = "https://speedguide.net/port.php?port=%s";
           wikipedia = null;
-          youtube = "https://youtube.com/results?search_query=%";
+          youtube = "https://youtube.com/results?search_query=%s";
         };
       };
 

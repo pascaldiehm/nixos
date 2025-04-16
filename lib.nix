@@ -20,7 +20,7 @@ lib: prev: {
       { metaData.hidden = true; }
     else
       {
-        urls = [ { template = lib.replaceStrings [ "%" ] [ "{searchTerms}" ] url; } ];
+        urls = [ { template = lib.replaceStrings [ "%s" ] [ "{searchTerms}" ] url; } ];
         definedAliases = [ "@${name}" ];
       }
   );
