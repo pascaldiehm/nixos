@@ -32,6 +32,7 @@
       cacm = "commit --all --amend --message";
       cam = "commit --all --message";
       cc = "commit --amend --no-edit";
+      cce = "commit --amend";
       ccm = "commit --amend --message";
       ce = "commit --allow-empty";
       cem = "commit --allow-empty --message";
