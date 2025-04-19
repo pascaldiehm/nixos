@@ -123,7 +123,7 @@ function nixos-test() {
 }
 
 compdef '_arguments ":mode:(boot build build-vm switch test)"' nixos-test
-compdef '_arguments ":mode:(boot switch test)"' nixos-update
+compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"

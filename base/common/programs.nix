@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
-    home.packages = [ pkgs.btrfs-progs pkgs.rsync pkgs.scripts.nixos-update pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
+    home.packages = [ pkgs.btrfs-progs pkgs.rsync pkgs.scripts.nixos-upgrade pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
 
     programs = {
       jq.enable = true;
@@ -11,7 +11,7 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
-    scripts.nixos-update.text = lib.readFile ../../resources/scripts/update.sh;
+    scripts.nixos-upgrade.text = lib.readFile ../../resources/scripts/upgrade.sh;
 
     vim = {
       enable = true;
