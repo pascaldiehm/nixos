@@ -19,6 +19,12 @@ elif [ -b "$1" ] || [ -f "$1" ]; then
 elif [ -b "/dev/$1" ]; then
   sudo mount "/dev/$1" "$TMP"
   ROOT="true"
+elif [ -b "/dev/disk/by-label/$1" ]; then
+  sudo mount "/dev/disk/by-label/$1" "$TMP"
+  ROOT="true"
+elif [ -b "/dev/disk/by-partlabel/$1" ]; then
+  sudo mount "/dev/disk/by-partlabel/$1" "$TMP"
+  ROOT="true"
 else
   echo "Cannot mount $1"
   rmdir "$TMP"
