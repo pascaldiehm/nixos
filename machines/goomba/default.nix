@@ -1,1 +1,1 @@
-{ imports = [ ./boot.nix ./networking.nix ]; }
+{ imports = [ ./misc.nix ./networking.nix ]; }

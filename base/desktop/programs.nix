@@ -13,7 +13,6 @@
       pkgs.networkmanagerapplet
       pkgs.poppler_utils
       pkgs.pwvucontrol
-      pkgs.sbctl
       pkgs.scripts.letter
       pkgs.scripts.mnt
       pkgs.sops

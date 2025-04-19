@@ -1,14 +1,7 @@
-{ inputs, lib, pkgs, ... }: {
-  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
-
+{ lib, pkgs, ... }: {
   boot = {
     initrd.luks.devices.nixos.device = "/dev/disk/by-partlabel/nixos";
     kernelPackages = pkgs.linuxPackages_latest;
-
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/perm/var/lib/sbctl";
-    };
   };
 
   services.greetd = {

@@ -74,7 +74,7 @@
 
             machine = {
               inherit name;
-              inherit (info) disk type;
+              inherit (info) boot type;
             };
           };
         }
