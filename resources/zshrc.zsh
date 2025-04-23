@@ -70,13 +70,8 @@ function _prompt_host() {
   test -n "$SSH_TTY" && echo -n " %F{14}%n@%M%f"
 }
 
-function _prompt_pyenv() {
-  test -n "$VIRTUAL_ENV" && echo -n " %F{13}($(basename "$(dirname "$VIRTUAL_ENV")"))%f"
-}
-
-export VIRTUAL_ENV_DISABLE_PROMPT=1
 export PROMPT='%F{4}%~%f$(_prompt_git) %F{%(?.5.1)}$(_prompt_char)%f '
-export RPROMPT='$(_prompt_pyenv)$(_prompt_host)'
+export RPROMPT='$(_prompt_host)'
 
 bindkey -rp ""
 bindkey -R " "-"~" self-insert
@@ -148,14 +143,8 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
-  function pyenv() {
-    test -d .venv || python3 -m venv .venv
-    source .venv/bin/activate
-  }
-
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing letter
-  compdef _nothing pyenv
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
     docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
