@@ -1,8 +1,5 @@
 {
-  networking = {
-    useDHCP = false;
-    usePredictableInterfaceNames = false;
-  };
+  networking.usePredictableInterfaceNames = false;
 
   systemd.network = {
     enable = true;
