@@ -4,6 +4,7 @@
     ./boot.nix
     ./development.nix
     ./firefox.nix
+    ./git.nix
     ./gpg.nix
     ./hypr.nix
     ./locale.nix

@@ -1,5 +1,6 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
+    programs.yt-dlp.enable = true;
     services.playerctld.enable = true;
 
     home.packages = [
@@ -20,15 +21,6 @@
       pkgs.vlc
       pkgs.wl-clipboard
     ];
-
-    programs = {
-      yt-dlp.enable = true;
-
-      git.signing = {
-        key = "E85EB0566C779A2F";
-        signByDefault = true;
-      };
-    };
   };
 
   programs.scripts = {
