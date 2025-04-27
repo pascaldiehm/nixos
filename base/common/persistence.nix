@@ -1,4 +1,6 @@
-{ config, lib, ... }: {
+{ config, inputs, lib, ... }: {
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
+
   environment.persistence."/perm" = {
     directories = [ "/etc/nixos" "/var/lib/docker" "/var/lib/nixos" "/var/lib/systemd" ];
     files = [ "/etc/machine-id" ];

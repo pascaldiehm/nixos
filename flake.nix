@@ -55,18 +55,7 @@
       mkSystems = lib.mapAttrs (
         name: info:
         lib.nixosSystem {
-          modules = [
-            inputs.home-manager.nixosModules.home-manager
-            inputs.impermanence.nixosModules.impermanence
-            inputs.sops-nix.nixosModules.sops
-
-            /etc/nixos/hardware.nix
-            ./modules
-            ./pkgs
-            base/common
-            base/${info.type}
-            machines/${name}
-          ];
+          modules = [ /etc/nixos/hardware.nix ./modules ./pkgs base/common base/${info.type} machines/${name} ];
 
           specialArgs = {
             inherit inputs;
