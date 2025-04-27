@@ -45,14 +45,10 @@
       ];
     };
 
-    networks = {
-      "99-wired-dhcp".linkConfig.RequiredForOnline = "routable";
-
-      "50-wireguard" = {
-        address = [ "10.42.0.1/24" ];
-        matchConfig.Name = "wg0";
-        networkConfig.IPv4Forwarding = true;
-      };
+    networks."50-wireguard" = {
+      address = [ "10.42.0.1/24" ];
+      matchConfig.Name = "wg0";
+      networkConfig.IPv4Forwarding = true;
     };
   };
 }
