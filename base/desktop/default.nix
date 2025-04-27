@@ -18,6 +18,7 @@
     ./thunderbird.nix
     ./waybar.nix
     ./xdg.nix
+    ./ydotool.nix
     ./yubikey.nix
   ];
 }
