@@ -41,6 +41,8 @@
       cl = "clean -fdx";
       cli = "clean -fdX";
 
+      cn = "clone";
+
       co = "checkout";
       cob = "checkout -b";
 
