@@ -46,6 +46,11 @@
       co = "checkout";
       cob = "checkout -b";
 
+      cp = "cherry-pick";
+      cpa = "cherry-pick --abort";
+      cpc = "cherry-pick --continue";
+      cpn = "cherry-pick --no-commit";
+
       d = "diff";
       dm = "diff main";
       ds = "diff --staged";
@@ -63,6 +68,7 @@
       m = "merge";
       ma = "merge --abort";
       mc = "merge --continue";
+      mn = "merge --no-commit";
 
       pf = "push --force-with-lease";
       pl = "pull";
@@ -86,6 +92,7 @@
       rv = "revert";
       rva = "revert --abort";
       rvc = "revert --continue";
+      rvn = "revert --no-commit";
 
       s = "status";
       ss = "status --short";
