@@ -31,12 +31,11 @@
 
         extraPackages = tpkgs: {
           inherit (tpkgs)
+            collection-basic
             collection-bibtexextra
             collection-fontsrecommended
             collection-langgerman
-            collection-latexrecommended
-            csquotes
-            pgfplots
+            collection-latexextra
             ;
         };
       };
