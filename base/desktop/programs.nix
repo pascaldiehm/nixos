@@ -9,6 +9,7 @@
       pkgs.dmidecode
       pkgs.exfat
       pkgs.ffmpeg-full
+      pkgs.file
       pkgs.imagemagickBig
       pkgs.netcat
       pkgs.networkmanagerapplet
