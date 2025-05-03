@@ -5,6 +5,7 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
+      extraFiles."spell/de.utf-8.spl".source = ../../resources/de.utf-8.spl;
       extraPackages = [ pkgs.ripgrep ];
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       nixpkgs.useGlobalPackages = true;
@@ -55,6 +56,7 @@
         signcolumn = "yes";
         smartcase = true;
         softtabstop = 2;
+        spelllang = "en,de";
         splitbelow = true;
         splitright = true;
         tabstop = 2;
