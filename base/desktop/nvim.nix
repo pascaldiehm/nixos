@@ -15,7 +15,7 @@
         register = "unnamedplus";
       };
 
-      diagnostic.config = {
+      diagnostic.settings = {
         severity_sort = true;
         update_in_insert = true;
       };
