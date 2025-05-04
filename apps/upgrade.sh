@@ -16,7 +16,7 @@ jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
   echo "  - $NAME"
 
   curl -Sis "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
+  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed "s/^location: //")"
 
   curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
   ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
@@ -41,7 +41,7 @@ jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
   echo "  - $NAME"
 
   curl -Sis "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
+  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed "s/^location: //")"
 
   curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
   ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"

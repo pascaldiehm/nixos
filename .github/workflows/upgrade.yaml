@@ -41,16 +41,16 @@ jobs:
       - name: Commit
         if: steps.detect-changes.outcome == 'success'
         run: |
-          CHANGES_FLAKE="$(git diff flake.lock | grep repo | sed -E 's/^\s+"repo": "([^"]+)",$/\1/' | sort | uniq)"
-          test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed -E "s/^/- /")"
+          CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d '"' -f 4 | sort | uniq)"
+          test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && echo "$CHANGES_FLAKE" | sed "s/^/- /")"
           git add flake.lock
 
-          CHANGES_EXTENSIONS_FIREFOX="$(git diff resources/extensions/firefox.json | grep "^+ " | sed -E 's/.*"name": "([^"]+)".*/\1/' | sort | uniq)"
-          test -n "$CHANGES_EXTENSIONS_FIREFOX" && CHANGES_EXTENSIONS_FIREFOX="$(echo "Firefox extension changes:" && echo "$CHANGES_EXTENSIONS_FIREFOX" | sed -E "s/^/- /")"
+          CHANGES_EXTENSIONS_FIREFOX="$(git diff resources/extensions/firefox.json | grep "^+" | cut -d '"' -f 4 | sort | uniq)"
+          test -n "$CHANGES_EXTENSIONS_FIREFOX" && CHANGES_EXTENSIONS_FIREFOX="$(echo "Firefox extension changes:" && echo "$CHANGES_EXTENSIONS_FIREFOX" | sed "s/^/- /")"
           git add resources/extensions/firefox.json
 
-          CHANGES_EXTENSIONS_THUNDERBIRD="$(git diff resources/extensions/thunderbird.json | grep "^+ " | sed 's/.*"name": "([^"]+)".*/\1/' | sort | uniq)"
-          test -n "$CHANGES_EXTENSIONS_THUNDERBIRD" && CHANGES_EXTENSIONS_THUNDERBIRD="$(echo "Thunderbird extension changes:" && echo "$CHANGES_EXTENSIONS_THUNDERBIRD" | sed -E "s/^/- /")"
+          CHANGES_EXTENSIONS_THUNDERBIRD="$(git diff resources/extensions/thunderbird.json | grep "^+" | cut -d '"' -f 4 | sort | uniq)"
+          test -n "$CHANGES_EXTENSIONS_THUNDERBIRD" && CHANGES_EXTENSIONS_THUNDERBIRD="$(echo "Thunderbird extension changes:" && echo "$CHANGES_EXTENSIONS_THUNDERBIRD" | sed "s/^/- /")"
           git add resources/extensions/thunderbird.json
 
           git config user.name "github-actions[bot]"
