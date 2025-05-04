@@ -3,9 +3,9 @@
 set -e
 pushd ~/.config/nixos
 
-STASHED="false"
+STASHED=0
 if [ -n "$(git status --porcelain)" ]; then
-  STASHED="true"
+  STASHED=1
   git stash push --include-untracked
 fi
 
@@ -30,7 +30,7 @@ if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   elif [ "$RES" = "P" ]; then
     git push --force
   elif [ "$RES" != "I" ]; then
-    test "$STASHED" = "true" && git stash pop
+    ((STASHED)) && git stash pop
     exit 1
   fi
 elif [ -n "$AHEAD" ]; then
@@ -50,7 +50,7 @@ elif [ -n "$AHEAD" ]; then
   elif [ "$RES" = "R" ]; then
     git reset --hard "@{u}"
   elif [ "$RES" != "I" ]; then
-    test "$STASHED" = "true" && git stash pop
+    ((STASHED)) && git stash pop
     exit 1
   fi
 elif [ -n "$BEHIND" ]; then
@@ -67,7 +67,7 @@ elif [ -n "$BEHIND" ]; then
   if [ "$RES" = "P" ]; then
     git pull
   elif [ "$RES" != "I" ]; then
-    test "$STASHED" = "true" && git stash pop
+    ((STASHED)) && git stash pop
     exit 1
   fi
 fi
@@ -83,5 +83,5 @@ fi
 
 sudo nixos-rebuild --impure --flake . "${1:-boot}"
 
-test "$STASHED" = "true" && git stash pop
+((STASHED)) && git stash pop
 popd

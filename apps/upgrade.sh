@@ -7,10 +7,10 @@ echo "Upgrading Firefox extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
-FIRST="true"
+FIRST=1
 jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
-  test "$FIRST" = "false" && echo "," >>"$TMP/extensions.json"
-  FIRST="false"
+  ((FIRST)) && echo "," >>"$TMP/extensions.json"
+  FIRST=0
 
   NAME="$(echo "$EXT" | jq -r .name)"
   echo "  - $NAME"
@@ -32,10 +32,10 @@ echo "Upgrading Thunderbird extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
-FIRST="true"
+FIRST=1
 jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
-  test "$FIRST" = "false" && echo "," >>"$TMP/extensions.json"
-  FIRST="false"
+  ((FIRST)) && echo "," >>"$TMP/extensions.json"
+  FIRST=0
 
   NAME="$(echo "$EXT" | jq -r .name)"
   echo "  - $NAME"
