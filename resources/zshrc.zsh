@@ -124,6 +124,11 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
   alias py="python3"
 
+  function mktex() {
+    mkdir -p build
+    pdflatex -output-directory build "$1"
+  }
+
   function nixos-secrets() {
     sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml
   }
