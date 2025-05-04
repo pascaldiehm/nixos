@@ -3,6 +3,7 @@
     pkgs.blender-hip
     pkgs.freecad-wayland
     pkgs.gimp3
+    pkgs.inkscape
     pkgs.kicad
     pkgs.prismlauncher
     pkgs.quickemu
