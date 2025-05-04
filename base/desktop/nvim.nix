@@ -89,6 +89,7 @@
             sources = [ { name = "nvim_lsp"; } { name = "path"; } { name = "buffer"; } ];
 
             mapping = {
+              "<C-Return>" = "cmp.mapping.confirm()";
               "<C-Space>" = "cmp.mapping.complete()";
               "<S-Tab>" = "cmp.mapping.select_prev_item()";
               "<Tab>" = "cmp.mapping.select_next_item()";
