@@ -15,7 +15,7 @@
       pkgs.networkmanagerapplet
       pkgs.poppler_utils
       pkgs.pwvucontrol
-      pkgs.scripts.letter
+      pkgs.scripts.mkletter
       pkgs.scripts.mnt
       pkgs.sops
       pkgs.usbutils
@@ -25,7 +25,7 @@
   };
 
   programs.scripts = {
-    letter.text = lib.readFile ../../resources/scripts/letter.sh;
+    mkletter.text = lib.readFile ../../resources/scripts/mkletter.sh;
 
     mnt = {
       deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
