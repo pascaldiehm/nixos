@@ -125,8 +125,12 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias py="python3"
 
   function mktex() {
-    mkdir -p build
-    pdflatex -output-directory build "$1"
+    BUILD_DIR="$PWD/build"
+    mkdir -p "$BUILD_DIR"
+
+    pushd "$(dirname "$1")"
+    pdflatex -output-directory "$BUILD_DIR" "$(basename "$1")"
+    popd
   }
 
   function nixos-secrets() {
