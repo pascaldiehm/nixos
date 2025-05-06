@@ -1,10 +1,6 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
-
-  home-manager.users.pascal = {
-    nixpkgs.overlays = lib.mkForce null; # HACK(github.com/danth/stylix/issues/865): Replace with home manager patch disable option
-    stylix.targets.firefox.profileNames = [ "default" ];
-  };
+  home-manager.users.pascal.stylix.targets.firefox.profileNames = [ "default" ];
 
   stylix = {
     enable = true;
