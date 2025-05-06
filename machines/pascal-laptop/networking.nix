@@ -12,7 +12,6 @@
 
       ipv4 = {
         addresses = "10.42.0.3/24";
-        gateway = "10.42.0.1";
         method = "manual";
       };
 
