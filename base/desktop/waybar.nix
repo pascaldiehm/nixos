@@ -22,7 +22,7 @@
         format-charging = "󰂄 {capacity}%";
         format-full = "󱟢";
         format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-        interval = 10;
+        interval = 1;
 
         states = {
           warning = 20;
@@ -104,6 +104,7 @@
 
       mpris = {
         artist-len = 16;
+        dynamic-len = 32;
         dynamic-order = [ "title" "artist" ];
         format = "{status_icon} {dynamic}";
         title-len = 32;
@@ -122,8 +123,8 @@
         format-ethernet = "󰈀 {ipaddr}/{cidr}";
         format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
         format-wifi = "{icon} {ipaddr}/{cidr}";
-        interval = 10;
-        tooltip-format = "Unknown state";
+        interval = 1;
+        tooltip-format = "Connecting...";
         tooltip-format-disconnected = "Disconnected";
         tooltip-format-ethernet = "{ifname}: Ethernet";
         tooltip-format-wifi = "{ifname}: {essid} ({frequency}GHz WiFi)";
@@ -137,6 +138,7 @@
       temperature = {
         format = "{icon} {temperatureC}°C";
         format-icons = [ "" "" "" "" "" ];
+        interval = 1;
         tooltip = false;
       };
 
