@@ -7,13 +7,12 @@ on:
 jobs:
   upgrade:
     name: Upgrade
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     permissions:
       contents: write
 
     steps:
-      - uses: jlumbroso/free-disk-space@v1.3.1
       - uses: actions/checkout@v4
 
       - uses: cachix/install-nix-action@v30
