@@ -156,7 +156,11 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _nothing letter
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
-    docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
+    if [ -n "$1" ]; then
+      docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
+    else
+      docker compose ls
+    fi
   }
 
   compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename -a "{}" +))"' service
