@@ -4,8 +4,8 @@
     pkgs.freecad-wayland
     pkgs.gimp3
     pkgs.inkscape
-    pkgs.kicad
     pkgs.prismlauncher
+    pkgs.qucs-s
     pkgs.quickemu
     pkgs.tenacity
   ];
