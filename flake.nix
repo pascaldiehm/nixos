@@ -39,20 +39,18 @@
       lib = inputs.nixpkgs.lib;
       pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 
-      mkScripts = lib.mapAttrs (
-        name: runtimeInputs: {
-          type = "app";
+      mkScript = name: runtimeInputs: {
+        type = "app";
 
-          program =
-            pkgs.writeShellApplication {
-              inherit name runtimeInputs;
-              text = lib.readFile apps/${name}.sh;
-            }
-            |> lib.getExe;
-        }
-      );
+        program =
+          pkgs.writeShellApplication {
+            inherit name runtimeInputs;
+            text = lib.readFile apps/${name}.sh;
+          }
+          |> lib.getExe;
+      };
 
-      mkSystems = lib.mapAttrs (
+      mkSystem =
         name: info:
         lib.nixosSystem {
           modules = [ /etc/nixos/hardware.nix ./modules ./pkgs base/common base/${info.type} machines/${name} ];
@@ -66,11 +64,10 @@
               inherit (info) boot type;
             };
           };
-        }
-      );
+        };
     in
     {
-      apps.x86_64-linux = mkScripts {
+      apps.x86_64-linux = lib.mapAttrs mkScript {
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 
         install = [
@@ -89,7 +86,7 @@
 
       nixosConfigurations =
         lib.importJSON ./machines.json
-        |> mkSystems
+        |> (lib.mapAttrs mkSystem)
         |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
     };
 }
