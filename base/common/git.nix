@@ -102,9 +102,12 @@
       stc = "stash clear";
       std = "stash drop";
       stl = "stash list";
+      stm = "stash push --include-untracked --message";
       stp = "stash pop";
+      sts = "stash show";
 
       sh = "show";
+      shs = "show stash";
 
       t = "tag";
       td = "tag --delete";
