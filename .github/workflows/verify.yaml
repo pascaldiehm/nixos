@@ -26,7 +26,7 @@ jobs:
         run: |
           rm -f failed
 
-          find . -path ./pkgs -prune -o -name default.nix -print | while read -r DEFAULT; do
+          find . -path ./overlay -prune -o -name default.nix -print | while read -r DEFAULT; do
             echo "Checking $DEFAULT"
             USED="$(nix eval --json --file "$DEFAULT" imports | jq -r ".[]")"
 

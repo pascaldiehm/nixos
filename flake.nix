@@ -53,7 +53,7 @@
       mkSystem =
         name: info:
         lib.nixosSystem {
-          modules = [ /etc/nixos/hardware.nix ./modules ./pkgs base/common base/${info.type} machines/${name} ];
+          modules = [ /etc/nixos/hardware.nix ./modules base/common base/${info.type} machines/${name} ];
 
           specialArgs = {
             inherit inputs;
@@ -67,6 +67,8 @@
         };
     in
     {
+      legacyPackages.x86_64-linux = pkgs.extend (import ./overlay);
+
       apps.x86_64-linux = lib.mapAttrs mkScript {
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 

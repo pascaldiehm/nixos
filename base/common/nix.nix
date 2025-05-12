@@ -1,4 +1,6 @@
 { inputs, ... }: {
+  nixpkgs.overlays = [ (import ../../overlay) ];
+
   nix = {
     channel.enable = false;
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];

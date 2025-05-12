@@ -43,7 +43,7 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 - [extra](extra/): Additional modules
 - [machines](machines/): Machine-specific configuration
 - [modules](modules/): Custom option definitions
-- [pkgs](pkgs/): Custom nixpkgs patches
+- [overlay](overlay/): Nixpkgs overlay
 - [resources](resources/): Additional resources and non-nix configuration files
   - [extensions](resources/extensions/): List of extensions not provided by nixpkgs
   - [scripts](resources/scripts/): Outsourced shell scripts
