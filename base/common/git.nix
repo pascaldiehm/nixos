@@ -42,6 +42,7 @@
       cli = "clean -fdX";
 
       cn = "clone";
+      cns = "clone --depth 1";
 
       co = "checkout";
       cob = "checkout -b";
@@ -72,8 +73,11 @@
       mn = "merge --no-commit";
 
       pf = "push --force-with-lease";
-      pl = "pull";
       ps = "push";
+      psa = "push --all";
+      psd = "push --delete";
+
+      pl = "pull";
 
       rb = "rebase";
       rba = "rebase --abort";
