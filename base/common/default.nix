@@ -5,7 +5,6 @@
     ./git.nix
     ./home-manager.nix
     ./hosts.nix
-    ./locale.nix
     ./misc.nix
     ./networking.nix
     ./nix.nix

@@ -1,4 +1,6 @@
 { lib, pkgs, ... }: {
+  users.users.pascal.extraGroups = [ "ydotool" ];
+
   home-manager.users.pascal = {
     programs.yt-dlp.enable = true;
     services.playerctld.enable = true;
@@ -24,12 +26,16 @@
     ];
   };
 
-  programs.scripts = {
-    mkletter.text = lib.readFile ../../resources/scripts/mkletter.sh;
+  programs = {
+    ydotool.enable = true;
 
-    mnt = {
-      deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
-      text = lib.readFile ../../resources/scripts/mount.sh;
+    scripts = {
+      mkletter.text = lib.readFile ../../resources/scripts/mkletter.sh;
+
+      mnt = {
+        deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
+        text = lib.readFile ../../resources/scripts/mount.sh;
+      };
     };
   };
 }
