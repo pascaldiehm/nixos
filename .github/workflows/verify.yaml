@@ -13,13 +13,15 @@ jobs:
         with:
           extra_nix_config: "experimental-features = flakes nix-command pipe-operators"
 
-      - name: Check
+      - name: Build
         if: ${{ !cancelled() }}
         run: |
           sudo mkdir -p /etc/nixos
           echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix >/dev/null
 
-          nix flake check --impure --option keep-going true
+          jq -r "keys[]" machines.json | while read -r MACHINE; do
+            timeout 20m nix build --impure ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
+          done
 
       - name: Check default.nix imports
         if: ${{ !cancelled() }}
