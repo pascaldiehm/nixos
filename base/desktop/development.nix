@@ -4,9 +4,9 @@
       sessionVariables.CMAKE_GENERATOR = "Ninja";
 
       file = {
+        ".clang-format".source = ../../resources/clang/format.yaml;
+        ".clang-tidy".source = ../../resources/clang/tidy.yaml;
         ".config/clangd/config.yaml".source = ../../resources/clang/clangd.yaml;
-        "Documents/.clang-format".source = ../../resources/clang/format.yaml;
-        "Documents/.clang-tidy".source = ../../resources/clang/tidy.yaml;
       };
 
       packages = [
