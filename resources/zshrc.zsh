@@ -110,7 +110,12 @@ function mkcd() {
 
 function mkvim() {
   mkdir -p "$(dirname "$1")"
-  vim "$1"
+
+  if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+    nvim "$1"
+  else
+    vim "$1"
+  fi
 }
 
 function nixos-test() {
