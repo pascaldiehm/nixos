@@ -61,12 +61,12 @@ jobs:
 
       - name: Lint nix
         if: ${{ !cancelled() }}
-        run: | # HACK(github.com/oppiliappan/statix/issues/88): Add statix check
+        run: | # FIXME: Add statix check once statix supports pipe operators
           rm -f failed
 
           find . -name "*.nix" | while read -r FILE; do
             echo "Checking $FILE"
-            DIAGNOSTICS="$(nix run github:oxalica/nil -- diagnostics "$FILE")" # HACK(github.com/oxalica/nil/issues/160): Use nil from nixpkgs
+            DIAGNOSTICS="$(nix run github:oxalica/nil -- diagnostics "$FILE")" # FIXME: Use nil from nixpkgs once pipe operators are released
 
             if [ -n "$DIAGNOSTICS" ]; then
               echo "$DIAGNOSTICS"

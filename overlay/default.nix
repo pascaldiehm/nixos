@@ -1,5 +1,5 @@
 pkgs: prev: {
-  # HACK(github.com/NixOS/nixfmt/issues/206): Remove patch
+  # FIXME: Remove patch once single line lists are implemented
   nixfmt-rfc-style = prev.nixfmt-rfc-style.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [ nixfmt-rfc-style/compact-lists.patch nixfmt-rfc-style/compact-params.patch ];
   });
@@ -20,7 +20,7 @@ pkgs: prev: {
     });
   };
 
-  # HACK(github.com/Alexays/Waybar/issues/3956): Remove patch
+  # FIXME: Remove patch once waybar correctly handles ipv4
   waybar = prev.waybar.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [ waybar/restore-ipv4.patch ];
   });
