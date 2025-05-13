@@ -102,7 +102,7 @@
           enable = true;
 
           settings = {
-            format_on_save.lsp_format = "never";
+            format_on_save.lsp_format = "fallback";
 
             formatters = lib.mkNvimFormatters {
               bibtex-tidy = [ (lib.getExe pkgs.bibtex-tidy) "--wrap" "120" ];
