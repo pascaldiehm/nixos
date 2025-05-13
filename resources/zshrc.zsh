@@ -156,10 +156,10 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _nothing letter
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
-    if [ -n "$1" ]; then
-      docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
-    else
+    if [ "$#" = "0" ]; then
       docker compose ls
+    else
+      docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
     fi
   }
 

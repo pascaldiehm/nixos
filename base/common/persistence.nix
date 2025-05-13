@@ -2,7 +2,7 @@
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   environment.persistence."/perm" = {
-    directories = [ "/etc/nixos" "/var/lib/docker" "/var/lib/nixos" "/var/lib/systemd" ];
+    directories = [ "/etc/nixos" "/var/lib/nixos" "/var/lib/systemd" ];
     files = [ "/etc/machine-id" ];
     users.pascal.directories = [ ".config/nixos" ];
   };
