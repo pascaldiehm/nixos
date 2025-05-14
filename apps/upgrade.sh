@@ -16,10 +16,17 @@ jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
   echo "  - $NAME"
 
   curl -Sis "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
 
-  curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
-  ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  if grep -q "^location:" "$TMP/$NAME.txt"; then
+    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
+
+    curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
+    ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  else
+    echo "    -> Failed, no location returned"
+    SOURCE="$(echo "$EXT" | jq -r .source)"
+    ID="$(echo "$EXT" | jq -r .id)"
+  fi
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
 done
@@ -41,10 +48,17 @@ jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
   echo "  - $NAME"
 
   curl -Sis "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
 
-  curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
-  ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  if grep -q "^location:" "$TMP/$NAME.txt"; then
+    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
+
+    curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
+    ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
+  else
+    echo "    -> Failed, no location returned"
+    SOURCE="$(echo "$EXT" | jq -r .source)"
+    ID="$(echo "$EXT" | jq -r .id)"
+  fi
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
 done
