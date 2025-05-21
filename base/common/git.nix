@@ -29,6 +29,7 @@
       c = "commit";
       ca = "commit --all";
       cac = "commit --all --amend --no-edit";
+      cace = "commit --all --amend";
       cacm = "commit --all --amend --message";
       cam = "commit --all --message";
       cc = "commit --amend --no-edit";
