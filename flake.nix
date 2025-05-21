@@ -39,16 +39,12 @@
       lib = inputs.nixpkgs.lib;
       pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 
-      mkScript = name: runtimeInputs: {
-        type = "app";
-
-        program =
-          pkgs.writeShellApplication {
-            inherit name runtimeInputs;
-            text = lib.readFile apps/${name}.sh;
-          }
-          |> lib.getExe;
-      };
+      mkScript =
+        name: runtimeInputs:
+        pkgs.writeShellApplication {
+          inherit name runtimeInputs;
+          text = lib.readFile apps/${name}.sh;
+        };
 
       mkSystem =
         name: info:
@@ -69,7 +65,12 @@
     {
       legacyPackages.x86_64-linux = pkgs.extend (import ./overlay);
 
-      apps.x86_64-linux = lib.mapAttrs mkScript {
+      nixosConfigurations =
+        lib.importJSON ./machines.json
+        |> (lib.mapAttrs mkSystem)
+        |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
+
+      packages.x86_64-linux = lib.mapAttrs mkScript {
         upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
 
         install = [
@@ -85,10 +86,5 @@
           (pkgs.writeShellScriptBin "machines" "cat ${./machines.json}")
         ];
       };
-
-      nixosConfigurations =
-        lib.importJSON ./machines.json
-        |> (lib.mapAttrs mkSystem)
-        |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
     };
 }
