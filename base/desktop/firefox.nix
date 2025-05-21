@@ -26,6 +26,7 @@
           PayPal = "https://paypal.com";
           PiHole = "http://192.168.1.88:8072/admin";
           Sparkasse = "https://sparkasse-mainfranken.de";
+          Traefik = "https://traefik.pdiehm.dev";
 
           _toolbar = {
             Element = "https://app.element.io";
