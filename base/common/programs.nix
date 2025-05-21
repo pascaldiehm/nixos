@@ -11,7 +11,11 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
-    scripts.nixos-upgrade.text = lib.readFile ../../resources/scripts/upgrade.sh;
+
+    scripts = {
+      nixos-diff.text = lib.readFile ../../resources/scripts/nixos-diff.sh;
+      nixos-upgrade.text = lib.readFile ../../resources/scripts/nixos-upgrade.sh;
+    };
 
     vim = {
       enable = true;
