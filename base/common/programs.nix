@@ -1,6 +1,14 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal = {
-    home.packages = [ pkgs.btrfs-progs pkgs.rsync pkgs.scripts.nixos-upgrade pkgs.unzip pkgs.wireguard-tools pkgs.zip ];
+    home.packages = [
+      pkgs.btrfs-progs
+      pkgs.rsync
+      pkgs.scripts.nixos-diff
+      pkgs.scripts.nixos-upgrade
+      pkgs.unzip
+      pkgs.wireguard-tools
+      pkgs.zip
+    ];
 
     programs = {
       jq.enable = true;
