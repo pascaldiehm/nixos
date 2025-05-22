@@ -61,6 +61,7 @@
       settings = {
         bindm = [ "SUPER, mouse:272, movewindow" "SUPER, mouse:273, resizewindow" ];
         decoration.rounding = 10;
+        ecosystem.no_update_news = true;
         gestures.workspace_swipe = true;
         windowrulev2 = [ "bordersize 0, floating:0, onworkspace:w[t1]" "rounding 0, floating:0, onworkspace:w[t1]" ];
         workspace = [ "w[t1], gapsout:0" ];
