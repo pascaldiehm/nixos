@@ -2,10 +2,15 @@
   home-manager.users.pascal = {
     home.packages = [
       pkgs.btrfs-progs
+      pkgs.dig
+      pkgs.fastfetch
+      pkgs.file
+      pkgs.netcat
       pkgs.rsync
       pkgs.scripts.nixos-diff
       pkgs.scripts.nixos-upgrade
       pkgs.unzip
+      pkgs.usbutils
       pkgs.wireguard-tools
       pkgs.zip
     ];

@@ -7,20 +7,15 @@
 
     home.packages = [
       pkgs.cryptsetup
-      pkgs.dig
-      pkgs.dmidecode
       pkgs.exfat
       pkgs.ffmpeg-full
-      pkgs.file
       pkgs.imagemagickBig
-      pkgs.netcat
       pkgs.networkmanagerapplet
       pkgs.poppler_utils
       pkgs.pwvucontrol
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
       pkgs.sops
-      pkgs.usbutils
       pkgs.vlc
       pkgs.wl-clipboard
     ];
