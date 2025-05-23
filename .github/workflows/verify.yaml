@@ -16,11 +16,8 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         run: |
-          sudo mkdir -p /etc/nixos
-          echo '{ nixpkgs.hostPlatform = "x86_64-linux"; }' | sudo tee /etc/nixos/hardware.nix >/dev/null
-
           jq -r "keys[]" machines.json | while read -r MACHINE; do
-            timeout 20m nix build --impure ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
+            timeout 20m nix build ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done
 
       - name: Check default.nix imports

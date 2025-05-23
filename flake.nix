@@ -49,7 +49,14 @@
       mkSystem =
         name: info:
         lib.nixosSystem {
-          modules = [ /etc/nixos/hardware.nix ./modules base/common base/${info.type} machines/${name} ];
+          system = "x86_64-linux";
+
+          modules = [
+            ./modules
+            base/common
+            base/${info.type}
+            machines/${name}
+          ] ++ lib.optional (lib.pathExists /etc/nixos/hardware.nix) /etc/nixos/hardware.nix;
 
           specialArgs = {
             inherit inputs;
