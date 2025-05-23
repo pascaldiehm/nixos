@@ -2,8 +2,7 @@
 
 NixOS is a fully declarative Linux distribution - and this repository contains the files required to make _my version_ of NixOS.
 
-<!-- TODO: Update screenshot -->
-<!-- ![Screenshot](resources/screenshot.png) -->
+![Screenshot](resources/screenshot.png)
 
 > [!IMPORTANT]
 > This is _my_ configuration, containing _my_ secrets and requiring _my_ password to install.
