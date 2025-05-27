@@ -11,7 +11,7 @@
       pkgs.ffmpeg-full
       pkgs.imagemagickBig
       pkgs.networkmanagerapplet
-      pkgs.poppler_utils
+      pkgs.poppler-utils
       pkgs.pwvucontrol
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
