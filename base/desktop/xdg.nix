@@ -6,7 +6,6 @@
       defaultApplications = {
         "application/json" = "firefox.desktop";
         "application/pdf" = "firefox.desktop";
-        "application/vnd.sqlite3" = "sqlitebrowser.desktop";
         "audio/mp4" = "vlc.desktop";
         "audio/mpeg" = "vlc.desktop";
         "audio/ogg" = "vlc.desktop";
