@@ -21,7 +21,9 @@
       };
 
       keymaps = lib.mkNvimKeymaps {
+        "<C-d>zz" = [ "<C-d>" "n" ];
         "<C-h>" = [ "<C-Bs>" "t" ];
+        "<C-u>zz" = [ "<C-u>" "n" ];
         "<C-w>" = [ "<C-Bs>" "!" ];
         "<Cmd>Oil<Return>" = [ "<Space><Space>" "n" ];
         "<Cmd>cnext<Return>" = [ "gq" "n" ];
