@@ -1,8 +1,6 @@
 { pkgs, ... }: {
   home-manager.users.pascal = {
     home = {
-      sessionVariables.CMAKE_GENERATOR = "Ninja";
-
       file = {
         ".clang-format".source = ../../resources/clang/format.yaml;
         ".clang-tidy".source = ../../resources/clang/tidy.yaml;
@@ -21,6 +19,11 @@
         pkgs.sqlite
         pkgs.sqlitebrowser
       ];
+
+      sessionVariables = {
+        CMAKE_EXPORT_COMPILE_COMMANDS = "1";
+        CMAKE_GENERATOR = "Ninja";
+      };
     };
 
     programs = {
