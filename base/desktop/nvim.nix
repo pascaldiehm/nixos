@@ -75,13 +75,24 @@
       };
 
       plugins = {
-        autoclose.enable = true;
         comment.enable = true;
         gitsigns.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
         ts-autotag.enable = true;
         web-devicons.enable = true;
+
+        autoclose = {
+          enable = true;
+
+          settings.keys = {
+            ">" = {
+              close = false;
+              escape = false;
+              pair = "><";
+            };
+          };
+        };
 
         cmp = {
           enable = true;
