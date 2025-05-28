@@ -29,8 +29,11 @@
           "<C-u>" = "<C-u>zz";
           "<Space><Return>" = "<Cmd>terminal<Return>i";
           "<Space><Space>" = "<Cmd>Oil<Return>";
+          J = "mmJ`m";
+          N = "Nzz";
           gQ = "<Cmd>cprevious<Return>";
           gq = "<Cmd>cnext<Return>";
+          n = "nzz";
         };
 
         nt = {
@@ -50,8 +53,11 @@
         };
 
         x = {
-          "<S-Tab>" = "<gv";
-          "<Tab>" = ">gv";
+          H = "<gv";
+          J = ":m '>+1<Return>gv=gv";
+          K = ":m '<-2<Return>gv=gv";
+          L = ">gv";
+          O = ":sort<Return>";
         };
       };
 
@@ -96,12 +102,10 @@
         autoclose = {
           enable = true;
 
-          settings.keys = {
-            ">" = {
-              close = false;
-              escape = false;
-              pair = "><";
-            };
+          settings.keys.">" = {
+            close = false;
+            escape = false;
+            pair = "><";
           };
         };
 
@@ -228,8 +232,10 @@
           extensions.fzf-native.enable = true;
 
           keymaps = {
+            "<Space>b" = "builtin";
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
+            "<Space>o" = "resume";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
             "<Space>r" = "lsp_references";
