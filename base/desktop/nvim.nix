@@ -21,29 +21,38 @@
       };
 
       keymaps = lib.mkNvimKeymaps {
-        "<C-d>zz" = [ "<C-d>" "n" ];
-        "<C-h>" = [ "<C-Bs>" "t" ];
-        "<C-u>zz" = [ "<C-u>" "n" ];
-        "<C-w>" = [ "<C-Bs>" "!" ];
-        "<Cmd>Oil<Return>" = [ "<Space><Space>" "n" ];
-        "<Cmd>cnext<Return>" = [ "gq" "n" ];
-        "<Cmd>cprevious<Return>" = [ "gQ" "n" ];
-        "<Cmd>new<Return>" = [ "<A-S-w>" "n" "t" ];
-        "<Cmd>tab new<Return>" = [ "<A-t>" "n" "t" ];
-        "<Cmd>tabnext<Return>" = [ "<A-Tab>" "n" "t" ];
-        "<Cmd>tabprevious<Return>" = [ "<A-S-Tab>" "n" "t" ];
-        "<Cmd>terminal<Return>i" = [ "<Space><Return>" "n" ];
-        "<Cmd>vertical new<Return>" = [ "<A-w>" "n" "t" ];
-        "<Cmd>wincmd H<Return>" = [ "<A-S-h>" "n" "t" ];
-        "<Cmd>wincmd J<Return>" = [ "<A-S-j>" "n" "t" ];
-        "<Cmd>wincmd K<Return>" = [ "<A-S-k>" "n" "t" ];
-        "<Cmd>wincmd L<Return>" = [ "<A-S-l>" "n" "t" ];
-        "<Cmd>wincmd h<Return>" = [ "<A-h>" "n" "t" ];
-        "<Cmd>wincmd j<Return>" = [ "<A-j>" "n" "t" ];
-        "<Cmd>wincmd k<Return>" = [ "<A-k>" "n" "t" ];
-        "<Cmd>wincmd l<Return>" = [ "<A-l>" "n" "t" ];
-        "<gv" = [ "<S-Tab>" "x" ];
-        ">gv" = [ "<Tab>" "x" ];
+        "!"."<C-Bs>" = "<C-w>";
+        t."<C-Bs>" = "<C-h>";
+
+        n = {
+          "<C-d>" = "<C-d>zz";
+          "<C-u>" = "<C-u>zz";
+          "<Space><Return>" = "<Cmd>terminal<Return>i";
+          "<Space><Space>" = "<Cmd>Oil<Return>";
+          gQ = "<Cmd>cprevious<Return>";
+          gq = "<Cmd>cnext<Return>";
+        };
+
+        nt = {
+          "<A-S-Tab>" = "<Cmd>tabprevious<Return>";
+          "<A-S-h>" = "<Cmd>wincmd H<Return>";
+          "<A-S-j>" = "<Cmd>wincmd J<Return>";
+          "<A-S-k>" = "<Cmd>wincmd K<Return>";
+          "<A-S-l>" = "<Cmd>wincmd L<Return>";
+          "<A-S-w>" = "<Cmd>new<Return>";
+          "<A-Tab>" = "<Cmd>tabnext<Return>";
+          "<A-h>" = "<Cmd>wincmd h<Return>";
+          "<A-j>" = "<Cmd>wincmd j<Return>";
+          "<A-k>" = "<Cmd>wincmd k<Return>";
+          "<A-l>" = "<Cmd>wincmd l<Return>";
+          "<A-t>" = "<Cmd>tab new<Return>";
+          "<A-w>" = "<Cmd>vertical new<Return>";
+        };
+
+        x = {
+          "<S-Tab>" = "<gv";
+          "<Tab>" = ">gv";
+        };
       };
 
       opts = {

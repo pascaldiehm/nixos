@@ -45,11 +45,14 @@ lib: prev: {
     }
   );
 
-  mkNvimKeymaps = lib.mapAttrsToList (
-    action: value: {
-      inherit action;
-      key = lib.head value;
-      mode = lib.tail value;
-    }
-  );
+  mkNvimKeymaps =
+    maps:
+    lib.mapAttrsToList (
+      mode: keys:
+      lib.mapAttrsToList (key: action: {
+        inherit action key;
+        mode = lib.stringToCharacters mode;
+      }) keys
+    ) maps
+    |> lib.flatten;
 }
