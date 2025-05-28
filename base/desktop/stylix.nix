@@ -20,13 +20,13 @@
       };
 
       sansSerif = {
-        name = "Ubuntu Nerd Font";
-        package = pkgs.nerd-fonts.ubuntu;
+        name = "NotoSans Nerd Font";
+        package = pkgs.nerd-fonts.noto;
       };
 
       serif = {
-        name = "Ubuntu Nerd Font";
-        package = pkgs.nerd-fonts.ubuntu;
+        name = "NotoSerif Nerd Font";
+        package = pkgs.nerd-fonts.noto;
       };
     };
   };
