@@ -15,6 +15,15 @@
         register = "unnamedplus";
       };
 
+      colorschemes.onedark = {
+        enable = true;
+
+        settings = {
+          term_colors = false;
+          transparent = true;
+        };
+      };
+
       diagnostic.settings = {
         severity_sort = true;
         update_in_insert = true;

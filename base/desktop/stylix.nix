@@ -1,6 +1,10 @@
 { inputs, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
-  home-manager.users.pascal.stylix.targets.firefox.profileNames = [ "default" ];
+
+  home-manager.users.pascal.stylix.targets = {
+    firefox.profileNames = [ "default" ];
+    nixvim.enable = false;
+  };
 
   stylix = {
     enable = true;

@@ -12,6 +12,13 @@ pkgs: prev: {
       '';
     });
 
+    lualine-nvim = prev.vimPlugins.lualine-nvim.overrideAttrs (prev: {
+      postPatch = ''
+        ${prev.postPatch or ""}
+        rm lua/lualine/themes/onedark.lua
+      '';
+    });
+
     oil-nvim = prev.vimPlugins.oil-nvim.overrideAttrs (prev: {
       postPatch = ''
         ${prev.postPatch or ""}
