@@ -29,6 +29,20 @@
         update_in_insert = true;
       };
 
+      extraConfigLua = ''
+        vim.keymap.set("i", ";", function()
+          local line = "_" .. vim.api.nvim_get_current_line()
+          local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+          local ctx = line:sub(col, col + 1)
+
+          if ctx == "{}" then
+            return "<Esc>la;<Esc>hi"
+          else
+            return ";"
+          end
+        end, { expr = true, noremap = true })
+      '';
+
       keymaps = lib.mkNvimKeymaps {
         "!"."<C-Bs>" = "<C-w>";
         t."<C-Bs>" = "<C-h>";
