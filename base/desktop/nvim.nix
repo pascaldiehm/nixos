@@ -235,7 +235,7 @@
             "<Space>b" = "builtin";
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
-            "<Space>o" = "resume";
+            "<Space>l" = "resume";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
             "<Space>r" = "lsp_references";
