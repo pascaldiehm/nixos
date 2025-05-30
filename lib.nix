@@ -38,6 +38,13 @@ lib: prev: {
     |> lib.listToAttrs
     |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
 
+  mkNvimAutoCommands = lib.mapAttrsToList (
+    event: command: {
+      inherit command;
+      event = lib.splitString "," event;
+    }
+  );
+
   mkNvimFormatters = lib.mapAttrs (
     key: value: {
       command = lib.head value;

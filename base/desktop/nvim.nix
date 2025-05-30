@@ -4,6 +4,7 @@
 
     programs.nixvim = {
       enable = true;
+      autoCmd = lib.mkNvimAutoCommands { TermOpen = "setlocal nospell"; };
       defaultEditor = true;
       extraFiles."spell/de.utf-8.spl".source = ../../resources/de.utf-8.spl;
       extraPackages = [ pkgs.ripgrep ];
@@ -96,10 +97,13 @@
         shiftwidth = 2;
         signcolumn = "yes";
         smartcase = true;
+        smartindent = true;
         softtabstop = 2;
+        spell = true;
         spelllang = "en,de";
         splitbelow = true;
         splitright = true;
+        swapfile = false;
         tabstop = 2;
         wrap = false;
       };
