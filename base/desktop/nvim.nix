@@ -46,6 +46,7 @@
 
       keymaps = lib.mkNvimKeymaps {
         "!"."<C-Bs>" = "<C-w>";
+        nx.x = "\"_x";
         t."<C-Bs>" = "<C-h>";
 
         n = {
