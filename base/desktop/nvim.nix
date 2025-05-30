@@ -50,6 +50,7 @@
         t."<C-Bs>" = "<C-h>";
 
         n = {
+          "<A-Return>" = "<Cmd>8new +terminal<Return>i";
           "<C-d>" = "<C-d>zz";
           "<C-u>" = "<C-u>zz";
           "<Space><Return>" = "<Cmd>terminal<Return>i";
