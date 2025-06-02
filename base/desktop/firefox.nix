@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ lib, ... }: {
   home-manager.users.pascal.programs.firefox = {
     enable = true;
 
