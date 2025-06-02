@@ -138,6 +138,12 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     popd
   }
 
+  function nixos-iso() {
+    nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
+    cp result/iso/*.iso nixos.iso
+    rm result
+  }
+
   function nixos-secrets() {
     sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml
   }
@@ -159,6 +165,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing letter
+  compdef _nothing nixos-iso
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
     if [ "$#" = "0" ]; then
