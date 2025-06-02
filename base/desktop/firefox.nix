@@ -71,7 +71,7 @@
           google = null;
           mdn = "https://developer.mozilla.org/search?q=%s";
           music = "https://music.youtube.com/search?q=%s";
-          nixopts = "https://search.nixos.org/options?channel=${config.system.stateVersion}&query=%s";
+          nixopts = "https://search.nixos.org/options?channel=unstable&query=%s";
           nixpkgs = "https://search.nixos.org/packages?channel=unstable&query=%s";
           nixwiki = "https://wiki.nixos.org/w/index.php?search=%s";
           noogle = "https://noogle.dev/q?term=%s";
