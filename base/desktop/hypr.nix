@@ -163,6 +163,11 @@
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
         ];
 
+        bindls = [
+          "Control_R, f, exec, ${lib.getExe pkgs.scripts.ha} fan toggle fan_desk"
+          "Control_R, l, exec, ${lib.getExe pkgs.scripts.ha} light toggle lamp_desk"
+        ];
+
         general = {
           border_size = 2;
           "col.active_border" = lib.mkForce "rgb(00dbde) rgb(fc00ff) 45deg";
