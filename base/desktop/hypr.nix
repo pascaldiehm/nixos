@@ -149,15 +149,18 @@
           "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m region"
           "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m window"
 
+          ", XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage}"
+          ", XF86Mail, exec, ${lib.getExe config.home-manager.users.pascal.programs.thunderbird.package}"
+          "SHIFT, XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage} --private-window"
+        ];
+
+        bindl = [
           ", XF86AudioLowerVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%-"
           ", XF86AudioMute, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle"
           ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
           ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
           ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
-          ", XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage}"
-          ", XF86Mail, exec, ${lib.getExe config.home-manager.users.pascal.programs.thunderbird.package}"
-          "SHIFT, XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage} --private-window"
         ];
 
         general = {
