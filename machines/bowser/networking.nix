@@ -29,7 +29,6 @@
       "10-wired" = {
         address = [ "192.168.1.88/16" ];
         gateway = [ "192.168.1.1" ];
-        linkConfig.RequiredForOnline = "routable";
         matchConfig.Name = "eth0";
       };
 
