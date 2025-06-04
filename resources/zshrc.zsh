@@ -118,12 +118,18 @@ function mkvim() {
   fi
 }
 
+function nixos-diff() {
+  git -C ~/.config/nixos fetch
+  git -C ~/.config/nixos diff "${@}" "$(nixos-version --configuration-revision)"...origin
+}
+
 function nixos-test() {
   sudo nixos-rebuild --impure --flake ~/.config/nixos "${1:-test}"
 }
 
 compdef '_arguments ":mode:(boot build build-vm switch test)"' nixos-test
 compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
+compdef _nothing nixos-diff
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"

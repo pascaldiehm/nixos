@@ -7,7 +7,6 @@
       pkgs.file
       pkgs.netcat
       pkgs.rsync
-      pkgs.scripts.nixos-diff
       pkgs.scripts.nixos-upgrade
       pkgs.unzip
       pkgs.usbutils
@@ -24,11 +23,7 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
-
-    scripts = {
-      nixos-diff.text = lib.readFile ../../resources/scripts/nixos-diff.sh;
-      nixos-upgrade.text = lib.readFile ../../resources/scripts/nixos-upgrade.sh;
-    };
+    scripts.nixos-upgrade.text = lib.readFile ../../resources/scripts/nixos-upgrade.sh;
 
     vim = {
       enable = true;
