@@ -157,15 +157,15 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function nv() {
     if [ -z "$1" ]; then
       nvim
+    elif [ -f "$1" ]; then
+      nvim "$1"
     elif [ -d "$1" ]; then
       pushd "$1"
       nvim .
       popd
     else
-      mkdir -p "$(dirname "$1")"
-      pushd "$(dirname "$1")"
-      nvim "$(basename "$1")"
-      popd
+      echo "nv: $1: No such file or directory"
+      exit 1
     fi
   }
 
