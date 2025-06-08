@@ -8,11 +8,11 @@ TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
 FIRST=1
-jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
+while read -r EXT; do
   ((FIRST)) || echo "," >>"$TMP/extensions.json"
   FIRST=0
 
-  NAME="$(echo "$EXT" | jq -r .name)"
+  NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
   curl -Sis "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
@@ -24,12 +24,12 @@ jq -c ".[]" resources/extensions/firefox.json | while read -r EXT; do
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"
-    SOURCE="$(echo "$EXT" | jq -r .source)"
-    ID="$(echo "$EXT" | jq -r .id)"
+    SOURCE="$(jq -r .source <<<"$EXT")"
+    SOURCE="$(jq -r .id <<<"$EXT")"
   fi
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
-done
+done < <(jq -c ".[]" resources/extensions/firefox.json)
 
 echo -e "\n]" >>"$TMP/extensions.json"
 mv "$TMP/extensions.json" resources/extensions/firefox.json
@@ -40,11 +40,11 @@ TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
 FIRST=1
-jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
+while read -r EXT; do
   ((FIRST)) || echo "," >>"$TMP/extensions.json"
   FIRST=0
 
-  NAME="$(echo "$EXT" | jq -r .name)"
+  NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
   curl -Sis "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
@@ -56,12 +56,12 @@ jq -c ".[]" resources/extensions/thunderbird.json | while read -r EXT; do
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"
-    SOURCE="$(echo "$EXT" | jq -r .source)"
-    ID="$(echo "$EXT" | jq -r .id)"
+    SOURCE="$(jq -r .source <<<"$EXT")"
+    ID="$(jq -r .id <<<"$EXT")"
   fi
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
-done
+done < <(jq -c ".[]" resources/extensions/thunderbird.json)
 
 echo -e "\n]" >>"$TMP/extensions.json"
 mv "$TMP/extensions.json" resources/extensions/thunderbird.json
