@@ -6,6 +6,7 @@
     services.playerctld.enable = true;
 
     home.packages = [
+      pkgs.adwaita-icon-theme
       pkgs.cryptsetup
       pkgs.exfat
       pkgs.ffmpeg-full
