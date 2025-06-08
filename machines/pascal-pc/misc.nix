@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  environment.persistence."/perm".users.pascal.directories = [ ".local/share/PrismLauncher" ];
+  environment.persistence."/perm".users.pascal.directories = [ ".config/retroarch" ".local/share/PrismLauncher" ];
 
   hardware = {
     bluetooth.enable = true;

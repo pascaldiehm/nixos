@@ -7,6 +7,7 @@
     pkgs.prismlauncher
     pkgs.qucs-s
     pkgs.quickemu
+    pkgs.retroarch-free
     pkgs.tenacity
   ];
 }
