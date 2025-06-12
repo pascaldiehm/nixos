@@ -63,8 +63,8 @@
         decoration.rounding = 10;
         ecosystem.no_update_news = true;
         gestures.workspace_swipe = true;
-        windowrulev2 = [ "bordersize 0, floating:0, onworkspace:w[t1]" "rounding 0, floating:0, onworkspace:w[t1]" ];
-        workspace = [ "w[t1], gapsout:0" ];
+        windowrule = [ "bordersize 0, floating:0, onworkspace:w[t1]" "rounding 0, floating:0, onworkspace:w[t1]" ];
+        workspace = "w[t1], gapsout:0";
 
         animations = {
           animation = [
@@ -87,11 +87,11 @@
           ];
 
           bezier = [
-            "almostLinear, 0.5, 0.5, 0.75, 1"
-            "easeInOutCubic, 0.65, 0.05, 0.36, 1"
-            "easeOutQuint, 0.23, 1, 0.32, 1"
-            "linear, 0, 0, 1, 1"
-            "quick, 0.15, 0, 0.1, 1"
+            "almostLinear,0.5,0.5,0.75,1.0"
+            "easeInOutCubic,0.65,0.05,0.36,1"
+            "easeOutQuint,0.23,1,0.32,1"
+            "linear,0,0,1,1"
+            "quick,0.15,0,0.1,1"
           ];
         };
 
@@ -169,6 +169,7 @@
         general = {
           border_size = 2;
           "col.active_border" = lib.mkForce "rgb(00dbde) rgb(fc00ff) 45deg";
+          no_focus_fallback = true;
         };
 
         input = {
@@ -179,8 +180,11 @@
         };
 
         misc = {
-          mouse_move_enables_dpms = true;
+          enable_anr_dialog = false;
           key_press_enables_dpms = true;
+          middle_click_paste = false;
+          mouse_move_enables_dpms = true;
+          new_window_takes_over_fullscreen = 2;
         };
       };
     };
