@@ -12,13 +12,13 @@ while read -r LINE; do
 
   if [ "$SERVICE" = "sshd-session" ]; then
     if grep -Eq "$PAT_SSHD_PASSWORD" <<<"$MESSAGE"; then
-      ntfy journal "$(sed -E "s/$PAT_SSHD_PASSWORD/[sshd] \\1 password for \\2 (\\3:\\4)/" <<<"$MESSAGE")"
+      ntfy journal "$(sed -E "s/$PAT_SSHD_PASSWORD/[sshd] \\1 password for \\2 from \\3/" <<<"$MESSAGE")"
     elif grep -Eq "$PAT_SSHD_PUBLICKEY" <<<"$MESSAGE"; then
-      ntfy journal "$(sed -E "s/$PAT_SSHD_PUBLICKEY/[sshd] \\1 publickey (\\5) for \\2 (\\3:\\4): \\6/" <<<"$MESSAGE")"
+      ntfy journal "$(sed -E "s/$PAT_SSHD_PUBLICKEY/[sshd] \\1 publickey for \\2 from \\3/" <<<"$MESSAGE")"
     elif grep -Eq "$PAT_SSHD_USER_DENIED" <<<"$MESSAGE"; then
-      ntfy journal "$(sed -E "s/$PAT_SSHD_USER_DENIED/[sshd] Denied user \\1 (\\2)/" <<<"$MESSAGE")"
+      ntfy journal "$(sed -E "s/$PAT_SSHD_USER_DENIED/[sshd] Denied user \\1 from \\2/" <<<"$MESSAGE")"
     elif grep -Eq "$PAT_SSHD_USER_INVALID" <<<"$MESSAGE"; then
-      ntfy journal "$(sed -E "s/$PAT_SSHD_USER_INVALID/[sshd] Invalid user \\1 (\\2:\\3)/" <<<"$MESSAGE")"
+      ntfy journal "$(sed -E "s/$PAT_SSHD_USER_INVALID/[sshd] Invalid user \\1 from \\2/" <<<"$MESSAGE")"
     fi
   elif [ "$SERVICE" = "sudo" ]; then
     if grep -Eq "$PAT_SUDO_COMMAND" <<<"$MESSAGE"; then
