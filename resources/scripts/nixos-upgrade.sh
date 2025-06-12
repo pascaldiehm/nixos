@@ -72,7 +72,7 @@ elif [ -n "$BEHIND" ]; then
   fi
 fi
 
-if [ "$(/run/booted-system/sw/bin/nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
+if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   clear
   echo "The configuration has not changed. Continue anyway?"
   echo
