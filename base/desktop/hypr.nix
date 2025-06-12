@@ -2,7 +2,7 @@
   home-manager.users.pascal = {
     programs = {
       kitty.enable = true;
-      wofi.enable = true;
+      rofi.enable = true;
 
       hyprlock = {
         enable = true;
@@ -30,9 +30,9 @@
     };
 
     services = {
-      dunst = {
+      mako = {
         enable = true;
-        settings.global.follow = "mouse";
+        settings.default-timeout = 5000;
       };
 
       hypridle = {
@@ -142,7 +142,7 @@
           "SUPER, f, fullscreen"
 
           "SUPER, Return, exec, kitty"
-          "SUPER, Space, exec, wofi --show drun"
+          "SUPER, Space, exec, rofi -show drun"
 
           ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
           "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} -a"
