@@ -10,8 +10,6 @@
     };
 
     profiles.default = {
-      name = "Default";
-
       bookmarks = {
         force = true;
 
