@@ -51,15 +51,11 @@
 
         n = {
           "<A-Return>" = "<Cmd>8new +terminal<Return>i";
-          "<C-d>" = "<C-d>zz";
-          "<C-u>" = "<C-u>zz";
           "<Space><Return>" = "<Cmd>terminal<Return>i";
           "<Space><Space>" = "<Cmd>Oil<Return>";
           J = "mmJ`m";
-          N = "Nzz";
           gQ = "<Cmd>cprevious<Return>";
           gq = "<Cmd>cnext<Return>";
-          n = "nzz";
         };
 
         nt = {
@@ -130,22 +126,18 @@
 
         autoclose = {
           enable = true;
-
-          settings.keys.">" = {
-            close = false;
-            escape = false;
-            pair = "><";
-          };
+          settings.keys.">".pair = "><";
         };
 
         cmp = {
           enable = true;
 
           settings = {
+            preselect = "cmp.PreselectMode.None";
             sources = [ { name = "nvim_lsp"; } { name = "path"; } { name = "buffer"; } ];
 
             mapping = {
-              "<C-Return>" = "cmp.mapping.confirm()";
+              "<C-Return>" = "cmp.mapping.confirm({ select = true })";
               "<C-Space>" = "cmp.mapping.complete()";
               "<S-Tab>" = "cmp.mapping.select_prev_item()";
               "<Tab>" = "cmp.mapping.select_next_item()";
@@ -163,7 +155,7 @@
               bibtex-tidy = [ (lib.getExe pkgs.bibtex-tidy) "--wrap" "120" ];
               black = [ (lib.getExe pkgs.python3Packages.black) "-l" "120" ];
               clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
-              cmake_format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
+              cmake-format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
               latexindent = [ (lib.getExe' pkgs.texlivePackages.latexindent "latexindent") "--logfile" "/dev/null" ];
               nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
@@ -174,7 +166,7 @@
             formatters_by_ft = {
               bib = [ "bibtex-tidy" ];
               c = [ "clang-format" ];
-              cmake = [ "cmake_format" ];
+              cmake = [ "cmake-format" ];
               cpp = [ "clang-format" ];
               css = [ "prettier" ];
               html = [ "prettier" ];
