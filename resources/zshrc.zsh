@@ -165,7 +165,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
       popd
     else
       echo "nv: $1: No such file or directory"
-      exit 1
+      return 1
     fi
   }
 
