@@ -63,6 +63,7 @@
 
         engines = lib.mkFirefoxSearchEngines {
           bing = null;
+          crates = "https://crates.io/search?q=%s";
           devhints = "https://devhints.io/%s";
           docker = "https://hub.docker.com/search?q=%s";
           github = "https://github.com/search?q=%s";

@@ -126,7 +126,11 @@
 
         autoclose = {
           enable = true;
-          settings.keys.">".pair = "><";
+
+          settings.keys = {
+            "'".close = false;
+            ">".pair = "><";
+          };
         };
 
         cmp = {
@@ -160,6 +164,7 @@
               latexindent = [ (lib.getExe' pkgs.texlivePackages.latexindent "latexindent") "--logfile" "/dev/null" ];
               nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
               prettier = [ (lib.getExe pkgs.nodePackages.prettier) "--arrow-parens" "avoid" "--print-width" "120" ];
+              rustfmt = [ (lib.getExe pkgs.rustfmt) ];
               shfmt = [ (lib.getExe pkgs.shfmt) "-i" "2" ];
             };
 
@@ -178,6 +183,7 @@
               nix = [ "nixfmt" ];
               plaintex = [ "latexindent" ];
               python = [ "black" ];
+              rust = [ "rustfmt" ];
               scss = [ "prettier" ];
               sh = [ "shfmt" ];
               tex = [ "latexindent" ];
@@ -230,6 +236,12 @@
             tailwindcss.enable = true;
             texlab.enable = true;
             ts_ls.enable = true;
+
+            rust_analyzer = {
+              enable = true;
+              installCargo = true;
+              installRustc = true;
+            };
           };
         };
 
