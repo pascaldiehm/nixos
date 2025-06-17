@@ -4,130 +4,117 @@
 }
 
 window#waybar {
-  background: @window_bg_color;
+  background-color: @window_bg_color;
   color: @window_fg_color;
 }
 
-box#privacy,
-box#workspaces,
-box#hardware,
-label#mpris,
-label#clock,
-label#network,
-label#backlight,
-label#wireplumber,
-label#battery,
-box#power {
-  background: @card_bg_color;
-  border-radius: 1rem;
-  margin: 4px;
+box#workspaces {
+  border-right: 0.5em solid transparent;
+
+  background:
+    linear-gradient(@card_bg_color),
+    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
 }
 
-box#privacy image,
-box#workspaces button,
-box#hardware label,
+label#cpu,
+label#memory,
+label#disk,
+label#temperature {
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
+
+  background:
+    linear-gradient(@card_bg_color),
+    border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+}
+
+label#mpris {
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
+
+  background:
+    linear-gradient(@card_bg_color),
+    border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+}
+
+label#network,
+label#backlight,
+label#wireplumber,
+label#battery {
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
+
+  background:
+    linear-gradient(@card_bg_color),
+    border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+}
+
+label#clock {
+  border-left: 0.5em solid transparent;
+
+  background:
+    linear-gradient(@card_bg_color),
+    border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%;
+}
+
+box#workspaces,
+label#cpu,
+label#memory,
+label#disk,
+label#temperature,
 label#mpris,
 label#network,
 label#backlight,
 label#wireplumber,
 label#battery,
-box#power label {
-  padding: 2px 8px;
+label#clock {
+  margin: 0.25em 0;
+  padding: 0 0.5em;
+}
+
+box#workspaces,
+box#workspaces button {
+  padding: 0 0.25em;
 }
 
 label#network:not(.ethernet):not(.wifi),
 label#wireplumber.muted,
-label#battery.full,
-box#power label {
-  font-size: 14pt;
+label#battery.full {
+  padding-right: 0.75em;
 }
 
-label#backlight:hover,
-label#wireplumber:hover,
-box#power label:hover {
-  background: @accent_color;
-  border-radius: 1rem;
-}
-
-box#workspaces,
-box#hardware {
-  border-radius: 0.5rem;
-}
-
-box#workspaces button {
-  border-radius: 0;
-}
-
-box#workspaces button:first-child {
-  border-bottom-left-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
-}
-
-box#workspaces button:last-child {
-  border-bottom-right-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-}
-
-box#workspaces button.active {
-  background: alpha(@accent_color, 0.5);
-}
-
-box#workspaces button:hover {
-  background: @accent_color;
-}
-
-label#cpu.load {
+box#workspaces button.active,
+label#cpu.load,
+label#battery.charging {
   color: @accent_color;
 }
 
-label#cpu.high {
-  color: @error_color;
-}
-
-label#memory.warning {
+label#memory.warning,
+label#disk.warning,
+label#network:not(.disconnected):not(.ethernet):not(.wifi),
+label#battery.discharging.warning {
   color: @warning_color;
 }
 
-label#memory.critical {
+label#cpu.high,
+label#memory.critical,
+label#disk.critical,
+label#network.disconnected,
+label#battery.discharging.critical {
   color: @error_color;
-}
-
-label#disk.warning {
-  color: @warning_color;
-}
-
-label#disk.critical {
-  color: @error_color;
-}
-
-label#temperature.critical {
-  color: @error_color;
-}
-
-label#clock {
-  padding: 4px 16px;
-}
-
-label#network:not(.disconnected):not(.ethernet):not(.wifi) {
-  background: @warning_color;
-}
-
-label#network.disconnected {
-  background: @error_color;
 }
 
 label#battery.full {
-  background: @success_color;
-}
-
-label#battery.charging {
-  background: @accent_color;
-}
-
-label#battery.discharging.warning {
-  background: @warning_color;
-}
-
-label#battery.discharging.critical {
-  background: @error_color;
+  color: @success_color;
 }

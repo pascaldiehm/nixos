@@ -5,15 +5,15 @@
     systemd.enable = true;
 
     settings.bar = {
-      modules-center = [ "clock" ];
-      modules-left = [ "privacy" "hyprland/workspaces" "group/hardware" "mpris" ];
-      modules-right = [ "network" "backlight" "wireplumber" "battery" "group/power" ];
+      modules-center = [ "mpris" ];
+      modules-left = [ "hyprland/workspaces" "cpu" "memory" "disk" "temperature" ];
+      modules-right = [ "network" "backlight" "wireplumber" "battery" "clock" ];
 
       backlight = {
         format = "{icon} {percent}%";
         format-icons = [ "󰃞" "󰃟" "󰃠" ];
         on-click = "sleep 1 && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
-        on-click-right = "${lib.getExe pkgs.brightnessctl} s 50%";
+        on-click-right = "${lib.getExe pkgs.brightnessctl} set 50%";
         tooltip = false;
       };
 
@@ -22,17 +22,40 @@
         format-charging = "󰂄 {capacity}%";
         format-full = "󱟢";
         format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+        format-time = "{H}:{m}";
+        full-at = 95;
         interval = 1;
+        tooltip-format = "{timeTo}\nPower: {power:.1f}W\nCycles: {cycles}\nHealth: {health}%";
 
         states = {
-          warning = 20;
           critical = 10;
+          warning = 20;
         };
       };
 
       clock = {
-        calendar.format.today = "<b>{}</b>";
+        format = "{:%b %d, %H:%M}";
         tooltip-format = "<tt>{calendar}</tt>";
+
+        actions = {
+          on-click = "mode";
+          on-click-right = "shift_reset";
+          on-scroll-down = "shift_down";
+          on-scroll-up = "shift_up";
+        };
+
+        calendar = {
+          mode-mon-col = 3;
+          on-scroll = -1;
+          weeks-pos = "left";
+
+          format = {
+            months = "<span color='#f80'><b>{}</b></span>";
+            today = "<span color='#f00'><b>{}</b></span>";
+            weekdays = "<span color='#888'><b>{}</b></span>";
+            weeks = "<span color='#888'><b>{}</b></span>";
+          };
+        };
       };
 
       cpu = {
@@ -40,27 +63,9 @@
         interval = 1;
 
         states = {
-          load = 10;
           high = 80;
+          load = 10;
         };
-      };
-
-      "custom/reboot" = {
-        format = "󰜉";
-        on-click = "${lib.getExe' pkgs.systemd "systemctl"} reboot";
-        tooltip-format = "Reboot";
-      };
-
-      "custom/shutdown" = {
-        format = "󰐥";
-        on-click = "${lib.getExe' pkgs.systemd "systemctl"} poweroff";
-        tooltip-format = "Power off";
-      };
-
-      "custom/sleep" = {
-        format = "󰤄";
-        on-click = "${lib.getExe' pkgs.systemd "systemctl"} suspend";
-        tooltip-format = "Sleep";
       };
 
       disk = {
@@ -70,20 +75,9 @@
         unit = "GiB";
 
         states = {
-          warning = 80;
           critical = 95;
+          warning = 80;
         };
-      };
-
-      "group/hardware" = {
-        modules = [ "cpu" "memory" "disk" "temperature" ];
-        orientation = "inherit";
-      };
-
-      "group/power" = {
-        drawer.transition-left-to-right = false;
-        modules = [ "custom/shutdown" "custom/sleep" "custom/reboot" ];
-        orientation = "inherit";
       };
 
       "hyprland/workspaces" = {
@@ -92,13 +86,13 @@
       };
 
       memory = {
-        interval = 1;
         format = " {percentage}%";
+        interval = 1;
         tooltip-format = "{used:.1f} / {total:.1f} GiB";
 
         states = {
-          warning = 50;
           critical = 80;
+          warning = 50;
         };
       };
 
@@ -111,8 +105,8 @@
         tooltip-format = "Player: {player}\nTitle: {title}\nArtist: {artist}\nAlbum: {album}";
 
         status-icons = {
-          playing = "󰐊";
           paused = "󰏤";
+          playing = "󰐊";
           stopped = "󰓛";
         };
       };
@@ -126,13 +120,8 @@
         interval = 1;
         tooltip-format = "Connecting...";
         tooltip-format-disconnected = "Disconnected";
-        tooltip-format-ethernet = "{ifname}: Ethernet";
-        tooltip-format-wifi = "{ifname}: {essid} ({frequency}GHz WiFi)";
-      };
-
-      privacy = {
-        icon-size = 14;
-        icon-spacing = 0;
+        tooltip-format-ethernet = "{ifname}: Ethernet\nGateway: {gwaddr}\nDown: {bandwidthDownBits}\nUp: {bandwidthUpBits}";
+        tooltip-format-wifi = "{ifname}: {essid} ({frequency}GHz WiFi)\nGateway: {gwaddr}\nDown: {bandwidthDownBits}\nUp: {bandwidthUpBits}";
       };
 
       temperature = {
