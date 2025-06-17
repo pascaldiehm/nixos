@@ -25,7 +25,7 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 | Boot loader       | Lanzaboote     | systemd-boot / GRUB |
 | Filesystem        | btrfs + LUKS   | btrfs               |
 | Networking        | NetworkManager | systemd-networkd    |
-| Display manager   | greetd         |                     |
+| Display manager   | SDDM           |                     |
 | Window manager    | Hyprland       |                     |
 | Audio server      | pipewire       |                     |
 | Terminal emulator | kitty          |                     |
