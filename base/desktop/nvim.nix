@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }: {
+{ config, inputs, lib, machine, pkgs, ... }: {
   home-manager.users.pascal = {
     imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
@@ -230,12 +230,16 @@
             eslint.enable = true;
             html.enable = true;
             java_language_server.enable = true;
-            nixd.enable = true;
             phpactor.enable = true;
             pylsp.enable = true;
             tailwindcss.enable = true;
             texlab.enable = true;
             ts_ls.enable = true;
+
+            nixd = {
+              enable = true;
+              settings.options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${machine.name}.options";
+            };
 
             rust_analyzer = {
               enable = true;
