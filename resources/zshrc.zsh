@@ -164,8 +164,8 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
       nvim .
       popd
     else
-      echo "nv: $1: No such file or directory"
-      return 1
+      mkdir -p "$(dirname "$1")"
+      nvim "$1"
     fi
   }
 
