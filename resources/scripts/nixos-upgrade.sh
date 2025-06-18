@@ -81,7 +81,7 @@ if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   test "$RES" = "n" && exit 1
 fi
 
-sudo nixos-rebuild --impure --flake . "${1:-boot}"
+nixos-rebuild --sudo --impure --flake . "${1:-boot}"
 
 ((STASHED)) && git stash pop
 popd
