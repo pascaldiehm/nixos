@@ -241,6 +241,7 @@
               enable = true;
               installCargo = true;
               installRustc = true;
+              settings.check.command = "clippy";
             };
           };
         };

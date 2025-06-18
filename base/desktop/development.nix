@@ -9,6 +9,7 @@
 
       packages = [
         pkgs.cargo
+        pkgs.clippy
         pkgs.cmake
         pkgs.gcc
         pkgs.gdb
