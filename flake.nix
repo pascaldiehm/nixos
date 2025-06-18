@@ -49,8 +49,6 @@
       mkSystem =
         name: info:
         lib.nixosSystem {
-          system = "x86_64-linux";
-
           modules = [
             ./modules
             base/common

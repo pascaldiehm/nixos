@@ -1,5 +1,6 @@
 { inputs, ... }: {
   console.keyMap = "de";
+  nixpkgs.hostPlatform = "x86_64-linux";
   services.fwupd.enable = true;
   time.timeZone = "Europe/Berlin";
 
