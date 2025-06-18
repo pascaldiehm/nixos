@@ -2,7 +2,6 @@
   home-manager.users.pascal = {
     programs = {
       kitty.enable = true;
-      rofi.enable = true;
 
       hyprlock = {
         enable = true;
@@ -26,6 +25,11 @@
             valign = "center";
           };
         };
+      };
+
+      rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
       };
     };
 
