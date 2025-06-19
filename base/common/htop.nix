@@ -7,6 +7,7 @@ in
 
     settings =
       {
+        delay = 10;
         enable_mouse = 0;
         hide_userland_threads = 1;
         highlight_base_name = 1;
