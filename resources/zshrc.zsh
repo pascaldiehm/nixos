@@ -12,7 +12,8 @@ function _prompt_char() {
 }
 
 function _prompt_git() {
-  git rev-parse HEAD &>/dev/null || return
+  local GIT_DIR="$(git rev-parse --git-dir 2>/dev/null)"
+  test -z "$GIT_DIR" && return
 
   local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
   if [ "$BRANCH" = "HEAD" ]; then
@@ -21,14 +22,15 @@ function _prompt_git() {
     echo -n " %F{8}$BRANCH%f"
   fi
 
-  local CHANGED="$(git diff --name-only && git ls-files --others --exclude-standard)"
-  local STAGED="$(git diff --cached --name-only)"
+  local STATUS="$(git status --porcelain)"
+  local CHANGED="$(grep -Ec "^.(\w|\?)" <<<"$STATUS")"
+  local STAGED="$(grep -Ec "^\w." <<<"$STATUS")"
 
-  if [ -n "$CHANGED" ] && [ -n "$STAGED" ]; then
+  if [ "$CHANGED" -gt "0" ] && [ "$STAGED" -gt "0" ]; then
     echo -n "%F{6}\U203D%f"
-  elif [ -n "$CHANGED" ]; then
+  elif [ "$CHANGED" -gt "0" ]; then
     echo -n "%F{6}?%f"
-  elif [ -n "$STAGED" ]; then
+  elif [ "$STAGED" -gt "0" ]; then
     echo -n "%F{6}!%f"
   fi
 
@@ -36,22 +38,20 @@ function _prompt_git() {
 
   if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
-      local AHEAD="$(git rev-list "@{u}..")"
-      local BEHIND="$(git rev-list "..@{u}")"
+      local AHEAD="$(git rev-list --count "@{u}..")"
+      local BEHIND="$(git rev-list --count "..@{u}")"
 
-      if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
+      if [ "$AHEAD" -gt "0" ] && [ "$BEHIND" -gt "0" ]; then
         echo -n " %F{6}\U296F%f"
-      elif [ -n "$AHEAD" ]; then
+      elif [ "$AHEAD" -gt "0" ]; then
         echo -n " %F{6}\U2191%f"
-      elif [ -n "$BEHIND" ]; then
+      elif [ "$BEHIND" -gt "0" ]; then
         echo -n " %F{6}\U2193%f"
       fi
     else
       echo -n " %F{6}\U21A5%f"
     fi
   fi
-
-  local GIT_DIR="$(git rev-parse --git-dir)"
 
   if [ -f "$GIT_DIR/MERGE_HEAD" ]; then
     echo -n " %F{1}(merge)%f"
