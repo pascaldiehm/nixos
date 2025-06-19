@@ -161,11 +161,16 @@
               clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
               cmake-format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
-              latexindent = [ (lib.getExe' pkgs.texlivePackages.latexindent "latexindent") "--logfile" "/dev/null" ];
               nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
               prettier = [ (lib.getExe pkgs.nodePackages.prettier) "--arrow-parens" "avoid" "--print-width" "120" ];
               rustfmt = [ (lib.getExe pkgs.rustfmt) ];
               shfmt = [ (lib.getExe pkgs.shfmt) "-i" "2" ];
+
+              latexindent = [
+                (lib.getExe' pkgs.texlivePackages.latexindent "latexindent")
+                "--local=${../../resources/latexindent.yaml}"
+                "--logfile=/dev/null"
+              ];
             };
 
             formatters_by_ft = {
