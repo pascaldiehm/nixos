@@ -148,10 +148,10 @@
           "SUPER, Return, exec, kitty"
           "SUPER, Space, exec, rofi -show drun"
 
-          ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m output"
+          ", Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Downloads -m active -m output"
           "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} -a"
-          "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m region"
-          "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Pictures -m active -m window"
+          "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Downloads -m region"
+          "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Downloads -m active -m window"
 
           ", XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage}"
           ", XF86Mail, exec, ${lib.getExe config.home-manager.users.pascal.programs.thunderbird.package}"
