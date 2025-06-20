@@ -81,6 +81,15 @@ if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   test "$RES" = "n" && exit 1
 fi
 
+sudo -v
+while true; do
+  sleep 500
+  sudo -v
+done &
+
+SUDO_LOOP_PID="$!"
+trap 'kill "$SUDO_LOOP_PID"' EXIT
+
 nixos-rebuild --sudo --impure --flake . "${1:-boot}"
 
 ((STASHED)) && git stash pop
