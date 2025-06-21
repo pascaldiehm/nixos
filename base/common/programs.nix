@@ -3,6 +3,7 @@
     home.packages = [
       pkgs.btrfs-progs
       pkgs.dig
+      pkgs.dmidecode
       pkgs.fastfetch
       pkgs.file
       pkgs.lsof
