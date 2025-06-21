@@ -165,6 +165,8 @@
           ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
           ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
           ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
+          ", XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} set 5%-"
+          ", XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} set 5%+"
 
           "SUPER ALT, f, exec, ${lib.getExe pkgs.scripts.ha} fan toggle fan_desk"
           "SUPER ALT, l, exec, ${lib.getExe pkgs.scripts.ha} light toggle lamp_desk"
