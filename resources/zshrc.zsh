@@ -12,8 +12,7 @@ function _prompt_char() {
 }
 
 function _prompt_git() {
-  local GIT_DIR="$(git rev-parse --git-dir 2>/dev/null)"
-  test -z "$GIT_DIR" && return
+  git rev-parse HEAD &>/dev/null || return
 
   local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
   if [ "$BRANCH" = "HEAD" ]; then
@@ -53,6 +52,7 @@ function _prompt_git() {
     fi
   fi
 
+  local GIT_DIR="$(git rev-parse --git-dir)"
   if [ -f "$GIT_DIR/MERGE_HEAD" ]; then
     echo -n " %F{1}(merge)%f"
   elif [ -f "$GIT_DIR/REVERT_HEAD" ]; then
