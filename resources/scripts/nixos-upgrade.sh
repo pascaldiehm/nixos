@@ -83,7 +83,7 @@ fi
 
 sudo -v
 while true; do
-  sleep 500
+  sleep 250
   sudo -v
 done &
 
