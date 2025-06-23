@@ -6,7 +6,7 @@
 
     settings.bar = {
       modules-center = [ "mpris" ];
-      modules-left = [ "hyprland/workspaces" "cpu" "memory" "disk" "temperature" ];
+      modules-left = [ "hyprland/workspaces" "cpu" "memory" "disk" "temperature" "custom/git-status" ];
       modules-right = [ "network" "backlight" "wireplumber" "battery" "clock" ];
 
       backlight = {
@@ -66,6 +66,12 @@
           high = 80;
           load = 10;
         };
+      };
+
+      "custom/git-status" = {
+        exec = lib.readFile ../../resources/scripts/git-status.sh |> pkgs.writeShellScript "git-status";
+        format = "󰊢 {}";
+        tooltip = false;
       };
 
       disk = {
