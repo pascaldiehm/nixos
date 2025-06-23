@@ -63,7 +63,7 @@ jobs:
           FAILED=0
           while read -r FILE; do
             echo "Checking $FILE"
-            DIAGNOSTICS="$(nix run github:oxalica/nil -- diagnostics "$FILE")" # FIXME: Use nil from nixpkgs once pipe operators are released
+            DIAGNOSTICS="$(nix run nixpkgs#nil -- diagnostics "$FILE")"
 
             if [ -n "$DIAGNOSTICS" ]; then
               echo "$DIAGNOSTICS"
