@@ -4,6 +4,6 @@
 
   virtualisation.docker.autoPrune = {
     enable = true;
-    flags = [ "--all" ];
+    flags = [ "--all" "--volumes" ];
   };
 }
