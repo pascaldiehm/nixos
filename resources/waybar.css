@@ -20,8 +20,7 @@ box#workspaces {
 label#cpu,
 label#memory,
 label#disk,
-label#temperature,
-label#custom-git-status {
+label#temperature {
   border-left: 0.5em solid transparent;
   border-right: 0.5em solid transparent;
 
@@ -74,7 +73,6 @@ label#cpu,
 label#memory,
 label#disk,
 label#temperature,
-label#custom-git-status,
 label#mpris,
 label#network,
 label#backlight,
