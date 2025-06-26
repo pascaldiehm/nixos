@@ -26,9 +26,4 @@ pkgs: prev: {
       '';
     });
   };
-
-  # FIXME: Remove patch once waybar correctly handles ipv4
-  waybar = prev.waybar.overrideAttrs (prev: {
-    patches = (prev.patches or [ ]) ++ [ waybar/restore-ipv4.patch ];
-  });
 }
