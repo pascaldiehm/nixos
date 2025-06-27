@@ -5,6 +5,7 @@
     pkgs.gimp3
     pkgs.inkscape
     pkgs.prismlauncher
+    pkgs.qemu
     pkgs.qucs-s
     pkgs.quickemu
     pkgs.retroarch-free
