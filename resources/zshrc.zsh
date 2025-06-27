@@ -125,7 +125,6 @@ function nixos-diff() {
 
 function nixos-test() {
   nixos-rebuild --sudo --impure --flake ~/.config/nixos "${1:-test}"
-  test "$1" = "build" || rm result
 }
 
 compdef '_arguments ":mode:(boot build switch test)"' nixos-test
