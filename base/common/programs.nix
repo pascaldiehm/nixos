@@ -7,6 +7,7 @@
       pkgs.fastfetch
       pkgs.file
       pkgs.lsof
+      pkgs.man-pages
       pkgs.man-pages-posix
       pkgs.netcat
       pkgs.rsync
