@@ -1,10 +1,8 @@
-{ inputs, ... }: {
+{
   nixpkgs.overlays = [ (import ../../overlay) ];
 
   nix = {
     channel.enable = false;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    registry.nixpkgs.flake = inputs.nixpkgs;
 
     gc = {
       automatic = true;
