@@ -9,6 +9,7 @@
       extraFiles."spell/de.utf-8.spl".source = ../../resources/de.utf-8.spl;
       extraPackages = [ pkgs.ripgrep ];
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
+      filetype.extension.zsh = "sh";
       nixpkgs.useGlobalPackages = true;
 
       clipboard = {
@@ -195,7 +196,6 @@
               typescript = [ "prettier" ];
               typescriptreact = [ "prettier" ];
               yaml = [ "prettier" ];
-              zsh = [ "shfmt" ];
             };
           };
         };
