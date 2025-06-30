@@ -31,7 +31,7 @@ jobs:
         if: steps.detect-changes.outcome == 'success'
         run: |
           while read -r MACHINE; do
-            timeout 20m nix build ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
+            timeout 1h nix build ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done < <(jq -r "keys[]" machines.json)
 
       - name: Commit
