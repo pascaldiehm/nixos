@@ -128,7 +128,7 @@ function nixos-test() {
   test -h result && rm result
 }
 
-compdef '_arguments ":mode:(boot build switch test)"' nixos-test
+compdef '_arguments ":mode:(boot switch test)"' nixos-test
 compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing nixos-diff
 
