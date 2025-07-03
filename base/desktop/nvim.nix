@@ -56,6 +56,7 @@
           "<Space><Space>" = "<Cmd>Oil<Return>";
           J = "mmJ`m";
           gQ = "<Cmd>cprevious<Return>";
+          gl = "<C-o>";
           gq = "<Cmd>cnext<Return>";
         };
 
