@@ -15,7 +15,7 @@
         pkgs.gdb
         pkgs.gnumake
         pkgs.ninja
-        pkgs.nodejs
+        pkgs.nodePackages.nodejs
         pkgs.php
         pkgs.python3
         pkgs.rustc
