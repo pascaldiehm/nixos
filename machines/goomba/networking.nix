@@ -26,19 +26,19 @@
 
       wireguardPeers = [
         {
-          AllowedIPs = [ "10.42.0.2/32" "192.168.0.0/16" ];
+          AllowedIPs = [ "192.168.0.0/16" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/bowser/psk".path;
           PublicKeyFile = config.sops.secrets."goomba/wireguard/bowser/public".path;
         }
 
         {
-          AllowedIPs = [ "10.42.0.3/32" ];
+          AllowedIPs = [ "192.168.16.3/32" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/psk".path;
           PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/public".path;
         }
 
         {
-          AllowedIPs = [ "10.42.0.4/32" ];
+          AllowedIPs = [ "192.168.16.4/32" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-phone/psk".path;
           PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-phone/public".path;
         }
@@ -46,7 +46,7 @@
     };
 
     networks."50-wireguard" = {
-      address = [ "10.42.0.1/24" ];
+      address = [ "192.168.16.1/24" ];
       matchConfig.Name = "wg0";
       networkConfig.IPv4Forwarding = true;
     };

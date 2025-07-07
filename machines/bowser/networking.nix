@@ -17,7 +17,7 @@
       };
 
       wireguardPeers = lib.singleton {
-        AllowedIPs = [ "10.42.0.0/24" ];
+        AllowedIPs = [ "192.168.16.0/24" ];
         Endpoint = "goomba:51820";
         PersistentKeepalive = 25;
         PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba/psk".path;
@@ -33,7 +33,7 @@
       };
 
       "50-wireguard" = {
-        address = [ "10.42.0.2/24" ];
+        address = [ "192.168.16.2/24" ];
         matchConfig.Name = "wg0";
         networkConfig.IPMasquerade = "ipv4";
       };
