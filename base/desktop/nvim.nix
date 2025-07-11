@@ -314,6 +314,16 @@
           };
         };
 
+        todo-comments = {
+          enable = true;
+          keymaps.todoTelescope.key = "<Space>t";
+
+          settings.highlight = {
+            after = "";
+            keyword = "fg";
+          };
+        };
+
         treesitter = {
           enable = true;
 
