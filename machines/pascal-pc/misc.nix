@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{
   environment.persistence."/perm".users.pascal.directories = [ ".config/retroarch" ".local/share/PrismLauncher" ];
 
-  hardware = {
+  features = {
+    amdgpu.enable = true;
     bluetooth.enable = true;
-    graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
   };
 }
