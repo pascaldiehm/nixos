@@ -56,9 +56,8 @@
             inherit inputs;
             lib = (lib.extend (import ./lib.nix)).extend (self: super: inputs.home-manager.lib);
 
-            machine = {
+            machine = info // {
               inherit name;
-              inherit (info) boot type;
             };
           };
         };
