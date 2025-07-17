@@ -5,8 +5,22 @@
     policies = {
       DisableFirefoxAccounts = true;
       DisablePocket = true;
-      ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/firefox.json;
       PasswordManagerEnabled = false;
+
+      ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/firefox.json {
+        bitwarden-password-manager.area = "navbar";
+        dont-track-me-google1.private = true;
+        flagfox.private = true;
+        markdown-viewer-chrome.private = true;
+        react-devtools.private = true;
+        return-youtube-dislikes.private = true;
+        vimium-ff.private = true;
+
+        ublock-origin = {
+          area = "navbar";
+          private = true;
+        };
+      };
     };
 
     profiles.default = {
@@ -66,6 +80,7 @@
           crates = "https://crates.io/search?q=%s";
           devhints = "https://devhints.io/%s";
           docker = "https://hub.docker.com/search?q=%s";
+          ecosia = null;
           github = "https://github.com/search?q=%s";
           google = null;
           mdn = "https://developer.mozilla.org/search?q=%s";
@@ -86,7 +101,10 @@
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
         "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.newtabpage.activity-stream.newtabWallpapers.wallpaper" = "dark-beach";
         "browser.newtabpage.activity-stream.newtabWallpapers.wallpaper-dark" = "dark-beach";
+        "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
         "browser.search.suggest.enabled" = false;
         "browser.toolbars.bookmarks.visibility" = "always";
         "browser.translations.automaticallyPopup" = false;
@@ -94,6 +112,7 @@
         "browser.urlbar.suggest.engines" = false;
         "browser.urlbar.suggest.history" = false;
         "browser.urlbar.suggest.openpage" = false;
+        "browser.urlbar.suggest.quickactions" = false;
         "browser.urlbar.suggest.recentsearches" = false;
         "browser.urlbar.suggest.searches" = false;
         "browser.urlbar.suggest.topsites" = false;

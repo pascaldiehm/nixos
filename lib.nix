@@ -28,13 +28,16 @@ lib: prev: {
   );
 
   mkMozillaExtensions =
-    path:
+    path: settings:
     lib.importJSON path
     |> lib.map (ext: {
       name = ext.id;
+
       value = {
-        installation_mode = "force_installed";
+        default_area = settings.${ext.name}.area or "menupanel";
         install_url = ext.source;
+        installation_mode = "force_installed";
+        private_browsing = settings.${ext.name}.private or false;
       };
     })
     |> lib.listToAttrs

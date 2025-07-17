@@ -15,7 +15,7 @@
       settings."mail.collect_email_address_outgoing" = false;
 
       package = pkgs.thunderbird.override {
-        extraPolicies.ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/thunderbird.json;
+        extraPolicies.ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/thunderbird.json { };
       };
     };
   };
