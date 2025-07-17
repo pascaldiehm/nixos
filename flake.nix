@@ -74,6 +74,7 @@
         install = [
           pkgs.btrfs-progs
           pkgs.cryptsetup
+          pkgs.curl
           pkgs.dosfstools
           pkgs.git
           pkgs.gnupg

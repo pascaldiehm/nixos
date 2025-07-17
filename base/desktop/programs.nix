@@ -16,6 +16,7 @@
       pkgs.pwvucontrol
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
+      pkgs.scripts.nixos-upgrade
       pkgs.sops
       pkgs.vlc
       pkgs.wl-clipboard
@@ -27,6 +28,7 @@
 
     scripts = {
       mkletter.text = lib.readFile ../../resources/scripts/mkletter.sh;
+      nixos-upgrade.text = lib.readFile ../../resources/scripts/nixos-upgrade.sh;
 
       mnt = {
         deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];

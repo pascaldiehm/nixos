@@ -120,12 +120,13 @@ mkdir -p /mnt/perm/etc/nixos
 nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
-echo "Cloning NixOS configuration..."
-git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
-git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
-chown -R 1000:100 /mnt/perm/home/pascal
-chmod 700 /mnt/perm/home/pascal
-ln -s /mnt/perm/home/pascal /home/pascal
+if [ "$TYPE" = "desktop" ]; then
+  echo "Cloning NixOS configuration..."
+  git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
+  git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+  chown -R 1000:100 /mnt/perm/home/pascal
+  chmod 700 /mnt/perm/home/pascal
+fi
 
 echo "Preparing GnuPG..."
 mkdir -p ~/.gnupg
@@ -138,7 +139,8 @@ chmod 700 /mnt/perm/etc/nixos/.gnupg
 echo disable-scdaemon >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
-gpg --decrypt "/home/pascal/.config/nixos/resources/secrets/$TYPE/key.gpg" | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
+curl -O "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
+gpg --decrypt key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
-nixos-install --impure --no-channel-copy --no-root-password --flake "/home/pascal/.config/nixos#$MACHINE"
+nixos-install --impure --no-channel-copy --no-root-password --flake "github:pascaldiehm/nixos#$MACHINE"

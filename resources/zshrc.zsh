@@ -118,20 +118,6 @@ function mkvim() {
   fi
 }
 
-function nixos-diff() {
-  git -C ~/.config/nixos fetch
-  git -C ~/.config/nixos diff "${@}" "$(nixos-version --configuration-revision)"...origin
-}
-
-function nixos-test() {
-  nixos-rebuild --sudo --impure --flake ~/.config/nixos "${1:-test}"
-  test -h result && rm result
-}
-
-compdef '_arguments ":mode:(boot switch test)"' nixos-test
-compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
-compdef _nothing nixos-diff
-
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
   alias py="python3"
@@ -145,6 +131,11 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     popd
   }
 
+  function nixos-diff() {
+    git -C ~/.config/nixos fetch
+    git -C ~/.config/nixos diff "${@}" "$(nixos-version --configuration-revision)"...origin
+  }
+
   function nixos-iso() {
     nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
     cp result/iso/*.iso nixos.iso
@@ -153,6 +144,11 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 
   function nixos-secrets() {
     sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml
+  }
+
+  function nixos-test() {
+    nixos-rebuild --sudo --impure --flake ~/.config/nixos "${1:-test}"
+    test -h result && rm result
   }
 
   function nv() {
@@ -170,8 +166,11 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
+  compdef '_arguments ":mode:(boot switch test)"' nixos-test
+  compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing letter
+  compdef _nothing nixos-diff
   compdef _nothing nixos-iso
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
