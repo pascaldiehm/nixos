@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal.programs.waybar = {
     enable = true;
-    style = lib.mkForce ../../resources/waybar.css;
+    style = ../../resources/waybar.css;
     systemd.enable = true;
 
     settings.bar = {

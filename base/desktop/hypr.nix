@@ -9,7 +9,7 @@
         settings = {
           general.hide_cursor = true;
 
-          background = lib.mkForce {
+          background = {
             blur_passes = 2;
             blur_size = 4;
             path = "screenshot";

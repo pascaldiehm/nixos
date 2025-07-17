@@ -3,7 +3,9 @@
 
   home-manager.users.pascal.stylix.targets = {
     firefox.profileNames = [ "default" ];
+    hyprlock.enable = false;
     nixvim.enable = false;
+    waybar.enable = false;
   };
 
   stylix = {
