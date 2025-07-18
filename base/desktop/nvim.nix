@@ -124,7 +124,6 @@
 
       plugins = {
         comment.enable = true;
-        gitsigns.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
         ts-autotag.enable = true;
@@ -202,6 +201,15 @@
               typescriptreact = [ "prettier" ];
               yaml = [ "prettier" ];
             };
+          };
+        };
+
+        gitsigns = {
+          enable = true;
+
+          settings = {
+            current_line_blame = true;
+            current_line_blame_opts.delay = 250;
           };
         };
 
