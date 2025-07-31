@@ -182,5 +182,5 @@ elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
     fi
   }
 
-  compdef '_arguments ":service:($(find ~/docker/$NIXOS_MACHINE_NAME -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename -a "{}" +))"' service
+  compdef '_arguments ":service:($(ls ~/docker/$NIXOS_MACHINE_NAME))"' service
 fi
