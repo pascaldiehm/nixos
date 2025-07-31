@@ -178,9 +178,9 @@ elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
     if [ "$#" = "0" ]; then
       docker compose ls
     else
-      docker compose -f "/home/pascal/docker/$1/compose.yaml" "${@:2}"
+      docker compose -f "/home/pascal/docker/$NIXOS_MACHINE_NAME/$1/compose.yaml" "${@:2}"
     fi
   }
 
-  compdef '_arguments ":service:($(find ~/docker -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename -a "{}" +))"' service
+  compdef '_arguments ":service:($(find ~/docker/$NIXOS_MACHINE_NAME -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename -a "{}" +))"' service
 fi
