@@ -120,6 +120,11 @@ mkdir -p /mnt/perm/etc/nixos
 nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
+if [ "$BOOT" = "BIOS" ]; then
+  sed "\$ s|.*|  boot.loader.grub.device = \"$DEV\";\n\0|" /etc/nixos/hardware.nix >hardware.nix
+  mv hardware.nix /etc/nixos/hardware.nix
+fi
+
 if [ "$TYPE" = "desktop" ]; then
   echo "Cloning NixOS configuration..."
   git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos

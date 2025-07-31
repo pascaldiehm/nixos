@@ -1,1 +1,1 @@
-{ imports = [ ./misc.nix ./networking.nix ]; }
+{ imports = [ ./networking.nix ]; }
