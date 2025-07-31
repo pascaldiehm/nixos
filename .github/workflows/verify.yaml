@@ -11,7 +11,9 @@ jobs:
 
       - uses: cachix/install-nix-action@v30
         with:
-          extra_nix_config: "experimental-features = flakes nix-command pipe-operators"
+          extra_nix_config: |
+            experimental-features = flakes nix-command pipe-operators
+            substituters = http://nixcache
 
       - name: Build
         if: ${{ !cancelled() }}
@@ -59,7 +61,7 @@ jobs:
 
       - name: Lint nix
         if: ${{ !cancelled() }}
-        run: | # FIXME: Add statix check once statix supports pipe operators
+        run: | # TODO: Add statix check once statix supports pipe operators
           FAILED=0
           while read -r FILE; do
             echo "Checking $FILE"
@@ -83,3 +85,7 @@ jobs:
           done < <(find . -name "*.sh")
 
           ((! FAILED))
+
+      - name: Cleanup
+        if: ${{ always() }}
+        run: sudo rm -rf /nix

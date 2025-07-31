@@ -17,7 +17,9 @@ jobs:
 
       - uses: cachix/install-nix-action@v30
         with:
-          extra_nix_config: "experimental-features = flakes nix-command pipe-operators"
+          extra_nix_config: |
+            experimental-features = flakes nix-command pipe-operators
+            substituters = http://nixcache
 
       - name: Upgrade
         run: nix run .#upgrade
@@ -53,3 +55,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD"
           git push
+
+      - name: Cleanup
+        if: ${{ always() }}
+        run: sudo rm -rf /nix
