@@ -9,7 +9,7 @@ function _prompt_char() {
   if expr "$TTY" : /dev/tty >/dev/null; then
     echo -n ">"
   else
-    echo -n $'\U276F'
+    echo -n $'\u276F'
   fi
 }
 
@@ -28,14 +28,14 @@ function _prompt_git() {
   local STAGED="$(grep -Ec "^\w." <<<"$STATUS")"
 
   if [ "$CHANGED" -gt "0" ] && [ "$STAGED" -gt "0" ]; then
-    echo -n "%F{6}\U203D%f"
+    echo -n "%F{6}\u203D%f"
   elif [ "$CHANGED" -gt "0" ]; then
     echo -n "%F{6}?%f"
   elif [ "$STAGED" -gt "0" ]; then
     echo -n "%F{6}!%f"
   fi
 
-  test -n "$(git stash list)" && echo -n " %F{6}\U2026%f"
+  test -n "$(git stash list)" && echo -n " %F{6}\u2026%f"
 
   if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
@@ -43,14 +43,14 @@ function _prompt_git() {
       local BEHIND="$(git rev-list --count "..@{u}")"
 
       if [ "$AHEAD" -gt "0" ] && [ "$BEHIND" -gt "0" ]; then
-        echo -n " %F{6}\U296F%f"
+        echo -n " %F{6}\u296F%f"
       elif [ "$AHEAD" -gt "0" ]; then
-        echo -n " %F{6}\U2191%f"
+        echo -n " %F{6}\u2191%f"
       elif [ "$BEHIND" -gt "0" ]; then
-        echo -n " %F{6}\U2193%f"
+        echo -n " %F{6}\u2193%f"
       fi
     else
-      echo -n " %F{6}\U21A5%f"
+      echo -n " %F{6}\u21A5%f"
     fi
   fi
 
