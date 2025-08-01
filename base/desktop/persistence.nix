@@ -7,6 +7,6 @@
         ".local/state/wireplumber" = "0755";
         ".mozilla/firefox/default" = "0755";
         ".thunderbird/default" = "0755";
-        Documents = "0755";
+        Repos = "0755";
       };
 }
