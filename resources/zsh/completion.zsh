@@ -28,4 +28,5 @@ if [ "$NIXOS_MACHINE_TYPE" = desktop ]; then
   compdef _repo repo
 elif [ "$NIXOS_MACHINE_TYPE" = server ]; then
   compdef '_arguments ":service:($(ls ~/docker/$NIXOS_MACHINE_NAME))"' service
+  compdef _nothing nixos-upgrade
 fi
