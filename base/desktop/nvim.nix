@@ -326,9 +326,13 @@
           enable = true;
           keymaps.todoTelescope.key = "<Space>t";
 
-          settings.highlight = {
-            after = "";
-            keyword = "fg";
+          settings = {
+            search.args = [ "--color=never" "--column" "--hidden" "--line-number" "--no-heading" "--smart-case" "--with-filename" ];
+
+            highlight = {
+              after = "";
+              keyword = "fg";
+            };
           };
         };
 
