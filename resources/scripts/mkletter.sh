@@ -45,7 +45,7 @@ if [ "$RECIPIENT" = "" ]; then
 fi
 
 TMP="$(mktemp -d)"
-pushd "$TMP"
+cd "$TMP"
 
 cat <<EOF >letter.tex
 \documentclass[parskip=half]{scrlttr2}
@@ -71,7 +71,5 @@ ${DATE:+"\\setkomavar{date}{$DATE}"}
 EOF
 
 pdflatex letter.tex
-popd
-
 mv "$TMP/letter.pdf" .
 rm -rf "$TMP"

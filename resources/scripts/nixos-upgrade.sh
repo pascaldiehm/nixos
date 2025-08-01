@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-pushd ~/.config/nixos
+cd ~/.config/nixos
 
 STASHED=0
 if [ -n "$(git status --porcelain)" ]; then
@@ -91,6 +91,4 @@ SUDO_LOOP_PID="$!"
 trap 'kill "$SUDO_LOOP_PID"' EXIT
 
 nixos-rebuild --sudo --impure --flake . "${1:-boot}"
-
 ((STASHED)) && git stash pop
-popd
