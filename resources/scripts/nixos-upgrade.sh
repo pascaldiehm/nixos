@@ -25,11 +25,11 @@ if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   read -r -n 1 -p "> " RES
   echo
 
-  if [ "$RES" = "R" ]; then
+  if [ "$RES" = R ]; then
     git reset --hard "@{u}"
-  elif [ "$RES" = "P" ]; then
+  elif [ "$RES" = P ]; then
     git push --force
-  elif [ "$RES" != "I" ]; then
+  elif [ "$RES" != I ]; then
     ((STASHED)) && git stash pop
     exit 1
   fi
@@ -45,11 +45,11 @@ elif [ -n "$AHEAD" ]; then
   read -r -n 1 -p "> " RES
   echo
 
-  if [ "$RES" = "P" ]; then
+  if [ "$RES" = P ]; then
     git push
-  elif [ "$RES" = "R" ]; then
+  elif [ "$RES" = R ]; then
     git reset --hard "@{u}"
-  elif [ "$RES" != "I" ]; then
+  elif [ "$RES" != I ]; then
     ((STASHED)) && git stash pop
     exit 1
   fi
@@ -64,9 +64,9 @@ elif [ -n "$BEHIND" ]; then
   read -r -n 1 -p "> " RES
   echo
 
-  if [ "$RES" = "P" ]; then
+  if [ "$RES" = P ]; then
     git pull
-  elif [ "$RES" != "I" ]; then
+  elif [ "$RES" != I ]; then
     ((STASHED)) && git stash pop
     exit 1
   fi
@@ -78,7 +78,7 @@ if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   echo
   read -r -n 1 -p "[Y/n] " RES
   echo
-  test "$RES" = "n" && exit 1
+  test "$RES" = n && exit 1
 fi
 
 sudo -v

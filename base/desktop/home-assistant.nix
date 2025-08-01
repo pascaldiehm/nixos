@@ -3,7 +3,7 @@
   sops.secrets.home-assistant-token.owner = "pascal";
 
   programs.scripts.ha.text = ''
-    if [ "$#" != "3" ]; then
+    if [ "$#" != 3 ]; then
       echo "Usage: ha <domain> <action> <device>"
       exit 1
     fi

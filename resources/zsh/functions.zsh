@@ -8,14 +8,14 @@ function mkcd() {
 function mkvim() {
   mkdir -p "$(dirname "$1")"
 
-  if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+  if [ "$NIXOS_MACHINE_TYPE" = desktop ]; then
     nvim "$1"
   else
     vim "$1"
   fi
 }
 
-if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+if [ "$NIXOS_MACHINE_TYPE" = desktop ]; then
   function mktex() {
     BUILD_DIR="$PWD/build"
     mkdir -p "$BUILD_DIR"
@@ -59,9 +59,9 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
       nvim "$1"
     fi
   }
-elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
+elif [ "$NIXOS_MACHINE_TYPE" = server ]; then
   function service() {
-    if [ "$#" = "0" ]; then
+    if [ "$#" = 0 ]; then
       docker compose ls
     else
       docker compose -f "/home/pascal/docker/$NIXOS_MACHINE_NAME/$1/compose.yaml" "${@:2}"

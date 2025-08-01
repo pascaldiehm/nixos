@@ -1,18 +1,18 @@
 #!/usr/bin/env zsh
 
-if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+if [ "$NIXOS_MACHINE_TYPE" = desktop ]; then
   function _repo() {
     if ((CURRENT == 2)); then
       _arguments ":command:(list status clone update edit remove exec)"
-    elif ((CURRENT == 3)) && [ "${words[2]}" = "status" ]; then
+    elif ((CURRENT == 3)) && [ "${words[2]}" = status ]; then
       _arguments '2:name:($(ls ~/Repos))'
-    elif ((CURRENT == 3)) && [ "${words[2]}" = "update" ]; then
+    elif ((CURRENT == 3)) && [ "${words[2]}" = update ]; then
       _arguments '2:name:($(ls ~/Repos))'
-    elif ((CURRENT == 3)) && [ "${words[2]}" = "edit" ]; then
+    elif ((CURRENT == 3)) && [ "${words[2]}" = edit ]; then
       _arguments '2:name:($(ls ~/Repos))'
-    elif ((CURRENT == 3)) && [ "${words[2]}" = "remove" ]; then
+    elif ((CURRENT == 3)) && [ "${words[2]}" = remove ]; then
       _arguments '2:name:($(ls ~/Repos))'
-    elif ((CURRENT == 3)) && [ "${words[2]}" = "exec" ]; then
+    elif ((CURRENT == 3)) && [ "${words[2]}" = exec ]; then
       _arguments '2:name:($(ls ~/Repos))'
     else
       _nothing
@@ -26,6 +26,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _nothing nixos-diff
   compdef _nothing nixos-iso
   compdef _repo repo
-elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
+elif [ "$NIXOS_MACHINE_TYPE" = server ]; then
   compdef '_arguments ":service:($(ls ~/docker/$NIXOS_MACHINE_NAME))"' service
 fi

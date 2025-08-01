@@ -17,7 +17,7 @@ function _prompt_git() {
   git rev-parse HEAD &>/dev/null || return
 
   local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-  if [ "$BRANCH" = "HEAD" ]; then
+  if [ "$BRANCH" = HEAD ]; then
     echo -n " %F{3}$(git rev-parse --short HEAD)%f"
   else
     echo -n " %F{8}$BRANCH%f"
@@ -27,26 +27,26 @@ function _prompt_git() {
   local CHANGED="$(grep -Ec "^.(\w|\?)" <<<"$STATUS")"
   local STAGED="$(grep -Ec "^\w." <<<"$STATUS")"
 
-  if [ "$CHANGED" -gt "0" ] && [ "$STAGED" -gt "0" ]; then
+  if [ "$CHANGED" -gt 0 ] && [ "$STAGED" -gt 0 ]; then
     echo -n "%F{6}\u203D%f"
-  elif [ "$CHANGED" -gt "0" ]; then
+  elif [ "$CHANGED" -gt 0 ]; then
     echo -n "%F{6}?%f"
-  elif [ "$STAGED" -gt "0" ]; then
+  elif [ "$STAGED" -gt 0 ]; then
     echo -n "%F{6}!%f"
   fi
 
   test -n "$(git stash list)" && echo -n " %F{6}\u2026%f"
 
-  if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
+  if [ -n "$(git remote show)" ] && [ "$BRANCH" != HEAD ]; then
     if git rev-parse "@{u}" &>/dev/null; then
       local AHEAD="$(git rev-list --count "@{u}..")"
       local BEHIND="$(git rev-list --count "..@{u}")"
 
-      if [ "$AHEAD" -gt "0" ] && [ "$BEHIND" -gt "0" ]; then
+      if [ "$AHEAD" -gt 0 ] && [ "$BEHIND" -gt 0 ]; then
         echo -n " %F{6}\u296F%f"
-      elif [ "$AHEAD" -gt "0" ]; then
+      elif [ "$AHEAD" -gt 0 ]; then
         echo -n " %F{6}\u2191%f"
-      elif [ "$BEHIND" -gt "0" ]; then
+      elif [ "$BEHIND" -gt 0 ]; then
         echo -n " %F{6}\u2193%f"
       fi
     else

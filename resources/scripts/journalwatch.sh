@@ -11,7 +11,7 @@ journalctl -f -o json | while read -r LINE; do
   SERVICE="$(jq -r .SYSLOG_IDENTIFIER <<<"$LINE")"
   MESSAGE="$(jq -r .MESSAGE <<<"$LINE")"
 
-  if [ "$SERVICE" = "sshd-session" ]; then
+  if [ "$SERVICE" = sshd-session ]; then
     if grep -Eq "$PAT_SSHD_PASSWORD" <<<"$MESSAGE"; then
       ntfy journal "$(sed -E "s/$PAT_SSHD_PASSWORD/[sshd] \\1 password for \\2 from \\3/" <<<"$MESSAGE")"
     elif grep -Eq "$PAT_SSHD_PUBLICKEY" <<<"$MESSAGE"; then
@@ -21,11 +21,11 @@ journalctl -f -o json | while read -r LINE; do
     elif grep -Eq "$PAT_SSHD_USER_INVALID" <<<"$MESSAGE"; then
       ntfy journal "$(sed -E "s/$PAT_SSHD_USER_INVALID/[sshd] Invalid user \\1 from \\2/" <<<"$MESSAGE")"
     fi
-  elif [ "$SERVICE" = "sudo" ]; then
+  elif [ "$SERVICE" = sudo ]; then
     if grep -Eq "$PAT_SUDO_COMMAND" <<<"$MESSAGE"; then
       ntfy journal "$(sed -E "s/$PAT_SUDO_COMMAND/[sudo] \\1 as \\2: \\3/" <<<"$MESSAGE")"
     fi
-  elif [ "$SERVICE" = "systemd" ]; then
+  elif [ "$SERVICE" = systemd ]; then
     if grep -Eq "$PAT_SYSTEM_STARTUP" <<<"$MESSAGE"; then
       ntfy journal "$(sed -E "s/$PAT_SYSTEM_STARTUP/[system] Booted in \\1 seconds/" <<<"$MESSAGE")"
     fi

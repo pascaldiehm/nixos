@@ -3,14 +3,14 @@
 set -e
 cd ~/Repos
 
-if [ "$1" = "list" ]; then
-  if [ "$#" = "1" ]; then
+if [ "$1" = list ]; then
+  if [ "$#" = 1 ]; then
     for REPO in *; do
       test -d "$REPO" || continue
       cd "$REPO"
 
       HEAD="$(git rev-parse --abbrev-ref HEAD)"
-      if [ "$HEAD" = "HEAD" ]; then
+      if [ "$HEAD" = HEAD ]; then
         HEAD="\033[33m$(git rev-parse --short HEAD)\033[m"
       else
         HEAD="\033[32m$HEAD\033[m"
@@ -23,13 +23,13 @@ if [ "$1" = "list" ]; then
     echo "Usage: repo list"
     exit 1
   fi
-elif [ "$1" = "status" ]; then
+elif [ "$1" = status ]; then
   function status() {
     cd "$1"
     git fetch
 
     HEAD="$(git rev-parse --abbrev-ref HEAD)"
-    if [ "$HEAD" = "HEAD" ]; then
+    if [ "$HEAD" = HEAD ]; then
       HEAD="\033[33m$(git rev-parse --short HEAD)\033[m"
     else
       HEAD="\033[32m$HEAD\033[m"
@@ -60,7 +60,7 @@ elif [ "$1" = "status" ]; then
     cd ..
   }
 
-  if [ "$#" = "1" ]; then
+  if [ "$#" = 1 ]; then
     FIRST=1
     for REPO in *; do
       test -d "$REPO" || continue
@@ -70,7 +70,7 @@ elif [ "$1" = "status" ]; then
 
       status "$REPO"
     done
-  elif [ "$#" = "2" ]; then
+  elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
       echo "Repo $2 does not exist."
       exit 1
@@ -84,10 +84,10 @@ elif [ "$1" = "status" ]; then
 
     exit 1
   fi
-elif [ "$1" = "clone" ]; then
-  if [ "$#" = "2" ]; then
+elif [ "$1" = clone ]; then
+  if [ "$#" = 2 ]; then
     git clone "$2"
-  elif [ "$#" = "3" ]; then
+  elif [ "$#" = 3 ]; then
     git clone "$2" "$3"
   else
     echo "Usage: repo clone <url> [name]"
@@ -97,7 +97,7 @@ elif [ "$1" = "clone" ]; then
 
     exit 1
   fi
-elif [ "$1" = "update" ]; then
+elif [ "$1" = update ]; then
   function conflict() {
     clear
     git status
@@ -118,7 +118,7 @@ elif [ "$1" = "update" ]; then
     fi
 
     HEAD="$(git rev-parse --abbrev-ref HEAD)"
-    test "$HEAD" = "HEAD" && HEAD="$(git rev-parse HEAD)"
+    test "$HEAD" = HEAD && HEAD="$(git rev-parse HEAD)"
 
     git branch --format "%(refname:short)" | while read -r BRANCH; do
       git checkout "$BRANCH"
@@ -142,12 +142,12 @@ elif [ "$1" = "update" ]; then
     cd ..
   }
 
-  if [ "$#" = "1" ]; then
+  if [ "$#" = 1 ]; then
     for REPO in *; do
       test -d "$REPO" || continue
       update "$REPO"
     done
-  elif [ "$#" = "2" ]; then
+  elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
       echo "Repo $2 does not exist."
       exit 1
@@ -161,15 +161,15 @@ elif [ "$1" = "update" ]; then
 
     exit 1
   fi
-elif [ "$1" = "edit" ]; then
-  if [ "$#" = "2" ]; then
+elif [ "$1" = edit ]; then
+  if [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
       echo "Repo $2 does not exist. Do you want to clone gh:/$2.git?"
       echo
       read -r -n 1 -p "[y/N] " RES
       echo
 
-      if [ "$RES" = "y" ]; then
+      if [ "$RES" = y ]; then
         git clone "gh:/$2.git"
       else
         exit 1
@@ -185,8 +185,8 @@ elif [ "$1" = "edit" ]; then
 
     exit 1
   fi
-elif [ "$1" = "remove" ]; then
-  if [ "$#" = "2" ]; then
+elif [ "$1" = remove ]; then
+  if [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
       echo "Repo $2 does not exist."
       exit 1
@@ -213,7 +213,7 @@ elif [ "$1" = "remove" ]; then
       read -r -n 1 -p "[y/N] " RES
       echo
 
-      test "$RES" = "y" || exit 1
+      test "$RES" = y || exit 1
     fi
 
     cd ..
@@ -225,8 +225,8 @@ elif [ "$1" = "remove" ]; then
 
     exit 1
   fi
-elif [ "$1" = "exec" ]; then
-  if [ "$#" -gt "2" ]; then
+elif [ "$1" = exec ]; then
+  if [ "$#" -gt 2 ]; then
     cd "$2"
     git "${@:3}"
   else

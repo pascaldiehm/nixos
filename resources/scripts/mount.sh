@@ -4,9 +4,9 @@ set -e
 TMP="$(mktemp -d)"
 ROOT=0
 
-if [ "$1" = "android" ]; then
+if [ "$1" = android ]; then
   aft-mtp-mount "$TMP"
-elif [ "$1" = "tmpfs" ]; then
+elif [ "$1" = tmpfs ]; then
   sudo mount -t tmpfs tmpfs "$TMP"
   ROOT=1
 elif expr "$1" : ftp:// >/dev/null; then
