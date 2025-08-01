@@ -6,6 +6,7 @@
     ./firefox.nix
     ./gpg.nix
     ./home-assistant.nix
+    ./home.nix
     ./hypr.nix
     ./locale.nix
     ./misc.nix
