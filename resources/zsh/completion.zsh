@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+compdef _nothing ntfy
+
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
     if ((CURRENT == 2)); then
@@ -22,7 +24,8 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef '_arguments ":mode:(boot switch test)"' nixos-test
   compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
-  compdef _nothing letter
+  compdef _nothing ha
+  compdef _nothing mkletter
   compdef _nothing nixos-diff
   compdef _nothing nixos-iso
   compdef _repo repo
