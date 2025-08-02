@@ -10,6 +10,7 @@
       pkgs.cryptsetup
       pkgs.exfat
       pkgs.ffmpeg-full
+      pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.networkmanagerapplet
       pkgs.poppler-utils
