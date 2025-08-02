@@ -1,4 +1,7 @@
 {
+  console.keyMap = "de";
+  time.timeZone = "Europe/Berlin";
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
     LC_COLLATE = "C.UTF-8";
