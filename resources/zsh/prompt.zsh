@@ -9,7 +9,7 @@ function _prompt_char() {
   if expr "$TTY" : /dev/tty >/dev/null; then
     echo -n ">"
   else
-    echo -n $'\u276F'
+    echo -en "\u276F"
   fi
 }
 
@@ -17,7 +17,7 @@ function _prompt_git() {
   git rev-parse HEAD &>/dev/null || return
 
   local BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-  if [ "$BRANCH" = HEAD ]; then
+  if [ "$BRANCH" = "HEAD" ]; then
     echo -n " %F{3}$(git rev-parse --short HEAD)%f"
   else
     echo -n " %F{8}$BRANCH%f"
@@ -37,7 +37,7 @@ function _prompt_git() {
 
   test -n "$(git stash list)" && echo -n " %F{6}\u2026%f"
 
-  if [ -n "$(git remote show)" ] && [ "$BRANCH" != HEAD ]; then
+  if [ -n "$(git remote show)" ] && [ "$BRANCH" != "HEAD" ]; then
     if git rev-parse "@{u}" &>/dev/null; then
       local AHEAD="$(git rev-list --count "@{u}..")"
       local BEHIND="$(git rev-list --count "..@{u}")"

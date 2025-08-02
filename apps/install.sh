@@ -10,7 +10,7 @@ fi
 MACHINE=""
 BOOT="null"
 TYPE="null"
-while [ "$TYPE" = null ]; do
+while [ "$TYPE" = "null" ]; do
   clear
   echo "Which machine should I install?"
   echo
@@ -30,14 +30,14 @@ while [ ! -b "$DEV" ]; do
   test -b "$DEV" || DEV="/dev/$DEV"
 done
 
-if [ "$BOOT" = SB ]; then
-  if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = false ]; then
+if [ "$BOOT" = "SB" ]; then
+  if ! sbctl status &>/dev/null || [ "$(sbctl status --json | jq .setup_mode)" = "false" ]; then
     echo "Secure boot is disabled or not in setup mode"
     exit 1
   fi
 fi
 
-if [ "$BOOT" = BIOS ]; then
+if [ "$BOOT" = "BIOS" ]; then
   echo "Formatting $DEV..."
   parted "$DEV" -- mklabel msdos
   parted "$DEV" -- mkpart primary btrfs 512MB 100%
@@ -80,7 +80,7 @@ else
   while [ ! -b "$PART_BOOT" ]; do sleep 1; done
 fi
 
-if [ "$TYPE" = desktop ]; then
+if [ "$TYPE" = "desktop" ]; then
   echo "Encrypting root partition..."
   read -rs -p "Enter disk encryption password: " FDE_PASS
 
@@ -107,7 +107,7 @@ mount -o compress=zstd,noatime,subvol=nix "$PART_NIXOS" /mnt/nix
 mount -o compress=zstd,subvol=perm "$PART_NIXOS" /mnt/perm
 mount -o umask=077 "$PART_BOOT" /mnt/boot
 
-if [ "$BOOT" = SB ]; then
+if [ "$BOOT" = "SB" ]; then
   echo "Setting up secure boot..."
   mkdir -p /mnt/perm/var/lib/sbctl
   ln -s /mnt/perm/var/lib/sbctl /var/lib/sbctl
@@ -120,12 +120,12 @@ mkdir -p /mnt/perm/etc/nixos
 nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 
-if [ "$BOOT" = BIOS ]; then
+if [ "$BOOT" = "BIOS" ]; then
   sed "\$ s|.*|  boot.loader.grub.device = \"$DEV\";\n\0|" /etc/nixos/hardware.nix >hardware.nix
   mv hardware.nix /etc/nixos/hardware.nix
 fi
 
-if [ "$TYPE" = desktop ]; then
+if [ "$TYPE" = "desktop" ]; then
   echo "Cloning NixOS configuration..."
   git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
   git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
@@ -141,7 +141,7 @@ echo "pinentry-program $(which pinentry-tty)" >~/.gnupg/gpg-agent.conf
 echo "Setting up GnuPG..."
 mkdir -p /mnt/perm/etc/nixos/.gnupg
 chmod 700 /mnt/perm/etc/nixos/.gnupg
-echo disable-scdaemon >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
+echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
 curl -O "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
