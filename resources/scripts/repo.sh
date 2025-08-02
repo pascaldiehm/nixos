@@ -11,12 +11,16 @@ if [ "$1" = "list" ]; then
 
       HEAD="$(git rev-parse --abbrev-ref HEAD)"
       if [ "$HEAD" = "HEAD" ]; then
-        HEAD="\033[33m$(git rev-parse --short HEAD)\033[m"
+        HEAD="\033[33m$(git rev-parse --short HEAD)"
       else
-        HEAD="\033[32m$HEAD\033[m"
+        HEAD="\033[32m$HEAD"
       fi
 
-      echo -e "\033[1;34m$REPO \033[m$HEAD \033[90m$(git remote get-url origin)\033[m"
+      CHANGES=""
+      test -n "$(git rev-list "@{u}.." 2>/dev/null)" && CHANGES="\033[36m+"
+      test -n "$(git status --porcelain)" && CHANGES="\033[36m*"
+
+      echo -e "\033[1;34m$REPO \033[m$HEAD$CHANGES \033[90m$(git remote get-url origin)"
       cd ..
     done | column -t -N $'\033[4mRepo,Head,Remote\033[m'
   else
@@ -30,12 +34,12 @@ elif [ "$1" = "status" ]; then
 
     HEAD="$(git rev-parse --abbrev-ref HEAD)"
     if [ "$HEAD" = "HEAD" ]; then
-      HEAD="\033[33m$(git rev-parse --short HEAD)\033[m"
+      HEAD="\033[33m$(git rev-parse --short HEAD)"
     else
-      HEAD="\033[32m$HEAD\033[m"
+      HEAD="\033[32m$HEAD"
     fi
 
-    echo -e "\033[1mRepo: \033[34m$1 \033[m($HEAD, \033[90m$(git remote get-url origin)\033[m)"
+    echo -e "\033[1mRepo: \033[34m$1 \033[m($HEAD\033[m, \033[90m$(git remote get-url origin)\033[m)"
     echo
 
     if [ -n "$(git status --porcelain)" ]; then
