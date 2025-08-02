@@ -137,6 +137,15 @@
         format-muted = "󰖁";
         on-click = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle";
         on-click-right = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 40%";
+
+        on-click-middle = pkgs.writeShellScript "wp-toggle" ''
+          DEVICE="$(${lib.getExe' pkgs.wireplumber "wpctl"} inspect @DEFAULT_SINK@ | grep device.id | cut -d \" -f 2)"
+          DEVICE="$(${lib.getExe' pkgs.pipewire "pw-dump"} | ${lib.getExe pkgs.jq} ".[] | select(.id == $DEVICE)")"
+          ROUTES="$(${lib.getExe pkgs.jq} '.info.params.EnumRoute | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
+          ROUTE="$(${lib.getExe pkgs.jq} '.info.params.Route | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
+
+          ${lib.getExe' pkgs.wireplumber "wpctl"} set-route @DEFAULT_SINK@ "$(echo -e "$ROUTES\n$ROUTES" | sed -n "/^$ROUTE\$/{n;p}")"
+        '';
       };
     };
   };
