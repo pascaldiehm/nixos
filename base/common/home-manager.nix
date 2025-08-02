@@ -16,7 +16,7 @@
         username = "pascal";
 
         activation.delete-backups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run find /home/pascal -name "*.hm-bak" -exec rm -rf "{}" +
+          run find /home/pascal -path /home/pascal/Shared -prune -o -name "*.hm-bak" -exec rm -rf "{}" +
         '';
       };
     };
