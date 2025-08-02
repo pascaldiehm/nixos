@@ -12,6 +12,7 @@
         "allow_other"
         "reconnect"
         "x-systemd.automount"
+        "x-systemd.idle-timeout=1h"
       ];
     };
 
