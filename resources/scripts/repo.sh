@@ -76,7 +76,7 @@ elif [ "$1" = "status" ]; then
     done
   elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
-      echo "Repo $2 does not exist."
+      echo "Repo '$2' not found."
       exit 1
     fi
 
@@ -153,7 +153,7 @@ elif [ "$1" = "update" ]; then
     done
   elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
-      echo "Repo $2 does not exist."
+      echo "Repo '$2' not found."
       exit 1
     fi
 
@@ -168,7 +168,7 @@ elif [ "$1" = "update" ]; then
 elif [ "$1" = "edit" ]; then
   if [ "$#" = 2 ] || [ "$#" = 3 ]; then
     if [ ! -d "$2" ]; then
-      echo "Repo $2 does not exist. Do you want to clone gh:/$2.git?"
+      echo "Repo '$2' not found. Do you want to clone gh:/$2.git?"
       echo
       read -r -n 1 -p "[y/N] " RES
       echo
@@ -189,7 +189,7 @@ elif [ "$1" = "edit" ]; then
         cd "$(dirname "$3")"
         nvim "$(basename "$3")"
       else
-        echo "Path $3 does not exist."
+        echo "Path '$3' not found."
         exit 1
       fi
     else
@@ -203,10 +203,48 @@ elif [ "$1" = "edit" ]; then
 
     exit 1
   fi
+elif [ "$1" = "shell" ]; then
+  if [ "$#" = 2 ] || [ "$#" = 3 ]; then
+    if [ ! -d "$2" ]; then
+      echo "Repo '$2' not found."
+      exit 1
+    fi
+
+    cd "$2"
+    if [ "$#" = 3 ]; then
+      if [ ! -d "$3" ]; then
+        echo "Directory '$3' not found."
+        exit 1
+      fi
+
+      cd "$3"
+    fi
+
+    $SHELL
+  else
+    echo "Usage: repo shell <name> [path]"
+    echo
+    echo "name   Repository name"
+    echo "path   Path to open"
+
+    exit 1
+  fi
+elif [ "$1" = "exec" ]; then
+  if [ "$#" -gt 2 ]; then
+    cd "$2"
+    "${@:3}"
+  else
+    echo "Usage: repo exec <name> [cmd...]"
+    echo
+    echo "name   Repository name"
+    echo "cmd    Shell command"
+
+    exit 1
+  fi
 elif [ "$1" = "remove" ]; then
   if [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
-      echo "Repo $2 does not exist."
+      echo "Repo '$2' not found."
       exit 1
     fi
 
@@ -243,29 +281,18 @@ elif [ "$1" = "remove" ]; then
 
     exit 1
   fi
-elif [ "$1" = "exec" ]; then
-  if [ "$#" -gt 2 ]; then
-    cd "$2"
-    git "${@:3}"
-  else
-    echo "Usage: repo exec <name> [cmd...]"
-    echo
-    echo "name   Repository name"
-    echo "cmd    Git command"
-
-    exit 1
-  fi
 else
   echo "Usage: repo <command> [args...]"
   echo
   echo "Commands:"
-  echo "  repo list                   List repos"
-  echo "  repo status [name]          Show status of [name] or all repos"
-  echo "  repo clone <url> [name]     Clone <url> (as [name])"
-  echo "  repo update [name]          Update local branches of [name] or all repos"
-  echo "  repo edit <name> [path]     Open editor in <name>"
-  echo "  repo remove <name>          Remove <name>"
-  echo "  repo exec <name> [cmd...]   Execute git command in <name>"
+  echo "  list                   List all repos"
+  echo "  status [name]          Show status of one or all repos"
+  echo "  clone <url> [name]     Clone a repo"
+  echo "  update [name]          Update one or all repos"
+  echo "  edit <name> [path]     Open editor in a repo"
+  echo "  shell <name> [path]    Open shell in a repo"
+  echo "  exec <name> [cmd...]   Execute a command in a repo"
+  echo "  remove <name>          Remove a repo"
 
   exit 1
 fi
