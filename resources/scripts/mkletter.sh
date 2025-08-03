@@ -12,7 +12,7 @@ function readmultiline() {
 
   while true; do
     read -r -p "$1" READ
-    test "$READ" = "" && break
+    test -z "$READ" && break
     RES="$RES${RES:+$3}$READ"
   done
 
@@ -39,7 +39,7 @@ echo
 readline "Closing: " CLOSING
 echo
 
-if [ "$RECIPIENT" = "" ]; then
+if [ -z "$RECIPIENT" ]; then
   echo "RECIPIENT is required"
   exit 1
 fi

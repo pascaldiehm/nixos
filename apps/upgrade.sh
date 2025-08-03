@@ -18,7 +18,7 @@ while read -r EXT; do
   curl -Sis "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
-    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
+    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
     curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
@@ -50,7 +50,7 @@ while read -r EXT; do
   curl -Sis "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
-    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*/\1/")"
+    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
     curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"

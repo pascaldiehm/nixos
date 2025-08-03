@@ -109,7 +109,7 @@
       stl = "stash list";
       stm = "stash push --include-untracked --message";
       stp = "stash pop";
-      sts = "stash show";
+      sts = "stash show --patch";
 
       sh = "show";
       shs = "show stash";

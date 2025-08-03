@@ -49,7 +49,7 @@ elif [ "$1" = "status" ]; then
     fi
 
     git branch --format "%(refname:short)" | while read -r BRANCH; do
-      COMMIT="$(git show --oneline --no-patch "$BRANCH" | sed -E "s/(\w+) (.+)/\\\\033[33m\1 \\\\033[m\2/")"
+      COMMIT="$(git show --oneline --no-patch "$BRANCH" | sed -E 's/^(\w+) (.+)$/\\033[33m\1 \\033[m\2/')"
 
       if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
         AHEAD="$(git rev-list --count "$BRANCH@{upstream}..$BRANCH")"

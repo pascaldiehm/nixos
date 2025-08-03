@@ -144,7 +144,7 @@
           ROUTES="$(${lib.getExe pkgs.jq} '.info.params.EnumRoute | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
           ROUTE="$(${lib.getExe pkgs.jq} '.info.params.Route | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
 
-          ${lib.getExe' pkgs.wireplumber "wpctl"} set-route @DEFAULT_SINK@ "$(echo -e "$ROUTES\n$ROUTES" | sed -n "/^$ROUTE\$/{n;p}")"
+          ${lib.getExe' pkgs.wireplumber "wpctl"} set-route @DEFAULT_SINK@ "$(echo -e "$ROUTES\n$ROUTES" | sed -n "/^$ROUTE$/{n;p}")"
         '';
       };
     };
