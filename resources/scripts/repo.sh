@@ -166,7 +166,7 @@ elif [ "$1" = "update" ]; then
     exit 1
   fi
 elif [ "$1" = "edit" ]; then
-  if [ "$#" = 2 ]; then
+  if [ "$#" = 2 ] || [ "$#" = 3 ]; then
     if [ ! -d "$2" ]; then
       echo "Repo $2 does not exist. Do you want to clone gh:/$2.git?"
       echo
@@ -181,11 +181,25 @@ elif [ "$1" = "edit" ]; then
     fi
 
     cd "$2"
-    nvim .
+    if [ "$#" = 3 ]; then
+      if [ -d "$3" ]; then
+        cd "$3"
+        nvim .
+      elif [ -f "$3" ]; then
+        cd "$(dirname "$3")"
+        nvim "$(basename "$3")"
+      else
+        echo "Path $3 does not exist."
+        exit 1
+      fi
+    else
+      nvim .
+    fi
   else
-    echo "Usage: repo edit <name>"
+    echo "Usage: repo edit <name> [path]"
     echo
     echo "name   Repository name"
+    echo "path   Path to open"
 
     exit 1
   fi
@@ -249,7 +263,7 @@ else
   echo "  repo status [name]          Show status of [name] or all repos"
   echo "  repo clone <url> [name]     Clone <url> (as [name])"
   echo "  repo update [name]          Update local branches of [name] or all repos"
-  echo "  repo edit <name>            Open editor in <name>"
+  echo "  repo edit <name> [path]     Open editor in <name>"
   echo "  repo remove <name>          Remove <name>"
   echo "  repo exec <name> [cmd...]   Execute git command in <name>"
 
