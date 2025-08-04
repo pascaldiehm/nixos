@@ -20,7 +20,7 @@ while [ "$TYPE" = "null" ]; do
 done
 
 DEV=""
-while [ ! -b "$DEV" ]; do
+until [ -b "$DEV" ]; do
   clear
   echo "Which device should I use?"
   echo
@@ -45,7 +45,7 @@ if [ "$BOOT" = "BIOS" ]; then
   parted "$DEV" -- set 2 boot on
 
   PART_NIXOS=""
-  while [ ! -b "$PART_NIXOS" ]; do
+  until [ -b "$PART_NIXOS" ]; do
     clear
     echo "Where is the system partition?"
     echo
@@ -56,7 +56,7 @@ if [ "$BOOT" = "BIOS" ]; then
   done
 
   PART_BOOT=""
-  while [ ! -b "$PART_BOOT" ]; do
+  until [ -b "$PART_BOOT" ]; do
     clear
     echo "Where is the boot partition?"
     echo
@@ -74,10 +74,10 @@ else
 
   echo "Waiting for partitions..."
   PART_NIXOS="/dev/disk/by-partlabel/nixos"
-  while [ ! -b "$PART_NIXOS" ]; do sleep 1; done
+  until [ -b "$PART_NIXOS" ]; do sleep 1; done
 
   PART_BOOT="/dev/disk/by-partlabel/BOOT"
-  while [ ! -b "$PART_BOOT" ]; do sleep 1; done
+  until [ -b "$PART_BOOT" ]; do sleep 1; done
 fi
 
 if [ "$TYPE" = "desktop" ]; then
