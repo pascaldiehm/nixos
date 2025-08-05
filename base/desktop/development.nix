@@ -14,6 +14,7 @@
         pkgs.gcc
         pkgs.gdb
         pkgs.gnumake
+        pkgs.gradle
         pkgs.ninja
         pkgs.nodePackages.nodejs
         pkgs.php
