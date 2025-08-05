@@ -42,7 +42,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 
   function nixos-test() {
     nixos-rebuild --sudo --impure --flake ~/.config/nixos "${1:-test}"
-    test -h result && rm result
+    if [ -h result ]; then rm result; fi
   }
 
   function nv() {

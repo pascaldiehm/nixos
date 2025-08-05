@@ -91,4 +91,4 @@ SUDO_LOOP_PID="$!"
 trap 'kill "$SUDO_LOOP_PID"' EXIT
 
 nixos-rebuild --sudo --impure --flake . "${1:-boot}"
-((STASHED)) && git stash pop
+if ((STASHED)); then git stash pop; fi
