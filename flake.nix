@@ -50,7 +50,8 @@
             base/common
             base/${info.type}
             machines/${name}
-          ] ++ lib.optional (lib.pathExists /etc/nixos/hardware.nix) /etc/nixos/hardware.nix;
+          ]
+          ++ lib.optional (lib.pathExists /etc/nixos/hardware.nix) /etc/nixos/hardware.nix;
 
           specialArgs = {
             inherit inputs;

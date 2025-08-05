@@ -1,7 +1,7 @@
 pkgs: prev: {
   # FIXME: Remove patch once single line lists are implemented
-  nixfmt-rfc-style = prev.nixfmt-rfc-style.overrideAttrs (prev: {
-    patches = (prev.patches or [ ]) ++ [ nixfmt-rfc-style/compact-lists.patch nixfmt-rfc-style/compact-params.patch ];
+  nixfmt = prev.nixfmt.overrideAttrs (prev: {
+    patches = (prev.patches or [ ]) ++ [ nixfmt/compact-lists.patch nixfmt/compact-params.patch ];
   });
 
   vimPlugins = prev.vimPlugins // {

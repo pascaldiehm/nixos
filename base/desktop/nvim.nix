@@ -1,6 +1,6 @@
 { config, inputs, lib, machine, pkgs, ... }: {
   home-manager.users.pascal = {
-    imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+    imports = [ inputs.nixvim.homeModules.nixvim ];
 
     programs.nixvim = {
       enable = true;
@@ -37,7 +37,7 @@
           local col = vim.api.nvim_win_get_cursor(0)[2] + 1
           local ctx = line:sub(col, col + 1)
 
-          if ctx == "{}" then
+          if ctx == "{}" or ctx == "[]" then
             return "<Esc>la;<Esc>hi"
           else
             return ";"
@@ -148,6 +148,8 @@
             mapping = {
               "<C-Return>" = "cmp.mapping.confirm({ select = true })";
               "<C-Space>" = "cmp.mapping.complete()";
+              "<C-d>" = "cmp.mapping.scroll_docs(-8)";
+              "<C-u>" = "cmp.mapping.scroll_docs(8)";
               "<S-Tab>" = "cmp.mapping.select_prev_item()";
               "<Tab>" = "cmp.mapping.select_next_item()";
             };
@@ -161,20 +163,32 @@
             format_on_save.lsp_format = "fallback";
 
             formatters = lib.mkNvimFormatters {
-              bibtex-tidy = [ (lib.getExe pkgs.bibtex-tidy) "--wrap" "120" ];
-              black = [ (lib.getExe pkgs.python3Packages.black) "-l" "120" ];
+              black = [ (lib.getExe pkgs.python3Packages.black) "--line-length=120" ];
               clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
-              cmake-format = [ (lib.getExe pkgs.cmake-format) "--line-width" "120" "--tab-size" "2" ];
+              cmake-format = [ (lib.getExe pkgs.cmake-format) "--autosort" "--line-width=120" "--tab-size=2" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
-              nixfmt = [ (lib.getExe pkgs.nixfmt-rfc-style) "-s" "-w" "120" ];
-              prettier = [ (lib.getExe pkgs.nodePackages.prettier) "--arrow-parens" "avoid" "--print-width" "120" ];
+              isort = [ (lib.getExe pkgs.python3Packages.isort) ];
+              nixfmt = [ (lib.getExe pkgs.nixfmt) "--strict" "--width=120" ];
+              prettier = [ (lib.getExe pkgs.prettier) "--arrow-parens=avoid" "--print-width=120" ];
               rustfmt = [ (lib.getExe pkgs.rustfmt) ];
-              shfmt = [ (lib.getExe pkgs.shfmt) "-i" "2" ];
+              shfmt = [ (lib.getExe pkgs.shfmt) "--indent=2" ];
+
+              bibtex-tidy = [
+                (lib.getExe pkgs.bibtex-tidy)
+                "--blank-lines"
+                "--merge"
+                "--numeric"
+                "--remove-empty-fields"
+                "--sort"
+                "--sort-fields"
+                "--trailing-commas"
+                "--wrap=120"
+              ];
 
               latexindent = [
                 (lib.getExe' pkgs.texlivePackages.latexindent "latexindent")
-                "--local=${../../resources/latexindent.yaml}"
                 "--logfile=/dev/null"
+                "--yaml=\"defaultIndent: '  ', indentPreamble: 1\""
               ];
             };
 
@@ -191,8 +205,7 @@
               json = [ "prettier" ];
               markdown = [ "prettier" ];
               nix = [ "nixfmt" ];
-              plaintex = [ "latexindent" ];
-              python = [ "black" ];
+              python = [ "isort" "black" ];
               rust = [ "rustfmt" ];
               scss = [ "prettier" ];
               sh = [ "shfmt" ];
