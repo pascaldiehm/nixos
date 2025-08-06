@@ -3,6 +3,25 @@
 set -e
 cd ~/Repos
 
+function help() {
+  echo "Usage: repo <command> [args...]"
+  echo
+  echo "Commands:"
+  echo "  list                   List all repos"
+  echo "  status [name]          Show status of one or all repos"
+  echo "  clone <url> [name]     Clone a repo"
+  echo "  update [name]          Update one or all repos"
+  echo "  edit <name> [path]     Open editor in a repo"
+  echo "  shell <name> [path]    Open shell in a repo"
+  echo "  exec <name> [cmd...]   Execute a command in a repo"
+  echo "  remove <name>          Remove a repo"
+}
+
+if [ "$#" = 0 ]; then
+  help
+  exit 0
+fi
+
 if [ "$1" = "list" ]; then
   if [ "$#" = 1 ]; then
     for REPO in *; do
@@ -282,17 +301,6 @@ elif [ "$1" = "remove" ]; then
     exit 1
   fi
 else
-  echo "Usage: repo <command> [args...]"
-  echo
-  echo "Commands:"
-  echo "  list                   List all repos"
-  echo "  status [name]          Show status of one or all repos"
-  echo "  clone <url> [name]     Clone a repo"
-  echo "  update [name]          Update one or all repos"
-  echo "  edit <name> [path]     Open editor in a repo"
-  echo "  shell <name> [path]    Open shell in a repo"
-  echo "  exec <name> [cmd...]   Execute a command in a repo"
-  echo "  remove <name>          Remove a repo"
-
+  help
   exit 1
 fi
