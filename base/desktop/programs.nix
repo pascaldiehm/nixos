@@ -11,7 +11,7 @@
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.hardinfo2
-      pkgs.imagemagickBig
+      pkgs.inkscape
       pkgs.networkmanagerapplet
       pkgs.poppler-utils
       pkgs.pwvucontrol
