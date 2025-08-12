@@ -261,11 +261,13 @@
             eslint.enable = true;
             html.enable = true;
             java_language_server.enable = true;
+            jsonls.enable = true;
             phpactor.enable = true;
             pylsp.enable = true;
             tailwindcss.enable = true;
             texlab.enable = true;
             ts_ls.enable = true;
+            yamlls.enable = true;
 
             nixd = {
               enable = true;
