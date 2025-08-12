@@ -32,6 +32,7 @@
           Brilliant = "https://brilliant.org";
           ChatGPT = "https://chatgpt.com";
           Cloudflare = "https://dash.cloudflare.com";
+          FileGator = "http://192.168.1.88:8058";
           Hetzner = "https://console.hetzner.cloud";
           "Matrix Admin" = "https://admin.etke.cc";
           Netflix = "https://netflix.com";
