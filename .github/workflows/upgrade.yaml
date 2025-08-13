@@ -13,9 +13,9 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5.0.0
 
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v31.0.0
         with:
           extra_nix_config: |
             experimental-features = flakes nix-command pipe-operators
