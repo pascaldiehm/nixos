@@ -51,7 +51,6 @@
         t."<C-Bs>" = "<C-h>";
 
         n = {
-          "<A-Return>" = "<Cmd>8new +terminal<Return>i";
           "<Space><Return>" = "<Cmd>terminal<Return>i";
           "<Space><Space>" = "<Cmd>Oil<Return>";
           J = "mmJ`m";
@@ -349,6 +348,15 @@
               after = "";
               keyword = "fg";
             };
+          };
+        };
+
+        toggleterm = {
+          enable = true;
+
+          settings = {
+            open_mapping = "[[<A-Return>]]";
+            size = 8;
           };
         };
 
