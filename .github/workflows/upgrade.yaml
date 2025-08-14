@@ -30,14 +30,14 @@ jobs:
         run: test -n "$(git status --porcelain)"
 
       - name: Verify
-        if: steps.detect-changes.outcome == 'success'
+        if: ${{ steps.detect-changes.outcome == 'success' }}
         run: |
           while read -r MACHINE; do
             timeout 1h nix build ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done < <(jq -r "keys[]" machines.json)
 
       - name: Commit
-        if: steps.detect-changes.outcome == 'success'
+        if: ${{ steps.detect-changes.outcome == 'success' }}
         run: |
           CHANGES_FLAKE="$(git diff flake.lock | grep repo | cut -d \" -f 4 | sort | uniq)"
           test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && sed "s/^/  - /" <<<"$CHANGES_FLAKE")"
