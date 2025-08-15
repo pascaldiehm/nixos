@@ -5,7 +5,7 @@ compdef _nothing ntfy
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
     if [ "$CURRENT" = 2 ]; then
-      _values command list status clone update edit shell exec remove
+      _values command help list status clone update edit shell exec remove
     elif [ "$CURRENT" = 3 ]; then
       if [ "${words[2]}" = "update" ]; then
         _values name "${(f)$(ls ~/Repos)}"

@@ -7,45 +7,55 @@ function help() {
   echo "Usage: repo <command> [args...]"
   echo
   echo "Commands:"
+  echo "  help                   Show this help"
   echo "  list                   List all repos"
   echo "  status [name]          Show status of one or all repos"
   echo "  clone <url> [name]     Clone a repo"
   echo "  update [name]          Update one or all repos"
   echo "  edit <name> [path]     Open editor in a repo"
   echo "  shell <name> [path]    Open shell in a repo"
-  echo "  exec <name> [cmd...]   Execute a command in a repo"
+  echo "  exec <name> <cmd...>   Execute a command in a repo"
   echo "  remove <name>          Remove a repo"
 }
 
 if [ "$#" = 0 ]; then
   help
-  exit 0
-fi
-
-if [ "$1" = "list" ]; then
-  if [ "$#" = 1 ]; then
-    for REPO in *; do
-      test -d "$REPO" || continue
-      cd "$REPO"
-
-      HEAD="$(git rev-parse --abbrev-ref HEAD)"
-      if [ "$HEAD" = "HEAD" ]; then
-        HEAD="\033[33m$(git rev-parse --short HEAD)"
-      else
-        HEAD="\033[32m$HEAD"
-      fi
-
-      CHANGES=""
-      test -n "$(git rev-list "@{u}.." 2>/dev/null)" && CHANGES="\033[36m+"
-      test -n "$(git status --porcelain)" && CHANGES="\033[36m*"
-
-      echo -e "\033[1;34m$REPO \033[m$HEAD$CHANGES \033[90m$(git remote get-url origin)"
-      cd ..
-    done | column -t -N $'\033[4mRepo,Head,Remote\033[m'
-  else
+  exit 1
+elif [ "$1" = "help" ]; then
+  help
+elif [ "$1" = "list" ]; then
+  if [ "$#" != 1 ]; then
     echo "Usage: repo list"
     exit 1
   fi
+
+  for REPO in *; do
+    test -d "$REPO" || continue
+    cd "$REPO"
+
+    HEAD="$(git rev-parse --abbrev-ref HEAD)"
+    if [ "$HEAD" = "HEAD" ]; then
+      HEAD="\033[33m$(git rev-parse --short HEAD)"
+    else
+      HEAD="\033[32m$HEAD"
+    fi
+
+    CHANGES=""
+    if [ -n "$(git status --porcelain)" ]; then
+      CHANGES="\033[36m*"
+    else
+      while read -r BRANCH; do
+        if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
+          test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES="\033[36m+"
+        else
+          CHANGES="\033[36m+"
+        fi
+      done < <(git branch --format "%(refname:short)")
+    fi
+
+    echo -e "\033[1;34m$REPO \033[m$HEAD$CHANGES \033[90m$(git remote get-url origin)"
+    cd ..
+  done | column -t -N $'\033[4mRepo,Head,Remote\033[m'
 elif [ "$1" = "status" ]; then
   function status() {
     cd "$1"
@@ -167,8 +177,7 @@ elif [ "$1" = "update" ]; then
 
   if [ "$#" = 1 ]; then
     for REPO in *; do
-      test -d "$REPO" || continue
-      update "$REPO"
+      test -d "$REPO" && update "$REPO"
     done
   elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
@@ -185,36 +194,7 @@ elif [ "$1" = "update" ]; then
     exit 1
   fi
 elif [ "$1" = "edit" ]; then
-  if [ "$#" = 2 ] || [ "$#" = 3 ]; then
-    if [ ! -d "$2" ]; then
-      echo "Repo '$2' not found. Do you want to clone gh:/$2.git?"
-      echo
-      read -r -n 1 -p "[y/N] " RES
-      echo
-
-      if [ "$RES" = "y" ]; then
-        git clone "gh:/$2.git"
-      else
-        exit 1
-      fi
-    fi
-
-    cd "$2"
-    if [ "$#" = 3 ]; then
-      if [ -d "$3" ]; then
-        cd "$3"
-        nvim .
-      elif [ -f "$3" ]; then
-        cd "$(dirname "$3")"
-        nvim "$(basename "$3")"
-      else
-        echo "Path '$3' not found."
-        exit 1
-      fi
-    else
-      nvim .
-    fi
-  else
+  if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
     echo "Usage: repo edit <name> [path]"
     echo
     echo "name   Repository name"
@@ -222,25 +202,37 @@ elif [ "$1" = "edit" ]; then
 
     exit 1
   fi
-elif [ "$1" = "shell" ]; then
-  if [ "$#" = 2 ] || [ "$#" = 3 ]; then
-    if [ ! -d "$2" ]; then
-      echo "Repo '$2' not found."
+
+  if [ ! -d "$2" ]; then
+    echo "Repo '$2' not found. Do you want to clone gh:/$2.git?"
+    echo
+    read -r -n 1 -p "[y/N] " RES
+    echo
+
+    if [ "$RES" = "y" ]; then
+      git clone "gh:/$2.git"
+    else
       exit 1
     fi
+  fi
 
-    cd "$2"
-    if [ "$#" = 3 ]; then
-      if [ ! -d "$3" ]; then
-        echo "Directory '$3' not found."
-        exit 1
-      fi
-
+  cd "$2"
+  if [ "$#" = 3 ]; then
+    if [ -d "$3" ]; then
       cd "$3"
+      nvim .
+    elif [ -f "$3" ]; then
+      cd "$(dirname "$3")"
+      nvim "$(basename "$3")"
+    else
+      echo "Path '$3' not found."
+      exit 1
     fi
-
-    $SHELL
   else
+    nvim .
+  fi
+elif [ "$1" = "shell" ]; then
+  if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
     echo "Usage: repo shell <name> [path]"
     echo
     echo "name   Repository name"
@@ -248,58 +240,80 @@ elif [ "$1" = "shell" ]; then
 
     exit 1
   fi
+
+  if [ ! -d "$2" ]; then
+    echo "Repo '$2' not found."
+    exit 1
+  fi
+
+  cd "$2"
+  if [ "$#" = 3 ]; then
+    if [ ! -d "$3" ]; then
+      echo "Directory '$3' not found."
+      exit 1
+    fi
+
+    cd "$3"
+  fi
+
+  $SHELL
 elif [ "$1" = "exec" ]; then
-  if [ "$#" -gt 2 ]; then
-    cd "$2"
-    "${@:3}"
-  else
-    echo "Usage: repo exec <name> [cmd...]"
+  if [ "$#" -lt 3 ]; then
+    echo "Usage: repo exec <name> <cmd...>"
     echo
     echo "name   Repository name"
     echo "cmd    Shell command"
 
     exit 1
   fi
+
+  if [ ! -d "$2" ]; then
+    echo "Repo '$2' not found."
+    exit 1
+  fi
+
+  cd "$2"
+  "${@:3}"
 elif [ "$1" = "remove" ]; then
-  if [ "$#" = 2 ]; then
-    if [ ! -d "$2" ]; then
-      echo "Repo '$2' not found."
-      exit 1
-    fi
-
-    cd "$2"
-    CHANGES=""
-    test -n "$(git status --porcelain)" && CHANGES+="  - Uncommitted changes\n"
-    test -n "$(git stash list)" && CHANGES+="  - Stashed changes\n"
-
-    while read -r BRANCH; do
-      if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
-        test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES+="  - Unpushed commits ($BRANCH)\n"
-      else
-        CHANGES+="  - Local branch ($BRANCH)\n"
-      fi
-    done < <(git branch --format "%(refname:short)")
-
-    if [ -n "$CHANGES" ]; then
-      echo "The repository has been changed:"
-      echo -e "$CHANGES"
-      echo "Are your sure you want to remove the repo?"
-      echo
-      read -r -n 1 -p "[y/N] " RES
-      echo
-
-      test "$RES" = "y" || exit 1
-    fi
-
-    cd ..
-    rm -rf "$2"
-  else
+  if [ "$#" != 2 ]; then
     echo "Usage: repo remove <name>"
     echo
     echo "name   Repository name"
 
     exit 1
   fi
+
+  if [ ! -d "$2" ]; then
+    echo "Repo '$2' not found."
+    exit 1
+  fi
+
+  cd "$2"
+  CHANGES=""
+  test -n "$(git status --porcelain)" && CHANGES+="  - Uncommitted changes\n"
+  test -n "$(git stash list)" && CHANGES+="  - Stashed changes\n"
+
+  while read -r BRANCH; do
+    if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
+      test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES+="  - Unpushed commits ($BRANCH)\n"
+    else
+      CHANGES+="  - Local branch ($BRANCH)\n"
+    fi
+  done < <(git branch --format "%(refname:short)")
+
+  if [ -n "$CHANGES" ]; then
+    echo "The repository has been changed:"
+    echo -e "$CHANGES"
+    echo "Are you sure you want to remove the repo?"
+    echo
+    read -r -n 1 -p "[y/N] " RES
+    echo
+
+    test "$RES" = "y" || exit 1
+  fi
+
+  cd ..
+  rm -rf "$2"
 else
   help
   exit 1
