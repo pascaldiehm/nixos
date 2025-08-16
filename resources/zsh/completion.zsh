@@ -7,7 +7,9 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     if [ "$CURRENT" = 2 ]; then
       _values command help list status clone update edit shell exec remove
     elif [ "$CURRENT" = 3 ]; then
-      if [ "${words[2]}" = "update" ]; then
+      if [ "${words[2]}" = "status" ]; then
+        _values name "${(f)$(ls ~/Repos)}"
+      elif [ "${words[2]}" = "update" ]; then
         _values name "${(f)$(ls ~/Repos)}"
       elif [ "${words[2]}" = "edit" ]; then
         _values name "${(f)$(ls ~/Repos)}"
