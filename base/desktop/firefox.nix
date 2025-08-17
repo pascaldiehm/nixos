@@ -84,6 +84,7 @@
           ecosia = null;
           github = "https://github.com/search?q=%s";
           google = null;
+          ip = "https://ipinfo.io/%s";
           mdn = "https://developer.mozilla.org/search?q=%s";
           music = "https://music.youtube.com/search?q=%s";
           nixopts = "https://search.nixos.org/options?channel=unstable&query=%s";
