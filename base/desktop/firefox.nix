@@ -37,7 +37,6 @@
           "Matrix Admin" = "https://admin.etke.cc";
           Netflix = "https://netflix.com";
           PayPal = "https://paypal.com";
-          PiHole = "http://192.168.1.88:8072/admin";
           Sparkasse = "https://sparkasse-mainfranken.de";
           Traefik = "https://traefik.pdiehm.dev";
 

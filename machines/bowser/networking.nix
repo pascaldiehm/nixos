@@ -1,6 +1,4 @@
 { config, lib, ... }: {
-  services.resolved.extraConfig = "DNSStubListener=no";
-
   sops.secrets = {
     "bowser/wireguard/key".owner = "systemd-network";
     "bowser/wireguard/goomba/psk".owner = "systemd-network";
