@@ -10,7 +10,9 @@
       pkgs.man-pages
       pkgs.man-pages-posix
       pkgs.netcat
+      pkgs.nmap
       pkgs.rsync
+      pkgs.traceroute
       pkgs.unzip
       pkgs.usbutils
       pkgs.wireguard-tools
