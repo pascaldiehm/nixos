@@ -45,10 +45,19 @@
       ];
     };
 
-    networks."50-wireguard" = {
-      address = [ "192.168.16.1/24" ];
-      matchConfig.Name = "wg0";
-      networkConfig.IPv4Forwarding = true;
+    networks = {
+      "10-wired" = {
+        DHCP = "ipv4";
+        address = [ "2a01:4f8:c0c:988b::1/64" ];
+        gateway = [ "fe80::1" ];
+        matchConfig.Name = "eth0";
+      };
+
+      "50-wireguard" = {
+        address = [ "192.168.16.1/24" ];
+        matchConfig.Name = "wg0";
+        networkConfig.IPv4Forwarding = true;
+      };
     };
   };
 }
