@@ -61,7 +61,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function nixos-upgrade() {
-    nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos boot
+    nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos "${1:-boot}"
     sudo reboot
   }
 

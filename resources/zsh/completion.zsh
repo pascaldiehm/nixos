@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
@@ -36,7 +37,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   compdef '_arguments ":mode:(boot switch test)"' nixos-test
-  compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha
   compdef _nothing mkletter
@@ -45,5 +45,4 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef _repo repo
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   compdef '_arguments ":service:($(ls ~/docker/$NIXOS_MACHINE_NAME))"' service
-  compdef _nothing nixos-upgrade
 fi
