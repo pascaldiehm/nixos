@@ -13,6 +13,7 @@
       pkgs.netcat
       pkgs.nmap
       pkgs.rsync
+      pkgs.tcpdump
       pkgs.traceroute
       pkgs.unzip
       pkgs.usbutils

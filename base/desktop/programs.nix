@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: {
-  users.users.pascal.extraGroups = [ "ydotool" ];
+  users.users.pascal.extraGroups = [ "wireshark" "ydotool" ];
 
   home-manager.users.pascal = {
     services.playerctld.enable = true;
@@ -21,12 +21,14 @@
       pkgs.scripts.repo
       pkgs.sops
       pkgs.vlc
+      pkgs.wireshark
       pkgs.wl-clipboard
       pkgs.yt-dlp
     ];
   };
 
   programs = {
+    wireshark.enable = true;
     ydotool.enable = true;
 
     scripts = {
