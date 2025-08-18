@@ -3,6 +3,8 @@
     services.ssh-agent.enable = true;
 
     programs.ssh = {
+      enable = true;
+
       extraConfig = ''
         IdentitiesOnly yes
         SetEnv TERM=xterm-256color

@@ -2,7 +2,6 @@
   users.users.pascal.extraGroups = [ "ydotool" ];
 
   home-manager.users.pascal = {
-    programs.yt-dlp.enable = true;
     services.playerctld.enable = true;
 
     home.packages = [
@@ -23,6 +22,7 @@
       pkgs.sops
       pkgs.vlc
       pkgs.wl-clipboard
+      pkgs.yt-dlp
     ];
   };
 

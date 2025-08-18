@@ -6,6 +6,7 @@
       pkgs.dmidecode
       pkgs.fastfetch
       pkgs.file
+      pkgs.jq
       pkgs.lsof
       pkgs.man-pages
       pkgs.man-pages-posix
@@ -18,11 +19,6 @@
       pkgs.wireguard-tools
       pkgs.zip
     ];
-
-    programs = {
-      jq.enable = true;
-      ssh.enable = true;
-    };
   };
 
   programs = {
