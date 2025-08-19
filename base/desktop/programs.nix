@@ -20,6 +20,7 @@
       pkgs.scripts.nixos-upgrade
       pkgs.scripts.repo
       pkgs.sops
+      pkgs.steam-run-free
       pkgs.vlc
       pkgs.wireshark
       pkgs.wl-clipboard

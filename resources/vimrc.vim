@@ -1,4 +1,3 @@
-" FIXME: This should not be necessary...
 runtime defaults.vim
 let g:skip_defaults_vim = 1
 
