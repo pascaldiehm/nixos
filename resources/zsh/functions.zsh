@@ -17,7 +17,7 @@ function mkvim() {
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
-    BUILD_DIR="$PWD/build"
+    local BUILD_DIR="$PWD/build"
     mkdir -p "$BUILD_DIR"
 
     pushd "$(dirname "$1")"
@@ -62,7 +62,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function nixos-upgrade() {
     nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos "${1:-boot}"
-    sudo reboot
   }
 
   function service() {
