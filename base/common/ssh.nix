@@ -1,6 +1,4 @@
 { config, lib, machine, ... }: {
-  programs.ssh.knownHostsFiles = [ ../../resources/known_hosts ];
-
   services.openssh = {
     enable = true;
     authorizedKeysFiles = [ config.sops.secrets."common/ssh/${machine.name}/public".path ];
