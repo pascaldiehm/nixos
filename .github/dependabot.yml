@@ -9,4 +9,4 @@ updates:
         patterns: ["*"]
 
     schedule:
-      interval: daily
+      interval: weekly
