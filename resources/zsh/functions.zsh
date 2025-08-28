@@ -5,16 +5,6 @@ function mkcd() {
   cd "$1"
 }
 
-function mkvim() {
-  mkdir -p "$(dirname "$1")"
-
-  if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
-    nvim "$1"
-  else
-    vim "$1"
-  fi
-}
-
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
     local BUILD_DIR="$PWD/build"
