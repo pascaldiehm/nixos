@@ -14,10 +14,14 @@
     programs.thunderbird = {
       enable = true;
       profiles.default.isDefault = true;
-      settings."mail.collect_email_address_outgoing" = false;
 
       package = pkgs.thunderbird.override {
         extraPolicies.ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/thunderbird.json { };
+      };
+
+      settings = {
+        "mail.collect_email_address_outgoing" = false;
+        "spellchecker.dictionary" = "en-US,de-DE";
       };
     };
   };
