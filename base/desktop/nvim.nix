@@ -310,13 +310,16 @@
 
           keymaps = {
             "<Space>b" = "builtin";
+            "<Space>c" = "git_commits";
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>l" = "resume";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
             "<Space>r" = "lsp_references";
-            "<Space>s" = "lsp_workspace_symbols";
+            "<Space>s" = "git_status";
+            "<Space>w" = "grep_string";
+            gs = "spell_suggest";
           };
 
           settings.defaults = {
