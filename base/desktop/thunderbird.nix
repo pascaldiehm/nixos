@@ -1,4 +1,6 @@
 { lib, pkgs, ... }: {
+  environment.persistence."/perm".users.pascal.directories = [ ".thunderbird/default" ];
+
   home-manager.users.pascal = {
     accounts.email.accounts.default = {
       address = "pdiehm8@gmail.com";

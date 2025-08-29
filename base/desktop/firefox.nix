@@ -1,4 +1,6 @@
 { lib, ... }: {
+  environment.persistence."/perm".users.pascal.directories = [ ".mozilla/firefox/default" ];
+
   home-manager.users.pascal.programs.firefox = {
     enable = true;
 
