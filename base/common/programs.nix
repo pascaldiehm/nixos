@@ -29,7 +29,7 @@
     vim = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.vim.override { vimrc = ../../resources/vimrc.vim; };
+      package = pkgs.vim.override { vimrc = ../../resources/vim/vimrc.vim; };
     };
   };
 }

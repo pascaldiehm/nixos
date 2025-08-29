@@ -6,7 +6,6 @@
       enable = true;
       autoCmd = lib.mkNvimAutoCommands { TermOpen = "setlocal nospell"; };
       defaultEditor = true;
-      extraFiles."spell/de.utf-8.spl".source = ../../resources/de.utf-8.spl;
       extraPackages = [ pkgs.ripgrep ];
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       filetype.extension.zsh = "sh";
@@ -50,6 +49,13 @@
           end
         end, { expr = true, noremap = true })
       '';
+
+      extraFiles = {
+        "spell/de.utf-8.spl".source = ../../resources/vim/de.utf-8.spl;
+        "spell/de.utf-8.sug".source = ../../resources/vim/de.utf-8.sug;
+        "spell/en.utf-8.spl".source = ../../resources/vim/en.utf-8.spl;
+        "spell/en.utf-8.sug".source = ../../resources/vim/en.utf-8.sug;
+      };
 
       keymaps = lib.mkNvimKeymaps {
         "!"."<C-Bs>" = "<C-w>";
