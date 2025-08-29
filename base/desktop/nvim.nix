@@ -249,7 +249,7 @@
             };
           };
 
-          postConfig = ''
+          luaConfig.content = ''
             vim.lsp.buf.empty_rename = function()
               vim.ui.input({ prompt = "New Name: " }, function(name)
                 vim.lsp.buf.rename(name)
