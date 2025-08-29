@@ -84,8 +84,8 @@ if [ "$TYPE" = "desktop" ]; then
   echo "Encrypting root partition..."
   read -rs -p "Enter disk encryption password: " FDE_PASS
 
-  echo -n "$FDE_PASS" | cryptsetup luksFormat "$PART_NIXOS"
-  echo -n "$FDE_PASS" | cryptsetup open "$PART_NIXOS" nixos
+  cryptsetup luksFormat "$PART_NIXOS" <<<"$FDE_PASS"
+  cryptsetup open "$PART_NIXOS" nixos <<<"$FDE_PASS"
 
   unset FDE_PASS
   PART_NIXOS="/dev/mapper/nixos"
