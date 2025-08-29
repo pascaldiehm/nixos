@@ -32,6 +32,12 @@
       };
 
       extraConfigLua = ''
+        vim.keymap.del("n", "gra");
+        vim.keymap.del("n", "gri");
+        vim.keymap.del("n", "grn");
+        vim.keymap.del("n", "grr");
+        vim.keymap.del("n", "grt");
+
         vim.keymap.set("i", ";", function()
           local line = "_" .. vim.api.nvim_get_current_line()
           local col = vim.api.nvim_win_get_cursor(0)[2] + 1
