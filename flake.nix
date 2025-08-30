@@ -70,7 +70,7 @@
         |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
 
       packages.x86_64-linux = lib.mapAttrs mkScript {
-        upgrade = [ pkgs.curl pkgs.jq pkgs.unzip ];
+        upgrade = [ pkgs.curl pkgs.jq pkgs.nodePackages.nodejs pkgs.unzip ];
 
         install = [
           pkgs.btrfs-progs

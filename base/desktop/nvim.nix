@@ -180,7 +180,6 @@
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
               isort = [ (lib.getExe pkgs.python3Packages.isort) ];
               nixfmt = [ (lib.getExe pkgs.nixfmt) "--strict" "--width=120" ];
-              prettier = [ (lib.getExe pkgs.prettier) "--arrow-parens=avoid" "--print-width=120" ];
               rustfmt = [ (lib.getExe pkgs.rustfmt) ];
               shfmt = [ (lib.getExe pkgs.shfmt) "--indent=2" ];
 
@@ -201,6 +200,14 @@
                 "--logfile=/dev/null"
                 "--yaml=\"defaultIndent: '  ', indentPreamble: 1\""
               ];
+
+              prettier = [
+                (lib.getExe pkgs.prettier)
+                "--arrow-parens=avoid"
+                "--brace-style=1tbs"
+                "--print-width=120"
+                "--tab-width=2"
+              ];
             };
 
             formatters_by_ft = {
@@ -216,6 +223,7 @@
               json = [ "prettier" ];
               markdown = [ "prettier" ];
               nix = [ "nixfmt" ];
+              php = [ "prettier" ];
               python = [ "isort" "black" ];
               rust = [ "rustfmt" ];
               scss = [ "prettier" ];

@@ -43,6 +43,10 @@ jobs:
           test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && sed "s/^/  - /" <<<"$CHANGES_FLAKE")"
           git add flake.lock
 
+          CHANGES_PRETTIER="$(git diff overlay/prettier/package.json | grep "^+ " | cut -d \" -f 2 | sort | uniq)"
+          test -n "$CHANGES_PRETTIER" && CHANGES_PRETTIER="$(echo "Prettier plugin changes:" && sed "s/^/  - /" <<<"$CHANGES_PRETTIER")"
+          git add overlay/prettier
+
           CHANGES_EXTENSIONS_FIREFOX="$(git diff resources/extensions/firefox.json | grep "^+ " | cut -d \" -f 4 | sort | uniq)"
           test -n "$CHANGES_EXTENSIONS_FIREFOX" && CHANGES_EXTENSIONS_FIREFOX="$(echo "Firefox extension changes:" && sed "s/^/  - /" <<<"$CHANGES_EXTENSIONS_FIREFOX")"
           git add resources/extensions/firefox.json
@@ -53,7 +57,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD"
+          git commit -m "Automatic upgrade" -m "$CHANGES_FLAKE" -m "$CHANGES_PRETTIER" -m "$CHANGES_EXTENSIONS_FIREFOX" -m "$CHANGES_EXTENSIONS_THUNDERBIRD"
           git push
 
       - name: Cleanup

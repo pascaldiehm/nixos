@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
+set -e
+
 echo "Upgrading system..."
 nix flake update
+
+echo "Upgrading prettier plugins..."
+cd overlay/prettier
+sed -i 's/"\^.*"/"*"/' package.json
+npm upgrade -S
+rm -rf node_modules
+cd -
 
 echo "Upgrading Firefox extensions..."
 TMP="$(mktemp -d)"
