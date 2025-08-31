@@ -66,7 +66,7 @@
     {
       nixosConfigurations =
         lib.importJSON ./machines.json
-        |> (lib.mapAttrs mkSystem)
+        |> lib.mapAttrs mkSystem
         |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
 
       packages.x86_64-linux = lib.mapAttrs mkScript {
