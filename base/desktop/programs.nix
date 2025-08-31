@@ -6,6 +6,7 @@
 
     home.packages = [
       pkgs.adwaita-icon-theme
+      pkgs.brightnessctl
       pkgs.cryptsetup
       pkgs.exfat
       pkgs.ffmpeg-full

@@ -12,8 +12,8 @@
       backlight = {
         format = "{icon} {percent}%";
         format-icons = [ "󰃞" "󰃟" "󰃠" ];
-        on-click = "sleep 1 && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
-        on-click-right = "${lib.getExe pkgs.brightnessctl} set 50%";
+        on-click = "sleep 1 && hyprctl dispatch dpms off";
+        on-click-right = "brightnessctl set 50%";
         tooltip = false;
       };
 
@@ -135,18 +135,15 @@
         format = "{icon} {volume}%";
         format-icons = [ "󰕿" "󰖀" "󰕾" ];
         format-muted = "󰖁";
-        on-click = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle";
-        on-click-right = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 40%";
-
-        on-click-middle = pkgs.writeShellScript "wp-toggle" ''
-          DEVICE="$(${lib.getExe' pkgs.wireplumber "wpctl"} inspect @DEFAULT_SINK@ | grep device.id | cut -d \" -f 2)"
-          DEVICE="$(${lib.getExe' pkgs.pipewire "pw-dump"} | ${lib.getExe pkgs.jq} ".[] | select(.id == $DEVICE)")"
-          ROUTES="$(${lib.getExe pkgs.jq} '.info.params.EnumRoute | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
-          ROUTE="$(${lib.getExe pkgs.jq} '.info.params.Route | .[] | select(.direction == "Output") | .index' <<<"$DEVICE")"
-
-          ${lib.getExe' pkgs.wireplumber "wpctl"} set-route @DEFAULT_SINK@ "$(echo -e "$ROUTES\n$ROUTES" | sed -n "/^$ROUTE$/{n;p;q}")"
-        '';
+        on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
+        on-click-middle = lib.getExe pkgs.scripts.wp-toggle;
+        on-click-right = "wpctl set-volume @DEFAULT_SINK@ 40%";
       };
     };
+  };
+
+  programs.scripts.wp-toggle = {
+    deps = [ pkgs.jq pkgs.pipewire pkgs.wireplumber ];
+    text = lib.readFile ../../resources/scripts/wp-toggle.sh;
   };
 }

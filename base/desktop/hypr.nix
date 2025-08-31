@@ -44,16 +44,16 @@
 
         settings = {
           general = {
-            lock_cmd = "pidof hyprlock || ${lib.getExe pkgs.hyprlock}";
-            unlock_cmd = "pkill -USR1 hyprlock && ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms on";
-            before_sleep_cmd = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
-            after_sleep_cmd = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms on";
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+            before_sleep_cmd = "loginctl lock-session";
+            lock_cmd = "pidof hyprlock || hyprlock";
+            unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
           };
 
           listener = {
+            on-resume = "hyprctl dispatch dpms on";
+            on-timeout = "hyprctl dispatch dpms off";
             timeout = 300;
-            on-timeout = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
-            on-resume = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms on";
           };
         };
       };
@@ -153,23 +153,23 @@
           "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Downloads -m region"
           "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} -o /home/pascal/Downloads -m active -m window"
 
-          ", XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage}"
-          ", XF86Mail, exec, ${lib.getExe config.home-manager.users.pascal.programs.thunderbird.package}"
-          "SHIFT, XF86HomePage, exec, ${lib.getExe config.home-manager.users.pascal.programs.firefox.finalPackage} --private-window"
+          ", XF86HomePage, exec, firefox"
+          ", XF86Mail, exec, thunderbird"
+          "SHIFT, XF86HomePage, exec, firefox --private-window"
         ];
 
         bindl = [
-          ", XF86AudioLowerVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%-"
-          ", XF86AudioMute, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_SINK@ toggle"
-          ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
-          ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
-          ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
-          ", XF86AudioRaiseVolume, exec, ${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_SINK@ 5%+"
-          ", XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} set 5%-"
-          ", XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} set 5%+"
+          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
+          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_SINK@ toggle"
+          ", XF86AudioNext, exec, playerctl next"
+          ", XF86AudioPlay, exec, playerctl play-pause"
+          ", XF86AudioPrev, exec, playerctl previous"
+          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
+          ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+          ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
 
-          "SUPER ALT, f, exec, ${lib.getExe pkgs.scripts.ha} fan toggle fan_desk"
-          "SUPER ALT, l, exec, ${lib.getExe pkgs.scripts.ha} light toggle lamp_desk"
+          "SUPER ALT, f, exec, ha fan toggle fan_desk"
+          "SUPER ALT, l, exec, ha light toggle lamp_desk"
         ];
 
         general = {
