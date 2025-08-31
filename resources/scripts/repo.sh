@@ -137,7 +137,7 @@ elif [ "$1" = "update" ]; then
     echo -n "Press enter to open editor..."
     read -r
 
-    nvim .
+    "$EDITOR" .
   }
 
   function update() {
@@ -220,16 +220,16 @@ elif [ "$1" = "edit" ]; then
   if [ "$#" = 3 ]; then
     if [ -d "$3" ]; then
       cd "$3"
-      nvim .
+      "$EDITOR" .
     elif [ -f "$3" ]; then
       cd "$(dirname "$3")"
-      nvim "$(basename "$3")"
+      "$EDITOR" "$(basename "$3")"
     else
       echo "Path '$3' not found."
       exit 1
     fi
   else
-    nvim .
+    "$EDITOR" .
   fi
 elif [ "$1" = "shell" ]; then
   if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
@@ -256,7 +256,7 @@ elif [ "$1" = "shell" ]; then
     cd "$3"
   fi
 
-  $SHELL
+  "$SHELL"
 elif [ "$1" = "exec" ]; then
   if [ "$#" -lt 3 ]; then
     echo "Usage: repo exec <name> <cmd...>"
