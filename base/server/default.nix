@@ -1,1 +1,1 @@
-{ imports = [ ./docker.nix ./journalwatch.nix ./misc.nix ./networking.nix ]; }
+{ imports = [ ./journalwatch.nix ./misc.nix ./networking.nix ]; }
