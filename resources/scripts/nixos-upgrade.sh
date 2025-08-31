@@ -15,20 +15,27 @@ BEHIND="$(git rev-list "..@{u}")"
 
 if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   clear
-  echo "The local branch is diverged from the remote branch."
+  echo "The local and remote branches have diverged."
   echo
-  echo "R) Hard reset"
-  echo "P) Force push"
+  echo "P) Pull (rebase)"
+  echo "F) Force push"
+  echo "R) Reset"
   echo "I) Ignore"
   echo "Q) Quit"
   echo
   read -r -n 1 -p "> " RES
   echo
 
-  if [ "$RES" = "R" ]; then
-    git reset --hard "@{u}"
-  elif [ "$RES" = "P" ]; then
+  if [ "$RES" = "P" ]; then
+    if ! git pull --rebase; then
+      git rebase --abort
+      ((STASHED)) && git stash pop
+      exit 1
+    fi
+  elif [ "$RES" = "F" ]; then
     git push --force
+  elif [ "$RES" = "R" ]; then
+    git reset --hard "@{u}"
   elif [ "$RES" != "I" ]; then
     ((STASHED)) && git stash pop
     exit 1
