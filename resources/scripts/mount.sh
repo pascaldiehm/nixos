@@ -35,6 +35,7 @@ cd "$TMP"
 $SHELL || true
 
 echo "Syncing..."
+sleep 1
 sync
 
 echo "Unmounting..."
