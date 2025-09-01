@@ -159,8 +159,8 @@
             mapping = {
               "<C-Return>" = "cmp.mapping.confirm({ select = true })";
               "<C-Space>" = "cmp.mapping.complete()";
-              "<C-d>" = "cmp.mapping.scroll_docs(-8)";
-              "<C-u>" = "cmp.mapping.scroll_docs(8)";
+              "<C-d>" = "cmp.mapping.scroll_docs(8)";
+              "<C-u>" = "cmp.mapping.scroll_docs(-8)";
               "<S-Tab>" = "cmp.mapping.select_prev_item()";
               "<Tab>" = "cmp.mapping.select_next_item()";
             };
