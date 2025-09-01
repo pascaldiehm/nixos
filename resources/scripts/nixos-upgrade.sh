@@ -32,6 +32,8 @@ if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
       ((STASHED)) && git stash pop
       exit 1
     fi
+
+    git push
   elif [ "$RES" = "F" ]; then
     git push --force
   elif [ "$RES" = "R" ]; then
