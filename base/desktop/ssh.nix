@@ -4,14 +4,15 @@
 
     programs.ssh = {
       enable = true;
-
-      extraConfig = ''
-        IdentitiesOnly yes
-        SetEnv TERM=xterm-256color
-      '';
+      enableDefaultConfig = false;
 
       matchBlocks = {
         "github.com".identityFile = config.sops.secrets."ssh/github".path;
+
+        "*" = {
+          identitiesOnly = true;
+          setEnv.TERM = "xterm-256color";
+        };
 
         bowser = {
           forwardAgent = true;
