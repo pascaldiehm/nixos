@@ -255,7 +255,7 @@
             };
 
             lspBuf = {
-              gc = "code_action";
+              ga = "code_action";
               gd = "definition";
               gh = "hover";
               gi = "implementation";
@@ -325,6 +325,7 @@
           keymaps = {
             "<Space>b" = "builtin";
             "<Space>c" = "git_commits";
+            "<Space>d" = "lsp_document_symbols";
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>l" = "resume";
