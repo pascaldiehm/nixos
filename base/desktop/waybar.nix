@@ -136,14 +136,9 @@
         format-icons = [ "󰕿" "󰖀" "󰕾" ];
         format-muted = "󰖁";
         on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
-        on-click-middle = lib.getExe pkgs.scripts.wp-toggle;
+        on-click-middle = "wp-toggle";
         on-click-right = "wpctl set-volume @DEFAULT_SINK@ 40%";
       };
     };
-  };
-
-  programs.scripts.wp-toggle = {
-    deps = [ pkgs.jq pkgs.pipewire pkgs.wireplumber ];
-    text = lib.readFile ../../resources/scripts/wp-toggle.sh;
   };
 }
