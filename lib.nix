@@ -6,7 +6,7 @@ lib: prev: {
     if lib.isAttrs value then
       {
         inherit name;
-        toolbar = (name == "_toolbar");
+        toolbar = name == "_toolbar";
         bookmarks = lib.mkFirefoxBookmarks value;
       }
     else

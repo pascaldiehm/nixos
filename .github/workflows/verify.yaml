@@ -61,7 +61,7 @@ jobs:
 
       - name: Lint nix
         if: ${{ !cancelled() }}
-        run: | # TODO: Add statix check once statix supports pipe operators
+        run: |
           FAILED=0
           while read -r FILE; do
             echo "Checking $FILE"
@@ -72,6 +72,9 @@ jobs:
               FAILED=1
             fi
           done < <(find . -name "*.nix")
+
+          # TODO: Use statix from nixpkgs once pipe-operators are released
+          nix run --accept-flake-config github:oppiliappan/statix check . || FAILED=1
 
           ((! FAILED))
 

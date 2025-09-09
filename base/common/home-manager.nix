@@ -11,8 +11,8 @@
       xdg.enable = true;
 
       home = {
-        inherit (config.system) stateVersion;
         homeDirectory = "/home/pascal";
+        stateVersion = config.system.stateVersion;
         username = "pascal";
 
         activation.delete-backups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
