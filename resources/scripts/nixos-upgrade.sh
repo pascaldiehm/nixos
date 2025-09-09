@@ -17,7 +17,7 @@ if [ -n "$AHEAD" ] && [ -n "$BEHIND" ]; then
   clear
   echo "The local and remote branches have diverged."
   echo
-  echo "P) Pull (rebase)"
+  echo "P) Pull (rebase) and push"
   echo "F) Force push"
   echo "R) Reset"
   echo "I) Ignore"

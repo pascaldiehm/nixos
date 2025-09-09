@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{
   home-manager.users.pascal.programs.waybar = {
     enable = true;
     style = ../../resources/waybar.css;
