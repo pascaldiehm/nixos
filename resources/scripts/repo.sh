@@ -220,16 +220,16 @@ elif [ "$1" = "edit" ]; then
   if [ "$#" = 3 ]; then
     if [ -d "$3" ]; then
       cd "$3"
-      "$EDITOR" .
+      exec "$EDITOR" .
     elif [ -f "$3" ]; then
       cd "$(dirname "$3")"
-      "$EDITOR" "$(basename "$3")"
+      exec "$EDITOR" "$(basename "$3")"
     else
       echo "Path '$3' not found."
       exit 1
     fi
   else
-    "$EDITOR" .
+    exec "$EDITOR" .
   fi
 elif [ "$1" = "shell" ]; then
   if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
@@ -256,7 +256,7 @@ elif [ "$1" = "shell" ]; then
     cd "$3"
   fi
 
-  "$SHELL"
+  exec "$SHELL"
 elif [ "$1" = "exec" ]; then
   if [ "$#" -lt 3 ]; then
     echo "Usage: repo exec <name> <cmd...>"
@@ -273,7 +273,7 @@ elif [ "$1" = "exec" ]; then
   fi
 
   cd "$2"
-  "${@:3}"
+  exec "${@:3}"
 elif [ "$1" = "remove" ]; then
   if [ "$#" != 2 ]; then
     echo "Usage: repo remove <name>"
