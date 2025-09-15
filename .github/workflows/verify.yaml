@@ -91,4 +91,4 @@ jobs:
 
       - name: Cleanup
         if: ${{ always() }}
-        run: sudo rm -rf /nix
+        run: nix store gc
