@@ -1,26 +1,15 @@
 { pkgs, ... }: {
-  home-manager.users.pascal = {
-    home.packages = [
-      pkgs.btrfs-progs
-      pkgs.dig
-      pkgs.dmidecode
-      pkgs.fastfetch
-      pkgs.file
-      pkgs.jq
-      pkgs.lsof
-      pkgs.man-pages
-      pkgs.man-pages-posix
-      pkgs.netcat
-      pkgs.nmap
-      pkgs.rsync
-      pkgs.tcpdump
-      pkgs.traceroute
-      pkgs.unzip
-      pkgs.usbutils
-      pkgs.wireguard-tools
-      pkgs.zip
-    ];
-  };
+  home-manager.users.pascal.home.packages = [
+    pkgs.btrfs-progs
+    pkgs.fastfetch
+    pkgs.file
+    pkgs.jq
+    pkgs.lsof
+    pkgs.netcat
+    pkgs.unzip
+    pkgs.wireguard-tools
+    pkgs.zip
+  ];
 
   programs = {
     command-not-found.enable = false;

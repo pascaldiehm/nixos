@@ -8,14 +8,20 @@
       pkgs.adwaita-icon-theme
       pkgs.brightnessctl
       pkgs.cryptsetup
+      pkgs.dig
+      pkgs.dmidecode
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.inkscape
+      pkgs.man-pages
+      pkgs.man-pages-posix
       pkgs.networkmanagerapplet
+      pkgs.nmap
       pkgs.poppler-utils
       pkgs.pwvucontrol
+      pkgs.rsync
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
       pkgs.scripts.nixos-upgrade
@@ -23,6 +29,9 @@
       pkgs.scripts.wp-toggle
       pkgs.sops
       pkgs.steam-run-free
+      pkgs.tcpdump
+      pkgs.traceroute
+      pkgs.usbutils
       pkgs.vlc
       pkgs.wireshark
       pkgs.wl-clipboard
