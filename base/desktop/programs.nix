@@ -12,6 +12,7 @@
       pkgs.dmidecode
       pkgs.exfat
       pkgs.ffmpeg-full
+      pkgs.gimp3
       pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.inkscape
@@ -30,6 +31,7 @@
       pkgs.sops
       pkgs.steam-run-free
       pkgs.tcpdump
+      pkgs.tenacity
       pkgs.traceroute
       pkgs.usbutils
       pkgs.vlc
