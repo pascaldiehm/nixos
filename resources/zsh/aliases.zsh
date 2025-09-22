@@ -4,6 +4,7 @@ alias lsblk="lsblk -o NAME,TYPE,SIZE,PARTLABEL,LABEL,FSTYPE,MOUNTPOINTS"
 alias which="which -as"
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
+  alias fd="fd -H"
   alias l="ls -alg"
   alias ls="eza"
   alias open="xdg-open"
