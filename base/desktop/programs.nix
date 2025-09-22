@@ -6,11 +6,15 @@
 
     home.packages = [
       pkgs.adwaita-icon-theme
+      pkgs.bat
       pkgs.brightnessctl
       pkgs.cryptsetup
-      pkgs.dig
       pkgs.dmidecode
+      pkgs.dog
+      pkgs.duf
       pkgs.exfat
+      pkgs.eza
+      pkgs.fd
       pkgs.ffmpeg-full
       pkgs.gimp3
       pkgs.hardinfo2
@@ -18,10 +22,13 @@
       pkgs.inkscape
       pkgs.man-pages
       pkgs.man-pages-posix
+      pkgs.mtr
+      pkgs.ncdu
       pkgs.networkmanagerapplet
       pkgs.nmap
       pkgs.poppler-utils
       pkgs.pwvucontrol
+      pkgs.ripgrep
       pkgs.rsync
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
@@ -32,11 +39,12 @@
       pkgs.steam-run-free
       pkgs.tcpdump
       pkgs.tenacity
-      pkgs.traceroute
+      pkgs.tlrc
       pkgs.usbutils
       pkgs.vlc
       pkgs.wireshark
       pkgs.wl-clipboard
+      pkgs.xh
       pkgs.yt-dlp
     ];
   };
