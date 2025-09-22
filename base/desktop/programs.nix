@@ -20,8 +20,6 @@
       pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.inkscape
-      pkgs.man-pages
-      pkgs.man-pages-posix
       pkgs.mtr
       pkgs.ncdu
       pkgs.networkmanagerapplet
@@ -39,7 +37,6 @@
       pkgs.steam-run-free
       pkgs.tcpdump
       pkgs.tenacity
-      pkgs.tlrc
       pkgs.usbutils
       pkgs.vlc
       pkgs.wireshark

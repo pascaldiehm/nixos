@@ -3,6 +3,7 @@
     ../../extra/university
     ./boot.nix
     ./development.nix
+    ./documentation.nix
     ./firefox.nix
     ./gpg.nix
     ./home-assistant.nix
