@@ -38,6 +38,7 @@
       pkgs.tcpdump
       pkgs.tenacity
       pkgs.usbutils
+      pkgs.vhs
       pkgs.vlc
       pkgs.wireshark
       pkgs.wl-clipboard
