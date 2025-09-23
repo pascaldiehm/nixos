@@ -104,7 +104,7 @@
         number = true;
         relativenumber = true;
         scrolloff = 8;
-        shell = "${lib.getExe config.users.users.pascal.shell} -i";
+        shell = "${lib.getExe config.users.users.pascal.shell} --interactive";
         shiftwidth = 2;
         signcolumn = "yes";
         smartcase = true;

@@ -57,7 +57,7 @@ elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
     if [ "$#" = 0 ]; then
       docker compose ls
     else
-      docker compose -f "/home/pascal/docker/$NIXOS_MACHINE_NAME/$1/compose.yaml" "${@:2}"
+      docker compose --file "/home/pascal/docker/$NIXOS_MACHINE_NAME/$1/compose.yaml" "${@:2}"
     fi
   }
 fi

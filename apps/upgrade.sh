@@ -8,7 +8,7 @@ nix flake update
 echo "Upgrading prettier plugins..."
 cd overlay/prettier
 sed -i 's/"\^.*"/"*"/' package.json
-npm upgrade -S
+npm upgrade --save
 rm -rf node_modules
 cd -
 
@@ -24,12 +24,12 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl -Sis "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl --silent --show-error --head "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
     SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-    curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
+    curl --silent --show-error --output "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"
@@ -56,12 +56,12 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl -Sis "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl --silent --show-error --head "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
     SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-    curl -Ss -o "$TMP/$NAME.xpi" "$SOURCE"
+    curl --silent --show-error --output "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"

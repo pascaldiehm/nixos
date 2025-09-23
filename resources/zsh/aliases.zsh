@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
-alias lsblk="lsblk -o NAME,TYPE,SIZE,PARTLABEL,LABEL,FSTYPE,MOUNTPOINTS"
+alias lsblk="lsblk --output NAME,TYPE,SIZE,PARTLABEL,LABEL,FSTYPE,MOUNTPOINTS"
 alias which="which -as"
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
-  alias fd="fd -H"
-  alias l="ls -alg"
+  alias fd="fd --hidden"
+  alias l="ls --all --long --group"
   alias ls="eza"
   alias open="xdg-open"
   alias py="python3"

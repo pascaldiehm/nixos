@@ -55,7 +55,7 @@ elif [ "$1" = "list" ]; then
 
     echo -e "\033[1;34m$REPO \033[m$HEAD$CHANGES \033[90m$(git remote get-url origin)"
     cd ..
-  done | column -t -N $'\033[4mRepo,Head,Remote\033[m'
+  done | column --table --table-columns $'\033[4mRepo,Head,Remote\033[m'
 elif [ "$1" = "status" ]; then
   function status() {
     cd "$1"
@@ -88,7 +88,7 @@ elif [ "$1" = "status" ]; then
       else
         echo -e "\033[32m$BRANCH\x09\033[36mlocal\x09$COMMIT"
       fi
-    done | column -t -s $'\x09' -N $'\033[4mBranch,Changes,Commit\033[m'
+    done | column --table --separator $'\x09' --table-columns $'\033[4mBranch,Changes,Commit\033[m'
 
     cd ..
   }

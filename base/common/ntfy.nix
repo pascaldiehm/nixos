@@ -5,9 +5,9 @@
     TOKEN="$(cat ${config.sops.secrets."common/ntfy".path})"
 
     if [ "$#" = 1 ]; then
-      ${lib.getExe pkgs.curl} -Ss -H "Authorization: Bearer $TOKEN" -d "$1" https://ntfy.pdiehm.dev/default
+      ${lib.getExe pkgs.curl} --silent --show-error --header "Authorization: Bearer $TOKEN" --data "$1" https://ntfy.pdiehm.dev/default
     elif [ "$#" = 2 ]; then
-      ${lib.getExe pkgs.curl} -Ss -H "Authorization: Bearer $TOKEN" -d "$2" "https://ntfy.pdiehm.dev/${machine.name}-$1"
+      ${lib.getExe pkgs.curl} --silent --show-error --header "Authorization: Bearer $TOKEN" --data "$2" "https://ntfy.pdiehm.dev/${machine.name}-$1"
     else
       echo "Usage: ntfy [channel] <message>"
       exit 1

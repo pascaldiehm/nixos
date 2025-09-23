@@ -11,7 +11,7 @@ ntfy journal "[journalwatch] Started"
 
 trap 'ntfy journal "[journalwatch] Stopped"' EXIT
 
-journalctl -f -o json | while read -r LINE; do
+journalctl --follow --output json | while read -r LINE; do
   SERVICE="$(jq -r .SYSLOG_IDENTIFIER <<<"$LINE")"
   MESSAGE="$(jq -r .MESSAGE <<<"$LINE")"
 

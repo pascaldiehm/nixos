@@ -90,10 +90,10 @@ if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
   test "$RES" = "n" && exit 1
 fi
 
-sudo -v
+sudo --validate
 while true; do
   sleep 250
-  sudo -v
+  sudo --validate
 done &
 
 SUDO_LOOP_PID="$!"

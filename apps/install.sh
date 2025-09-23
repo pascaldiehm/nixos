@@ -92,7 +92,7 @@ if [ "$TYPE" = "desktop" ]; then
 fi
 
 echo "Creating filesystems..."
-mkfs.btrfs -f -L nixos "$PART_NIXOS"
+mkfs.btrfs --force --label nixos "$PART_NIXOS"
 mkfs.fat -F 32 -n BOOT "$PART_BOOT"
 
 echo "Creating subvolumes..."
@@ -125,7 +125,7 @@ if [ "$TYPE" = "desktop" ]; then
   echo "Cloning NixOS configuration..."
   git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
   git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
-  chown -R 1000:100 /mnt/perm/home/pascal
+  chown --recursive 1000:100 /mnt/perm/home/pascal
   chmod 700 /mnt/perm/home/pascal
 fi
 
@@ -140,7 +140,7 @@ chmod 700 /mnt/perm/etc/nixos/.gnupg
 echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
-curl -O "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
+curl --remote-name "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
 gpg --decrypt key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
