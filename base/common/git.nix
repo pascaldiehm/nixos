@@ -104,6 +104,8 @@
       ss = "status --short";
 
       st = "stash push --include-untracked";
+      sta = "stash apply";
+      stb = "stash branch";
       stc = "stash clear";
       std = "stash drop";
       stl = "stash list";
