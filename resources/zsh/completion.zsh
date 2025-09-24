@@ -36,12 +36,13 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
-  compdef '_arguments ":mode:(boot switch test)"' nixos-test
+  compdef '_arguments ":mode:(build boot switch test)"' nixos-test
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha
   compdef _nothing mkletter
   compdef _nothing nixos-diff
   compdef _nothing nixos-iso
+  compdef _nothing wp-toggle
   compdef _repo repo
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   compdef '_arguments ":service:($(ls ~/docker/$NIXOS_MACHINE_NAME))"' service
