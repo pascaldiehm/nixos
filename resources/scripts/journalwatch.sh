@@ -6,11 +6,6 @@ PAT_SSHD_USER_DENIED="^User (\w+) from (\S+) not allowed because not listed in A
 PAT_SSHD_USER_INVALID="^Invalid user (\w+) from (\S+) port ([0-9]+)$"
 PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
 
-until ping -c 1 1.1.1.1 &>/dev/null; do sleep 1; done
-ntfy journal "[journalwatch] Started"
-
-trap 'ntfy journal "[journalwatch] Stopped"' EXIT
-
 journalctl --follow --output json | while read -r LINE; do
   SERVICE="$(jq -r .SYSLOG_IDENTIFIER <<<"$LINE")"
   MESSAGE="$(jq -r .MESSAGE <<<"$LINE")"
