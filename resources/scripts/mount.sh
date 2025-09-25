@@ -35,10 +35,11 @@ cd "$TMP"
 $SHELL || true
 
 echo "Syncing..."
-sleep 1
 sync
 
 echo "Unmounting..."
+sleep 1
+
 if ((ROOT)); then
   sudo umount "$TMP"
 else
