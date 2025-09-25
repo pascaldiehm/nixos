@@ -10,7 +10,7 @@
       pkgs.brightnessctl
       pkgs.cryptsetup
       pkgs.dmidecode
-      pkgs.dog
+      pkgs.dogdns
       pkgs.duf
       pkgs.exfat
       pkgs.eza
