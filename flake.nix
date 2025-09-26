@@ -70,7 +70,7 @@
         |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
 
       packages.x86_64-linux = lib.mapAttrs mkScript {
-        nvim = [ nixosConfigurations.pascal-pc.config.home-manager.users.pascal.programs.nixvim.build.package ];
+        nixvim = [ nixosConfigurations.pascal-pc.config.home-manager.users.pascal.programs.nixvim.build.package ];
         upgrade = [ pkgs.curl pkgs.jq pkgs.nodePackages.nodejs pkgs.unzip ];
 
         install = [
