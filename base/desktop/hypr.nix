@@ -1,4 +1,6 @@
 { config, lib, pkgs, ... }: {
+  services.speechd.enable = false;
+
   home-manager.users.pascal = {
     programs = {
       kitty.enable = true;
