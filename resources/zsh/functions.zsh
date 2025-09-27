@@ -5,6 +5,23 @@ function mkcd() {
   cd "$1"
 }
 
+function watch() {
+  set -o localoptions -o localtraps
+  trap "tput cnorm; tput rmcup" EXIT
+  trap "return 0" INT
+
+  tput smcup
+  tput civis
+
+  while tput cup 0 0; do
+    echo -e "\033[90mWatching: $@\033[0m\n"
+    eval "$@"
+    tput ed
+
+    sleep 0.1
+  done
+}
+
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
     local BUILD_DIR="$PWD/build"

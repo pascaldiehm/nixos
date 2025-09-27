@@ -15,8 +15,8 @@
       (lib.readFile ../../resources/zsh/completion.zsh)
       (lib.readFile ../../resources/zsh/functions.zsh)
       (lib.readFile ../../resources/zsh/input.zsh)
+      (lib.readFile ../../resources/zsh/options.zsh)
       (lib.readFile ../../resources/zsh/prompt.zsh)
-      (lib.readFile ../../resources/zsh/settings.zsh)
     ];
 
     localVariables = {

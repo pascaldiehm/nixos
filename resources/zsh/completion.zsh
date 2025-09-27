@@ -2,6 +2,7 @@
 
 compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy
+compdef _nothing watch
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
