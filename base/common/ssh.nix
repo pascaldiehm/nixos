@@ -1,12 +1,12 @@
 { config, lib, machine, ... }: {
   services.openssh = {
     enable = true;
-    authorizedKeysFiles = [ config.sops.secrets."common/ssh/${machine.name}/public".path ];
+    authorizedKeysFiles = [ config.sops.common."ssh/${machine.name}/public".path ];
     ports = [ 1970 ];
 
     hostKeys = lib.singleton {
       type = "ed25519";
-      path = config.sops.secrets."common/ssh/${machine.name}/host".path;
+      path = config.sops.common."ssh/${machine.name}/host".path;
     };
 
     settings = {
@@ -16,12 +16,8 @@
     };
   };
 
-  sops.secrets = {
-    "common/ssh/${machine.name}/host".sopsFile = ../../resources/secrets/common/store.yaml;
-
-    "common/ssh/${machine.name}/public" = {
-      owner = "pascal";
-      sopsFile = ../../resources/secrets/common/store.yaml;
-    };
+  sops.common = {
+    "ssh/${machine.name}/host" = { };
+    "ssh/${machine.name}/public".owner = "pascal";
   };
 }
