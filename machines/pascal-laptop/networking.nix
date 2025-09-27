@@ -6,16 +6,16 @@
       connection = {
         autoconnect = false;
         id = "home";
-        interface-name = "wg-home";
+        interface-name = "wg0";
         type = "wireguard";
       };
 
       ipv4 = {
-        addresses = "192.168.16.3/24";
+        addresses = "192.168.0.91/24";
         method = "manual";
       };
 
-      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC_KEY" = {
+      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC" = {
         allowed-ips = "192.168.0.0/16";
         endpoint = "goomba:51820";
         preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
