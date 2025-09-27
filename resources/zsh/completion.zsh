@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy
 compdef _nothing watch
 
@@ -37,6 +36,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
+  compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
   compdef '_arguments ":mode:(build boot switch test)"' nixos-test
   compdef '_arguments ":type:($(ls ~/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha
