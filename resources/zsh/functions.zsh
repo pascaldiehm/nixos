@@ -5,22 +5,20 @@ function mkcd() {
   cd "$1"
 }
 
-function watch() {
-  set -o localoptions -o localtraps
+function watch() (
   trap "tput cnorm; tput rmcup" EXIT
   trap "return 0" INT
 
   tput smcup
   tput civis
 
-  while tput cup 0 0; do
-    echo -e "\033[90mWatching: $@\033[0m\n"
-    eval "$@"
-    tput ed
+  while clear; do
+    echo -e "\033[90mWatching: $*\033[0m\n"
+    eval "$*"
 
-    sleep 0.1
+    sleep 1
   done
-}
+)
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
