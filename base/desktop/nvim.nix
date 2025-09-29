@@ -4,12 +4,16 @@
 
     programs.nixvim = {
       enable = true;
-      autoCmd = lib.mkNvimAutoCommands { TermOpen = "setlocal nospell"; };
       defaultEditor = true;
       extraPackages = [ pkgs.ripgrep ];
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       filetype.extension.zsh = "sh";
       nixpkgs.useGlobalPackages = true;
+
+      autoCmd = lib.mkNvimAutoCommands {
+        TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input(\"<Return>\") end";
+        TermOpen = "setlocal nospell";
+      };
 
       clipboard = {
         providers.wl-copy.enable = true;
