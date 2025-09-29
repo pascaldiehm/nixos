@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5.0.0
 
-      - uses: cachix/install-nix-action@v31.6.2
+      - uses: cachix/install-nix-action@v31.7.0
         with:
           extra_nix_config: |
             experimental-features = flakes nix-command pipe-operators
