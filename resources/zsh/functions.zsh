@@ -13,7 +13,7 @@ function watch() (
   tput civis
 
   while clear; do
-    echo -e "\033[90mWatching: $*\033[0m\n"
+    echo -e "\033[90mWatching: $*\033[m\n"
     eval "$*"
 
     sleep 1

@@ -3,7 +3,7 @@
   services.fwupd.enable = true;
 
   system = {
-    configurationRevision = inputs.self.rev or inputs.self.dirtyRev or "???";
+    configurationRevision = inputs.self.rev or "<dirty>";
     stateVersion = "24.11";
   };
 }

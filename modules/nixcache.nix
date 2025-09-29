@@ -16,7 +16,6 @@
             proxyPass = config.nix.cache;
 
             extraConfig = ''
-              add_header X-Upstream ${config.nix.cache};
               error_page 502 504 = @fallback;
               proxy_connect_timeout 100ms;
             '';
@@ -26,7 +25,6 @@
             proxyPass = "https://cache.nixos.org";
 
             extraConfig = ''
-              add_header X-Upstream https://cache.nixos.org;
               proxy_ssl_server_name on;
               proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
               proxy_ssl_verify on;
