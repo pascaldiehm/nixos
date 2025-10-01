@@ -5,6 +5,7 @@
     path = [ pkgs.jq pkgs.iputils pkgs.scripts.ntfy ];
     requires = [ "network-online.target" ];
     script = lib.readFile ../../resources/scripts/journalwatch.sh;
+    serviceConfig.Restart = "on-failure";
     wantedBy = [ "multi-user.target" ];
   };
 }
