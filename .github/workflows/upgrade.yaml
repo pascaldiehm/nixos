@@ -17,12 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5.0.0
 
-      - uses: cachix/install-nix-action@v31.7.0
-        with:
-          extra_nix_config: |
-            experimental-features = flakes nix-command pipe-operators
-            substituters = http://nixcache
-
       - name: Upgrade
         run: nix run .#upgrade
 
@@ -35,7 +29,7 @@ jobs:
         if: ${{ steps.detect-changes.outcome == 'success' }}
         run: |
           while read -r MACHINE; do
-            timeout 1h nix build ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
+            timeout 1h nix build -o "/tmp/ci-roots/$MACHINE" ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done < <(jq -r "keys[]" machines.json)
 
       - name: Commit
@@ -61,7 +55,3 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit --message "Automatic upgrade" --message "$CHANGES_FLAKE" --message "$CHANGES_PRETTIER" --message "$CHANGES_EXTENSIONS_FIREFOX" --message "$CHANGES_EXTENSIONS_THUNDERBIRD"
           git push
-
-      - name: Cleanup
-        if: ${{ always() }}
-        run: nix store gc

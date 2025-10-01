@@ -1,1 +1,1 @@
-{ imports = [ ./features.nix ./nixcache.nix ./scripts.nix ./sops.nix ]; }
+{ imports = [ ./features.nix ./scripts.nix ./sops.nix ]; }
