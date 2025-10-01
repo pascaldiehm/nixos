@@ -1,4 +1,9 @@
 pkgs: prev: {
+  # FIXME: Remove this once released
+  nix = prev.nix.overrideAttrs (prev: {
+    patches = (prev.patches or [ ]) ++ [ nix/substituter-fallback.patch ];
+  });
+
   # FIXME: Remove patch once single line lists are implemented
   nixfmt = prev.nixfmt.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [ nixfmt/compact-lists.patch nixfmt/compact-params.patch ];

@@ -5,7 +5,7 @@
   };
 
   nix.settings = {
-    substituters = [ "http://bowser:5779" ];
+    substituters = [ "http://bowser:5778" "http://bowser:5779" ];
     trusted-public-keys = [ "bowser:diwsWDb5oogaZJ5BwRrjtRWcwGPzppJhZkiIqgjIP+g=" ];
   };
 }
