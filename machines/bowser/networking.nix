@@ -26,6 +26,7 @@
     networks = {
       "10-wired" = {
         address = [ "192.168.1.88/16" ];
+        dns = [ "1.1.1.1" "1.0.0.1" ];
         gateway = [ "192.168.1.1" ];
         matchConfig.Name = "eth0";
       };
