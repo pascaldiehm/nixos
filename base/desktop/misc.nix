@@ -6,6 +6,6 @@
 
   nix.settings = {
     substituters = [ "http://bowser:5778" "http://bowser:5779" ];
-    trusted-public-keys = [ "bowser:diwsWDb5oogaZJ5BwRrjtRWcwGPzppJhZkiIqgjIP+g=" ];
+    trusted-public-keys = [ "private-1:Rx2/kvQOl7bTeQLc9hq8jV+7mJZaPZv3see8QbcXSmI=" ];
   };
 }
