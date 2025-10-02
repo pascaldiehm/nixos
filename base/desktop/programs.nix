@@ -6,27 +6,21 @@
 
     home.packages = [
       pkgs.adwaita-icon-theme
-      pkgs.bat
       pkgs.brightnessctl
       pkgs.cryptsetup
       pkgs.dmidecode
       pkgs.dogdns
-      pkgs.duf
       pkgs.exfat
-      pkgs.eza
-      pkgs.fd
       pkgs.ffmpeg-full
       pkgs.gimp3
       pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.inkscape
       pkgs.mtr
-      pkgs.ncdu
       pkgs.networkmanagerapplet
       pkgs.nmap
       pkgs.poppler-utils
       pkgs.pwvucontrol
-      pkgs.ripgrep
       pkgs.rsync
       pkgs.scripts.mkletter
       pkgs.scripts.mnt
