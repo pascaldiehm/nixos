@@ -42,11 +42,11 @@
         vim.keymap.del("n", "grt");
 
         vim.keymap.set("i", ";", function()
-          local line = "_" .. vim.api.nvim_get_current_line()
-          local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+          local line = vim.api.nvim_get_current_line()
+          local col = vim.api.nvim_win_get_cursor(0)[2]
           local ctx = line:sub(col, col + 1)
 
-          if ctx == "{}" or ctx == "[]" then
+          if ctx == "()" or ctx == "[]" or ctx == "{}" then
             return "<Esc>la;<Esc>hi"
           else
             return ";"
@@ -70,6 +70,7 @@
           "<Space><Return>" = "<Cmd>terminal<Return>i";
           "<Space><Space>" = "<Cmd>Oil<Return>";
           J = "mmJ`m";
+          X = "\"_D";
           gQ = "<Cmd>cprevious<Return>";
           gl = "<C-o>";
           gq = "<Cmd>cnext<Return>";
