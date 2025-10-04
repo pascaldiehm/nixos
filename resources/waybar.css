@@ -1,6 +1,6 @@
 * {
-  font-family: "NotoSans Nerd Font";
   font-size: 12pt;
+  font-family: "NotoSans Nerd Font";
 }
 
 window#waybar {
@@ -13,50 +13,50 @@ box#workspaces {
 
   background:
     linear-gradient(@card_bg_color, @card_bg_color),
-    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
-    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+    border-box no-repeat linear-gradient(to top right, @card_bg_color 50%, transparent 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom right, @card_bg_color 50%, transparent 50%) 100% 100% / 0.5em 50%;
 }
 
 label#cpu,
 label#memory,
 label#disk,
 label#temperature {
-  border-left: 0.5em solid transparent;
   border-right: 0.5em solid transparent;
+  border-left: 0.5em solid transparent;
 
   background:
     linear-gradient(@card_bg_color, @card_bg_color),
     border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
     border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
-    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
-    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+    border-box no-repeat linear-gradient(to top right, @card_bg_color 50%, transparent 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom right, @card_bg_color 50%, transparent 50%) 100% 100% / 0.5em 50%;
 }
 
 label#mpris {
-  border-left: 0.5em solid transparent;
   border-right: 0.5em solid transparent;
+  border-left: 0.5em solid transparent;
 
   background:
     linear-gradient(@card_bg_color, @card_bg_color),
     border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
     border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
-    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
-    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+    border-box no-repeat linear-gradient(to top right, @card_bg_color 50%, transparent 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to bottom right, @card_bg_color 50%, transparent 50%) 100% 100% / 0.5em 50%;
 }
 
 label#network,
 label#backlight,
 label#wireplumber,
 label#battery {
-  border-left: 0.5em solid transparent;
   border-right: 0.5em solid transparent;
+  border-left: 0.5em solid transparent;
 
   background:
     linear-gradient(@card_bg_color, @card_bg_color),
     border-box no-repeat linear-gradient(to bottom right, transparent 50%, @card_bg_color 50%) 0 0 / 0.5em 50%,
     border-box no-repeat linear-gradient(to top right, transparent 50%, @card_bg_color 50%) 0 100% / 0.5em 50%,
-    border-box no-repeat linear-gradient(to top left, transparent 50%, @card_bg_color 50%) 100% 0 / 0.5em 50%,
-    border-box no-repeat linear-gradient(to bottom left, transparent 50%, @card_bg_color 50%) 100% 100% / 0.5em 50%;
+    border-box no-repeat linear-gradient(to bottom right, @card_bg_color 50%, transparent 50%) 100% 0 / 0.5em 50%,
+    border-box no-repeat linear-gradient(to top right, @card_bg_color 50%, transparent 50%) 100% 100% / 0.5em 50%;
 }
 
 label#clock {
