@@ -33,13 +33,12 @@ fi
 
 cd "$TMP"
 $SHELL || true
+cd /
 
 echo "Syncing..."
 sync
 
 echo "Unmounting..."
-sleep 1
-
 if ((ROOT)); then
   sudo umount "$TMP"
 else
