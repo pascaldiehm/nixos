@@ -8,7 +8,7 @@
       extraPackages = [ pkgs.ripgrep ];
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       filetype.extension.zsh = "sh";
-      nixpkgs.useGlobalPackages = true;
+      nixpkgs.pkgs = pkgs;
 
       autoCmd = lib.mkNvimAutoCommands {
         TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input(\"<Return>\") end";
