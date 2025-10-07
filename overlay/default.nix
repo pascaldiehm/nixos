@@ -1,8 +1,6 @@
 pkgs: prev: {
-  # FIXME: Remove this once released
-  nix = prev.nix.overrideAttrs (prev: {
-    patches = (prev.patches or [ ]) ++ [ nix/substituter-fallback.patch ];
-  });
+  # FIXME: Remove this once nix > 2.31.2 is released (graceful substituter fallback)
+  nix = prev.nixVersions.git;
 
   # FIXME: Remove patch once single line lists are implemented
   nixfmt = prev.nixfmt.overrideAttrs (prev: {
