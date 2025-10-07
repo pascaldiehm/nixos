@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-INIT="$(grep "^init=" "$(which nixvim-print-init)" | cut -d = -f 2)"
-nvim --clean -u "$INIT" -s - "$@" <<<":set spelllang="
+INIT="$(mktemp --suffix .lua)"
+trap 'rm $INIT' EXIT
+
+nixvim-print-init | grep -v spelllang >"$INIT"
+nvim --clean -u "$INIT" "$@"
