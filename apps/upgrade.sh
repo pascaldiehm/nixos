@@ -34,7 +34,7 @@ while read -r EXT; do
   else
     echo "    -> Failed, no location returned"
     SOURCE="$(jq -r .source <<<"$EXT")"
-    SOURCE="$(jq -r .id <<<"$EXT")"
+    ID="$(jq -r .id <<<"$EXT")"
   fi
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
