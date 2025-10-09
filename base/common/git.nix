@@ -1,6 +1,7 @@
 {
   home-manager.users.pascal.programs.git = {
     enable = true;
+    delta.enable = true;
     userEmail = "pdiehm8@gmail.com";
     userName = "Pascal Diehm";
 
