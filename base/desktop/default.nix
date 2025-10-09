@@ -12,6 +12,7 @@
     ./locale.nix
     ./misc.nix
     ./networking.nix
+    ./nixcache.nix
     ./nvim.nix
     ./persistence.nix
     ./programs.nix

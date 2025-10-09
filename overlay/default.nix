@@ -1,7 +1,4 @@
 pkgs: prev: {
-  # FIXME: Remove once nix > 2.31.2 is released (graceful substituter fallback)
-  nix = prev.nixVersions.git;
-
   # FIXME: Remove this
   cmake-language-server = prev.cmake-language-server.overrideAttrs (prev: {
     disabledTests = (prev.disabledTests or [ ]) ++ [
