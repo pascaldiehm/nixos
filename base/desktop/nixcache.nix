@@ -6,13 +6,15 @@
 
   services.nginx = {
     enable = true;
+    proxyResolveWhileRunning = true;
+    resolver.addresses = [ "1.1.1.1" "1.0.0.1" ];
 
     virtualHosts.nix-substituter-proxy = {
       extraConfig = "recursive_error_pages on;";
 
       locations = {
         "/" = {
-          proxyPass = "http://bowser:5779";
+          proxyPass = "http://192.168.1.88:5779";
 
           extraConfig = ''
             error_page 404 = @cache;
@@ -23,7 +25,7 @@
         };
 
         "@cache" = {
-          proxyPass = "http://bowser:5778";
+          proxyPass = "http://192.168.1.88:5778";
 
           extraConfig = ''
             error_page 502 504 = @upstream;
@@ -47,10 +49,5 @@
         port = 5777;
       };
     };
-  };
-
-  systemd.services.nginx = {
-    after = [ "network-online.target" ];
-    requires = [ "network-online.target" ];
   };
 }
