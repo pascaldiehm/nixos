@@ -5,7 +5,6 @@
     services.playerctld.enable = true;
 
     home.packages = [
-      pkgs.adwaita-icon-theme
       pkgs.brightnessctl
       pkgs.cryptsetup
       pkgs.dmidecode

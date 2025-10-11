@@ -12,6 +12,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/colors.yaml";
     image = ../../resources/wallpaper.jpg;
+    polarity = "dark";
 
     cursor = {
       name = "Quintom_Ink";
@@ -34,6 +35,12 @@
         name = "NotoSerif Nerd Font";
         package = pkgs.nerd-fonts.noto;
       };
+    };
+
+    icons = {
+      enable = true;
+      dark = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
     };
   };
 }
