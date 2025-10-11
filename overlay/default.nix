@@ -14,8 +14,8 @@ pkgs: prev: {
   });
 
   prettier = pkgs.importNpmLock.buildNodeModules rec {
-    npmRoot = ./prettier;
     nodejs = pkgs.nodePackages.nodejs;
+    npmRoot = ./prettier;
 
     derivationArgs = {
       meta.mainProgram = "prettier";
