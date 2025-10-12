@@ -12,10 +12,8 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         run: |
-          rm -rf /nix/var/nix/gcroots/ci
-
           while read -r MACHINE; do
-            timeout 1h nix build -o "/nix/var/nix/gcroots/ci/$MACHINE" ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
+            timeout 1h nix build -o "/tmp/ci-roots/$MACHINE" ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" || exit 1
           done < <(jq -r "keys[]" machines.json)
 
       - name: Check default.nix imports
