@@ -5,7 +5,7 @@
 
       connection = {
         autoconnect = false;
-        id = "home";
+        id = "@home";
         interface-name = "wg0";
         type = "wireguard";
       };

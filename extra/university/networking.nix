@@ -6,7 +6,7 @@
       bayern-wlan = {
         connection = {
           autoconnect-priority = 25;
-          id = "@BayernWLAN";
+          id = "BayernWLAN";
           type = "wifi";
         };
 
@@ -43,7 +43,7 @@
       university = {
         connection = {
           autoconnect = false;
-          id = "university";
+          id = "@university";
           type = "vpn";
         };
 
