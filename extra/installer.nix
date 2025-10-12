@@ -1,5 +1,5 @@
 { lib, modulesPath, pkgs, ... }: {
-  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
+  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ../base/desktop/nixcache.nix ];
   console.keyMap = "de";
   environment.systemPackages = [ (pkgs.writeShellScriptBin "nixinstall" "nix run github:pascaldiehm/nixos#install") ];
   nix.settings.experimental-features = [ "flakes" "nix-command" "pipe-operators" ];
