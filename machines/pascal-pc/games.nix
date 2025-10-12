@@ -1,6 +1,5 @@
 { pkgs, ... }: {
-  # FIXME: Add supertuxkart and retroarch-free once CMake errors are fixed
-  home-manager.users.pascal.home.packages = [ pkgs.prismlauncher ];
+  home-manager.users.pascal.home.packages = [ pkgs.prismlauncher pkgs.retroarch-free pkgs.superTuxKart ];
 
   environment.persistence."/perm".users.pascal.directories = [
     ".config/retroarch"

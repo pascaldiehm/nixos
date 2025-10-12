@@ -1,5 +1,32 @@
 pkgs: prev: {
-  # FIXME: Remove this
+  # FIXME: Remove this once CMake problems are fixed
+  libretro.thepowdertoy = prev.libretro.thepowdertoy.overrideAttrs (prev: {
+    postPatch = ''
+      ${prev.postPatch or ""}
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/zlib/CMakeLists.txt
+    '';
+  });
+
+  libopenglrecorder = prev.libopenglrecorder.overrideAttrs (prev: {
+    postPatch = ''
+      ${prev.postPatch or ""}
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" CMakeLists.txt
+    '';
+  });
+
+  superTuxKart = prev.superTuxKart.overrideAttrs (prev: {
+    postPatch = ''
+      ${prev.postPatch or ""}
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" CMakeLists.txt
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" lib/enet/CMakeLists.txt
+      sed -i "s/CMAKE_MINIMUM_REQUIRED\(.*\)/CMAKE_MINIMUM_REQUIRED(VERSION 3.5)/" lib/libsquish/CMakeLists.txt
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" lib/graphics_utils/CMakeLists.txt
+      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" lib/tinygettext/CMakeLists.txt
+      grep -v CMP0043 CMakeLists.txt | tee CMakeLists.txt
+    '';
+  });
+
+  # FIXME: Remove this once fixed
   cmake-language-server = prev.cmake-language-server.overrideAttrs (prev: {
     disabledTests = (prev.disabledTests or [ ]) ++ [
       "test_parse_variable"
@@ -8,7 +35,6 @@ pkgs: prev: {
     ];
   });
 
-  # FIXME: Remove patch once single line lists are implemented
   nixfmt = prev.nixfmt.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [ nixfmt/compact-lists.patch nixfmt/compact-params.patch ];
   });
