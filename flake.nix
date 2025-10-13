@@ -80,6 +80,7 @@
           pkgs.dosfstools
           pkgs.git
           pkgs.gnupg
+          pkgs.iproute2
           pkgs.jq
           pkgs.parted
           pkgs.pinentry-tty
