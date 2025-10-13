@@ -5,7 +5,10 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.features.amdgpu.enable { hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ]; })
+    (lib.mkIf config.features.amdgpu.enable {
+      hardware.graphics.extraPackages = [ pkgs.rocmPackages.clr.icd ];
+      nixpkgs.config.rocmSupport = true;
+    })
 
     (lib.mkIf config.features.bluetooth.enable {
       environment.persistence."/perm".directories = [ "/var/lib/bluetooth" ];
