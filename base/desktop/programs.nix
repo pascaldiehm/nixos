@@ -6,6 +6,7 @@
 
     home.packages = [
       pkgs.brightnessctl
+      pkgs.clinfo
       pkgs.cryptsetup
       pkgs.dmidecode
       pkgs.dogdns
