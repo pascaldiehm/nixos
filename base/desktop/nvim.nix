@@ -69,7 +69,6 @@
         n = {
           "<Space><Return>" = "<Cmd>terminal<Return>i";
           "<Space><Space>" = "<Cmd>Oil<Return>";
-          J = "mmJ`m";
           X = "\"_D";
           gQ = "<Cmd>cprevious<Return>";
           gl = "<C-o>";
