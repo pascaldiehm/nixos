@@ -34,16 +34,7 @@
 
       texlive = {
         enable = true;
-
-        extraPackages = tpkgs: {
-          inherit (tpkgs)
-            collection-basic
-            collection-bibtexextra
-            collection-fontsrecommended
-            collection-langgerman
-            collection-latexextra
-            ;
-        };
+        extraPackages = tpkgs: { inherit (tpkgs) collection-langgerman collection-latexextra latexmk; };
       };
     };
   };

@@ -25,14 +25,12 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     local BUILD_DIR="$PWD/build"
     mkdir -p "$BUILD_DIR"
 
-    pushd "$(dirname "$1")"
-    pdflatex -output-directory "$BUILD_DIR" "$(basename "$1")"
-    popd
+    latexmk -pdf -cd "-output-directory=$BUILD_DIR" "$1"
   }
 
   function nixos-diff() {
     git -C ~/.config/nixos fetch
-    git -C ~/.config/nixos diff "$@" "$(nixos-version --configuration-revision)"...origin
+    git -C ~/.config/nixos diff "$(nixos-version --configuration-revision)"...origin
   }
 
   function nixos-iso() {
