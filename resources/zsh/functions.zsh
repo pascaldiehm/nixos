@@ -22,10 +22,7 @@ function watch() (
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
-    local BUILD_DIR="$PWD/build"
-    mkdir -p "$BUILD_DIR"
-
-    latexmk -pdf -cd "-output-directory=$BUILD_DIR" "$1"
+    latexmk -pdf -cd "-outdir=$PWD/build" "$1"
   }
 
   function nixos-diff() {
