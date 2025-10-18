@@ -1,11 +1,46 @@
 pkgs: prev: {
   # FIXME: Remove this once CMake problems are fixed
-  libretro.thepowdertoy = prev.libretro.thepowdertoy.overrideAttrs (prev: {
-    postPatch = ''
-      ${prev.postPatch or ""}
-      sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/zlib/CMakeLists.txt
-    '';
-  });
+  libretro = prev.libretro // {
+    thepowdertoy = prev.libretro.thepowdertoy.overrideAttrs (prev: {
+      postPatch = ''
+        ${prev.postPatch or ""}
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/zlib/CMakeLists.txt
+      '';
+    });
+
+    tic80 = prev.libretro.tic80.overrideAttrs (prev: {
+      postPatch = ''
+        ${prev.postPatch or ""}
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" core/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" core/vendor/zip/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" core/vendor/libuv/CMakeLists.txt
+      '';
+    });
+
+    citra = prev.libretro.citra.overrideAttrs (prev: {
+      postPatch = ''
+        ${prev.postPatch or ""}
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/xbyak/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/dynarmic/externals/robin-map/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/soundtouch/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/sirit/externals/SPIRV-Headers/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/zstd/build/cmake/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" externals/libressl/CMakeLists.txt
+      '';
+    });
+
+    dolphin = prev.libretro.dolphin.overrideAttrs (prev: {
+      postPatch = ''
+        ${prev.postPatch or ""}
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/fmt/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/pugixml/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/enet/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/cubeb/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/mbedtls/CMakeLists.txt
+        sed -i "s/cmake_minimum_required\(.*\)/cmake_minimum_required(VERSION 3.5)/" Externals/gtest/CMakeLists.txt
+      '';
+    });
+  };
 
   libopenglrecorder = prev.libopenglrecorder.overrideAttrs (prev: {
     postPatch = ''
