@@ -2,7 +2,7 @@
   sops.secrets."university/gitlab-ssh-key".owner = "pascal";
 
   home-manager.users.pascal.programs = {
-    git.extraConfig.url = {
+    git.settings.url = {
       "git@gitlab.informatik.uni-wuerzburg.de:".insteadOf = "uni:";
       "git@gitlab.informatik.uni-wuerzburg.de:s457719/".insteadOf = "uni:/";
     };
