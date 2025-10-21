@@ -202,7 +202,7 @@
               latexindent = [
                 (lib.getExe' pkgs.texlivePackages.latexindent "latexindent")
                 "--logfile=/dev/null"
-                "--yaml=\"defaultIndent: '  ', indentPreamble: 1\""
+                "--yaml=\"defaultIndent: '  '\""
               ];
 
               prettier = [
