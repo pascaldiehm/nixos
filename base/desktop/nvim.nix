@@ -191,6 +191,7 @@
                 (lib.getExe pkgs.bibtex-tidy)
                 "--blank-lines"
                 "--merge"
+                "--no-escape"
                 "--numeric"
                 "--remove-empty-fields"
                 "--sort"
