@@ -32,11 +32,6 @@
     };
 
     services = {
-      mako = {
-        enable = true;
-        settings.default-timeout = 5000;
-      };
-
       hypridle = {
         enable = true;
 
@@ -54,6 +49,11 @@
             timeout = 300;
           };
         };
+      };
+
+      mako = {
+        enable = true;
+        settings.default-timeout = 5000;
       };
     };
 
@@ -89,11 +89,11 @@
           ];
 
           bezier = [
-            "almostLinear,0.5,0.5,0.75,1.0"
-            "easeInOutCubic,0.65,0.05,0.36,1"
-            "easeOutQuint,0.23,1,0.32,1"
-            "linear,0,0,1,1"
-            "quick,0.15,0,0.1,1"
+            "almostLinear, 0.5, 0.5, 0.75, 1.0"
+            "easeInOutCubic, 0.65, 0.05, 0.36, 1"
+            "easeOutQuint, 0.23, 1, 0.32, 1"
+            "linear, 0, 0, 1, 1"
+            "quick, 0.15, 0, 0.1, 1"
           ];
         };
 
