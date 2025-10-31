@@ -6,11 +6,11 @@ echo "Upgrading system..."
 nix flake update
 
 echo "Upgrading prettier plugins..."
-cd overlay/prettier
+pushd overlay/prettier
 sed -i 's/"\^.*"/"*"/' package.json
 npm upgrade --save
 rm -rf node_modules
-cd -
+popd
 
 echo "Upgrading Firefox extensions..."
 TMP="$(mktemp -d)"
