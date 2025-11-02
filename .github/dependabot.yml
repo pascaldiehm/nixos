@@ -9,4 +9,5 @@ updates:
         patterns: ["*"]
 
     schedule:
-      interval: weekly
+      cronjob: 0 2 * * 1
+      interval: cron
