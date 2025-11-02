@@ -1,7 +1,7 @@
 {
   networking.networkmanager.ensureProfiles.profiles.wired = {
     connection = {
-      autoconnect-priority = 90;
+      autoconnect-priority = 100;
       id = "wired";
       type = "ethernet";
     };
