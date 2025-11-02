@@ -12,7 +12,7 @@
     clean-perm =
       let
         cfg = config.environment.persistence."/perm";
-        dirs = lib.map (dir: "-path '/perm${dir.dirPath}/*'") cfg.directories;
+        dirs = lib.map (dir: "-path '/perm${dir.dirPath}' -o -path '/perm${dir.dirPath}/*'") cfg.directories;
         files = lib.map (file: "-path '/perm${file.filePath}'") cfg.files;
         paths = "\\( ${lib.concatStringsSep " -o " (dirs ++ files)} \\)";
       in
