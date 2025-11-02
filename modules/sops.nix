@@ -32,7 +32,7 @@
   };
 
   config.sops.secrets = lib.mapAttrs' (name: value: {
-    name = "common/${name}";
+    inherit (value) name;
 
     value = value // {
       sopsFile = ../resources/secrets/common/store.yaml;
