@@ -67,8 +67,9 @@ jobs:
             fi
           done < <(find . -name "*.nix")
 
-          # TODO: Use statix once pipe-operators are released
-          # nix run nixpkgs#statix -- check . || FAILED=1
+          # TODO: Use upstream statix once pipe-operators are released
+          nix build --accept-flake-config -o /tmp/ci-roots/statix github:oppiliappan/statix
+          /tmp/ci-roots/statix/bin/statix check . || FAILED=1
 
           ((! FAILED))
 
