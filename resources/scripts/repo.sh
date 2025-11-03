@@ -33,62 +33,67 @@ elif [ "$1" = "list" ]; then
     test -d "$REPO" || continue
     cd "$REPO"
 
-    HEAD="$(git rev-parse --abbrev-ref HEAD)"
-    if [ "$HEAD" = "HEAD" ]; then
-      HEAD="\033[33m$(git rev-parse --short HEAD)"
-    else
-      HEAD="\033[32m$HEAD"
-    fi
+    URL="$(git remote get-url origin 2>/dev/null || echo "local")"
+    HEAD="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
 
     CHANGES=""
-    if [ -n "$(git status --porcelain)" ]; then
-      CHANGES="\033[36m*"
+    if [ "$HEAD" = "HEAD" ]; then
+      if git rev-parse HEAD &>/dev/null; then
+        echo -e "\e[1;34m$REPO \e[0;33m$(git rev-parse --short HEAD) \e[90m$URL"
+      else
+        echo -e "\e[1;34m$REPO \e[0;31mEMPTY \e[90m$URL"
+      fi
     else
-      while read -r BRANCH; do
-        if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
-          test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES="\033[36m+"
-        else
-          CHANGES="\033[36m+"
-        fi
-      done < <(git branch --format "%(refname:short)")
+      if [ -n "$(git status --porcelain)" ]; then
+        CHANGES="\e[36m*"
+      else
+        while read -r BRANCH; do
+          if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
+            test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES="\e[36m+"
+          else
+            CHANGES="\e[36m+"
+          fi
+        done < <(git branch --format "%(refname:short)")
+      fi
+
+      echo -e "\e[1;34m$REPO \e[0;32m$HEAD$CHANGES \e[90m$URL"
     fi
 
-    echo -e "\033[1;34m$REPO \033[m$HEAD$CHANGES \033[90m$(git remote get-url origin)"
     cd ..
-  done | column --table --table-columns $'\033[4mRepo,Head,Remote\033[m'
+  done | column --table --table-columns $'\e[4mRepo,Head,Remote\e[m'
 elif [ "$1" = "status" ]; then
   function status() {
     cd "$1"
     git fetch
 
-    HEAD="$(git rev-parse --abbrev-ref HEAD)"
+    HEAD="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
     if [ "$HEAD" = "HEAD" ]; then
-      HEAD="\033[33m$(git rev-parse --short HEAD)"
+      HEAD="\e[33m$(git rev-parse --short HEAD)"
     else
-      HEAD="\033[32m$HEAD"
+      HEAD="\e[32m$HEAD"
     fi
 
-    echo -e "\033[1mRepo: \033[34m$1 \033[m($HEAD\033[m, \033[90m$(git remote get-url origin)\033[m)"
+    echo -e "\e[1mRepo: \e[34m$1 \e[m($HEAD\e[m, \e[90m$(git remote get-url origin 2>/dev/null || echo "local")\e[m)"
     echo
 
     if [ -n "$(git status --porcelain)" ]; then
-      echo -e "\033[1mChanges:\033[m"
+      echo -e "\e[1mChanges:\e[m"
       git status --short
       echo
     fi
 
     git branch --format "%(refname:short)" | while read -r BRANCH; do
-      COMMIT="$(git show --oneline --no-patch "$BRANCH" | sed -E 's/^(\w+) (.+)$/\\033[33m\1 \\033[m\2/')"
+      COMMIT="$(git show --oneline --no-patch "$BRANCH" | sed -E 's/^(\w+) (.+)$/\\e[33m\1 \\e[m\2/')"
 
       if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
         AHEAD="$(git rev-list --count "$BRANCH@{upstream}..$BRANCH")"
         BEHIND="$(git rev-list --count "$BRANCH..$BRANCH@{upstream}")"
 
-        echo -e "\033[32m$BRANCH\x09\033[m\u2193\033[36m$BEHIND \033[m\u2191\033[36m$AHEAD\x09$COMMIT"
+        echo -e "\e[32m$BRANCH\x09\e[m\u2193\e[36m$BEHIND \e[m\u2191\e[36m$AHEAD\x09$COMMIT"
       else
-        echo -e "\033[32m$BRANCH\x09\033[36mlocal\x09$COMMIT"
+        echo -e "\e[32m$BRANCH\x09\e[36mlocal\x09$COMMIT"
       fi
-    done | column --table --separator $'\x09' --table-columns $'\033[4mBranch,Changes,Commit\033[m'
+    done | column --table --separator $'\x09' --table-columns $'\e[4mBranch,Changes,Commit\e[m'
 
     cd ..
   }
@@ -177,7 +182,10 @@ elif [ "$1" = "update" ]; then
 
   if [ "$#" = 1 ]; then
     for REPO in *; do
-      test -d "$REPO" && update "$REPO"
+      test -d "$REPO" || continue
+      git -C "$REPO" rev-parse HEAD &>/dev/null || continue
+
+      update "$REPO"
     done
   elif [ "$#" = 2 ]; then
     if [ ! -d "$2" ]; then
