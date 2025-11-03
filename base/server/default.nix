@@ -1,1 +1,1 @@
-{ imports = [ ./fail2ban.nix ./journalwatch.nix ./misc.nix ./networking.nix ./upgrade.nix ]; }
+{ imports = [ ./journalwatch.nix ./misc.nix ./networking.nix ./upgrade.nix ]; }
