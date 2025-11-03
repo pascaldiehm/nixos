@@ -2,6 +2,7 @@
   services.openssh = {
     enable = true;
     authorizedKeysFiles = [ config.sops.common."ssh/${machine.name}/public".path ];
+    authorizedKeysInHomedir = false;
     ports = [ 1970 ];
 
     hostKeys = lib.singleton {

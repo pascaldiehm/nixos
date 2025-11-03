@@ -1,5 +1,6 @@
 {
   imports = [
+    ./backup.nix
     ./boot.nix
     ./docker.nix
     ./git.nix

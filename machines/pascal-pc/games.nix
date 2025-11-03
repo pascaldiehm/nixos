@@ -7,4 +7,10 @@
     ".local/share/PrismLauncher"
     ".local/share/supertuxkart"
   ];
+
+  services.duplicity.include = [
+    "/home/pascal/.config/retroarch/saves"
+    "/home/pascal/.config/supertuxkart"
+    "/home/pascal/.local/share/PrismLauncher/instances"
+  ];
 }

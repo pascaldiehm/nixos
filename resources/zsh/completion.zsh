@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
-compdef _nothing ntfy
+compdef '_arguments ":action:(collection-status list-current-files restore)"' backup
 compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
+compdef _nothing ntfy
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
