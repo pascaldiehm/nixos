@@ -8,7 +8,6 @@
 
     users.pascal = {
       programs.home-manager.enable = true;
-      xdg.enable = true;
 
       home = {
         homeDirectory = "/home/pascal";

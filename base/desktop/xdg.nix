@@ -1,5 +1,7 @@
 {
   home-manager.users.pascal.xdg = {
+    enable = true;
+
     mimeApps = {
       enable = true;
 

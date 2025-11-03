@@ -81,7 +81,7 @@ elif [ -n "$BEHIND" ]; then
   fi
 fi
 
-if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse @)" ]; then
+if [ "$(nixos-version --configuration-revision)" = "$(git rev-parse HEAD)" ]; then
   clear
   echo "The configuration has not changed. Continue anyway?"
   echo
