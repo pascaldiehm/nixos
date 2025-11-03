@@ -14,7 +14,6 @@
     ./networking.nix
     ./nixcache.nix
     ./nvim.nix
-    ./persistence.nix
     ./programs.nix
     ./ssh.nix
     ./stylix.nix
