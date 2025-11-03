@@ -7,8 +7,6 @@ if ! ping -c 1 1.1.1.1 &>/dev/null; then
   exit 1
 fi
 
-MACHINE=""
-BOOT="null"
 TYPE="null"
 while [ "$TYPE" = "null" ]; do
   clear

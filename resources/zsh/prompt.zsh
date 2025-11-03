@@ -23,7 +23,7 @@ function _prompt_git() {
     echo -n " %F{8}$BRANCH%f"
   fi
 
-  local STATUS="$(timeout 0.1s git status --porcelain)"
+  local STATUS="$(timeout 0.1 git status --porcelain)"
   local CHANGED="$(grep -Ec "^.(\w|\?)" <<<"$STATUS")"
   local STAGED="$(grep -Ec "^\w." <<<"$STATUS")"
 

@@ -13,7 +13,7 @@ function watch() (
   tput civis
 
   while clear; do
-    echo -e "\033[90mWatching: $*\033[m\n"
+    echo -e "\e[90mWatching: $*\e[m\n"
     eval "$*"
 
     sleep 1
@@ -45,7 +45,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   function nv() {
-    if [ -z "$1" ]; then
+    if [ "$#" = 0 ]; then
       nvim
     elif [ -f "$1" ]; then
       nvim "$1"
