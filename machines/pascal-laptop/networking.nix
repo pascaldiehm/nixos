@@ -1,28 +1,5 @@
 {
   networking.networkmanager.ensureProfiles.profiles = {
-    home = {
-      wireguard.private-key = "$WIREGUARD_PASCAL_LAPTOP_KEY";
-
-      connection = {
-        autoconnect = false;
-        id = "@home";
-        interface-name = "wg0";
-        type = "wireguard";
-      };
-
-      ipv4 = {
-        addresses = "192.168.0.91/24";
-        method = "manual";
-      };
-
-      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC" = {
-        allowed-ips = "192.168.0.0/16";
-        endpoint = "goomba:51820";
-        preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
-        preshared-key-flags = 0;
-      };
-    };
-
     home-wifi = {
       connection = {
         autoconnect-priority = 50;
@@ -63,6 +40,29 @@
       wifi-security = {
         key-mgmt = "wpa-psk";
         psk = "$HOTSPOT_PSK";
+      };
+    };
+
+    wg-main = {
+      wireguard.private-key = "$WIREGUARD_PASCAL_LAPTOP_KEY";
+
+      connection = {
+        autoconnect-priority = 100;
+        id = "@main";
+        interface-name = "wg-main";
+        type = "wireguard";
+      };
+
+      ipv4 = {
+        addresses = "10.42.42.91/24";
+        method = "manual";
+      };
+
+      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC" = {
+        allowed-ips = "10.42.42.0/24";
+        endpoint = "goomba.wan:51820";
+        preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
+        preshared-key-flags = 0;
       };
     };
   };

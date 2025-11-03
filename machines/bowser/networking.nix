@@ -6,17 +6,17 @@
   };
 
   systemd.network = {
-    netdevs."50-wireguard" = {
+    netdevs."50-wg-main" = {
       wireguardConfig.PrivateKeyFile = config.sops.secrets."bowser/wireguard/key".path;
 
       netdevConfig = {
         Kind = "wireguard";
-        Name = "wg0";
+        Name = "wg-main";
       };
 
       wireguardPeers = lib.singleton {
-        AllowedIPs = [ "192.168.0.0/24" ];
-        Endpoint = "goomba:51820";
+        AllowedIPs = [ "10.42.42.0/24" ];
+        Endpoint = "goomba.wan:51820";
         PersistentKeepalive = 25;
         PresharedKeyFile = config.sops.secrets."bowser/wireguard/goomba/psk".path;
         PublicKeyFile = config.sops.secrets."bowser/wireguard/goomba/public".path;
@@ -28,13 +28,12 @@
         address = [ "192.168.1.88/16" ];
         dns = [ "1.1.1.1" "1.0.0.1" ];
         gateway = [ "192.168.1.1" ];
-        matchConfig.Name = "eth0";
+        name = "eth0";
       };
 
-      "50-wireguard" = {
-        address = [ "192.168.0.2/24" ];
-        matchConfig.Name = "wg0";
-        networkConfig.IPMasquerade = "ipv4";
+      "50-wg-main" = {
+        address = [ "10.42.42.2/24" ];
+        name = "wg-main";
       };
     };
   };

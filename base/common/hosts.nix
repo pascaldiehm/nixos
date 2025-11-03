@@ -1,11 +1,17 @@
 {
   networking.extraHosts = ''
-    192.168.1.88 bowser
-    192.168.1.89 homeassistant
-    192.168.1.90 pascal-pc
-    192.168.1.91 pascal-laptop
-    192.168.1.99 pascal-phone
-    91.99.52.233 goomba
+    192.168.1.88 bowser.lan bowser
+    192.168.1.89 homeassistant.lan homeassistant
+    192.168.1.90 pascal-pc.lan pascal-pc
+    192.168.1.91 pascal-laptop.lan pascal-laptop
+    192.168.1.99 pascal-phone.lan pascal-phone
+
+    10.42.42.1 goomba.wg goomba
+    10.42.42.2 bowser.wg bowser
+    10.42.42.90 pascal-pc.wg pascal-pc
+    10.42.42.91 pascal-laptop.wg pascal-laptop
+
+    91.99.52.233 goomba.wan goomba
   '';
 
   programs.ssh.knownHosts = {

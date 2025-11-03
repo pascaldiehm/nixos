@@ -5,42 +5,41 @@
     "goomba/wireguard/key".owner = "systemd-network";
     "goomba/wireguard/bowser/psk".owner = "systemd-network";
     "goomba/wireguard/bowser/public".owner = "systemd-network";
+    "goomba/wireguard/pascal-pc/psk".owner = "systemd-network";
+    "goomba/wireguard/pascal-pc/public".owner = "systemd-network";
     "goomba/wireguard/pascal-laptop/psk".owner = "systemd-network";
     "goomba/wireguard/pascal-laptop/public".owner = "systemd-network";
-    "goomba/wireguard/pascal-phone/psk".owner = "systemd-network";
-    "goomba/wireguard/pascal-phone/public".owner = "systemd-network";
   };
 
   systemd.network = {
-    netdevs."50-wireguard" = {
+    netdevs."50-wg-main" = {
       netdevConfig = {
         Kind = "wireguard";
-        Name = "wg0";
+        Name = "wg-main";
       };
 
       wireguardConfig = {
         ListenPort = 51820;
         PrivateKeyFile = config.sops.secrets."goomba/wireguard/key".path;
-        RouteTable = "main";
       };
 
       wireguardPeers = [
         {
-          AllowedIPs = [ "192.168.0.0/16" ];
+          AllowedIPs = [ "10.42.42.2/32" ];
           PresharedKeyFile = config.sops.secrets."goomba/wireguard/bowser/psk".path;
           PublicKeyFile = config.sops.secrets."goomba/wireguard/bowser/public".path;
         }
 
         {
-          AllowedIPs = [ "192.168.0.91/32" ];
-          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/psk".path;
-          PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/public".path;
+          AllowedIPs = [ "10.42.42.90/32" ];
+          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-pc/psk".path;
+          PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-pc/public".path;
         }
 
         {
-          AllowedIPs = [ "192.168.0.99/32" ];
-          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-phone/psk".path;
-          PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-phone/public".path;
+          AllowedIPs = [ "10.42.42.91/32" ];
+          PresharedKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/psk".path;
+          PublicKeyFile = config.sops.secrets."goomba/wireguard/pascal-laptop/public".path;
         }
       ];
     };
@@ -50,12 +49,12 @@
         DHCP = "ipv4";
         address = [ "2a01:4f8:c0c:988b::1/64" ];
         gateway = [ "fe80::1" ];
-        matchConfig.Name = "eth0";
+        name = "eth0";
       };
 
-      "50-wireguard" = {
-        address = [ "192.168.0.1/24" ];
-        matchConfig.Name = "wg0";
+      "50-wg-main" = {
+        address = [ "10.42.42.1/24" ];
+        name = "wg-main";
         networkConfig.IPv4Forwarding = true;
       };
     };
