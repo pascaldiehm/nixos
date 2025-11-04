@@ -6,8 +6,8 @@
 
     policies = {
       DisableFirefoxAccounts = true;
-      DisablePocket = true;
       PasswordManagerEnabled = false;
+      HttpAllowlist = [ "http://bowser:8058" "http://homeassistant:8123" ];
 
       ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/firefox.json {
         bitwarden-password-manager.area = "navbar";
@@ -34,7 +34,7 @@
           Brilliant = "https://brilliant.org";
           ChatGPT = "https://chatgpt.com";
           Cloudflare = "https://dash.cloudflare.com";
-          FileGator = "http://192.168.1.88:8058";
+          FileGator = "http://bowser:8058";
           Hetzner = "https://console.hetzner.cloud";
           Netflix = "https://netflix.com";
           PayPal = "https://paypal.com";
@@ -44,7 +44,7 @@
           _toolbar = {
             Element = "https://app.element.io";
             GitHub = "https://github.com";
-            "Home Assistant" = "http://192.168.1.89:8123";
+            "Home Assistant" = "http://homeassistant:8123";
             WhatsApp = "https://web.whatsapp.com";
 
             Google = {
