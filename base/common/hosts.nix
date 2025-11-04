@@ -6,11 +6,6 @@
     192.168.1.91 pascal-laptop.lan pascal-laptop
     192.168.1.99 pascal-phone.lan pascal-phone
 
-    10.42.42.1 goomba.wg goomba
-    10.42.42.2 bowser.wg bowser
-    10.42.42.90 pascal-pc.wg pascal-pc
-    10.42.42.91 pascal-laptop.wg pascal-laptop
-
     91.99.52.233 goomba.wan goomba
   '';
 

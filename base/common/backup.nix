@@ -17,7 +17,8 @@
   '';
 
   services.duplicity = {
-    enable = true;
+    # TODO: Enable once WireGuard is set up
+    enable = false;
     cleanup.maxFull = 2;
     exclude = [ "**" ];
     extraFlags = [ "--ssh-options=\"-i ${config.sops.common."backup/key".path}\"" ];

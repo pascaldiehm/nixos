@@ -1,4 +1,5 @@
 {
+  # TODO: Setup WireGuard network
   networking.networkmanager.ensureProfiles.profiles = {
     home-wifi = {
       connection = {
@@ -40,29 +41,6 @@
       wifi-security = {
         key-mgmt = "wpa-psk";
         psk = "$HOTSPOT_PSK";
-      };
-    };
-
-    wg-main = {
-      wireguard.private-key = "$WIREGUARD_PASCAL_LAPTOP_KEY";
-
-      connection = {
-        autoconnect-priority = 100;
-        id = "@main";
-        interface-name = "wg-main";
-        type = "wireguard";
-      };
-
-      ipv4 = {
-        addresses = "10.42.42.91/24";
-        method = "manual";
-      };
-
-      "wireguard-peer.$WIREGUARD_GOOMBA_PUBLIC" = {
-        allowed-ips = "10.42.42.0/24";
-        endpoint = "goomba.wan:51820";
-        preshared-key = "$WIREGUARD_PASCAL_LAPTOP_PSK";
-        preshared-key-flags = 0;
       };
     };
   };
