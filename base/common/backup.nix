@@ -1,7 +1,7 @@
 { config, lib, machine, pkgs, ... }: {
   environment.persistence."/perm".directories = [ "/var/lib/duplicity" ];
   home-manager.users.pascal.home.packages = [ pkgs.scripts.backup ];
-  systemd.timers.duplicity.timerConfig.Persistent = true;
+  # systemd.timers.duplicity.timerConfig.Persistent = true;
 
   programs.scripts.backup.text = ''
     test "$UID" = 0 || exec sudo "$0" "$@"
