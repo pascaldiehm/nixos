@@ -87,10 +87,11 @@
             "workspaces, 1, 1.94, almostLinear, fade"
             "workspacesIn, 1, 1.21, almostLinear, fade"
             "workspacesOut, 1, 1.94, almostLinear, fade"
+            "zoomFactor, 1, 7, quick"
           ];
 
           bezier = [
-            "almostLinear, 0.5, 0.5, 0.75, 1.0"
+            "almostLinear, 0.5, 0.5, 0.75, 1"
             "easeInOutCubic, 0.65, 0.05, 0.36, 1"
             "easeOutQuint, 0.23, 1, 0.32, 1"
             "linear, 0, 0, 1, 1"
