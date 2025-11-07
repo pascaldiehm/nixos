@@ -12,7 +12,7 @@
       default_session.command = "${lib.getExe' pkgs.greetd "agreety"} --cmd ${pkgs.writeShellScript "exec-shell" "exec $SHELL"}";
 
       initial_session = {
-        command = "${lib.getExe pkgs.uwsm} start ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop";
+        command = "${lib.getExe pkgs.uwsm} start -F /run/current-system/sw/bin/Hyprland";
         user = "pascal";
       };
     };
