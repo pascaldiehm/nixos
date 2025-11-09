@@ -6,6 +6,6 @@
   fileSystems."/home/pascal/archive" = {
     device = "archive";
     fsType = "zfs";
-    options = [ "x-systemd.device-timeout=10" ];
+    options = [ "nofail" "x-systemd.device-timeout=10" ];
   };
 }
