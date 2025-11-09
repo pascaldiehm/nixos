@@ -1,17 +1,10 @@
 { config, pkgs, ... }: {
   sops.secrets."bowser/backup-key".owner = "pascal";
+  systemd.tmpfiles.rules = [ "d /nix/var/nix/gcroots/ci 1777 root root -" ];
 
   environment = {
+    persistence."/perm".users.pascal.directories = [ "shared" ];
     systemPackages = [ pkgs.nix-serve ];
-
-    persistence."/perm".users.pascal.directories = [
-      "shared"
-
-      {
-        directory = "/nix/var/nix/gcroots/ci";
-        mode = "1777";
-      }
-    ];
   };
 
   services = {
