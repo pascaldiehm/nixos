@@ -71,7 +71,7 @@ jobs:
 
           # TODO: Use upstream statix once pipe-operators are released
           nix build --accept-flake-config -o /nix/var/nix/gcroots/ci/statix github:oppiliappan/statix
-          /nix/var/nix/gcroots/ci/statix check . || FAILED=1
+          /nix/var/nix/gcroots/ci/statix/bin/statix check . || FAILED=1
 
           ((! FAILED))
 
