@@ -7,19 +7,15 @@
     users.pascal.directories = [ ".local/share/systemd" ];
   };
 
-  system.activationScripts = {
-    createPersistentStorageDirs.deps = [ "clean-perm" ];
-
-    clean-perm =
-      let
-        cfg = config.environment.persistence."/perm";
-        dirs = lib.map (dir: "-path '/perm${dir.dirPath}' -o -path '/perm${dir.dirPath}/*'") cfg.directories;
-        files = lib.map (file: "-path '/perm${file.filePath}'") cfg.files;
-        paths = "\\( ${lib.concatStringsSep " -o " (dirs ++ files)} \\)";
-      in
-      ''
-        find /perm -not ${paths} -not -type d -exec rm "{}" +
-        find /perm -depth -not ${paths} -type d -exec rmdir --ignore-fail-on-non-empty "{}" +
-      '';
-  };
+  system.activationScripts.clean-perm =
+    let
+      cfg = config.environment.persistence."/perm";
+      dirs = lib.map (dir: "-path '/perm${dir.dirPath}' -o -path '/perm${dir.dirPath}/*'") cfg.directories;
+      files = lib.map (file: "-path '/perm${file.filePath}'") cfg.files;
+      paths = "\\( ${lib.concatStringsSep " -o " (dirs ++ files)} \\)";
+    in
+    ''
+      find /perm -not ${paths} -not -type d -exec rm "{}" +
+      find /perm -depth -not ${paths} -type d -exec rmdir --ignore-fail-on-non-empty "{}" +
+    '';
 }
