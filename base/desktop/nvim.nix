@@ -5,8 +5,6 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
-      extraPackages = [ pkgs.ripgrep ];
-      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       filetype.extension.zsh = "sh";
       nixpkgs.pkgs = pkgs;
 
