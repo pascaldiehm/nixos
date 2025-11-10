@@ -2,6 +2,7 @@
 
 compdef '_arguments ":action:(collection-status list-current-files restore)"' backup
 compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
+compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
@@ -27,7 +28,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
-  compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
   compdef '_arguments ":mode:(build boot switch test)"' nixos-test
   compdef '_arguments ":type:($(ls /home/pascal/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha

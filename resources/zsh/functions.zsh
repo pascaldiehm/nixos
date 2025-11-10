@@ -59,6 +59,10 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
+  function nixos-upgrade() {
+    nixos-rebuild --impure --sudo --flake github:pascaldiehm/nixos "${1:-switch}"
+  }
+
   function service() {
     if [ "$#" = 0 ]; then
       docker compose ls
