@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-compdef '_arguments ":action:(collection-status list-current-files restore)"' backup
+compdef '_arguments ":action:(status list restore)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
 compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
 compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy

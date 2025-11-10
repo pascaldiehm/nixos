@@ -8,7 +8,7 @@
   };
 
   services = {
-    duplicity.include = [ "/home/pascal/shared" ];
+    backup."/home/pascal/shared" = { };
     openssh.authorizedKeysFiles = [ config.sops.secrets."bowser/backup-key".path ];
   };
 }

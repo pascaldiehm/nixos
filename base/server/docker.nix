@@ -1,6 +1,10 @@
 {
   environment.persistence."/perm".directories = [ "/var/lib/docker" ];
-  services.duplicity.include = [ "/var/lib/docker/volumes" ];
+
+  services.backup."/var/lib/docker/volumes" = {
+    excludeRegex = [ "[0-9a-f]{64}" ];
+    include = [ "*/" ];
+  };
 
   virtualisation.docker.autoPrune = {
     enable = true;

@@ -8,9 +8,9 @@
     ".local/share/supertuxkart"
   ];
 
-  services.duplicity.include = [
-    "/home/pascal/.config/retroarch/saves"
-    "/home/pascal/.config/supertuxkart"
-    "/home/pascal/.local/share/PrismLauncher/instances"
-  ];
+  services.backup = {
+    "/home/pascal/.config/retroarch".include = [ "saves" ];
+    "/home/pascal/.config/supertuxkart".excludeExtension = [ "log" ];
+    "/home/pascal/.local/share/PrismLauncher".include = [ "instances/*/minecraft/saves" ];
+  };
 }
