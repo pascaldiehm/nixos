@@ -35,5 +35,10 @@ pkgs: prev: {
         rm doc/recipes.md
       '';
     });
+
+    # TODO: Remove once fixed upstream
+    onedark-nvim = prev.vimPlugins.onedark-nvim.overrideAttrs (prev: {
+      patches = (prev.patches or [ ]) ++ [ ./onedark.patch ];
+    });
   };
 }
