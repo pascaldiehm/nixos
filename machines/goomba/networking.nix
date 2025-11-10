@@ -5,10 +5,10 @@
     "goomba/wireguard/key".owner = "systemd-network";
     "goomba/wireguard/bowser/psk".owner = "systemd-network";
     "goomba/wireguard/bowser/public".owner = "systemd-network";
-    "goomba/wireguard/pascal-pc/psk".owner = "systemd-network";
-    "goomba/wireguard/pascal-pc/public".owner = "systemd-network";
     "goomba/wireguard/pascal-laptop/psk".owner = "systemd-network";
     "goomba/wireguard/pascal-laptop/public".owner = "systemd-network";
+    "goomba/wireguard/pascal-pc/psk".owner = "systemd-network";
+    "goomba/wireguard/pascal-pc/public".owner = "systemd-network";
   };
 
   # TODO: Setup WireGuard network
