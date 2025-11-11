@@ -5,7 +5,7 @@
   };
 
   services.backup."/var/lib/docker/volumes" = {
-    excludeRegex = [ "[0-9a-f]{64}" ];
+    excludeRegex = [ "[0-9a-f]{64}/" ];
     include = [ "*/" ];
   };
 
