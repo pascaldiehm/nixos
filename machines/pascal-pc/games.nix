@@ -10,7 +10,7 @@
 
   services.backup = {
     "/home/pascal/.config/retroarch".include = [ "saves" ];
-    "/home/pascal/.config/supertuxkart".excludeExtension = [ "log" ];
+    "/home/pascal/.config/supertuxkart".excludeGlob = [ "**.log" ];
     "/home/pascal/.local/share/PrismLauncher".include = [ "instances/*/minecraft/saves" ];
   };
 }

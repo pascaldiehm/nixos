@@ -5,7 +5,7 @@
     type = lib.types.attrsOf (
       lib.types.submodule {
         options = {
-          excludeExtension = lib.mkOption {
+          excludeGlob = lib.mkOption {
             default = [ ];
             type = lib.types.listOf lib.types.str;
           };
@@ -39,7 +39,7 @@
 
           paths = lib.mapAttrsToList (
             path: cfg:
-            lib.map (ext: [ "--exclude '${path}/**.${ext}'" ]) cfg.excludeExtension
+            lib.map (glob: [ "--exclude '${path}/${glob}'" ]) cfg.excludeGlob
             ++ lib.map (re: [ "--exclude-regexp '${lib.escapeRegex path}/${re}'" ]) cfg.excludeRegex
             ++ (if cfg.include == null then [ "--include '${path}'" ] else lib.map (sub: "--include '${path}/${sub}'") cfg.include)
           ) config.services.backup;
