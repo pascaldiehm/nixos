@@ -7,7 +7,7 @@
     policies = {
       DisableFirefoxAccounts = true;
       PasswordManagerEnabled = false;
-      HttpAllowlist = [ "http://bowser:8058" "http://homeassistant:8123" ];
+      HttpAllowlist = [ "http://homeassistant:8123" ];
 
       ExtensionSettings = lib.mkMozillaExtensions ../../resources/extensions/firefox.json {
         bitwarden-password-manager.area = "navbar";
@@ -34,7 +34,6 @@
           Brilliant = "https://brilliant.org";
           ChatGPT = "https://chatgpt.com";
           Cloudflare = "https://dash.cloudflare.com";
-          FileGator = "http://bowser:8058";
           Hetzner = "https://console.hetzner.cloud";
           Netflix = "https://netflix.com";
           PayPal = "https://paypal.com";
@@ -82,6 +81,7 @@
           devhints = "https://devhints.io/%s";
           docker = "https://hub.docker.com/search?q=%s";
           ecosia = null;
+          file = "https://fileinfo.com/extension/%s";
           github = "https://github.com/search?q=%s";
           google = null;
           ip = "https://ipinfo.io/%s";
@@ -92,6 +92,7 @@
           nixwiki = "https://wiki.nixos.org/w/index.php?search=%s";
           noogle = "https://noogle.dev/q?term=%s";
           npm = "https://npmjs.com/search?q=%s";
+          perplexity = null;
           port = "https://speedguide.net/port.php?port=%s";
           wikipedia = null;
           youtube = "https://youtube.com/results?search_query=%s";
