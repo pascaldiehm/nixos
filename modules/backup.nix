@@ -85,8 +85,12 @@
         after = [ "network-online.target" ];
         description = "Backup local files";
         requires = [ "network-online.target" ];
-        serviceConfig.ExecStart = lib.getExe pkgs.scripts.backup;
         startAt = "daily";
+
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.scripts.backup;
+          Type = "oneshot";
+        };
       };
     };
 
