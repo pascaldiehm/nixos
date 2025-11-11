@@ -16,6 +16,11 @@
               type = lib.types.str;
             };
 
+            neededForUsers = lib.mkOption {
+              default = false;
+              type = lib.types.bool;
+            };
+
             owner = lib.mkOption {
               default = null;
               type = lib.types.nullOr lib.types.str;
