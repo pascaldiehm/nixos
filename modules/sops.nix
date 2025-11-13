@@ -27,8 +27,13 @@
             };
 
             path = lib.mkOption {
-              default = "/run/${if config.neededForUsers then "secrets-for-users" else "secrets"}/${config.name}";
+              default = "/run/secrets${lib.optionalString config.neededForUsers "-for-users"}/${config.name}";
               type = lib.types.str;
+            };
+
+            sopsFile = lib.mkOption {
+              default = ../resources/secrets/common/store.yaml;
+              type = lib.types.path;
             };
           };
         }
@@ -38,9 +43,6 @@
 
   config.sops.secrets = lib.mapAttrs' (name: value: {
     inherit (value) name;
-
-    value = value // {
-      sopsFile = ../resources/secrets/common/store.yaml;
-    };
+    inherit value;
   }) config.sops.common;
 }
