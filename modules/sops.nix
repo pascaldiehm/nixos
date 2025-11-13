@@ -27,7 +27,7 @@
             };
 
             path = lib.mkOption {
-              default = "/run/secrets/${config.name}";
+              default = "/run/${if config.neededForUsers then "secrets-for-users" else "secrets"}/${config.name}";
               type = lib.types.str;
             };
           };
