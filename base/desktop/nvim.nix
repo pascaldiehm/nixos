@@ -116,7 +116,6 @@
         spelllang = "en,de";
         splitbelow = true;
         splitright = true;
-        swapfile = false;
         tabstop = 2;
         wrap = false;
       };
