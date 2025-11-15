@@ -4,7 +4,7 @@
 
     loader = {
       efi.canTouchEfiVariables = true;
-      grub.device = lib.mkIf (machine.boot == "BIOS") (lib.mkDefault "/dev/null");
+      grub.device = lib.mkDefault "/dev/null" |> lib.mkIf (machine.boot == "BIOS");
       systemd-boot.enable = machine.boot == "EFI";
     };
   };

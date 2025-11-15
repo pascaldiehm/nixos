@@ -1,4 +1,6 @@
 { config, lib, ... }: {
+  config.sops.secrets = lib.mapAttrs' (name: value: lib.nameValuePair value.name value) config.sops.common;
+
   options.sops.common = lib.mkOption {
     default = { };
 
@@ -40,9 +42,4 @@
       )
     );
   };
-
-  config.sops.secrets = lib.mapAttrs' (name: value: {
-    inherit (value) name;
-    inherit value;
-  }) config.sops.common;
 }

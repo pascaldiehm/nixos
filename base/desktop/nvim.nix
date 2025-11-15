@@ -8,7 +8,7 @@
       filetype.extension.zsh = "sh";
       nixpkgs.pkgs = pkgs;
 
-      autoCmd = lib.mkNvimAutoCommands {
+      autoCmd = lib.mapAttrsToList (event: command: { inherit command event; }) {
         TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input(\"<Return>\") end";
         TermOpen = "setlocal nospell";
       };

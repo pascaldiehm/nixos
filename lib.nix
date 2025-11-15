@@ -1,6 +1,4 @@
 lib: prev: {
-  mkNvimAutoCommands = lib.mapAttrsToList (event: command: { inherit event command; });
-
   mkFirefoxBookmarks = lib.mapAttrsToList (
     name: value:
     if lib.isAttrs value then
