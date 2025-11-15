@@ -1,4 +1,6 @@
 pkgs: prev: {
+  nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
+
   nixfmt = prev.nixfmt.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [ nixfmt/compact-lists.patch nixfmt/compact-params.patch ];
   });
