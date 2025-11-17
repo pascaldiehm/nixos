@@ -34,7 +34,7 @@
       text =
         let
           args = "--archive-dir /var/lib/duplicity --ssh-options '-i \"${config.sops.common."backup/key".path}\"'";
-          include = lib.flatten paths |> lib.concatStringsSep " ";
+          include = lib.flatten paths |> toString;
           target = "sftp://pascal@bowser:1970/archive/Backups";
 
           paths = lib.mapAttrsToList (
