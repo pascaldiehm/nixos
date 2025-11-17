@@ -9,7 +9,6 @@
     ./home-assistant.nix
     ./home.nix
     ./hypr.nix
-    ./locale.nix
     ./misc.nix
     ./networking.nix
     ./nixcache.nix

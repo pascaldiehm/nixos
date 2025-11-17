@@ -6,6 +6,7 @@
     ./home-manager.nix
     ./hosts.nix
     ./htop.nix
+    ./locale.nix
     ./misc.nix
     ./nix.nix
     ./ntfy.nix
