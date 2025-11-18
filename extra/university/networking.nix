@@ -5,7 +5,7 @@
     ensureProfiles.profiles = {
       bayern-wlan = {
         connection = {
-          autoconnect-priority = 25;
+          autoconnect = false;
           id = "BayernWLAN";
           type = "wifi";
         };
