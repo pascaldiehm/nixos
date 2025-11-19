@@ -7,6 +7,7 @@
     home.packages = [
       pkgs.brightnessctl
       pkgs.clinfo
+      pkgs.clock-rs
       pkgs.cryptsetup
       pkgs.dmidecode
       pkgs.dogdns
@@ -36,6 +37,7 @@
       pkgs.vlc
       pkgs.wireshark
       pkgs.wl-clipboard
+      pkgs.wl-mirror
       pkgs.xh
       pkgs.yt-dlp
     ];
