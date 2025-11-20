@@ -20,6 +20,7 @@
       pkgs.mtr
       pkgs.networkmanagerapplet
       pkgs.nmap
+      pkgs.pdfpc
       pkgs.poppler-utils
       pkgs.pwvucontrol
       pkgs.rsync
@@ -35,6 +36,7 @@
       pkgs.usbutils
       pkgs.vhs
       pkgs.vlc
+      pkgs.wf-recorder
       pkgs.wireshark
       pkgs.wl-clipboard
       pkgs.wl-mirror
