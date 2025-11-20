@@ -94,6 +94,7 @@
           npm = "https://npmjs.com/search?q=%s";
           perplexity = null;
           port = "https://speedguide.net/port.php?port=%s";
+          texdoc = "https://texdoc.org/serve/%s/0";
           wikipedia = null;
           youtube = "https://youtube.com/results?search_query=%s";
         };
