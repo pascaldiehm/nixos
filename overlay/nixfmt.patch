@@ -1,0 +1,224 @@
+diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
+index 96fd3c7..adb7c87 100644
+--- a/src/Nixfmt/Pretty.hs
++++ b/src/Nixfmt/Pretty.hs
+@@ -119,6 +119,20 @@ prettyItems (Items items) = go items
+     go (item : rest) =
+       pretty item <> if null rest then mempty else hardline <> go rest
+ 
++prettyListItems :: (Pretty a) => Items a -> Doc
++prettyListItems (Items items) = go items
++  where
++    go [] = mempty
++    go [item] = pretty item
++    -- Special case: language annotation comment followed by string item
++    go (Comments [LanguageAnnotation lang] : Item stringItem : rest) =
++      pretty (LanguageAnnotation lang)
++        <> hardspace
++        <> group stringItem
++        <> if null rest then mempty else hardline <> go rest
++    go (item : rest) =
++      pretty item <> if null rest then mempty else line <> go rest
++
+ instance Pretty [Trivium] where
+   pretty [] = mempty
+   -- Special case: if trivia consists only of a single language annotation, render it inline without a preceding hardline
+@@ -144,25 +158,19 @@ instance Pretty Binder where
+   pretty (Inherit inherit Nothing ids semicolon) =
+     group $
+       pretty inherit
+-        <> sep
+-        <> nest (sepBy sep ids <> nosep <> pretty semicolon)
+-    where
+-      -- Only allow a single line if it's already on a single line and has few enough elements
+-      (sep, nosep) = if sourceLine inherit == sourceLine semicolon && length ids < 4 then (line, line') else (hardline, hardline)
++        <> line
++        <> nest (sepBy line ids <> line' <> pretty semicolon)
+   -- `inherit (foo) bar` statement
+   pretty (Inherit inherit (Just source) ids semicolon) =
+     group $
+       pretty inherit
+         <> nest
+           ( group' RegularG (line <> pretty source)
+-              <> sep
+-              <> sepBy sep ids
+-              <> nosep
++              <> line
++              <> sepBy line ids
++              <> line'
+               <> pretty semicolon
+           )
+-    where
+-      -- Only allow a single line if it's already on a single line and has few enough elements
+-      (sep, nosep) = if sourceLine inherit == sourceLine semicolon && length ids < 4 then (line, line') else (hardline, hardline)
+   -- `foo = bar`
+   pretty (Assignment selectors assign expr semicolon) =
+     group $
+@@ -185,24 +193,14 @@ instance Pretty Binder where
+ prettySet :: Bool -> (Maybe Leaf, Leaf, Items Binder, Leaf) -> Doc
+ -- Empty attribute set
+ prettySet _ (krec, paropen@(LoneAnn _), Items [], parclose@Ann{preTrivia = []}) =
+-  pretty (fmap (,hardspace) krec) <> pretty paropen <> sep <> pretty parclose
+-  where
+-    -- If the braces are on different lines, keep them like that
+-    sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
++  pretty (fmap (,hardspace) krec) <> pretty paropen <> hardspace <> pretty parclose
+ -- Singleton sets are allowed to fit onto one line,
+ -- but apart from that always expand.
+ prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
+   pretty (fmap (,hardspace) krec)
+     <> pretty (paropen{trailComment = Nothing})
+-    <> surroundWith sep (nest $ pretty post <> prettyItems binders)
++    <> surroundWith line (nest $ pretty post <> prettyItems binders)
+     <> pretty parclose
+-  where
+-    sep =
+-      if wide && not (null (unItems binders))
+-        -- If the braces are on different lines, keep them like that
+-        || sourceLine paropen /= sourceLine parclose
+-        then hardline
+-        else line
+ 
+ prettyTermWide :: Term -> Doc
+ prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
+@@ -231,19 +229,13 @@ prettyTerm (Selection term selectors rest) =
+ 
+ -- Empty list
+ prettyTerm (List paropen@Ann{trailComment = Nothing} (Items []) parclose@Ann{preTrivia = []}) =
+-  pretty paropen <> sep <> pretty parclose
+-  where
+-    -- If the brackets are on different lines, keep them like that
+-    sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
++  pretty paropen <> hardspace <> pretty parclose
+ -- General list
+ -- Always expand if len > 1
+ prettyTerm (List paropen@Ann{trailComment = post} items parclose) =
+   pretty (paropen{trailComment = Nothing})
+-    <> surroundWith sur (nest $ pretty post <> prettyItems items)
++    <> surroundWith line (nest $ pretty post <> prettyListItems items)
+     <> pretty parclose
+-  where
+-    -- If the brackets are on different lines, keep them like that
+-    sur = if sourceLine paropen /= sourceLine parclose then hardline else line
+ prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
+ -- Parentheses
+ prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
+@@ -341,15 +333,12 @@ instance Pretty Parameter where
+   pretty (IDParameter i) = pretty i
+   -- {}:
+   pretty (SetParameter bopen [] bclose) =
+-    group $ pretty (moveTrailingCommentUp bopen) <> sep <> pretty bclose
+-    where
+-      -- If the braces are on different lines, keep them like that
+-      sep = if sourceLine bopen /= sourceLine bclose then hardline else hardspace
++    group $ pretty (moveTrailingCommentUp bopen) <> hardspace <> pretty bclose
+   -- { stuff }:
+   pretty (SetParameter bopen attrs bclose) =
+     group $
+       pretty (moveTrailingCommentUp bopen)
+-        <> surroundWith sep (nest $ sepBy sep $ handleTrailingComma $ map moveParamAttrComment $ moveParamsComments attrs)
++        <> surroundWith line (nest $ sepBy line $ handleTrailingComma $ map moveParamAttrComment $ moveParamsComments attrs)
+         <> pretty bclose
+     where
+       -- pretty all ParamAttrs, but mark the trailing comma of the last element specially
+@@ -360,19 +349,6 @@ instance Pretty Parameter where
+       handleTrailingComma [ParamAttr name maybeDefault (Just (LoneAnn TComma))] =
+         [pretty (ParamAttr name maybeDefault Nothing) <> trailing ","]
+       handleTrailingComma (x : xs) = pretty x : handleTrailingComma xs
+-
+-      sep =
+-        -- If the braces are on different lines, keep them like that
+-        if sourceLine bopen /= sourceLine bclose
+-          then hardline
+-          else case attrs of
+-            [ParamEllipsis _] -> line
+-            -- Attributes must be without default
+-            [ParamAttr _ Nothing _] -> line
+-            [ParamAttr _ Nothing _, ParamEllipsis _] -> line
+-            [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> line
+-            [ParamAttr _ Nothing _, ParamAttr _ Nothing _, ParamEllipsis _] -> line
+-            _ -> hardline
+   pretty (ContextParameter param1 at param2) =
+     pretty param1 <> pretty at <> pretty param2
+ 
+@@ -428,11 +404,7 @@ prettyApp indentFunction pre hasPost f a =
+               <> surroundWith sur (nest $ pretty post' <> sepBy line (unItems items))
+               <> pretty parclose
+         where
+-          -- If the brackets are on different lines, keep them like that
+-          sur
+-            | sourceLine paropen /= sourceLine parclose = hardline
+-            | null $ unItems items = hardspace
+-            | otherwise = line
++          sur = if null $ unItems items then hardspace else line
+       absorbInner expr = pretty expr
+ 
+       -- Render the last argument of a function call
+@@ -645,7 +617,7 @@ absorbRHS expr = case expr of
+   (Term (Path _)) -> nest $ hardspace <> group expr
+   -- Non-absorbable term
+   -- If it is multi-line, force it to start on a new line with indentation
+-  (Term _) -> nest $ group' RegularG (line <> pretty expr)
++  (Term _) -> nest $ group' RegularG (hardspace <> pretty expr)
+   -- Function call
+   -- Absorb if all arguments except the last fit into the line, start on new line otherwise
+   (Application f a) -> nest $ prettyApp False line False f a
+@@ -668,7 +640,7 @@ absorbRHS expr = case expr of
+   -- If it fits on one line, it fits
+   -- If it fits on one line but with a newline after the `=`, it fits (including semicolon)
+   -- Otherwise, start on new line, expand fully (including the semicolon)
+-  _ -> nest $ line <> group expr
++  _ -> nest $ hardspace <> group expr
+   where
+     isUpdateConcatPlus TUpdate = True
+     isUpdateConcatPlus TConcat = True
+@@ -682,18 +654,18 @@ instance Pretty Expression where
+   -- We also take the comments around the `in` (trailing, leading and detached binder comments)
+   -- and move them down to the first token of the body
+   pretty (Let let_ binders Ann{preTrivia, value = in_, trailComment} expr) =
+-    letPart <> hardline <> inPart
++    letPart <> line <> inPart
+     where
+       -- Convert the TrailingComment to a Trivium, if present
+       convertTrailing Nothing = []
+       convertTrailing (Just (TrailingComment t)) = [LineComment (" " <> t)]
+ 
+-      letPart = group $ pretty let_ <> hardline <> letBody
++      letPart = group $ pretty let_ <> line <> letBody
+       letBody = nest $ prettyItems binders
+       inPart =
+         group $
+           pretty in_
+-            <> hardline
++            <> hardspace
+             <> pretty (preTrivia ++ convertTrailing trailComment)
+             <> pretty expr
+   pretty (Assert assert cond semicolon expr) =
+@@ -730,7 +702,7 @@ instance Pretty Expression where
+ 
+   -- Simple parameter
+   pretty (Abstraction (IDParameter param) colon body) =
+-    group' RegularG $ line' <> pretty param <> pretty colon <> absorbAbs 1 body
++    group' RegularG $ softline' <> pretty param <> pretty colon <> absorbAbs 1 body
+     where
+       absorbAbs :: Int -> Expression -> Doc
+       -- If there are multiple ID parameters to that function, treat them all at once
+@@ -738,15 +710,14 @@ instance Pretty Expression where
+         hardspace <> pretty param0 <> pretty colon0 <> absorbAbs (depth + 1) body0
+       absorbAbs _ expr | isAbsorbableExpr expr = hardspace <> group' Priority (absorbExpr False expr)
+       -- Force the content onto a new line when it is not absorbable and there are more than two arguments
+-      absorbAbs depth x =
+-        (if depth <= 2 then line else hardline) <> pretty x
++      absorbAbs depth x = hardspace <> pretty x
+ 
+   -- Attrset parameter
+   pretty (Abstraction param colon (Term t))
+     | isAbsorbable t =
+-        pretty param <> pretty colon <> line <> group (prettyTermWide t)
++        pretty param <> pretty colon <> hardspace <> group (prettyTermWide t)
+   pretty (Abstraction param colon body) =
+-    pretty param <> pretty colon <> line <> pretty body
++    pretty param <> pretty colon <> hardspace <> pretty body
+   pretty (Application f a) =
+     prettyApp False mempty False f a
+   -- not chainable binary operators: <, >, <=, >=, ==, !=

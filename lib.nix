@@ -1,7 +1,6 @@
 lib: prev: {
   mkFirefoxBookmarks = lib.mapAttrsToList (
-    name: value:
-    if lib.isAttrs value then
+    name: value: if lib.isAttrs value then
       {
         inherit name;
         toolbar = name == "_toolbar";
@@ -15,31 +14,28 @@ lib: prev: {
   );
 
   mkFirefoxSearchEngines = lib.mapAttrs (
-    name: url:
-    if url == null then
+    name: url: if url == null then
       { metaData.hidden = true; }
     else
       {
-        urls = [ { template = lib.replaceStrings [ "%s" ] [ "{searchTerms}" ] url; } ];
         definedAliases = [ "@${name}" ];
+        urls = [ { template = lib.replaceStrings [ "%s" ] [ "{searchTerms}" ] url; } ];
       }
   );
 
-  mkMozillaExtensions =
-    path: settings:
-    lib.importJSON path
-    |> lib.map (ext: {
-      name = ext.id;
+  mkMozillaExtensions = path: settings: lib.importJSON path
+  |> lib.map (ext: {
+    name = ext.id;
 
-      value = {
-        default_area = settings.${ext.name}.area or "menupanel";
-        install_url = ext.source;
-        installation_mode = "force_installed";
-        private_browsing = settings.${ext.name}.private or false;
-      };
-    })
-    |> lib.listToAttrs
-    |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
+    value = {
+      default_area = settings.${ext.name}.area or "menupanel";
+      install_url = ext.source;
+      installation_mode = "force_installed";
+      private_browsing = settings.${ext.name}.private or false;
+    };
+  })
+  |> lib.listToAttrs
+  |> lib.mergeAttrs { "*".installation_mode = "blocked"; };
 
   mkNvimFormatters = lib.mapAttrs (
     key: value: {
@@ -48,14 +44,11 @@ lib: prev: {
     }
   );
 
-  mkNvimKeymaps =
-    maps:
-    lib.mapAttrsToList (
-      mode: keys:
-      lib.mapAttrsToList (key: action: {
-        inherit action key;
-        mode = lib.stringToCharacters mode;
-      }) keys
-    ) maps
-    |> lib.flatten;
+  mkNvimKeymaps = maps: lib.mapAttrsToList (
+    mode: keys: lib.mapAttrsToList (key: action: {
+      inherit action key;
+      mode = lib.stringToCharacters mode;
+    }) keys
+  ) maps
+  |> lib.flatten;
 }

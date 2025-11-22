@@ -36,12 +36,7 @@
         enable = true;
 
         extraPackages = tpkgs: {
-          inherit (tpkgs)
-            collection-fontsrecommended
-            collection-langgerman
-            collection-latexextra
-            latexmk
-            ;
+          inherit (tpkgs) collection-fontsrecommended collection-langgerman collection-latexextra latexmk;
         };
       };
     };
