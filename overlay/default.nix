@@ -1,6 +1,6 @@
 pkgs: prev: {
   nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
-  nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ ./nixfmt.patch ]; });
+  nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
 
   prettier = pkgs.importNpmLock.buildNodeModules rec {
     nodejs = pkgs.nodePackages.nodejs;
@@ -37,7 +37,7 @@ pkgs: prev: {
 
     # TODO: Remove once fixed upstream
     onedark-nvim = prev.vimPlugins.onedark-nvim.overrideAttrs (prev: {
-      patches = (prev.patches or [ ]) ++ [ ./onedark.patch ];
+      patches = (prev.patches or [ ]) ++ [ patches/onedark.patch ];
     });
   };
 }
