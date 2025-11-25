@@ -1,7 +1,6 @@
 pkgs: prev: {
   nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
-  pdfpc = prev.pdfpc.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/pdfpc.patch ]; });
 
   prettier = pkgs.importNpmLock.buildNodeModules rec {
     nodejs = pkgs.nodePackages.nodejs;
