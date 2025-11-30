@@ -22,7 +22,7 @@ function watch() (
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
-    latexmk -pdf -cd "-outdir=$PWD/build" "$1"
+    latexmk -pdf -cd -outdir="$PWD/build" "$1"
   }
 
   function nixos-diff() {
