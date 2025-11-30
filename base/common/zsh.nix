@@ -8,6 +8,7 @@
     dotDir = "/home/pascal/.config/zsh";
     history.path = "/home/pascal/.local/state/zsh/.zsh_history";
     plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { inherit (pkgs) zsh-completions; };
+    setOptions = [ "AUTO_CONTINUE" "CORRECT" "PUSHD_SILENT" ];
     syntaxHighlighting.enable = true;
 
     initContent = lib.mkMerge [
@@ -15,7 +16,6 @@
       (lib.readFile ../../resources/zsh/completion.zsh)
       (lib.readFile ../../resources/zsh/functions.zsh)
       (lib.readFile ../../resources/zsh/input.zsh)
-      (lib.readFile ../../resources/zsh/options.zsh)
       (lib.readFile ../../resources/zsh/prompt.zsh)
     ];
 
