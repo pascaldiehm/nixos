@@ -1,6 +1,6 @@
 {
   "name": "prettier",
-  "version": "1.0.0",
+  "version": "2025-10-07",
   "dependencies": {
     "@prettier/plugin-php": "^0.24.0",
     "prettier": "^3.6.2",

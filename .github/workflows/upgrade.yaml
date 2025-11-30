@@ -41,7 +41,7 @@ jobs:
           test -n "$CHANGES_FLAKE" && CHANGES_FLAKE="$(echo "Flake changes:" && sed "s/^/  - /" <<<"$CHANGES_FLAKE")"
           git add flake.lock
 
-          CHANGES_PRETTIER="$(git diff overlay/prettier/package.json | grep "^+ " | cut -d \" -f 2 | sort | uniq)"
+          CHANGES_PRETTIER="$(git diff overlay/prettier/package.json | grep "^+ " | tail -n +2 | cut -d \" -f 2 | sort | uniq)"
           test -n "$CHANGES_PRETTIER" && CHANGES_PRETTIER="$(echo "Prettier plugin changes:" && sed "s/^/  - /" <<<"$CHANGES_PRETTIER")"
           git add overlay/prettier
 

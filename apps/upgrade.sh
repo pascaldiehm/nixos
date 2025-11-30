@@ -10,6 +10,8 @@ pushd overlay/prettier
 sed -i 's/"\^.*"/"*"/' package.json
 npm upgrade --save
 rm -rf node_modules
+
+test -n "$(git status --porcelain .)" && sed -i "s/\"version\": \".*\"/\"version\": \"$(date "+%Y-%m-%d")\"/" package.json
 popd
 
 echo "Upgrading Firefox extensions..."
