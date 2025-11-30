@@ -54,6 +54,8 @@
       };
     };
   in rec {
+    legacyPackages.x86_64-linux = nixosConfigurations.pascal-pc._module.args.pkgs;
+
     nixosConfigurations = lib.importJSON ./machines.json
       |> lib.mapAttrs mkSystem
       |> lib.mergeAttrs { installer = lib.nixosSystem { modules = [ extra/installer.nix ]; }; };
