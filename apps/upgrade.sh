@@ -7,11 +7,20 @@ nix flake update
 
 echo "Upgrading prettier plugins..."
 pushd overlay/prettier
-sed -i 's/"\^.*"/"*"/' package.json
+TMP="$(mktemp)"
+
+jq '.dependencies |= with_entries(.value = "*")' package.json >"$TMP"
+cp "$TMP" package.json
+
 npm upgrade --save
 rm -rf node_modules
 
-test -n "$(git status --porcelain .)" && sed -i "s/\"version\": \".*\"/\"version\": \"$(date "+%Y-%m-%d")\"/" package.json
+if [ -n "$(git status --porcelain .)" ]; then
+  jq '.version = (now | strftime("%Y-%m-%d"))' package.json >"$TMP"
+  cp "$TMP" package.json
+fi
+
+rm -f "$TMP"
 popd
 
 echo "Upgrading Firefox extensions..."
