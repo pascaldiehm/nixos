@@ -6,8 +6,8 @@
     deps = [ pkgs.curl ];
 
     text = lib.templateString {
-      token = config.sops.common.ntfy.path;
-      machine = machine.name;
+      TOKEN = config.sops.common.ntfy.path;
+      MACHINE = machine.name;
     } (lib.readFile ../../resources/scripts/ntfy.sh);
   };
 }

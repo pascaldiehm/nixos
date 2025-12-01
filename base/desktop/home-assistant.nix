@@ -6,6 +6,6 @@
     deps = [ pkgs.curl ];
 
     text = lib.readFile ../../resources/scripts/ha.sh
-      |> lib.templateString { token = config.sops.secrets.home-assistant-token.path; };
+      |> lib.templateString { TOKEN = config.sops.secrets.home-assistant-token.path; };
   };
 }
