@@ -10,7 +10,6 @@
 
       ipv4 = {
         addresses = "192.168.1.91/16";
-        dns = "1.1.1.1;1.0.0.1";
         gateway = "192.168.1.1";
         method = "manual";
       };

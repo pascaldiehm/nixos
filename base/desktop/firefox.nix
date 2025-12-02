@@ -125,8 +125,7 @@
         "extensions.formautofill.creditCards.enabled" = false;
         "media.eme.enabled" = true;
         "media.webspeech.synth.dont_notify_on_error" = true;
-        "network.trr.mode" = 3;
-        "network.trr.uri" = "https://mozilla.cloudflare-dns.com/dns-query";
+        "network.trr.mode" = 5;
         "places.history.enabled" = false;
         "privacy.history.custom" = true;
       };

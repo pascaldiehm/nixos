@@ -10,9 +10,4 @@
       ensureProfiles.environmentFiles = [ config.sops.secrets.network.path ];
     };
   };
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-  };
 }
