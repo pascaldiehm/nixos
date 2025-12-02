@@ -1,17 +1,34 @@
 #!/usr/bin/env bash
 
 set -e
+echo "Automatic upgrade" >MSG
 
-echo "Upgrading system..."
+echo -e "\n\nUpgrading system..."
 nix flake update
 
-echo "Upgrading dynhostmgr dependencies..."
+CHANGES="$(git diff flake.lock)"
+git add flake.lock
+
+test -n "$CHANGES" && {
+  echo -e "\nFlake changes:"
+  grep '"repo":' <<<"$CHANGES" | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+} >>MSG
+
+echo -e "\n\nUpgrading dynhostmgr..."
 pushd overlay/dynhostmgr
 cargo update -Z unstable-options --breaking # TODO: Remove unstable-options when breaking is stable
 cargo update
 popd
 
-echo "Upgrading prettier plugins..."
+CHANGES="$(git diff overlay/dynhostmgr/Cargo.toml)"
+git add overlay/dynhostmgr
+
+test -n "$CHANGES" && {
+  echo -e "\nDynhostmgr changes:"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d = -f 1 | sort -u | sed "s/^+/  - /"
+} >>MSG
+
+echo -e "\n\nUpgrading prettier..."
 pushd overlay/prettier
 TMP="$(mktemp)"
 
@@ -26,10 +43,18 @@ if [ -n "$(git status --porcelain .)" ]; then
   cp "$TMP" package.json
 fi
 
-rm -f "$TMP"
+rm "$TMP"
 popd
 
-echo "Upgrading Firefox extensions..."
+CHANGES="$(git diff overlay/prettier/package.json)"
+git add overlay/prettier
+
+test -n "$CHANGES" && {
+  echo -e "\nPrettier changes:"
+  grep ^+ <<<"$CHANGES" | tail -n +3 | cut -d \" -f 2 | sort -u | sed "s/^/  - /"
+} >>MSG
+
+echo -e "\n\nUpgrading Firefox extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
@@ -41,12 +66,12 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl --silent --show-error --head "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl -fsS --head "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
     SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-    curl --silent --show-error --output "$TMP/$NAME.xpi" "$SOURCE"
+    curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"
@@ -61,7 +86,15 @@ echo -e "\n]" >>"$TMP/extensions.json"
 mv "$TMP/extensions.json" resources/extensions/firefox.json
 rm -rf "$TMP"
 
-echo "Upgrading Thunderbird extensions..."
+CHANGES="$(git diff resources/extensions/firefox.json)"
+git add resources/extensions/firefox.json
+
+test -n "$CHANGES" && {
+  echo -e "\nFirefox extension changes:"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+} >>MSG
+
+echo -e "\n\nUpgrading Thunderbird extensions..."
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
@@ -73,12 +106,12 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl --silent --show-error --head "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl -fsS --head "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
 
   if grep -q "^location:" "$TMP/$NAME.txt"; then
     SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
 
-    curl --silent --show-error --output "$TMP/$NAME.xpi" "$SOURCE"
+    curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
     ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
   else
     echo "    -> Failed, no location returned"
@@ -92,3 +125,13 @@ done < <(jq -c ".[]" resources/extensions/thunderbird.json)
 echo -e "\n]" >>"$TMP/extensions.json"
 mv "$TMP/extensions.json" resources/extensions/thunderbird.json
 rm -rf "$TMP"
+
+CHANGES="$(git diff resources/extensions/thunderbird.json)"
+git add resources/extensions/thunderbird.json
+
+test -n "$CHANGES" && {
+  echo -e "\nThunderbird extension changes:"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+} >>MSG
+
+echo "Done!"
