@@ -2,6 +2,13 @@ pkgs: prev: {
   nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
 
+  dynhostmgr = pkgs.rustPlatform.buildRustPackage {
+    name = "dynhostmgr";
+    src = ./dynhostmgr;
+    cargoLock.lockFile = dynhostmgr/Cargo.lock;
+    meta.mainProgram = "dynhostmgr";
+  };
+
   prettier = pkgs.importNpmLock.buildNodeModules rec {
     nodejs = pkgs.nodePackages.nodejs;
     npmRoot = ./prettier;

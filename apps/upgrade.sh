@@ -5,6 +5,12 @@ set -e
 echo "Upgrading system..."
 nix flake update
 
+echo "Upgrading dynhostmgr dependencies..."
+pushd overlay/dynhostmgr
+cargo update -Z unstable-options --breaking # TODO: Remove unstable-options when breaking is stable
+cargo update
+popd
+
 echo "Upgrading prettier plugins..."
 pushd overlay/prettier
 TMP="$(mktemp)"

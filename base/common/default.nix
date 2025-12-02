@@ -4,10 +4,10 @@
     ./docker.nix
     ./git.nix
     ./home-manager.nix
-    ./hosts.nix
     ./htop.nix
     ./locale.nix
     ./misc.nix
+    ./networking.nix
     ./nix.nix
     ./ntfy.nix
     ./persistence.nix
