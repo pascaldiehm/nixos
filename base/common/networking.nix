@@ -13,6 +13,7 @@
   networking = {
     nftables.enable = true;
     useDHCP = false;
+    usePredictableInterfaceNames = false;
 
     extraHosts = ''
       192.168.1.89 homeassistant

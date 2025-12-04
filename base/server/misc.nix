@@ -1,5 +1,4 @@
 {
-  networking.usePredictableInterfaceNames = false;
   security.sudo.wheelNeedsPassword = false;
   systemd.network.enable = true;
 
