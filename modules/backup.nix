@@ -50,7 +50,6 @@
       timers.backup.timerConfig.Persistent = true;
 
       services.backup = {
-        enable = false; # TODO: Enable this once WireGuard is set up
         after = [ "network-online.target" ];
         description = "Backup local files";
         requires = [ "network-online.target" ];
