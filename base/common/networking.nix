@@ -36,9 +36,10 @@
   };
 
   systemd.services.dynhostmgr = {
-    after = [ "network-online.target" ];
+    after = [ "network.target" "NetworkManager-wait-online.service" "systemd-networkd-wait-online.service" ];
+    before = [ "network-online.target" ];
     description = "Dynamically update /etc/hosts with reachable addresses";
-    requires = [ "network-online.target" ];
+    postStart = "until grep -q '### DYNAMIC HOSTS START ###' /etc/hosts; do sleep 0.1; done";
     serviceConfig.ExecStart = lib.getExe pkgs.dynhostmgr;
     wantedBy = [ "multi-user.target" ];
   };
