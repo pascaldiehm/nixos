@@ -1,7 +1,7 @@
 { lib, ... }: {
   nix.settings = {
     substituters = lib.mkForce [ "http://127.0.0.1:5777" ];
-    trusted-public-keys = [ "private-1:Rx2/kvQOl7bTeQLc9hq8jV+7mJZaPZv3see8QbcXSmI=" ];
+    trusted-public-keys = [ "private:Gj04okCf2KAYVNSQ5vwXCgOLRz+ESUGi/YlvT1rsnpQ=" ];
   };
 
   services.nginx = {
