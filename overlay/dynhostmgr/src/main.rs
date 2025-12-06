@@ -69,7 +69,35 @@ fn ping(addr: &&IpAddr) -> bool {
         .is_ok()
 }
 
-fn update_hosts(prev: &str, new: &str) -> io::Result<()> {
+fn update_hosts(data: &str) -> io::Result<()> {
+    let prev = fs::read_to_string(FILE_HOSTS).unwrap_or_default();
+    let mut new = String::new();
+    let mut keep = true;
+    let mut found = false;
+
+    for line in prev.lines() {
+        match line {
+            MARKER_START => {
+                pushln!(new, MARKER_START);
+                new.push_str(data);
+                pushln!(new, MARKER_END);
+
+                keep = false;
+                found = true;
+            }
+
+            MARKER_END => keep = true,
+            _ if keep => pushln!(new, line),
+            _ => (),
+        }
+    }
+
+    if !found {
+        pushln!(new, MARKER_START);
+        new.push_str(data);
+        pushln!(new, MARKER_END);
+    }
+
     if prev != new {
         fs::write(FILE_HOSTS_NEW, new)?;
         fs::rename(FILE_HOSTS_NEW, FILE_HOSTS)?;
@@ -111,37 +139,22 @@ fn main() {
             addrs.entry(addr).or_default().push(name);
         }
 
-        let prev = fs::read_to_string(FILE_HOSTS).unwrap_or_default();
-        let mut new = String::new();
-        let mut keep = true;
-
-        for line in prev.lines() {
-            match line {
-                MARKER_START => keep = false,
-                MARKER_END => keep = true,
-                _ if keep => pushln!(new, line),
-                _ => (),
-            }
-        }
-
-        pushln!(new, MARKER_START);
+        let mut data = String::new();
 
         for (addr, hosts) in addrs {
-            new.push_str(&addr.to_string());
-            new.push(' ');
+            data.push_str(&addr.to_string());
+            data.push(' ');
 
             for host in hosts {
-                new.push_str(host);
-                new.push(' ');
+                data.push_str(host);
+                data.push(' ');
             }
 
-            new.pop();
-            new.push('\n');
+            data.pop();
+            data.push('\n');
         }
 
-        pushln!(new, MARKER_END);
-
-        if let Err(err) = update_hosts(&prev, &new) {
+        if let Err(err) = update_hosts(&data) {
             eprintln!("Failed to update {FILE_HOSTS}: {err}");
         }
 
