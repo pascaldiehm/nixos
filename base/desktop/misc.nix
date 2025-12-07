@@ -1,4 +1,5 @@
 {
+  boot.kernel.sysctl."kernel.sysrq" = 1;
   services.logind.settings.Login.HandlePowerKey = "suspend";
 
   home-manager.users.pascal.programs.git.signing = {
