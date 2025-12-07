@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+FAILED=0
+
+echo "::group::Systems"
+echo "# Systems" >>"$GITHUB_STEP_SUMMARY"
+rm -f /nix/var/nix/gcroots/ci/*
+
+while read -r MACHINE; do
+  if timeout 1h nix build -o "/nix/var/nix/gcroots/ci/$MACHINE" ".#nixosConfigurations.$MACHINE.config.system.build.toplevel" |& sed "s/^evaluation warning: /::warning::/"; then
+    echo "- :white_check_mark: $MACHINE" >>"$GITHUB_STEP_SUMMARY"
+  else
+    echo "- :x: $MACHINE" >>"$GITHUB_STEP_SUMMARY"
+    FAILED=1
+  fi
+done < <(jq -r "keys[]" machines.json)
+echo "::endgroup::"
+
+# TODO: Use upstream statix once pipe-operators are released
+echo "::group::Lint nix"
+echo "# Nix files" >>"$GITHUB_STEP_SUMMARY"
+nix build --accept-flake-config -o /nix/var/nix/gcroots/ci/statix github:oppiliappan/statix
+
+while read -r FILE; do
+  echo "Checking $FILE"
+  DIAGNOSTICS="$(NO_COLOR=1 nil diagnostics "$FILE" && /nix/var/nix/gcroots/ci/statix/bin/statix check "$FILE" || true)"
+
+  if [ -z "$DIAGNOSTICS" ]; then
+    echo "- :white_check_mark: $FILE" >>"$GITHUB_STEP_SUMMARY"
+  else
+    {
+      echo "- :x: $FILE"
+      echo '  ```'
+      sed -E "s/^/  /" <<<"$DIAGNOSTICS"
+      echo '  ```'
+    } >>"$GITHUB_STEP_SUMMARY"
+
+    FAILED=1
+  fi
+done < <(find . -name "*.nix")
+echo "::endgroup::"
+
+echo "::group::Lint shell"
+echo "# Shell files" >>"$GITHUB_STEP_SUMMARY"
+
+while read -r FILE; do
+  echo "Checking $FILE"
+  DIAGNOSTICS="$(shellcheck "$FILE" || true)"
+
+  if [ -z "$DIAGNOSTICS" ]; then
+    echo "- :white_check_mark: $FILE" >>"$GITHUB_STEP_SUMMARY"
+  else
+    {
+      echo "- :x: $FILE"
+      echo '  ```'
+      sed -E "s/^/  /" <<<"$DIAGNOSTICS"
+      echo '  ```'
+    } >>"$GITHUB_STEP_SUMMARY"
+
+    FAILED=1
+  fi
+done < <(find . -name "*.sh")
+echo "::endgroup::"
+
+test "$FAILED" = 0

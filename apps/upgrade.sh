@@ -3,7 +3,7 @@
 set -e
 echo "Automatic upgrade" >MSG
 
-echo -e "\n\nUpgrading system..."
+echo "::group::System"
 nix flake update
 
 CHANGES="$(git diff flake.lock)"
@@ -13,8 +13,9 @@ test -n "$CHANGES" && {
   echo -e "\nFlake changes:"
   grep '"repo":' <<<"$CHANGES" | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
+echo "::endgroup::"
 
-echo -e "\n\nUpgrading dynhostmgr..."
+echo "::group::DynHostMGR"
 pushd overlay/dynhostmgr
 cargo update -Z unstable-options --breaking # TODO: Remove unstable-options when breaking is stable
 cargo update
@@ -27,8 +28,9 @@ test -n "$CHANGES" && {
   echo -e "\nDynhostmgr changes:"
   grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d = -f 1 | sort -u | sed "s/^+/  - /"
 } >>MSG
+echo "::endgroup::"
 
-echo -e "\n\nUpgrading prettier..."
+echo "::group::Prettier"
 pushd overlay/prettier
 TMP="$(mktemp)"
 
@@ -56,8 +58,9 @@ test -n "$CHANGES" && {
   echo -e "\nPrettier changes:"
   grep ^+ <<<"$CHANGES" | tail -n +3 | cut -d \" -f 2 | sort -u | sed "s/^/  - /"
 } >>MSG
+echo "::endgroup::"
 
-echo -e "\n\nUpgrading Firefox extensions..."
+echo "::group::Firefox extensions"
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
@@ -96,8 +99,9 @@ test -n "$CHANGES" && {
   echo -e "\nFirefox extension changes:"
   grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
+echo "::endgroup::"
 
-echo -e "\n\nUpgrading Thunderbird extensions..."
+echo "::group::Thunderbird extensions"
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
 
@@ -136,5 +140,4 @@ test -n "$CHANGES" && {
   echo -e "\nThunderbird extension changes:"
   grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
-
-echo "Done!"
+echo "::endgroup::"
