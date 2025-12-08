@@ -1,5 +1,6 @@
 {
   boot.kernel.sysctl."kernel.sysrq" = 1;
+  security.rtkit.enable = true;
   services.logind.settings.Login.HandlePowerKey = "suspend";
 
   home-manager.users.pascal.programs.git.signing = {
