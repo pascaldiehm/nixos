@@ -52,6 +52,7 @@
       services.backup = {
         after = [ "network-online.target" ];
         description = "Backup local files";
+        preStart = "until ${lib.getExe pkgs.netcat} -z bowser 1970; do sleep 1; done";
         requires = [ "network-online.target" ];
         startAt = "daily";
 
