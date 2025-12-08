@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   home-manager.users.pascal.systemd.user.services.music = {
     Install.WantedBy = [ "default.target" ];
-    Service.ExecStart = "${lib.getExe' pkgs.vlc "cvlc"} --random /home/pascal/Repos/personal/Music/Favorites";
+    Service.ExecStart = "${lib.getExe' pkgs.vlc "cvlc"} --loop --random /home/pascal/Repos/personal/Music/Favorites";
 
     Unit = {
       ConditionPathExistsGlob = "/home/pascal/Repos/personal/Music/Favorites/*";
