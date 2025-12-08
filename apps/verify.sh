@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 FAILED=0
+echo "# Verify" >>"$GITHUB_STEP_SUMMARY"
 
 echo "::group::Systems"
-echo "# Systems" >>"$GITHUB_STEP_SUMMARY"
+echo "## Systems" >>"$GITHUB_STEP_SUMMARY"
 rm -f /nix/var/nix/gcroots/ci/*
 
 while read -r MACHINE; do
@@ -18,7 +19,7 @@ echo "::endgroup::"
 
 # TODO: Use upstream statix once pipe-operators are released
 echo "::group::Lint nix"
-echo "# Nix files" >>"$GITHUB_STEP_SUMMARY"
+echo "## Nix files" >>"$GITHUB_STEP_SUMMARY"
 nix build --accept-flake-config -o /nix/var/nix/gcroots/ci/statix github:oppiliappan/statix
 
 while read -r FILE; do
@@ -41,7 +42,7 @@ done < <(find . -name "*.nix")
 echo "::endgroup::"
 
 echo "::group::Lint shell"
-echo "# Shell files" >>"$GITHUB_STEP_SUMMARY"
+echo "## Shell files" >>"$GITHUB_STEP_SUMMARY"
 
 while read -r FILE; do
   echo "Checking $FILE"
