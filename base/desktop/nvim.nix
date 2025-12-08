@@ -62,7 +62,6 @@
       keymaps = lib.mkNvimKeymaps {
         "!"."<C-Bs>" = "<C-w>";
         nx.x = "\"_x";
-        t."<C-Bs>" = "<C-h>";
 
         n = {
           "<Space><Return>" = "<Cmd>terminal<Return>i";
@@ -87,6 +86,11 @@
           "<A-l>" = "<Cmd>wincmd l<Return>";
           "<A-t>" = "<Cmd>tab new<Return>";
           "<A-w>" = "<Cmd>vertical new<Return>";
+        };
+
+        t = {
+          "<C-Bs>" = "<C-h>";
+          "<A-Esc>" = "<C-\\><C-n>";
         };
 
         x = {
@@ -315,6 +319,8 @@
             keymaps = {
               "<Bs>" = "actions.parent";
               "<Return>" = "actions.select";
+              "~" = "actions.cd";
+              _ = "actions.open_cwd";
               q = "actions.close";
             };
           };
@@ -325,7 +331,8 @@
           extensions.fzf-native.enable = true;
 
           keymaps = {
-            "<Space>b" = "builtin";
+            "<Space>a" = "spell_suggest";
+            "<Space>b" = "buffers";
             "<Space>c" = "git_commits";
             "<Space>d" = "lsp_document_symbols";
             "<Space>f" = "find_files hidden=true";
@@ -336,7 +343,6 @@
             "<Space>r" = "lsp_references";
             "<Space>s" = "git_status";
             "<Space>w" = "grep_string";
-            gs = "spell_suggest";
           };
 
           settings.defaults = {
