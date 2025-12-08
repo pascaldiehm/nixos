@@ -7,7 +7,7 @@
     completionInit = "autoload -U compinit && compinit -d /home/pascal/.local/state/zsh/.zcompdump";
     dotDir = "/home/pascal/.config/zsh";
     history.path = "/home/pascal/.local/state/zsh/.zsh_history";
-    plugins = lib.mapAttrsToList (name: src: { inherit name src; }) { inherit (pkgs) zsh-completions; };
+    plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) { zsh-completions.src = pkgs.zsh-completions; };
     setOptions = [ "AUTO_CONTINUE" "CORRECT" "PUSHD_SILENT" ];
     syntaxHighlighting.enable = true;
 
