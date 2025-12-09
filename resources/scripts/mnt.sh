@@ -35,9 +35,9 @@ else
   exit 1
 fi
 
-cd "$TMP"
+pushd "$TMP"
 $SHELL || true
-cd /
+popd
 
 echo "Syncing..."
 sync
