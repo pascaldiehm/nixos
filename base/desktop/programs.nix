@@ -55,7 +55,7 @@
 
       mnt = {
         deps = [ pkgs.android-file-transfer pkgs.curlftpfs pkgs.sshfs ];
-        text = lib.readFile ../../resources/scripts/mount.sh;
+        text = lib.readFile ../../resources/scripts/mnt.sh;
       };
     };
   };
