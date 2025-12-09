@@ -54,7 +54,7 @@
       };
     };
   in rec {
-    legacyPackages.x86_64-linux = nixosConfigurations.pascal-pc._module.args.pkgs;
+    legacyPackages.x86_64-linux = pkgs.extend (import ./overlay);
 
     nixosConfigurations = lib.importJSON ./machines.json
       |> lib.mapAttrs mkSystem
