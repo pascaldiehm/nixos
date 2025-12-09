@@ -6,7 +6,7 @@
       enable = true;
       defaultEditor = true;
       filetype.extension.zsh = "sh";
-      nixpkgs.pkgs = pkgs;
+      nixpkgs.useGlobalPackages = true;
 
       autoCmd = lib.mapAttrsToList (event: command: { inherit command event; }) {
         TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input(\"<Return>\") end";
