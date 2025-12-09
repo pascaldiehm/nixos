@@ -30,6 +30,7 @@
       diagnostic.settings = {
         severity_sort = true;
         update_in_insert = true;
+        virtual_text = true;
       };
 
       extraConfigLua = ''
