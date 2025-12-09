@@ -1,13 +1,13 @@
 version: 2
 
-updates:
-  - directory: /
-    package-ecosystem: github-actions
-
-    groups:
-      all:
-        patterns: ["*"]
-
+multi-ecosystem-groups:
+  all:
     schedule:
       cronjob: 0 2 * * 1
       interval: cron
+
+updates:
+  - directory: /
+    package-ecosystem: github-actions
+    multi-ecosystem-group: all
+    patterns: ["*"]
