@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-echo "Automatic upgrade" >MSG
+echo "build(deps): automatic upgrade" >MSG
 
 echo "::group::System"
 nix flake update
