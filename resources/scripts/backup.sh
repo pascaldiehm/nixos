@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-test "$UID" = 0 || exec sudo "$0" "$@"
 set -a
+test "$UID" = 0 || exec sudo "$0" "$@"
 
 # shellcheck disable=SC1090,SC1091
 source "${BACKUP_ENV}"
