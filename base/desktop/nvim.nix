@@ -177,7 +177,7 @@
           enable = true;
 
           settings = {
-            format_on_save.lsp_format = "fallback";
+            format_on_save.lsp_format = "never";
 
             formatters = lib.mkNvimFormatters {
               black = [ (lib.getExe pkgs.python3Packages.black) "--line-length=120" ];
