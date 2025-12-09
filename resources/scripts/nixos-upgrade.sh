@@ -92,6 +92,7 @@ fi
 
 sudo --validate
 while true; do
+  trap 'kill -- -"$$"' EXIT
   sleep 250
   sudo --validate
 done &
