@@ -4,7 +4,11 @@ set -e
 TMP="$(mktemp -d)"
 ROOT=0
 
-if [ "$1" = "android" ]; then
+if [ "$#" = 0 ]; then
+  echo "Usage: mnt <what>"
+  rmdir "$TMP"
+  exit 1
+elif [ "$1" = "android" ]; then
   aft-mtp-mount "$TMP"
 elif [ "$1" = "tmpfs" ]; then
   sudo mount -t tmpfs tmpfs "$TMP"
