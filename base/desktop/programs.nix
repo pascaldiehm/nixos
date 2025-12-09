@@ -24,7 +24,6 @@
       pkgs.poppler-utils
       pkgs.pwvucontrol
       pkgs.rsync
-      pkgs.scripts.mkletter
       pkgs.scripts.mnt
       pkgs.scripts.nixos-upgrade
       pkgs.scripts.repo
@@ -50,7 +49,6 @@
     ydotool.enable = true;
 
     scripts = {
-      mkletter.text = lib.readFile ../../resources/scripts/mkletter.sh;
       nixos-upgrade.text = lib.readFile ../../resources/scripts/nixos-upgrade.sh;
       repo.text = lib.readFile ../../resources/scripts/repo.sh;
       wp-toggle.text = lib.readFile ../../resources/scripts/wp-toggle.sh;

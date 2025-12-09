@@ -31,7 +31,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   compdef '_arguments ":mode:(build boot switch test)"' nixos-test
   compdef '_arguments ":type:($(ls /home/pascal/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha
-  compdef _nothing mkletter
   compdef _nothing nixos-diff
   compdef _nothing nixos-iso
   compdef _nothing wp-toggle
