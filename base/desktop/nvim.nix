@@ -183,6 +183,7 @@
               black = [ (lib.getExe pkgs.python3Packages.black) "--line-length=120" ];
               clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
               cmake-format = [ (lib.getExe pkgs.cmake-format) "--autosort" "--line-width=120" "--tab-size=2" ];
+              dockerfmt = [ (lib.getExe pkgs.dockerfmt) "--indent=2" "--newline" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
               isort = [ (lib.getExe pkgs.python3Packages.isort) ];
               nixfmt = [ (lib.getExe pkgs.nixfmt) "--strict" "--width=120" ];
@@ -223,6 +224,7 @@
               cmake = [ "cmake-format" ];
               cpp = [ "clang-format" ];
               css = [ "prettier" ];
+              dockerfile = [ "dockerfmt" ];
               html = [ "prettier" ];
               java = [ "google-java-format" ];
               javascript = [ "prettier" ];
