@@ -37,9 +37,9 @@
     printing = {
       enable = true;
 
-      drivers = [
-        (lib.readFile ../../resources/Brother_DCP-J1050DW.ppd |> pkgs.writeTextDir "share/cups/model/Brother_DCP-J1050DW")
-      ];
+      drivers = lib.readFile ../../resources/Brother_DCP-J1050DW.ppd
+        |> pkgs.writeTextDir "share/cups/model/Brother_DCP-J1050DW"
+        |> lib.singleton;
     };
   };
 }
