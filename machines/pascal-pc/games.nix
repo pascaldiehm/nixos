@@ -12,5 +12,6 @@
     "/home/pascal/.config/retroarch".include = [ "saves" ];
     "/home/pascal/.config/supertuxkart".excludeGlob = [ "**.log" ];
     "/home/pascal/.local/share/PrismLauncher".include = [ "instances/*/minecraft/saves" ];
+    "/home/pascal/.local/share/supertuxkart" = { };
   };
 }
