@@ -3,11 +3,8 @@
 set -a
 test "$UID" = 0 || exec sudo "$0" "$@"
 
-# shellcheck disable=SC1090,SC1091
-source "${BACKUP_ENV}"
-
 function dup() {
-  duplicity --archive-dir /var/lib/duplicity --ssh-options "-i '${BACKUP_KEY}'" "$@"
+  PASSPHRASE="$(cat "${BACKUP_PASS}")" duplicity --archive-dir /var/lib/duplicity --ssh-options "-i '${BACKUP_KEY}'" "$@"
 }
 
 if [ "$#" = 0 ]; then

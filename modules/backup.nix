@@ -38,8 +38,8 @@
           ++ (if cfg.include == null then [ "--include '${path}'" ] else lib.map (sub: "--include '${path}/${sub}'") cfg.include)
         ) config.services.backup;
       in lib.templateString {
-        BACKUP_ENV = config.sops.common."backup/env".path;
         BACKUP_KEY = config.sops.common."backup/key".path;
+        BACKUP_PASS = config.sops.common."backup/pass".path;
         MACHINE = machine.name;
         SPEC = lib.flatten paths;
         TARGET = "sftp://pascal@bowser:1970/archive/Backups";
@@ -64,8 +64,8 @@
     };
 
     sops.common = {
-      "backup/env" = { };
       "backup/key" = { };
+      "backup/pass" = { };
     };
   };
 }
