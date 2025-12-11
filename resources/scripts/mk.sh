@@ -48,6 +48,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 EOF
+elif [ "$1" = "tex" ]; then
+  cat <<EOF >main.tex
+\documentclass[parskip=half]{scrartcl}
+\usepackage[margin=1cm, bottom=2cm]{geometry}
+
+\title{}
+\author{}
+
+\begin{document}
+\maketitle
+\end{document}
+EOF
+elif [ "$1" = "tex-letter" ]; then
+  cat <<EOF >letter.tex
+\documentclass[parskip=half]{scrlttr2}
+\usepackage[ngerman]{babel}
+
+\renewcommand{\raggedsignature}{\raggedright}
+
+\setkomavar{fromname}{}
+\setkomavar{fromaddress}{}
+\setkomavar{subject}{}
+
+\begin{document}
+\begin{letter}{}
+  \opening{}
+  \closing{}
+\end{letter}
+\end{document}
+EOF
 else
   echo "Cannot make $1"
   exit 1
