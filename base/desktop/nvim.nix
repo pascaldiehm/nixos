@@ -352,11 +352,11 @@
             file_ignore_patterns = [ "^.git/" ];
 
             mappings.i = {
-              "<A-Return>".__raw = "require('telescope.actions').file_tab";
+              "<A-Return>".__raw = "require('telescope.actions').select_tab";
               "<A-S-q>".__raw = "require('telescope.actions').smart_add_to_qflist";
               "<A-q>".__raw = "require('telescope.actions').smart_send_to_qflist";
               "<Esc>".__raw = "require('telescope.actions').close";
-              "<S-Return>".__raw = "require('telescope.actions').file_vsplit";
+              "<S-Return>".__raw = "require('telescope.actions').select_vertical";
             };
 
             vimgrep_arguments = [
