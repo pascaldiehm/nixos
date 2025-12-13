@@ -11,6 +11,7 @@
   };
 
   networking = {
+    firewall.allowedTCPPorts = [ 1234 ];
     nftables.enable = true;
     useDHCP = false;
     usePredictableInterfaceNames = false;
