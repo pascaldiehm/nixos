@@ -71,6 +71,7 @@
           gQ = "<Cmd>cprevious<Return>";
           gl = "<C-o>";
           gq = "<Cmd>cnext<Return>";
+          vv = "gv";
         };
 
         nt = {
@@ -269,6 +270,11 @@
               gh = "hover";
               gi = "implementation";
               gr = "empty_rename";
+
+              "<A-Space>" = {
+                action = "signature_help";
+                mode = "i";
+              };
             };
           };
 
@@ -340,6 +346,7 @@
             "<Space>d" = "lsp_document_symbols";
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
+            "<Space>h" = "help_tags";
             "<Space>l" = "resume";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
