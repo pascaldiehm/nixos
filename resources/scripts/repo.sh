@@ -22,6 +22,11 @@ if [ "$#" = 0 ]; then
   help
   exit 1
 elif [ "$1" = "help" ]; then
+  if [ "$#" != 1 ]; then
+    echo "Usage: repo help"
+    exit 1
+  fi
+
   help
 elif [ "$1" = "list" ]; then
   if [ "$#" != 1 ]; then
