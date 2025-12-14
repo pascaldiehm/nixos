@@ -25,25 +25,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     latexmk -pdf -cd -outdir="$PWD/build" "$1"
   }
 
-  function nixos-diff() {
-    git -C ~/.config/nixos fetch
-    git -C ~/.config/nixos diff "$(nixos-version --configuration-revision)"...origin
-  }
-
-  function nixos-iso() {
-    nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
-    cp result/iso/*.iso nixos.iso
-    rm result
-  }
-
-  function nixos-secrets() {
-    sudo GNUPGHOME=/etc/nixos/.gnupg sops ~/.config/nixos/resources/secrets/${1:-desktop}/store.yaml
-  }
-
-  function nixos-test() {
-    nixos-rebuild --sudo --impure --flake ~/.config/nixos "${1:-test}"
-  }
-
   function nv() {
     if [ "$#" = 0 ]; then
       nvim
@@ -59,10 +40,6 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
-  function nixos-upgrade() {
-    nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos "${1:-boot}"
-  }
-
   function service() {
     if [ "$#" = 0 ]; then
       docker compose ls

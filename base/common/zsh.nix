@@ -1,4 +1,4 @@
-{ lib, machine, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   environment.pathsToLink = [ "/share/zsh" ];
 
   home-manager.users.pascal.programs.zsh = {
@@ -18,10 +18,5 @@
       (lib.readFile ../../resources/zsh/input.zsh)
       (lib.readFile ../../resources/zsh/prompt.zsh)
     ];
-
-    localVariables = {
-      NIXOS_MACHINE_NAME = machine.name;
-      NIXOS_MACHINE_TYPE = machine.type;
-    };
   };
 }

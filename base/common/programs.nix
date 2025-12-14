@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   home-manager.users.pascal.home.packages = [
     pkgs.bat
     pkgs.btrfs-progs
@@ -12,6 +12,7 @@
     pkgs.ncdu
     pkgs.netcat
     pkgs.ripgrep
+    pkgs.scripts.nx
     pkgs.unzip
     pkgs.wireguard-tools
     pkgs.zip
@@ -20,6 +21,11 @@
   programs = {
     command-not-found.enable = false;
     nano.enable = false;
+
+    scripts.nx = {
+      deps = [ pkgs.sops ];
+      text = lib.readFile ../../resources/scripts/nx.sh;
+    };
 
     vim = {
       enable = true;

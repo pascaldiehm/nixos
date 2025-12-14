@@ -1,9 +1,27 @@
 #!/usr/bin/env zsh
 
+function _nx() {
+  if [ "$CURRENT" = 2 ]; then
+    _values command help test build upgrade list reset repl secrets iso
+  elif [ "$CURRENT" = 3 ]; then
+    if [[ "${words[2]}" == (build|repl) ]]; then
+      _values host "${(f)$(ls /home/pascal/.config/nixos/machines)}"
+    elif [ "${words[2]}" = "upgrade" ]; then
+      _values mode boot switch
+    elif [ "${words[2]}" = "secrets" ]; then
+      _values host "${(f)$(ls /home/pascal/.config/nixos/resources/secrets)}"
+    fi
+  elif [ "$CURRENT" = 4 ]; then
+    if [ "${words[2]}" = "reset" ]; then
+      _values mode boot switch
+    fi
+  fi
+}
+
 compdef '_arguments ":action:(status list restore)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
 compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
-compdef '_arguments ":mode:(boot switch test)"' nixos-upgrade
 compdef _nothing ntfy
+compdef _nx nx
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
@@ -28,12 +46,8 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
-  compdef '_arguments ":mode:(build boot switch test)"' nixos-test
   compdef '_arguments ":mode:(cmake flake license tex tex-letter)"' mk
-  compdef '_arguments ":type:($(ls /home/pascal/.config/nixos/resources/secrets))"' nixos-secrets
   compdef _nothing ha
-  compdef _nothing nixos-diff
-  compdef _nothing nixos-iso
   compdef _nothing wp-toggle
   compdef _repo repo
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then

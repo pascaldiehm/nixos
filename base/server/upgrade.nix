@@ -1,12 +1,14 @@
 { lib, pkgs, ... }: {
-  systemd.services.nixos-upgrade.serviceConfig.ExecStartPost = "${lib.getExe' pkgs.systemd "systemctl"} reboot";
+  systemd.services.nixos-upgrade = {
+    after = [ "network-online.target" ];
+    description = "Upgrade NixOS";
+    requires = [ "network-online.target" ];
+    startAt = "Mon 01:00";
 
-  system.autoUpgrade = {
-    enable = true;
-    dates = "Mon 01:00";
-    flags = [ "--impure" ];
-    flake = "github:pascaldiehm/nixos";
-    operation = "boot";
-    upgrade = false;
+    serviceConfig = {
+      ExecStart = "${lib.getExe pkgs.scripts.nx} upgrade";
+      ExecStartPost = "${lib.getExe' pkgs.systemd "systemctl"} reboot";
+      Type = "oneshot";
+    };
   };
 }
