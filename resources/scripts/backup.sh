@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -a
 test "$UID" = 0 || exec sudo "$0" "$@"
 
 function dup() {
