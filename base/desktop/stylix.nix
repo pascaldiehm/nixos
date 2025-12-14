@@ -12,6 +12,7 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/colors.yaml";
     image = ../../resources/wallpaper.jpg;
+    opacity.terminal = 0.5;
     polarity = "dark";
 
     cursor = {
