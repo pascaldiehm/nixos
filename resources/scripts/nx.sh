@@ -47,7 +47,7 @@ elif [ "$1" = "build" ]; then
   nixos-rebuild --impure --flake "$SRC#${2:-$NIXOS_MACHINE_NAME}" build
 elif [ "$1" = "upgrade" ]; then
   if [ "$#" -gt 2 ]; then
-    echo "Usage: nx build [mode]"
+    echo "Usage: nx upgrade [mode]"
     echo
     echo "mode   Upgrade mode"
 
