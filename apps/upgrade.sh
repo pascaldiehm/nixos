@@ -36,16 +36,12 @@ TMP="$(mktemp)"
 
 jq '.dependencies |= with_entries(.value = "*")' package.json >"$TMP"
 cp "$TMP" package.json
-
 npm upgrade --save
-rm -rf node_modules
 
 if [ -n "$(git status --porcelain package.json)" ]; then
   jq '.version = (now | strftime("%Y-%m-%d"))' package.json >"$TMP"
   cp "$TMP" package.json
-
   npm upgrade
-  rm -rf node_modules
 fi
 
 rm "$TMP"
