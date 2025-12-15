@@ -13,6 +13,7 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "flakes" "nix-command" "pipe-operators" ];
+      trusted-users = [ "pascal" ];
       use-xdg-base-directories = true;
     };
   };
