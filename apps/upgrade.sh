@@ -56,6 +56,23 @@ test -n "$CHANGES" && {
 } >>MSG
 echo "::endgroup::"
 
+echo "::group::Vim spellfiles"
+pushd resources/vim
+curl -fsSLO https://ftp.nluug.nl/vim/runtime/spell/de.utf-8.spl
+curl -fsSLO https://ftp.nluug.nl/vim/runtime/spell/de.utf-8.sug
+curl -fsSLO https://ftp.nluug.nl/vim/runtime/spell/en.utf-8.spl
+curl -fsSLO https://ftp.nluug.nl/vim/runtime/spell/en.utf-8.sug
+popd
+
+CHANGES="$(git status --porcelain resources/vim)"
+git add resources/vim
+
+test -n "$CHANGES" && {
+  echo -e "\nVim spellfile changes:"
+  sort -u <<<"$CHANGES" | sed -E "s|^.*/([^/]+)$|  - \1|"
+} >>MSG
+echo "::endgroup::"
+
 echo "::group::Firefox extensions"
 TMP="$(mktemp -d)"
 echo "[" >"$TMP/extensions.json"
