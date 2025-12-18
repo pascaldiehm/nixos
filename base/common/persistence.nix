@@ -4,7 +4,7 @@
   environment.persistence."/perm" = {
     directories = [ "/etc/nixos" "/var/lib/nixos" "/var/lib/systemd" ];
     files = [ "/etc/machine-id" ];
-    users.pascal.directories = [ ".local/share/systemd" ];
+    users.pascal.directories = [ ".config/nixos" ".local/share/systemd" ];
   };
 
   system.activationScripts.clean-perm = let

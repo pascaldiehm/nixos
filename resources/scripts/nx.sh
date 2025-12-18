@@ -6,7 +6,6 @@ function help() {
   echo "Commands:"
   echo "  help                 Show this help"
   echo "  test                 Test configuration"
-  echo "  build [host]         Build system"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
   echo "  reset <gen> [mode]   Reset to previous generation"
@@ -14,9 +13,6 @@ function help() {
   echo "  secrets [type]       Edit secrets"
   echo "  iso                  Build ISO image"
 }
-
-SRC="github:pascaldiehm/nixos"
-test -d "$HOME/.config/nixos" && SRC="$HOME/.config/nixos"
 
 if [ "$#" = 0 ]; then
   help
@@ -34,17 +30,7 @@ elif [ "$1" = "test" ]; then
     exit 1
   fi
 
-  nixos-rebuild --sudo --impure --flake "$SRC" test
-elif [ "$1" = "build" ]; then
-  if [ "$#" -gt 2 ]; then
-    echo "Usage: nx build [host]"
-    echo
-    echo "host   Machine to build"
-
-    exit 1
-  fi
-
-  nixos-rebuild --impure --flake "$SRC#${2:-$NIXOS_MACHINE_NAME}" build
+  nixos-rebuild --sudo --impure --flake ~/.config/nixos test
 elif [ "$1" = "upgrade" ]; then
   if [ "$#" -gt 2 ]; then
     echo "Usage: nx upgrade [mode]"
@@ -64,7 +50,7 @@ elif [ "$1" = "upgrade" ]; then
   SUDO_LOOP_PID="$!"
   trap 'kill "$SUDO_LOOP_PID"' EXIT
 
-  nixos-rebuild --sudo --impure --flake "$SRC" "${2:-boot}"
+  nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos "${2:-boot}"
 elif [ "$1" = "list" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx list"
@@ -91,7 +77,7 @@ elif [ "$1" = "repl" ]; then
     exit 1
   fi
 
-  nixos-rebuild --impure --flake "$SRC#${2:-$NIXOS_MACHINE_NAME}" repl
+  nixos-rebuild --impure --flake "$HOME/.config/nixos#${2:-$NIXOS_MACHINE_NAME}" repl
 elif [ "$1" = "secrets" ]; then
   if [ "$#" -gt 2 ]; then
     echo "Usage: nx secrets [type]"
@@ -101,14 +87,14 @@ elif [ "$1" = "secrets" ]; then
     exit 1
   fi
 
-  sudo GNUPGHOME=/etc/nixos/.gnupg sops "$SRC/resources/secrets/${2:-$NIXOS_MACHINE_TYPE}/store.yaml"
+  sudo GNUPGHOME=/etc/nixos/.gnupg sops "$HOME/.config/nixos/resources/secrets/${2:-$NIXOS_MACHINE_TYPE}/store.yaml"
 elif [ "$1" = "iso" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx iso"
     exit 1
   fi
 
-  nix build "$SRC#nixosConfigurations.installer.config.system.build.isoImage"
+  nix build github:pascaldiehm/nixos#nixosConfigurations.installer.config.system.build.isoImage
   cp result/iso/*.iso nixos.iso
   rm result
 else

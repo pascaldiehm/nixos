@@ -119,13 +119,11 @@ nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 test "$BOOT" = "BIOS" && sed -i "\$s|.*|  boot.loader.grub.device = \"$DEV\";\n\0|" /mnt/perm/etc/nixos/hardware.nix
 
-if [ "$TYPE" = "desktop" ]; then
-  echo "Cloning NixOS configuration..."
-  git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
-  git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
-  chown --recursive 1000:100 /mnt/perm/home/pascal
-  chmod 700 /mnt/perm/home/pascal
-fi
+echo "Cloning NixOS configuration..."
+git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
+git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+chown --recursive 1000:100 /mnt/perm/home/pascal
+chmod 700 /mnt/perm/home/pascal
 
 echo "Preparing GnuPG..."
 mkdir -p ~/.gnupg
