@@ -5,7 +5,7 @@ if [ "$#" = 0 ]; then
   exit 1
 elif [ "$1" = "cmake" ]; then
   cat <<EOF >CMakeLists.txt
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 4.0.0)
 project(Project)
 EOF
 elif [ "$1" = "flake" ]; then
