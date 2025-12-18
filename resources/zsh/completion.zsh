@@ -19,9 +19,10 @@ function _nx() {
 }
 
 compdef '_arguments ":action:(status list restore)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
-compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
+compdef _files mkcd
 compdef _nothing ntfy
 compdef _nx nx
+compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
@@ -46,10 +47,12 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
     fi
   }
 
-  compdef '_arguments ":mode:(cmake flake license tex tex-letter)"' mk
   compdef _nothing ha
-  compdef _nothing wp-toggle
+  compdef '_arguments ":mode:(cmake flake license tex tex-letter)"' mk
+  compdef _files mktex
+  compdef _files mnt
   compdef _repo repo
+  compdef _nothing wp-toggle
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function _service() {
     if [ "$CURRENT" = 2 ]; then
