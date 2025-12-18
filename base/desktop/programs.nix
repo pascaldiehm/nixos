@@ -13,7 +13,7 @@
       pkgs.dogdns
       pkgs.exfat
       pkgs.ffmpeg-full
-      pkgs.gimp3
+      pkgs.gimp
       pkgs.hardinfo2
       pkgs.imagemagickBig
       pkgs.inkscape
