@@ -1,5 +1,22 @@
 #!/usr/bin/env zsh
 
+function ed() {
+  if [ "$#" = 0 ]; then
+    "$EDITOR"
+  elif [ -d "$1" ]; then
+    pushd "$1"
+    "$EDITOR" .
+    popd
+  else
+    local DIR="$(dirname "$1")"
+    mkdir -p "$DIR"
+
+    pushd "$DIR"
+    "$EDITOR" "$(basename "$1")"
+    popd
+  fi
+}
+
 function mkcd() {
   mkdir -p "$1"
   cd "$1"
@@ -23,21 +40,6 @@ function watch() (
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function mktex() {
     latexmk -pdf -cd -outdir="$PWD/build" "$1"
-  }
-
-  function nv() {
-    if [ "$#" = 0 ]; then
-      nvim
-    elif [ -f "$1" ]; then
-      nvim "$1"
-    elif [ -d "$1" ]; then
-      pushd "$1"
-      nvim .
-      popd
-    else
-      mkdir -p "$(dirname "$1")"
-      nvim "$1"
-    fi
   }
 elif [ "$NIXOS_MACHINE_TYPE" = "server" ]; then
   function service() {
