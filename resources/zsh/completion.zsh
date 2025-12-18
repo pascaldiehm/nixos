@@ -2,7 +2,7 @@
 
 function _nx() {
   if [ "$CURRENT" = 2 ]; then
-    _values command help test upgrade list reset repl secrets iso
+    _values command help sync test upgrade list reset repl secrets iso
   elif [ "$CURRENT" = 3 ]; then
     if [ "${words[2]}" = "upgrade" ]; then
       _values mode boot switch

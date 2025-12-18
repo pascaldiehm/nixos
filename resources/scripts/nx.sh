@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
+
 function help() {
   echo "Usage: nx <command> [args...]"
   echo
   echo "Commands:"
   echo "  help                 Show this help"
+  echo "  sync                 Update local repo"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
@@ -24,6 +27,14 @@ elif [ "$1" = "help" ]; then
   fi
 
   help
+elif [ "$1" = "sync" ]; then
+  if [ "$#" != 1 ]; then
+    echo "Usage: nx sync"
+    exit 1
+  fi
+
+  cd ~/.config/nixos
+  git pull && git push
 elif [ "$1" = "test" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx test"
