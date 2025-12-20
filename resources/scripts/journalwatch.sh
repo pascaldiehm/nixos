@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set +e
 PAT_SSHD_PASSWORD="^(Accepted|Failed) password for (\w+) from (\S+) port [0-9]+ ssh2$"
 PAT_SSHD_PUBLICKEY="^(Accepted|Failed) publickey for (\w+) from (\S+) port [0-9]+ ssh2: \S+ SHA256:\S+$"
 PAT_SSHD_USER_DENIED="^User (\w+) from (\S+) not allowed because not listed in AllowUsers$"
@@ -8,7 +9,7 @@ PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
 PAT_SYSTEMD_FAILED="^(\S+): Failed with result '(.+)'\.$"
 PAT_SYSTEMD_STARTUP="^Startup finished in .+ = (\S+)\.$"
 
-journalctl --follow --output json | while read -r LINE; do
+journalctl --follow --no-tail --output json | while read -r LINE; do
   SERVICE="$(jq -r .SYSLOG_IDENTIFIER <<<"$LINE")"
   MESSAGE="$(jq -r .MESSAGE <<<"$LINE")"
 
