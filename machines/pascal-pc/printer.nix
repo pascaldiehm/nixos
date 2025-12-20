@@ -31,7 +31,6 @@
   };
 
   services = {
-    avahi.enable = lib.mkForce false;
     ipp-usb.enable = true;
 
     printing = {
