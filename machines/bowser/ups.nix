@@ -1,18 +1,37 @@
 { config, lib, pkgs, ... }: {
-  sops.secrets."bowser/nut".restartUnits = [ "upsd.service" "upsmon.service" ];
+  sops.secrets."bowser/nut" = { };
 
   power.ups = {
     enable = true;
 
-    ups.ups = {
-      driver = "usbhid-ups";
-      port = "auto";
+    ups = {
+      ext = {
+        description = "External UPS";
+        directives = [ "bus = 001" "busport = 003" ];
+        driver = "usbhid-ups";
+        port = "auto";
+      };
+
+      int = {
+        description = "Internal UPS";
+        directives = [ "bus = 001" "busport = 004" ];
+        driver = "usbhid-ups";
+        port = "auto";
+      };
     };
 
     upsmon = {
-      monitor.ups = {
-        type = "primary";
-        user = "pascal";
+      monitor = {
+        ext = {
+          powerValue = 0;
+          type = "primary";
+          user = "pascal";
+        };
+
+        int = {
+          type = "primary";
+          user = "pascal";
+        };
       };
 
       settings = {
