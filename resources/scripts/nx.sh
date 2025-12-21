@@ -7,7 +7,8 @@ function help() {
   echo
   echo "Commands:"
   echo "  help                 Show this help"
-  echo "  sync                 Update local repo"
+  echo "  pull                 Update local repo"
+  echo "  sync                 Sync local repo"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
@@ -27,6 +28,14 @@ elif [ "$1" = "help" ]; then
   fi
 
   help
+elif [ "$1" = "pull" ]; then
+  if [ "$#" != 1 ]; then
+    echo "Usage: nx pull"
+    exit 1
+  fi
+
+  cd ~/.config/nixos
+  git pull || git reset --hard origin
 elif [ "$1" = "sync" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx sync"
