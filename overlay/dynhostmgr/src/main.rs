@@ -14,7 +14,7 @@ const FILE_DYN_HOSTS: &str = "/etc/dynhosts";
 const MARKER_START: &str = "### DYNAMIC HOSTS START ###";
 const MARKER_END: &str = "###  DYNAMIC HOSTS END  ###";
 const ADDR_VOID: IpAddr = IpAddr::V6(Ipv6Addr::new(0x100, 0, 0, 0, 0, 0, 0, 0));
-const TIMEOUT: Duration = Duration::from_millis(250);
+const TIMEOUT: Duration = Duration::from_millis(1000);
 const INTERVAL: Duration = Duration::from_millis(1000);
 
 type Hosts = BTreeMap<String, Host>;
