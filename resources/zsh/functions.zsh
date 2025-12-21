@@ -24,7 +24,7 @@ function mkcd() {
 
 function watch() (
   trap "tput cnorm; tput rmcup" EXIT
-  trap "return 0" INT
+  trap "exit 0" INT
 
   tput smcup
   tput civis
