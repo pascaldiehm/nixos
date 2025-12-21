@@ -25,6 +25,7 @@
       gwenviewrc.source = ../../resources/kde/gwenview.toml;
       "menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
       okularpartrc.source = ../../resources/kde/okular.toml;
+      "vlc/vlcrc".source = ../../resources/vlc.toml;
     };
   };
 }
