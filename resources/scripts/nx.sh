@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
-
 function help() {
   echo "Usage: nx <command> [args...]"
   echo
   echo "Commands:"
   echo "  help                 Show this help"
-  echo "  pull                 Update local repo"
-  echo "  sync                 Sync local repo"
+  echo "  sync                 Sync repository"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
@@ -28,22 +25,14 @@ elif [ "$1" = "help" ]; then
   fi
 
   help
-elif [ "$1" = "pull" ]; then
-  if [ "$#" != 1 ]; then
-    echo "Usage: nx pull"
-    exit 1
-  fi
-
-  cd ~/.config/nixos
-  git pull || git reset --hard origin
 elif [ "$1" = "sync" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx sync"
     exit 1
   fi
 
-  cd ~/.config/nixos
-  git pull && git push
+  git -C ~/.config/nixos pull
+  git -C ~/.config/nixos push
 elif [ "$1" = "test" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx test"
@@ -70,7 +59,8 @@ elif [ "$1" = "upgrade" ]; then
   SUDO_LOOP_PID="$!"
   trap 'kill "$SUDO_LOOP_PID"' EXIT
 
-  nixos-rebuild --sudo --impure --flake github:pascaldiehm/nixos "${2:-boot}"
+  git -C ~/.config/nixos pull
+  nixos-rebuild --sudo --impure --flake ~/.config/nixos "${2:-boot}"
 elif [ "$1" = "list" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx list"
@@ -114,7 +104,7 @@ elif [ "$1" = "iso" ]; then
     exit 1
   fi
 
-  nix build github:pascaldiehm/nixos#nixosConfigurations.installer.config.system.build.isoImage
+  nix build ~/.config/nixos#nixosConfigurations.installer.config.system.build.isoImage
   cp result/iso/*.iso nixos.iso
   rm result
 else

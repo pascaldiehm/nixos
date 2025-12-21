@@ -2,14 +2,14 @@
 
 function _nx() {
   if [ "$CURRENT" = 2 ]; then
-    _values command help pull sync test upgrade list reset repl secrets iso
+    _values command help sync test upgrade list reset repl secrets iso
   elif [ "$CURRENT" = 3 ]; then
     if [ "${words[2]}" = "upgrade" ]; then
       _values mode boot switch
     elif [ "${words[2]}" = "repl" ]; then
       _values host "${(f)$(ls /home/pascal/.config/nixos/machines)}"
     elif [ "${words[2]}" = "secrets" ]; then
-      _values host "${(f)$(ls /home/pascal/.config/nixos/resources/secrets)}"
+      _values type "${(f)$(ls /home/pascal/.config/nixos/resources/secrets)}"
     fi
   elif [ "$CURRENT" = 4 ]; then
     if [ "${words[2]}" = "reset" ]; then
