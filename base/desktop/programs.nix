@@ -1,9 +1,8 @@
 { lib, pkgs, ... }: {
+  services.speechd.enable = false;
   users.users.pascal.extraGroups = [ "wireshark" "ydotool" ];
 
   home-manager.users.pascal = {
-    services.playerctld.enable = true;
-
     home.packages = [
       pkgs.brightnessctl
       pkgs.clinfo
@@ -41,6 +40,20 @@
       pkgs.xh
       pkgs.yt-dlp
     ];
+
+    programs = {
+      kitty.enable = true;
+      rofi.enable = true;
+    };
+
+    services = {
+      playerctld.enable = true;
+
+      mako = {
+        enable = true;
+        settings.default-timeout = 5000;
+      };
+    };
   };
 
   programs = {

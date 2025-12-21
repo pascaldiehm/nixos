@@ -1,59 +1,45 @@
 { config, lib, pkgs, ... }: {
-  services.speechd.enable = false;
-
   home-manager.users.pascal = {
-    programs = {
-      kitty.enable = true;
-      rofi.enable = true;
+    programs.hyprlock = {
+      enable = true;
 
-      hyprlock = {
-        enable = true;
+      settings = {
+        general.hide_cursor = true;
 
-        settings = {
-          general.hide_cursor = true;
+        background = {
+          blur_passes = 2;
+          blur_size = 4;
+          path = "screenshot";
+        };
 
-          background = {
-            blur_passes = 2;
-            blur_size = 4;
-            path = "screenshot";
-          };
-
-          label = {
-            font_size = 64;
-            halign = "center";
-            position = "0, 20%";
-            shadow_passes = 2;
-            shadow_size = 4;
-            text = "$TIME";
-            valign = "center";
-          };
+        label = {
+          font_size = 64;
+          halign = "center";
+          position = "0, 20%";
+          shadow_passes = 2;
+          shadow_size = 4;
+          text = "$TIME";
+          valign = "center";
         };
       };
     };
 
-    services = {
-      hypridle = {
-        enable = true;
+    services.hypridle = {
+      enable = true;
 
-        settings = {
-          general = {
-            after_sleep_cmd = "hyprctl dispatch dpms on";
-            before_sleep_cmd = "loginctl lock-session";
-            lock_cmd = "pidof hyprlock || hyprlock";
-            unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
-          };
-
-          listener = {
-            on-resume = "hyprctl dispatch dpms on";
-            on-timeout = "hyprctl dispatch dpms off";
-            timeout = 300;
-          };
+      settings = {
+        general = {
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+          before_sleep_cmd = "loginctl lock-session";
+          lock_cmd = "pidof hyprlock || hyprlock";
+          unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
         };
-      };
 
-      mako = {
-        enable = true;
-        settings.default-timeout = 5000;
+        listener = {
+          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = "hyprctl dispatch dpms off";
+          timeout = 300;
+        };
       };
     };
 
@@ -197,10 +183,8 @@
     };
   };
 
-  programs = {
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
   };
 }
