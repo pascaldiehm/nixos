@@ -133,6 +133,7 @@
 
           "SUPER, Return, exec, kitty"
           "SUPER, Space, exec, rofi -show drun"
+          "SUPER, e, exec, dolphin"
 
           ", Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Downloads --mode active --mode output"
           "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} --autocopy"

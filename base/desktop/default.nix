@@ -1,6 +1,7 @@
 {
   imports = [
     ../../extra/university
+    ./applications.nix
     ./boot.nix
     ./development.nix
     ./documentation.nix

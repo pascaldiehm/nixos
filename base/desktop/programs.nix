@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   services.speechd.enable = false;
-  users.users.pascal.extraGroups = [ "wireshark" "ydotool" ];
+  users.users.pascal.extraGroups = [ "ydotool" ];
 
   home-manager.users.pascal = {
     home.packages = [
@@ -12,16 +12,11 @@
       pkgs.dogdns
       pkgs.exfat
       pkgs.ffmpeg-full
-      pkgs.gimp
       pkgs.hardinfo2
       pkgs.imagemagickBig
-      pkgs.inkscape
       pkgs.mtr
-      pkgs.networkmanagerapplet
       pkgs.nmap
-      pkgs.pdfpc
       pkgs.poppler-utils
-      pkgs.pwvucontrol
       pkgs.rsync
       pkgs.scripts.mk
       pkgs.scripts.mnt
@@ -29,12 +24,9 @@
       pkgs.scripts.wp-toggle
       pkgs.steam-run-free
       pkgs.tcpdump
-      pkgs.tenacity
       pkgs.usbutils
       pkgs.vhs
-      pkgs.vlc
       pkgs.wf-recorder
-      pkgs.wireshark
       pkgs.wl-clipboard
       pkgs.wl-mirror
       pkgs.xh
@@ -57,7 +49,6 @@
   };
 
   programs = {
-    wireshark.enable = true;
     ydotool.enable = true;
 
     scripts = {
