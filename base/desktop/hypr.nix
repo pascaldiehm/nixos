@@ -135,10 +135,10 @@
           "SUPER, Space, exec, rofi -show drun"
           "SUPER, e, exec, dolphin"
 
-          ", Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Downloads --mode active --mode output"
+          ", Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Temp --mode active --mode output"
           "ALT, Print, exec, ${lib.getExe pkgs.hyprpicker} --autocopy"
-          "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Downloads --mode region"
-          "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Downloads --mode active --mode window"
+          "SUPER SHIFT, Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Temp --mode region"
+          "SUPER, Print, exec, ${lib.getExe pkgs.hyprshot} --output-folder /home/pascal/Temp --mode active --mode window"
 
           ", XF86HomePage, exec, firefox"
           ", XF86Mail, exec, thunderbird"
