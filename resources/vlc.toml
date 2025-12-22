@@ -1,6 +1,5 @@
 [core]
 metadata-network-access=1
-one-instance-when-started-from-file=0
 
 [qt]
 qt-privacy-ask=0

@@ -1,0 +1,26 @@
+diff --git a/modules/control/dbus/dbus.c b/modules/control/dbus/dbus.c
+index 0faf07d..d91138a 100644
+--- a/modules/control/dbus/dbus.c
++++ b/modules/control/dbus/dbus.c
+@@ -71,7 +71,7 @@
+ #include <errno.h>
+ #include <unistd.h>
+ 
+-#define DBUS_MPRIS_BUS_NAME "org.mpris.MediaPlayer2.vlc"
++#define DBUS_MPRIS_BUS_NAME "org.mpris.MediaPlayer2.cvlc"
+ #define DBUS_INSTANCE_ID_PREFIX "instance"
+ 
+ #define SEEK_THRESHOLD 1000 /* µsec */
+diff --git a/src/posix/specific.c b/src/posix/specific.c
+index 067cfe0..5a997d0 100644
+--- a/src/posix/specific.c
++++ b/src/posix/specific.c
+@@ -42,7 +42,7 @@ static void system_ConfigureDbus(libvlc_int_t *vlc, int argc,
+ /* FIXME: could be replaced by using Unix sockets */
+ #ifdef HAVE_DBUS
+ # define MPRIS_APPEND "/org/mpris/MediaPlayer2/TrackList/Append"
+-# define MPRIS_BUS_NAME "org.mpris.MediaPlayer2.vlc"
++# define MPRIS_BUS_NAME "org.mpris.MediaPlayer2.cvlc"
+ # define MPRIS_OBJECT_PATH "/org/mpris/MediaPlayer2"
+ # define MPRIS_TRACKLIST_INTERFACE "org.mpris.MediaPlayer2.TrackList"
+ 
