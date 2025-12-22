@@ -27,7 +27,7 @@
         };
 
         installer = {
-          hostname = "nixos";
+          hostname = "nixos-installer.local";
           identityFile = config.sops.secrets."ssh/installer".path;
           user = "nixos";
 

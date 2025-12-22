@@ -4,7 +4,20 @@
   environment.systemPackages = [ (pkgs.writeShellScriptBin "nixinstall" "nix run github:pascaldiehm/nixos#install") ];
   nix.settings.experimental-features = [ "flakes" "nix-command" "pipe-operators" ];
   nixpkgs.hostPlatform = "x86_64-linux";
-  services.getty.helpLine = lib.mkAfter "Run 'nixinstall' to install NixOS.";
+
+  services = {
+    getty.helpLine = lib.mkAfter "Run 'nixinstall' to install NixOS.";
+
+    avahi = {
+      enable = true;
+      hostName = "nixos-installer";
+
+      publish = {
+        enable = true;
+        addresses = true;
+      };
+    };
+  };
 
   users.users.nixos.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMVpBDeuHacnZcYsM06F+ktipogjcLNZrL6rjYwZIV51 pascal"
