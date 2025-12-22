@@ -7,7 +7,7 @@ PAT_SSHD_USER_DENIED="^User (\w+) from (\S+) not allowed because not listed in A
 PAT_SSHD_USER_INVALID="^Invalid user (\w+) from (\S+) port [0-9]+$"
 PAT_SUDO_COMMAND="^\s+(\w+) : TTY=\S+ ; PWD=\S+ ; USER=(\w+) ; COMMAND=(.+)$"
 PAT_SYSTEMD_FAILED="^(\S+): Failed with result '(.+)'\.$"
-PAT_SYSTEMD_STARTUP="^Startup finished in .+ = (\S+)\.$"
+PAT_SYSTEMD_STARTUP="^Startup finished in .+ = (.+)\.$"
 
 journalctl --follow --no-tail --output json | while read -r LINE; do
   SERVICE="$(jq -r .SYSLOG_IDENTIFIER <<<"$LINE")"
