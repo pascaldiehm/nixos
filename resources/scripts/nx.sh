@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 function help() {
   echo "Usage: nx <command> [args...]"
   echo
   echo "Commands:"
   echo "  help                 Show this help"
   echo "  sync                 Sync repository"
+  echo "  edit                 Edit repository"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
@@ -33,6 +36,14 @@ elif [ "$1" = "sync" ]; then
 
   git -C ~/.config/nixos pull
   git -C ~/.config/nixos push
+elif [ "$1" = "edit" ]; then
+  if [ "$#" != 1 ]; then
+    echo "Usage: nx edit"
+    exit 1
+  fi
+
+  cd ~/.config/nixos
+  exec "$EDITOR" .
 elif [ "$1" = "test" ]; then
   if [ "$#" != 1 ]; then
     echo "Usage: nx test"
