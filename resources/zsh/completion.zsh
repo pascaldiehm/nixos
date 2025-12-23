@@ -24,6 +24,7 @@ compdef _files mkcd
 compdef _nothing ntfy
 compdef _nx nx
 compdef '_arguments ":cmd:_command_names" "*::args:_normal"' watch
+compdef _xh xhs
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   function _repo() {
