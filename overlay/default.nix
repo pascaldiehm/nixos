@@ -26,6 +26,7 @@ pkgs: prev: {
         makeWrapper "${pkgs.lib.getExe nodejs}" "$out/bin/prettier" \
           --add-flags "$out/node_modules/prettier/bin/prettier.cjs" \
           --add-flags "--plugin $out/node_modules/@prettier/plugin-php/standalone.js" \
+          --add-flags "--plugin $out/node_modules/@prettier/plugin-xml/src/plugin.js" \
           --add-flags "--plugin $out/node_modules/prettier-plugin-css-order/src/main.mjs" \
           --add-flags "--plugin $out/node_modules/prettier-plugin-organize-imports/index.js"
       '';

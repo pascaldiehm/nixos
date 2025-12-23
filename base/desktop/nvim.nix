@@ -241,6 +241,7 @@
               tex = [ "latexindent" ];
               typescript = [ "prettier" ];
               typescriptreact = [ "prettier" ];
+              xml = [ "prettier" ];
               yaml = [ "prettier" ];
             };
           };
