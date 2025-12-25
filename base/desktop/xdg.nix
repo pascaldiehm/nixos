@@ -42,5 +42,17 @@
         "x-scheme-handler/mailto" = "firefox.desktop";
       };
     };
+
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = null;
+      documents = null;
+      music = null;
+      pictures = null;
+      publicShare = null;
+      templates = null;
+      videos = null;
+    };
   };
 }
