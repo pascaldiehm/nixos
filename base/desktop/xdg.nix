@@ -6,9 +6,15 @@
       enable = true;
 
       defaultApplications = {
+        "application/gzip" = "org.kde.ark.desktop";
         "application/json" = "firefox.desktop";
         "application/pdf" = "org.kde.okular.desktop";
+        "application/vnd.efi.iso" = "org.kde.ark.desktop";
+        "application/x-compressed-tar" = "org.kde.ark.desktop";
+        "application/x-cpio" = "org.kde.ark.desktop";
+        "application/x-tar" = "org.kde.ark.desktop";
         "application/xml" = "firefox.desktop";
+        "application/zip" = "org.kde.ark.desktop";
         "audio/aac" = "vlc.desktop";
         "audio/flac" = "vlc.desktop";
         "audio/mp4" = "vlc.desktop";

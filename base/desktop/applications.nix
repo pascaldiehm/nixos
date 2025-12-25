@@ -6,6 +6,7 @@
     home.packages = [
       pkgs.gimp
       pkgs.inkscape
+      pkgs.kdePackages.ark
       pkgs.kdePackages.dolphin
       pkgs.kdePackages.ffmpegthumbs
       pkgs.kdePackages.gwenview
