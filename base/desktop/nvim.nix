@@ -374,6 +374,7 @@
               "--hidden"
               "--line-number"
               "--no-heading"
+              "--pcre2"
               "--smart-case"
               "--with-filename"
             ];
