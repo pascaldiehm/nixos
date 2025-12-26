@@ -13,6 +13,11 @@
               type = lib.types.str;
             };
 
+            mode = lib.mkOption {
+              default = "0400";
+              type = lib.types.str;
+            };
+
             name = lib.mkOption {
               default = "common/${config._module.args.name}";
               type = lib.types.str;

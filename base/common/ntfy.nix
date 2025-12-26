@@ -1,6 +1,6 @@
 { config, lib, machine, pkgs, ... }: {
   home-manager.users.pascal.home.packages = [ pkgs.scripts.ntfy ];
-  sops.common.ntfy.owner = "pascal";
+  sops.common.ntfy.mode = "0444";
 
   programs.scripts.ntfy = {
     deps = [ pkgs.curl ];
