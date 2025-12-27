@@ -6,6 +6,7 @@
     home.packages = [
       pkgs.brightnessctl
       pkgs.clinfo
+      pkgs.cloc
       pkgs.clock-rs
       pkgs.cryptsetup
       pkgs.dmidecode
