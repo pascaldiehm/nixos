@@ -2,11 +2,6 @@ pkgs: prev: {
   nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
 
-  cvlc = prev.vlc.overrideAttrs (prev: {
-    meta = (prev.meta or { }) // { mainProgram = "cvlc"; };
-    patches = (prev.patches or [ ]) ++ [ patches/cvlc.patch ];
-  });
-
   dynhostmgr = pkgs.rustPlatform.buildRustPackage {
     name = "dynhostmgr";
     src = ./dynhostmgr;

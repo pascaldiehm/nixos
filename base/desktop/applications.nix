@@ -17,9 +17,13 @@
       pkgs.pdfpc
       pkgs.pwvucontrol
       pkgs.tenacity
-      pkgs.vlc
       pkgs.wireshark
     ];
+
+    programs.mpv = {
+      enable = true;
+      scripts = [ pkgs.mpvScripts.mpris ];
+    };
 
     xdg = {
       dataFile."user-places.xbel".source = ../../resources/kde/user-places.xml;
@@ -29,7 +33,6 @@
         gwenviewrc.source = ../../resources/kde/gwenview.toml;
         "menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
         okularpartrc.source = ../../resources/kde/okular.toml;
-        "vlc/vlcrc".source = ../../resources/vlc.toml;
       };
     };
   };
