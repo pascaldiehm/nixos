@@ -47,7 +47,8 @@ label#mpris {
 label#network,
 label#backlight,
 label#wireplumber,
-label#battery {
+label#battery,
+label#custom-ups {
   border-right: 0.5em solid transparent;
   border-left: 0.5em solid transparent;
 
@@ -78,6 +79,7 @@ label#network,
 label#backlight,
 label#wireplumber,
 label#battery,
+label#custom-ups,
 label#clock {
   margin: 0.25em 0;
   padding: 0 0.5em;
@@ -96,14 +98,16 @@ label#battery.full {
 
 box#workspaces button.active,
 label#cpu.load,
-label#battery.charging {
+label#battery.charging,
+label#custom-ups.charging {
   color: @accent_color;
 }
 
 label#memory.warning,
 label#disk.warning,
 label#network:not(.disconnected):not(.ethernet):not(.wifi),
-label#battery.discharging.warning {
+label#battery.discharging.warning,
+label#custom-ups.discharging {
   color: @warning_color;
 }
 
@@ -111,10 +115,12 @@ label#cpu.high,
 label#memory.critical,
 label#disk.critical,
 label#network.disconnected,
-label#battery.discharging.critical {
+label#battery.discharging.critical,
+label#custom-ups.critical {
   color: @error_color;
 }
 
-label#battery.full {
+label#battery.full,
+label#custom-ups.full {
   color: @success_color;
 }

@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }: {
-  sops.secrets."bowser/nut" = { };
+  sops.common.nut = { };
 
   power.ups = {
     enable = true;
+    mode = "netserver";
+    openFirewall = true;
+    upsd.listen = [ { address = "0.0.0.0"; } { address = "::"; } ];
 
     ups = {
       ext = {
@@ -43,7 +46,7 @@
     users.pascal = {
       actions = [ "SET" ];
       instcmds = [ "ALL" ];
-      passwordFile = config.sops.secrets."bowser/nut".path;
+      passwordFile = config.sops.common.nut.path;
       upsmon = "primary";
     };
   };
