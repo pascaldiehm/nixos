@@ -98,8 +98,7 @@ label#battery.full {
 
 box#workspaces button.active,
 label#cpu.load,
-label#battery.charging,
-label#custom-ups.charging {
+label#battery.charging {
   color: @accent_color;
 }
 
@@ -107,7 +106,7 @@ label#memory.warning,
 label#disk.warning,
 label#network:not(.disconnected):not(.ethernet):not(.wifi),
 label#battery.discharging.warning,
-label#custom-ups.discharging {
+label#custom-ups.charging {
   color: @warning_color;
 }
 
@@ -116,11 +115,10 @@ label#memory.critical,
 label#disk.critical,
 label#network.disconnected,
 label#battery.discharging.critical,
-label#custom-ups.critical {
+label#custom-ups.discharging {
   color: @error_color;
 }
 
-label#battery.full,
-label#custom-ups.full {
+label#battery.full {
   color: @success_color;
 }

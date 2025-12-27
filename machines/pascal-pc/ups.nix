@@ -12,7 +12,6 @@
 
       format-icons = {
         charging = "󰂄";
-        critical = "󰂃";
         discharging = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
         full = "󱟢";
       };
