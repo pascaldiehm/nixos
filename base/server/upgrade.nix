@@ -1,16 +1,12 @@
-{ pkgs, ... }: {
-  systemd.services.nixos-upgrade = {
-    after = [ "network-online.target" ];
-    description = "Upgrade NixOS";
-    path = [ pkgs.git pkgs.nixos-rebuild pkgs.sudo ];
-    requires = [ "network-online.target" ];
-    serviceConfig.Type = "oneshot";
-    startAt = "Mon 01:00";
+{ lib, pkgs, ... }: {
+  systemd.services.nixos-upgrade.serviceConfig.ExecStartPost = "${lib.getExe' pkgs.systemd "systemctl"} reboot";
 
-    script = ''
-      sudo -u pascal git -C /home/pascal/.config/nixos pull
-      nixos-rebuild --impure --flake /home/pascal/.config/nixos boot
-      systemctl reboot
-    '';
+  system.autoUpgrade = {
+    enable = true;
+    dates = "Mon 01:00";
+    flags = [ "--impure" ];
+    flake = "github:pascaldiehm/nixos";
+    operation = "boot";
+    upgrade = false;
   };
 }
