@@ -20,6 +20,7 @@
 
     settings = {
       AllowUsers = [ "pascal" ];
+      GatewayPorts = "yes";
       KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
     };
