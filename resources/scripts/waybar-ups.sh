@@ -12,4 +12,4 @@ else
   STATE="charging"
 fi
 
-echo "{\"alt\": \"$STATE\", \"class\": \"$STATE\", \"percentage\": $CHARGE, \"tooltip\": \"${POWER}W\"}"
+echo "{ \"alt\": \"$STATE\", \"class\": \"$STATE\", \"percentage\": $CHARGE, \"tooltip\": \"${POWER}W\" }"

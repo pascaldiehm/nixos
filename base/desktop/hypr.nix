@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   home-manager.users.pascal = {
     programs.hyprlock = {
       enable = true;
@@ -167,7 +167,7 @@
         };
 
         input = {
-          kb_layout = config.console.keyMap;
+          kb_layout = "de";
           kb_options = "caps:escape";
           numlock_by_default = true;
           repeat_delay = 200;

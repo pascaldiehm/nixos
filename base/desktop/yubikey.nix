@@ -15,7 +15,7 @@
 
     udev.extraRules = ''
       ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-unlock" ''
-        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions || exit 0
+        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions || true
       ''}"
 
       ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-lock" ''

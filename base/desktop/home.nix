@@ -1,13 +1,11 @@
-{ config, ... }: {
-  environment.persistence."/perm".users.pascal.directories = [
-    ".local/state/wireplumber"
-    "Repos"
-
-    {
-      directory = ".local/share/gnupg";
-      mode = "0700";
-    }
-  ];
+{ config, lib, ... }: {
+  environment.persistence."/perm".users.pascal = {
+    directories = lib.mapAttrsToList (directory: mode: { inherit directory mode; }) {
+      ".local/share/gnupg" = "0700";
+      ".local/state/wireplumber" = "0755";
+      Repos = "0755";
+    };
+  };
 
   fileSystems = {
     "/home/pascal/Shared" = {

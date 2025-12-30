@@ -9,7 +9,7 @@
       nixpkgs.useGlobalPackages = true;
 
       autoCmd = lib.mapAttrsToList (event: command: { inherit command event; }) {
-        TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input(\"<Return>\") end";
+        TermClose = ''lua if vim.v.event.status ~= 0 then vim.api.nvim_input("<Return>") end'';
         TermOpen = "setlocal nospell";
       };
 
@@ -104,6 +104,70 @@
         };
       };
 
+      lsp = {
+        keymaps = lib.mkNvimKeymaps {
+          i."<A-Space>".__raw = "vim.lsp.buf.signature_help";
+
+          n = {
+            gP.__raw = "vim.diagnostic.goto_prev";
+            ga.__raw = "vim.lsp.buf.code_action";
+            gd.__raw = "vim.lsp.buf.definition";
+            gh.__raw = "vim.lsp.buf.hover";
+            gi.__raw = "vim.lsp.buf.implementation";
+            gp.__raw = "vim.diagnostic.goto_next";
+            gr.__raw = "vim.lsp.buf.empty_rename";
+          };
+        };
+
+        luaConfig.pre = ''
+          vim.lsp.buf.empty_rename = function()
+            vim.ui.input({ prompt = "New Name: " }, function(name)
+              vim.lsp.buf.rename(name)
+            end)
+          end
+        '';
+
+        servers = {
+          bashls.enable = true;
+          clangd.enable = true;
+          cmake.enable = true;
+          cssls.enable = true;
+          dockerls.enable = true;
+          eslint.enable = true;
+          html.enable = true;
+          java_language_server.enable = true;
+          jsonls.enable = true;
+          phpactor.enable = true;
+          pylsp.enable = true;
+          tailwindcss.enable = true;
+          texlab.enable = true;
+          ts_ls.enable = true;
+          yamlls.enable = true;
+
+          # TODO: Remove once fixed upstream
+          clangd.package = pkgs.clang-tools.overrideAttrs (prev: {
+            postInstall = ''
+              ${prev.postInstall or ""}
+              sed -i "s/-isystem/-isystem|-cxx-isystem/" "$out/bin/clangd"
+            '';
+          });
+
+          nixd = {
+            enable = true;
+
+            config.settings.nixd = {
+              nixpkgs.expr = ''(builtins.getFlake "/home/pascal/.config/nixos").nixosConfigurations."${machine.name}".pkgs'';
+              options.nixos.expr = ''(builtins.getFlake "/home/pascal/.config/nixos").nixosConfigurations."${machine.name}".options'';
+            };
+          };
+
+          rust_analyzer = {
+            enable = true;
+            config.settings.rust-analyzer.check.command = "clippy";
+          };
+        };
+      };
+
       opts = {
         expandtab = true;
         hlsearch = false;
@@ -142,6 +206,7 @@
 
       plugins = {
         comment.enable = true;
+        lspconfig.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
         ts-autotag.enable = true;
@@ -253,76 +318,6 @@
           settings = {
             current_line_blame = true;
             current_line_blame_opts.delay = 250;
-          };
-        };
-
-        lsp = {
-          enable = true;
-
-          keymaps = {
-            diagnostic = {
-              gP = "goto_prev";
-              gp = "goto_next";
-            };
-
-            lspBuf = {
-              ga = "code_action";
-              gd = "definition";
-              gh = "hover";
-              gi = "implementation";
-              gr = "empty_rename";
-
-              "<A-Space>" = {
-                action = "signature_help";
-                mode = "i";
-              };
-            };
-          };
-
-          luaConfig.content = ''
-            vim.lsp.buf.empty_rename = function()
-              vim.ui.input({ prompt = "New Name: " }, function(name)
-                vim.lsp.buf.rename(name)
-              end)
-            end
-          '';
-
-          servers = {
-            bashls.enable = true;
-            clangd.enable = true;
-            cmake.enable = true;
-            cssls.enable = true;
-            dockerls.enable = true;
-            eslint.enable = true;
-            html.enable = true;
-            java_language_server.enable = true;
-            jsonls.enable = true;
-            phpactor.enable = true;
-            pylsp.enable = true;
-            tailwindcss.enable = true;
-            texlab.enable = true;
-            ts_ls.enable = true;
-            yamlls.enable = true;
-
-            # TODO: Remove once fixed upstream
-            clangd.package = pkgs.clang-tools.overrideAttrs (prev: {
-              postInstall = ''
-                ${prev.postInstall or ""}
-                sed -i "s/-isystem/-isystem|-cxx-isystem/" "$out/bin/clangd"
-              '';
-            });
-
-            nixd = {
-              enable = true;
-              settings.options.nixos.expr = "(builtins.getFlake \"/home/pascal/.config/nixos\").nixosConfigurations.${machine.name}.options";
-            };
-
-            rust_analyzer = {
-              enable = true;
-              installCargo = false;
-              installRustc = false;
-              settings.check.command = "clippy";
-            };
           };
         };
 

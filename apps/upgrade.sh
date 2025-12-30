@@ -11,7 +11,7 @@ git add flake.lock
 
 test -n "$CHANGES" && {
   echo -e "\nFlake changes:"
-  grep '"repo":' <<<"$CHANGES" | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+  grep '"repo":' <<<"$CHANGES" | cut -d '"' -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
 echo "::endgroup::"
 
@@ -52,7 +52,7 @@ git add overlay/prettier
 
 test -n "$CHANGES" && {
   echo -e "\nPrettier changes:"
-  grep ^+ <<<"$CHANGES" | tail -n +3 | cut -d \" -f 2 | sort -u | sed "s/^/  - /"
+  grep ^+ <<<"$CHANGES" | tail -n +3 | cut -d '"' -f 2 | sort -u | sed "s/^/  - /"
 } >>MSG
 echo "::endgroup::"
 
@@ -85,18 +85,17 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl -fsS --head "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl -fsSI "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  SOURCE="$(sed -En "s/^location: (\S)\s*$/\1/p" "$TMP/$NAME.txt")"
 
-  if grep -q "^location:" "$TMP/$NAME.txt"; then
-    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
-
-    curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
-    ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
-  else
+  if [ -z "$SOURCE" ]; then
     echo "    -> Failed, no location returned"
+    echo "::warning::No location returned for Firefox extension $NAME"
     SOURCE="$(jq -r .source <<<"$EXT")"
-    ID="$(jq -r .id <<<"$EXT")"
   fi
+
+  curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
+  ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
 done < <(jq -c ".[]" resources/extensions/firefox.json)
@@ -110,7 +109,7 @@ git add resources/extensions/firefox.json
 
 test -n "$CHANGES" && {
   echo -e "\nFirefox extension changes:"
-  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d '"' -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
 echo "::endgroup::"
 
@@ -126,18 +125,17 @@ while read -r EXT; do
   NAME="$(jq -r .name <<<"$EXT")"
   echo "  - $NAME"
 
-  curl -fsS --head "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  curl -fsSI "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
+  SOURCE="$(sed -En "s/^location: (\S)\s*$/\1/p" "$TMP/$NAME.txt")"
 
-  if grep -q "^location:" "$TMP/$NAME.txt"; then
-    SOURCE="$(grep "^location:" "$TMP/$NAME.txt" | sed -E "s/^location: (\S+)\s*$/\1/")"
-
-    curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
-    ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
-  else
+  if [ -z "$SOURCE" ]; then
     echo "    -> Failed, no location returned"
+    echo "::warning::No location returned for Thunderbird extension $NAME"
     SOURCE="$(jq -r .source <<<"$EXT")"
-    ID="$(jq -r .id <<<"$EXT")"
   fi
+
+  curl -fsSL -o "$TMP/$NAME.xpi" "$SOURCE"
+  ID="$(unzip -cq "$TMP/$NAME.xpi" manifest.json | jq -r "(.browser_specific_settings // .applications).gecko.id")"
 
   echo -n "  { \"name\": \"$NAME\", \"id\": \"$ID\", \"source\": \"$SOURCE\" }" >>"$TMP/extensions.json"
 done < <(jq -c ".[]" resources/extensions/thunderbird.json)
@@ -151,6 +149,6 @@ git add resources/extensions/thunderbird.json
 
 test -n "$CHANGES" && {
   echo -e "\nThunderbird extension changes:"
-  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d \" -f 4 | sort -u | sed "s/^/  - /"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d '"' -f 4 | sort -u | sed "s/^/  - /"
 } >>MSG
 echo "::endgroup::"

@@ -3,7 +3,10 @@
 set -e
 cd ~/Repos
 
-function help() {
+if [ "$#" = 0 ]; then
+  echo "Usage: repo <command> [args...]"
+  exit 1
+elif [ "$1" = "help" ]; then
   echo "Usage: repo <command> [args...]"
   echo
   echo "Commands:"
@@ -16,24 +19,7 @@ function help() {
   echo "  shell <name> [path]    Open shell in a repo"
   echo "  exec <name> <cmd...>   Execute a command in a repo"
   echo "  remove <name>          Remove a repo"
-}
-
-if [ "$#" = 0 ]; then
-  help
-  exit 1
-elif [ "$1" = "help" ]; then
-  if [ "$#" != 1 ]; then
-    echo "Usage: repo help"
-    exit 1
-  fi
-
-  help
 elif [ "$1" = "list" ]; then
-  if [ "$#" != 1 ]; then
-    echo "Usage: repo list"
-    exit 1
-  fi
-
   for REPO in *; do
     test -d "$REPO" || continue
     cd "$REPO"
@@ -41,7 +27,6 @@ elif [ "$1" = "list" ]; then
     URL="$(git remote get-url origin 2>/dev/null || echo "local")"
     HEAD="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
 
-    CHANGES=""
     if [ "$HEAD" = "HEAD" ]; then
       if git rev-parse HEAD &>/dev/null; then
         echo -e "\e[1;34m$REPO \e[0;33m$(git rev-parse --short HEAD) \e[90m$URL"
@@ -49,14 +34,14 @@ elif [ "$1" = "list" ]; then
         echo -e "\e[1;34m$REPO \e[0;31mEMPTY \e[90m$URL"
       fi
     else
+      CHANGES=""
       if [ -n "$(git status --porcelain)" ]; then
         CHANGES="\e[36m*"
       else
         while read -r BRANCH; do
-          if git rev-parse "$BRANCH@{upstream}" &>/dev/null; then
-            test -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" && CHANGES="\e[36m+"
-          else
+          if ! git rev-parse "$BRANCH@{upstream}" &>/dev/null || [ -n "$(git rev-list "$BRANCH@{upstream}..$BRANCH")" ]; then
             CHANGES="\e[36m+"
+            break
           fi
         done < <(git branch --format "%(refname:short)")
       fi
@@ -122,9 +107,6 @@ elif [ "$1" = "status" ]; then
     status "$2"
   else
     echo "Usage: repo status [name]"
-    echo
-    echo "name   Repository name (defaults to all)"
-
     exit 1
   fi
 elif [ "$1" = "clone" ]; then
@@ -134,10 +116,6 @@ elif [ "$1" = "clone" ]; then
     git clone "$2" "$3"
   else
     echo "Usage: repo clone <url> [name]"
-    echo
-    echo "url    Upstream URL"
-    echo "name   Repository name (defaults to upstream name)"
-
     exit 1
   fi
 elif [ "$1" = "update" ]; then
@@ -201,18 +179,11 @@ elif [ "$1" = "update" ]; then
     update "$2"
   else
     echo "Usage: repo update [name]"
-    echo
-    echo "name   Repository name (defaults to all)"
-
     exit 1
   fi
 elif [ "$1" = "edit" ]; then
-  if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+  if [ "$#" -lt 2 ]; then
     echo "Usage: repo edit <name> [path]"
-    echo
-    echo "name   Repository name"
-    echo "path   Path to open"
-
     exit 1
   fi
 
@@ -220,13 +191,9 @@ elif [ "$1" = "edit" ]; then
     echo "Repo '$2' not found. Do you want to clone gh:/$2.git?"
     echo
     read -r -n 1 -p "[y/N] " RES
-    echo
 
-    if [ "$RES" = "y" ]; then
-      git clone "gh:/$2.git"
-    else
-      exit 1
-    fi
+    test "$RES" = "y" || exit 1
+    git clone "gh:/$2.git"
   fi
 
   cd "$2"
@@ -245,12 +212,8 @@ elif [ "$1" = "edit" ]; then
     exec "$EDITOR" .
   fi
 elif [ "$1" = "shell" ]; then
-  if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+  if [ "$#" -lt 2 ]; then
     echo "Usage: repo shell <name> [path]"
-    echo
-    echo "name   Repository name"
-    echo "path   Path to open"
-
     exit 1
   fi
 
@@ -273,10 +236,6 @@ elif [ "$1" = "shell" ]; then
 elif [ "$1" = "exec" ]; then
   if [ "$#" -lt 3 ]; then
     echo "Usage: repo exec <name> <cmd...>"
-    echo
-    echo "name   Repository name"
-    echo "cmd    Shell command"
-
     exit 1
   fi
 
@@ -288,11 +247,8 @@ elif [ "$1" = "exec" ]; then
   cd "$2"
   exec "${@:3}"
 elif [ "$1" = "remove" ]; then
-  if [ "$#" != 2 ]; then
+  if [ "$#" -lt 2 ]; then
     echo "Usage: repo remove <name>"
-    echo
-    echo "name   Repository name"
-
     exit 1
   fi
 
@@ -328,6 +284,6 @@ elif [ "$1" = "remove" ]; then
   cd ..
   rm -rf "$2"
 else
-  help
+  echo "Unknown command: $1"
   exit 1
 fi

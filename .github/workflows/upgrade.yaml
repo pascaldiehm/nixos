@@ -36,6 +36,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git commit --file MSG
-          rm MSG
-
           git push
+          rm MSG

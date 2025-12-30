@@ -136,7 +136,7 @@ chmod 700 /mnt/perm/etc/nixos/.gnupg
 echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
-curl --remote-name "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
+curl -fsSLO "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
 gpg --decrypt key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."

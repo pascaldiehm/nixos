@@ -7,7 +7,6 @@
     ./documentation.nix
     ./firefox.nix
     ./gpg.nix
-    ./home-assistant.nix
     ./home.nix
     ./hypr.nix
     ./misc.nix

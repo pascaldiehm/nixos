@@ -30,31 +30,31 @@
   };
 
   outputs = inputs: let
-    lib = inputs.nixpkgs.lib;
-    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+    lib = inputs.nixpkgs.lib.extend (import ./lib.nix) |> (lib: lib.extend (lib: prev: inputs.home-manager.lib));
+    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux.extend (import overlay/pkgs.nix);
 
     mkScript = name: runtimeInputs: pkgs.writeShellApplication {
       inherit name runtimeInputs;
       text = lib.readFile apps/${name}.sh;
     };
 
-    mkSystem = name: info: lib.nixosSystem {
+    mkSystem = name: cfg: lib.nixosSystem {
       modules = [
         ./modules
+        ./overlay
         base/common
-        base/${info.type}
+        base/${cfg.type}
         machines/${name}
       ]
       ++ lib.optional (lib.pathExists /etc/nixos/hardware.nix) /etc/nixos/hardware.nix;
 
       specialArgs = {
-        inherit inputs;
-        lib = (lib.extend (import ./lib.nix)).extend (self: super: inputs.home-manager.lib);
-        machine = info // { inherit name; };
+        inherit inputs lib;
+        machine = cfg // { inherit name; };
       };
     };
   in rec {
-    legacyPackages.x86_64-linux = pkgs.extend (import ./overlay);
+    legacyPackages.x86_64-linux = pkgs;
 
     nixosConfigurations = lib.importJSON ./machines.json
       |> lib.mapAttrs mkSystem

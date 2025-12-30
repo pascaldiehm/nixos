@@ -19,10 +19,10 @@
   config.nixpkgs.overlays = [
     (pkgs: prev: {
       scripts = lib.mapAttrs (
-        name: config: pkgs.writeShellApplication {
+        name: cfg: pkgs.writeShellApplication {
           inherit name;
-          inherit (config) text;
-          runtimeInputs = config.deps;
+          inherit (cfg) text;
+          runtimeInputs = cfg.deps;
         }
       ) config.programs.scripts;
     })

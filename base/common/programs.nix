@@ -1,4 +1,6 @@
-{ lib, pkgs, ... }: {
+{ config, lib, machine, pkgs, ... }: {
+  sops.common.ntfy.mode = "0444";
+
   home-manager.users.pascal.home.packages = [
     pkgs.bat
     pkgs.btrfs-progs
@@ -12,6 +14,7 @@
     pkgs.ncdu
     pkgs.netcat
     pkgs.ripgrep
+    pkgs.scripts.ntfy
     pkgs.scripts.nx
     pkgs.unzip
     pkgs.wireguard-tools
@@ -19,12 +22,23 @@
   ];
 
   programs = {
-    command-not-found.enable = false;
     nano.enable = false;
 
-    scripts.nx = {
-      deps = [ pkgs.sops ];
-      text = lib.readFile ../../resources/scripts/nx.sh;
+    scripts = {
+      ntfy = {
+        deps = [ pkgs.curl ];
+
+        text = lib.readFile ../../resources/scripts/ntfy.sh
+          |> lib.templateString {
+            TOKEN = config.sops.common.ntfy.path;
+            MACHINE = machine.name;
+          };
+      };
+
+      nx = {
+        deps = [ pkgs.sops ];
+        text = lib.readFile ../../resources/scripts/nx.sh;
+      };
     };
 
     vim = {

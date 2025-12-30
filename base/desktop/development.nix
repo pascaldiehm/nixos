@@ -20,11 +20,11 @@
         pkgs.php
         pkgs.python3
         pkgs.rustc
-        pkgs.sqlite
+        pkgs.sqlite-interactive
       ];
 
       sessionVariables = {
-        CMAKE_EXPORT_COMPILE_COMMANDS = "1";
+        CMAKE_EXPORT_COMPILE_COMMANDS = "ON";
         CMAKE_GENERATOR = "Ninja";
       };
     };

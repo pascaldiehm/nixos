@@ -19,11 +19,11 @@ lib: prev: {
     else
       {
         definedAliases = [ "@${name}" ];
-        urls = [ { template = lib.replaceStrings [ "%s" ] [ "{searchTerms}" ] url; } ];
+        urls = [ { template = lib.replaceString "%s" "{searchTerms}" url; } ];
       }
   );
 
-  mkMozillaExtensions = path: settings: lib.importJSON path
+  mkMozillaExtensions = file: settings: lib.importJSON file
   |> lib.map (ext: {
     name = ext.id;
 

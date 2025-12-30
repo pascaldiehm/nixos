@@ -9,11 +9,11 @@
 
   system.activationScripts.clean-perm = let
     cfg = config.environment.persistence."/perm";
-    dirs = lib.map (dir: "-path '/perm${dir.dirPath}' -o -path '/perm${dir.dirPath}/*'") cfg.directories;
-    files = lib.map (file: "-path '/perm${file.filePath}'") cfg.files;
-    paths = "\\( ${lib.concatStringsSep " -o " (dirs ++ files)} \\)";
+    dirs = lib.map (dir: [ "/perm${dir.dirPath}" "/perm${dir.dirPath}/*" ]) cfg.directories;
+    files = lib.map (file: [ "/perm${file.filePath}" ]) cfg.files;
+    paths = lib.flatten (dirs ++ files) |> lib.concatMapStringsSep " -o " (loc: "-path ${lib.escapeShellArg loc}");
   in ''
-    find /perm -not ${paths} -not -type d -exec rm "{}" +
-    find /perm -depth -not ${paths} -type d -exec rmdir --ignore-fail-on-non-empty "{}" +
+    find /perm -not \( ${paths} \) -not -type d -exec rm "{}" +
+    find /perm -depth -not \( ${paths} \) -type d -exec rmdir --ignore-fail-on-non-empty "{}" +
   '';
 }

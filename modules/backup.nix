@@ -33,17 +33,18 @@
 
       text = let
         paths = lib.mapAttrsToList (
-          path: cfg: lib.map (glob: [ "--exclude '${path}/${glob}'" ]) cfg.excludeGlob
-          ++ lib.map (re: [ "--exclude-regexp '${lib.escapeRegex path}/${re}'" ]) cfg.excludeRegex
-          ++ (if cfg.include == null then [ "--include '${path}'" ] else lib.map (sub: "--include '${path}/${sub}'") cfg.include)
+          loc: cfg: lib.map (glob: [ "--exclude" "${loc}/${glob}" ]) cfg.excludeGlob
+          ++ lib.map (re: [ "--exclude-regexp" "${lib.escapeRegex loc}/${re}" ]) cfg.excludeRegex
+          ++ (if cfg.include == null then [ "--include" loc ] else lib.map (inc: [ "--include" "${loc}/${inc}" ]) cfg.include)
         ) config.services.backup;
-      in lib.templateString {
+      in lib.readFile ../resources/scripts/backup.sh
+      |> lib.templateString {
         BACKUP_KEY = config.sops.common."backup/key".path;
         BACKUP_PASS = config.sops.common."backup/pass".path;
         MACHINE = machine.name;
-        SPEC = lib.flatten paths;
+        SPEC = lib.flatten paths |> lib.escapeShellArgs;
         TARGET = "sftp://pascal@bowser:1970/archive/Backups";
-      } (lib.readFile ../resources/scripts/backup.sh);
+      };
     };
 
     systemd = {

@@ -1,6 +1,4 @@
 {
-  nixpkgs.overlays = [ (import ../../overlay) ];
-
   nix = {
     channel.enable = false;
 

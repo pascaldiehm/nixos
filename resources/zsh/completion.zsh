@@ -18,7 +18,7 @@ function _nx() {
   fi
 }
 
-compdef '_arguments ":action:(status list restore)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
+compdef '_arguments ":action:(help status list restore)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
 compdef _files ed
 compdef _files mkcd
 compdef _nothing ntfy

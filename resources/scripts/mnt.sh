@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 set -e
+
+trap 'rmdir "$TMP"' EXIT
 TMP="$(mktemp -d)"
 ROOT=0
 
 if [ "$#" = 0 ]; then
   echo "Usage: mnt <what>"
-  rmdir "$TMP"
   exit 1
 elif [ "$1" = "android" ]; then
   aft-mtp-mount "$TMP"
@@ -31,7 +32,6 @@ elif [ -b "/dev/disk/by-partlabel/$1" ]; then
   ROOT=1
 else
   echo "Cannot mount $1"
-  rmdir "$TMP"
   exit 1
 fi
 
@@ -48,6 +48,3 @@ if ((ROOT)); then
 else
   umount "$TMP"
 fi
-
-echo "Done."
-rmdir "$TMP"

@@ -12,6 +12,14 @@ if [ "$#" = 0 ]; then
 
   # shellcheck disable=SC2086
   dup incremental --full-if-older-than 1M / "${TARGET}/${MACHINE}" ${SPEC} --exclude "**"
+elif [ "$1" = "help" ]; then
+  echo "Usage: backup [command] [args...]"
+  echo
+  echo "Commands:"
+  echo "  help                                Show this help"
+  echo "  status [machine]                    Show backup status"
+  echo "  list [machine]                      List backed up files"
+  echo "  restore [[machine] path] <target>   Restore backup"
 elif [ "$1" = "status" ]; then
   dup collection-status "${TARGET}/${2:-${MACHINE}}"
 elif [ "$1" = "list" ]; then

@@ -1,8 +1,9 @@
-{ config, inputs, lib, ... }: {
+{ inputs, ... }: {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   home-manager = {
     backupFileExtension = "hm-bak";
+    overwriteBackup = true;
     useGlobalPkgs = true;
     useUserPackages = true;
 
@@ -11,12 +12,8 @@
 
       home = {
         homeDirectory = "/home/pascal";
-        stateVersion = config.system.stateVersion;
+        stateVersion = "24.11";
         username = "pascal";
-
-        activation.delete-backups = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run find /home/pascal -path /home/pascal/Shared -prune -o -name "*.hm-bak" -exec rm -rf "{}" +
-        '';
       };
     };
   };
