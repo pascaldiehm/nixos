@@ -7,9 +7,12 @@
       file = {
         ".config/dolphinrc".source = ../../resources/kde/dolphin.toml;
         ".config/gwenviewrc".source = ../../resources/kde/gwenview.toml;
-        ".config/menu/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
         ".config/okularpartrc".source = ../../resources/kde/okular.toml;
         ".local/share/user-places.xbel".source = ../../resources/kde/user-places.xml;
+
+        ".config/menus/applications.menu" = {
+          source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+        };
       };
 
       packages = [
