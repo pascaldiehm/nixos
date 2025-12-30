@@ -1,4 +1,5 @@
-{ config, ... }: let htop = config.home-manager.users.pascal.lib.htop;
+{ config, ... }: let
+  htop = config.home-manager.users.pascal.lib.htop;
 in {
   home-manager.users.pascal.programs.htop = {
     enable = true;
