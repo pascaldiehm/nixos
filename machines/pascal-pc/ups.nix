@@ -1,20 +1,29 @@
 { config, lib, pkgs, ... }: {
   sops.common.nut = { };
 
-  home-manager.users.pascal.programs.waybar.settings.bar = {
-    modules-right = lib.mkForce [ "network" "wireplumber" "custom/ups" "clock" ];
+  home-manager.users.pascal = {
+    programs.waybar.settings.bar = {
+      modules-right = lib.mkForce [ "network" "wireplumber" "custom/ups" "clock" ];
 
-    "custom/ups" = {
-      exec = lib.readFile ../../resources/scripts/waybar-ups.sh |> pkgs.writeShellScript "waybar-ups";
-      format = "{icon} {percentage}%";
-      interval = 1;
-      return-type = "json";
+      "custom/ups" = {
+        exec = "cat /run/user/1000/upsmon";
+        format = "{icon} {percentage}%";
+        interval = 1;
+        return-type = "json";
 
-      format-icons = {
-        charging = "󰂄";
-        discharging = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-        full = "󱟢";
+        format-icons = {
+          charging = "󰂄";
+          discharging = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          error = "󱟨";
+          full = "󱟢";
+        };
       };
+    };
+
+    systemd.user.services.upsmon = {
+      Install.WantedBy = [ "default.target" ];
+      Service.ExecStart = lib.readFile ../../resources/scripts/upsmon.sh |> pkgs.writeShellScript "upsmon";
+      Unit.Description = "Monitor UPS";
     };
   };
 

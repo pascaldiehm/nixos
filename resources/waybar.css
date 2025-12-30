@@ -115,7 +115,8 @@ label#memory.critical,
 label#disk.critical,
 label#network.disconnected,
 label#battery.discharging.critical,
-label#custom-ups.discharging {
+label#custom-ups.discharging,
+label#custom-ups.error {
   color: @error_color;
 }
 
