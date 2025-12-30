@@ -7,6 +7,7 @@
     "custom/ups" = {
       exec = lib.readFile ../../resources/scripts/waybar-ups.sh |> pkgs.writeShellScript "waybar-ups";
       format = "{icon} {percentage}%";
+      hide-empty-text = true;
       interval = 1;
       return-type = "json";
 
