@@ -24,7 +24,7 @@ nix build --accept-flake-config -o /nix/var/nix/gcroots/ci/statix github:oppilia
 
 while read -r FILE; do
   echo "Checking $FILE"
-  DIAGNOSTICS="$(NO_COLOR=1 nil diagnostics "$FILE" && /nix/var/nix/gcroots/ci/statix/bin/statix check "$FILE" || true)"
+  DIAGNOSTICS="$(nil diagnostics "$FILE" && /nix/var/nix/gcroots/ci/statix/bin/statix check "$FILE" || true)"
 
   if [ -z "$DIAGNOSTICS" ]; then
     echo "- :white_check_mark: $FILE" >>"$GITHUB_STEP_SUMMARY"
@@ -32,7 +32,7 @@ while read -r FILE; do
     {
       echo "- :x: $FILE"
       echo '  ```'
-      sed -E "s/^/  /" <<<"$DIAGNOSTICS"
+      ansi2txt <<<"$DIAGNOSTICS" | sed -E "s/^/  /"
       echo '  ```'
     } >>"$GITHUB_STEP_SUMMARY"
 

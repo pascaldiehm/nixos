@@ -63,7 +63,7 @@
     packages.x86_64-linux = lib.mapAttrs mkScript {
       nixvim = [ nixosConfigurations.pascal-pc.config.home-manager.users.pascal.programs.nixvim.build.package ];
       upgrade = [ pkgs.cargo pkgs.curl pkgs.jq pkgs.nodePackages.nodejs pkgs.unzip ];
-      verify = [ pkgs.jq pkgs.nil pkgs.shellcheck ];
+      verify = [ pkgs.colorized-logs pkgs.jq pkgs.nil pkgs.shellcheck ];
 
       install = [
         pkgs.btrfs-progs
