@@ -32,7 +32,7 @@
       actions = [ "SET" ];
       instcmds = [ "ALL" ];
       passwordFile = config.sops.common.nut.path;
-      upsmon = "primary";
+      upsmon = "secondary";
     };
   };
 }
