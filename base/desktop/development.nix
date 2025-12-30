@@ -37,7 +37,6 @@
       godot = {
         enable = true;
         android.enable = true;
-        settings."network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # TODO: Remove once fixed upstream
 
         externalEditor = {
           enable = true;
@@ -48,6 +47,11 @@
         projects = {
           autoscan = true;
           path = "/home/pascal/Repos";
+        };
+
+        settings = {
+          "network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # TODO: Remove once fixed upstream
+          "run/window_placement/game_embed_mode" = 1;
         };
       };
 
