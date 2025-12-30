@@ -152,6 +152,16 @@
             '';
           });
 
+          gdscript = {
+            enable = true;
+
+            config = {
+              cmd.__raw = ''vim.lsp.rpc.connect("127.0.0.1", 6005)'';
+              filetypes = [ "gdscript" ];
+              root_markers = [ "project.godot" ];
+            };
+          };
+
           nixd = {
             enable = true;
 
@@ -250,6 +260,7 @@
               clang-format = [ (lib.getExe' pkgs.clang-tools "clang-format") ];
               cmake-format = [ (lib.getExe pkgs.cmake-format) "--autosort" "--line-width=120" "--tab-size=2" ];
               dockerfmt = [ (lib.getExe pkgs.dockerfmt) "--indent=2" "--newline" ];
+              gdformat = [ (lib.getExe' pkgs.gdtoolkit_4 "gdformat") "--line-length=120" ];
               google-java-format = [ (lib.getExe pkgs.google-java-format) ];
               isort = [ (lib.getExe pkgs.python3Packages.isort) ];
               nixfmt = [ (lib.getExe pkgs.nixfmt) "--strict" "--width=120" ];
@@ -291,6 +302,7 @@
               cpp = [ "clang-format" ];
               css = [ "prettier" ];
               dockerfile = [ "dockerfmt" ];
+              gdscript = [ "gdformat" ];
               html = [ "prettier" ];
               java = [ "google-java-format" ];
               javascript = [ "prettier" ];

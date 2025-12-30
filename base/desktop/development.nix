@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
+  programs.scripts.godot-editor.text = lib.readFile ../../resources/scripts/godot-editor.sh;
+
   home-manager.users.pascal = {
     home = {
       file = {
@@ -31,6 +33,23 @@
 
     programs = {
       java.enable = true;
+
+      godot = {
+        enable = true;
+        android.enable = true;
+        settings."network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # TODO: Remove once fixed upstream
+
+        externalEditor = {
+          enable = true;
+          args = "{project} {file} {line}";
+          path = lib.getExe pkgs.scripts.godot-editor;
+        };
+
+        projects = {
+          autoscan = true;
+          path = "/home/pascal/Repos";
+        };
+      };
 
       texlive = {
         enable = true;
