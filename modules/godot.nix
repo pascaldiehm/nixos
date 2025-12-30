@@ -46,7 +46,7 @@ in {
     };
   };
 
-  config = lib.mkIf (cfg.enable) {
+  config = lib.mkIf cfg.enable {
     xdg.dataFile."godot/export_templates".source = "${cfg.exportTemplates.package}/share/godot/export_templates";
 
     home = {
@@ -68,9 +68,9 @@ in {
     };
 
     programs.godot.settings = {
-      "export/android/android_sdk_path" = lib.mkIf (cfg.android.enable) "${cfg.android.androidPackage}/libexec/android-sdk";
-      "export/android/java_sdk_path" = lib.mkIf (cfg.android.enable) cfg.android.javaPackage.home;
-      "filesystem/directories/autoscan_project_path" = lib.mkIf (cfg.projects.autoscan) cfg.projects.path;
+      "export/android/android_sdk_path" = lib.mkIf cfg.android.enable "${cfg.android.androidPackage}/libexec/android-sdk";
+      "export/android/java_sdk_path" = lib.mkIf cfg.android.enable cfg.android.javaPackage.home;
+      "filesystem/directories/autoscan_project_path" = lib.mkIf cfg.projects.autoscan cfg.projects.path;
       "filesystem/directories/default_project_path" = cfg.projects.path;
       "network/connection/check_for_updates" = 0;
       "network/connection/network_mode" = if cfg.online then 1 else 0;
