@@ -11,6 +11,7 @@ elif [ "$1" = "help" ]; then
   echo "Commands:"
   echo "  help                 Show this help"
   echo "  sync                 Sync repository"
+  echo "  diff                 List new commits"
   echo "  edit                 Edit repository"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
@@ -22,6 +23,9 @@ elif [ "$1" = "help" ]; then
 elif [ "$1" = "sync" ]; then
   git -C ~/.config/nixos pull
   git -C ~/.config/nixos push
+elif [ "$1" = "diff" ]; then
+  git -C ~/.config/nixos pull
+  git -C ~/.config/nixos l "$(nixos-version --configuration-revision).."
 elif [ "$1" = "edit" ]; then
   cd ~/.config/nixos
   exec "$EDITOR" .
