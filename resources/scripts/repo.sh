@@ -191,6 +191,7 @@ elif [ "$1" = "edit" ]; then
     echo "Repo '$2' not found. Do you want to clone gh:/$2.git?"
     echo
     read -r -n 1 -p "[y/N] " RES
+    echo
 
     test "$RES" = "y" || exit 1
     git clone "gh:/$2.git"
