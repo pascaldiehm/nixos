@@ -1,5 +1,5 @@
 diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
-index 96fd3c7..11b4a09 100644
+index 96fd3c7..50dbb9e 100644
 --- a/src/Nixfmt/Pretty.hs
 +++ b/src/Nixfmt/Pretty.hs
 @@ -119,6 +119,20 @@ prettyItems (Items items) = go items
@@ -141,20 +141,23 @@ index 96fd3c7..11b4a09 100644
    pretty (ContextParameter param1 at param2) =
      pretty param1 <> pretty at <> pretty param2
  
-@@ -428,11 +404,7 @@ prettyApp indentFunction pre hasPost f a =
-               <> surroundWith sur (nest $ pretty post' <> sepBy line (unItems items))
+@@ -425,14 +401,8 @@ prettyApp indentFunction pre hasPost f a =
+       absorbInner (Term (List paropen@Ann{trailComment = post'} items parclose))
+         | length (unItems items) <= 6 && all (isSimple . Term) items =
+             pretty (paropen{trailComment = Nothing})
+-              <> surroundWith sur (nest $ pretty post' <> sepBy line (unItems items))
++              <> surroundWith line (nest $ pretty post' <> sepBy line (unItems items))
                <> pretty parclose
-         where
+-        where
 -          -- If the brackets are on different lines, keep them like that
 -          sur
 -            | sourceLine paropen /= sourceLine parclose = hardline
 -            | null $ unItems items = hardspace
 -            | otherwise = line
-+          sur = if null $ unItems items then hardspace else line
        absorbInner expr = pretty expr
  
        -- Render the last argument of a function call
-@@ -645,7 +617,7 @@ absorbRHS expr = case expr of
+@@ -645,7 +615,7 @@ absorbRHS expr = case expr of
    (Term (Path _)) -> nest $ hardspace <> group expr
    -- Non-absorbable term
    -- If it is multi-line, force it to start on a new line with indentation
@@ -163,7 +166,7 @@ index 96fd3c7..11b4a09 100644
    -- Function call
    -- Absorb if all arguments except the last fit into the line, start on new line otherwise
    (Application f a) -> nest $ prettyApp False line False f a
-@@ -668,7 +640,7 @@ absorbRHS expr = case expr of
+@@ -668,7 +638,7 @@ absorbRHS expr = case expr of
    -- If it fits on one line, it fits
    -- If it fits on one line but with a newline after the `=`, it fits (including semicolon)
    -- Otherwise, start on new line, expand fully (including the semicolon)
@@ -172,7 +175,7 @@ index 96fd3c7..11b4a09 100644
    where
      isUpdateConcatPlus TUpdate = True
      isUpdateConcatPlus TConcat = True
-@@ -693,7 +665,7 @@ instance Pretty Expression where
+@@ -693,7 +663,7 @@ instance Pretty Expression where
        inPart =
          group $
            pretty in_
@@ -181,7 +184,7 @@ index 96fd3c7..11b4a09 100644
              <> pretty (preTrivia ++ convertTrailing trailComment)
              <> pretty expr
    pretty (Assert assert cond semicolon expr) =
-@@ -730,7 +702,7 @@ instance Pretty Expression where
+@@ -730,7 +700,7 @@ instance Pretty Expression where
  
    -- Simple parameter
    pretty (Abstraction (IDParameter param) colon body) =
@@ -190,7 +193,7 @@ index 96fd3c7..11b4a09 100644
      where
        absorbAbs :: Int -> Expression -> Doc
        -- If there are multiple ID parameters to that function, treat them all at once
-@@ -738,15 +710,14 @@ instance Pretty Expression where
+@@ -738,15 +708,14 @@ instance Pretty Expression where
          hardspace <> pretty param0 <> pretty colon0 <> absorbAbs (depth + 1) body0
        absorbAbs _ expr | isAbsorbableExpr expr = hardspace <> group' Priority (absorbExpr False expr)
        -- Force the content onto a new line when it is not absorbable and there are more than two arguments
