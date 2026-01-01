@@ -19,7 +19,7 @@ elif [ "$1" = "help" ]; then
   echo "  help                                Show this help"
   echo "  status [machine]                    Show backup status"
   echo "  list [machine]                      List backed up files"
-  echo "  restore [[machine] path] <target>   Restore backup"
+  echo "  restore [machine [path]] <target>   Restore backup"
 elif [ "$1" = "status" ]; then
   dup collection-status "${TARGET}/${2:-${MACHINE}}"
 elif [ "$1" = "list" ]; then
@@ -28,11 +28,11 @@ elif [ "$1" = "restore" ]; then
   if [ "$#" = 2 ]; then
     dup restore "${TARGET}/${MACHINE}" "$2"
   elif [ "$#" = 3 ]; then
-    dup restore --path-to-restore "$2" "${TARGET}/${MACHINE}" "$3"
+    dup restore "${TARGET}/$2" "$3"
   elif [ "$#" = 4 ]; then
     dup restore --path-to-restore "$3" "${TARGET}/$2" "$4"
   else
-    echo "Usage: backup restore [[machine] path] <target>"
+    echo "Usage: backup restore [machine [path]] <target>"
     exit 1
   fi
 else
