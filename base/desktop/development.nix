@@ -1,6 +1,4 @@
 { lib, pkgs, ... }: {
-  programs.scripts.godot-editor.text = lib.readFile ../../resources/scripts/godot-editor.sh;
-
   home-manager.users.pascal = {
     home = {
       file = {
@@ -41,7 +39,7 @@
         externalEditor = {
           enable = true;
           args = "{project} {file} {line}";
-          path = lib.getExe pkgs.scripts.godot-editor;
+          path = lib.readFile ../../resources/scripts/godot-editor.sh |> pkgs.writeShellScript "godot-editor";
         };
 
         projects = {
