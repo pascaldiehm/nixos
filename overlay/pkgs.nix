@@ -43,4 +43,11 @@ pkgs: prev: {
       '';
     });
   };
+
+  waybar-ups = pkgs.rustPlatform.buildRustPackage {
+    name = "waybar-ups";
+    src = ./waybar-ups;
+    cargoLock.lockFile = waybar-ups/Cargo.lock;
+    meta.mainProgram = "waybar-ups";
+  };
 }

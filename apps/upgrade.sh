@@ -30,6 +30,21 @@ test -n "$CHANGES" && {
 } >>MSG
 echo "::endgroup::"
 
+echo "::group::Waybar UPS plugin"
+pushd overlay/waybar-ups
+cargo update -Z unstable-options --breaking # TODO: Remove unstable-options when breaking is stable
+cargo update
+popd
+
+CHANGES="$(git diff overlay/waybar-ups/Cargo.toml)"
+git add overlay/waybar-ups
+
+test -n "$CHANGES" && {
+  echo -e "\nWaybar UPS plugin changes:"
+  grep ^+ <<<"$CHANGES" | tail -n +2 | cut -d = -f 1 | sort -u | sed "s/^+/  - /"
+} >>MSG
+echo "::endgroup::"
+
 echo "::group::Prettier"
 pushd overlay/prettier
 TMP="$(mktemp)"
