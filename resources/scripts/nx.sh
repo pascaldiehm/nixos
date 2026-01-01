@@ -12,20 +12,39 @@ elif [ "$1" = "help" ]; then
   echo "  help                 Show this help"
   echo "  sync                 Sync repository"
   echo "  diff                 List new commits"
+  echo "  version              Show system version"
   echo "  edit                 Edit repository"
   echo "  test                 Test configuration"
   echo "  upgrade [mode]       Upgrade machine"
   echo "  list                 List generations"
   echo "  reset <gen> [mode]   Reset to previous generation"
-  echo "  repl [host]          Start repl with configuration"
-  echo "  secrets [type]       Edit secrets"
-  echo "  iso                  Build ISO image"
+  echo "  repl [host]          Start repl in configuration"
+  echo "  secrets [type]       Edit secret stores"
+  echo "  iso                  Build installer image"
 elif [ "$1" = "sync" ]; then
   git -C ~/.config/nixos pull
   git -C ~/.config/nixos push
 elif [ "$1" = "diff" ]; then
+  REV="$(nixos-version --configuration-revision)"
+
+  if [ "$REV" = "<dirty>" ]; then
+    echo "Error: unstable revision"
+    exit 1
+  fi
+
   git -C ~/.config/nixos pull
-  git -C ~/.config/nixos l "$(nixos-version --configuration-revision).."
+  git -C ~/.config/nixos log --oneline --no-decorate "$REV.."
+elif [ "$1" = "version" ]; then
+  REV="$(nixos-version --configuration-revision)"
+
+  uname -a
+  echo "NixOS $(nixos-version)"
+
+  if [ "$REV" = "<dirty>" ]; then
+    echo "??????? unstable revision"
+  else
+    git -C ~/.config/nixos show --oneline --no-decorate --no-patch "$REV"
+  fi
 elif [ "$1" = "edit" ]; then
   cd ~/.config/nixos
   exec "$EDITOR" .
