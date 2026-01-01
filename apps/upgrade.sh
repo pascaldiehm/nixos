@@ -101,7 +101,7 @@ while read -r EXT; do
   echo "  - $NAME"
 
   curl -fsSI "https://addons.mozilla.org/firefox/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(sed -En "s/^location: (\S)\s*$/\1/p" "$TMP/$NAME.txt")"
+  SOURCE="$(sed -En "s/^location: (\S+)\s*$/\1/p" "$TMP/$NAME.txt")"
 
   if [ -z "$SOURCE" ]; then
     echo "    -> Failed, no location returned"
@@ -141,7 +141,7 @@ while read -r EXT; do
   echo "  - $NAME"
 
   curl -fsSI "https://addons.thunderbird.net/thunderbird/downloads/latest/$NAME/latest.xpi" >"$TMP/$NAME.txt"
-  SOURCE="$(sed -En "s/^location: (\S)\s*$/\1/p" "$TMP/$NAME.txt")"
+  SOURCE="$(sed -En "s/^location: (\S+)\s*$/\1/p" "$TMP/$NAME.txt")"
 
   if [ -z "$SOURCE" ]; then
     echo "    -> Failed, no location returned"
