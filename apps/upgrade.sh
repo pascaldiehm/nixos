@@ -3,7 +3,7 @@
 set -e
 echo "build(deps): automatic upgrade" >MSG
 
-echo "::group::System"
+echo "::group::Flake"
 nix flake update
 
 CHANGES="$(git diff flake.lock)"
@@ -15,7 +15,7 @@ test -n "$CHANGES" && {
 } >>MSG
 echo "::endgroup::"
 
-echo "::group::DynHostMGR"
+echo "::group::Dynhostmgr"
 pushd overlay/dynhostmgr
 cargo update -Z unstable-options --breaking # TODO: Remove unstable-options when breaking is stable
 cargo update
