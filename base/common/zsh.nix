@@ -8,6 +8,7 @@
     dotDir = "/home/pascal/.config/zsh";
     history.path = "/home/pascal/.local/state/zsh/.zsh_history";
     plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) { zsh-completions.src = pkgs.zsh-completions; };
+    setOptions = [ "PUSHD_SILENT" ];
     syntaxHighlighting.enable = true;
 
     initContent = lib.mkMerge [
