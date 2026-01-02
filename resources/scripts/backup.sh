@@ -19,20 +19,32 @@ elif [ "$1" = "help" ]; then
   echo "  help                                Show this help"
   echo "  status [machine]                    Show backup status"
   echo "  list [machine]                      List backed up files"
-  echo "  restore [machine [path]] <target>   Restore backup"
+  echo "  restore [machine [path]] [target]   Restore latest backup"
+  echo "  rollback <time> [path]              Restore previous backup"
 elif [ "$1" = "status" ]; then
   dup collection-status "${TARGET}/${2:-${MACHINE}}"
 elif [ "$1" = "list" ]; then
   dup list-current-files "${TARGET}/${2:-${MACHINE}}"
 elif [ "$1" = "restore" ]; then
-  if [ "$#" = 2 ]; then
+  if [ "$#" = 1 ]; then
+    dup restore "${TARGET}/${MACHINE}" /
+  elif [ "$#" = 2 ]; then
     dup restore "${TARGET}/${MACHINE}" "$2"
   elif [ "$#" = 3 ]; then
     dup restore "${TARGET}/$2" "$3"
   elif [ "$#" = 4 ]; then
     dup restore --path-to-restore "$3" "${TARGET}/$2" "$4"
   else
-    echo "Usage: backup restore [machine [path]] <target>"
+    echo "Usage: backup restore [machine [path]] [target]"
+    exit 1
+  fi
+elif [ "$1" = "rollback" ]; then
+  if [ "$#" = 2 ]; then
+    dup restore --time "$2" "${TARGET}/${MACHINE}" /
+  elif [ "$#" = 3 ]; then
+    dup restore --time "$2" --path-to-restore "${3#/}" "${TARGET}/${MACHINE}" "$3"
+  else
+    echo "Usage: backup rollback <time> [path]"
     exit 1
   fi
 else
