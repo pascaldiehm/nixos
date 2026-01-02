@@ -15,6 +15,7 @@
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.hardinfo2
+      pkgs.hexedit
       pkgs.imagemagickBig
       pkgs.mtr
       pkgs.nmap
