@@ -9,9 +9,9 @@
   ];
 
   services.backup = {
-    "/home/pascal/.config/retroarch".include = [ "roms" "saves" ];
-    "/home/pascal/.config/supertuxkart".excludeGlob = [ "**.log*" ];
-    "/home/pascal/.local/share/PrismLauncher".include = [ "instances/**/saves" ];
+    "/home/pascal/.config/retroarch".include = [ "config" "playlists" "retroarch.cfg" "roms" "saves" ];
+    "/home/pascal/.config/supertuxkart" = { };
+    "/home/pascal/.local/share/PrismLauncher".include = [ "accounts.json" "icons" "instances" "prismlauncher.cfg" ];
     "/home/pascal/.local/share/supertuxkart".include = [ "grandprix" ];
   };
 }
