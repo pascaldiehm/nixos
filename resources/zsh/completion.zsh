@@ -1,5 +1,15 @@
 #!/usr/bin/env zsh
 
+function _backup() {
+  if [ "$CURRENT" = 2 ]; then
+    _values command help status list restore rollback
+  elif [ "$CURRENT" = 3 ]; then
+    if [[ "${words[2]}" == (status|list|restore) ]]; then
+      _values machine "${(f)$(ls /home/pascal/.config/nixos/machines)}"
+    fi
+  fi
+}
+
 function _nx() {
   if [ "$CURRENT" = 2 ]; then
     _values command help sync diff version edit test upgrade list reset repl secrets iso
@@ -18,7 +28,7 @@ function _nx() {
   fi
 }
 
-compdef '_arguments ":action:(help status list restore rollback)" ":machine:(bowser goomba pascal-laptop pascal-pc)"' backup
+compdef _backup backup
 compdef _files ed
 compdef _files mkcd
 compdef _nothing ntfy
