@@ -9,6 +9,7 @@ alias which="which -as"
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   alias open="xdg-open"
+  alias play="ffplay -autoexit -nodisp"
   alias py="python3"
   alias tl="tldr"
 fi
