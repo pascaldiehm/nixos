@@ -144,14 +144,6 @@
           ts_ls.enable = true;
           yamlls.enable = true;
 
-          # TODO: Remove once fixed upstream
-          clangd.package = pkgs.clang-tools.overrideAttrs (prev: {
-            postInstall = ''
-              ${prev.postInstall or ""}
-              sed -i "s/-isystem/-isystem|-cxx-isystem/" "$out/bin/clangd"
-            '';
-          });
-
           gdscript = {
             enable = true;
 
