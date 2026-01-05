@@ -84,7 +84,7 @@ git add resources/vim
 
 test -n "$CHANGES" && {
   echo -e "\nVim spellfile changes:"
-  sort -u <<<"$CHANGES" | sed -E "s|^.*/([^/]+)$|  - \1|"
+  sort -u <<<"$CHANGES" | sed -E "s|^.*/(.+)$|  - \1|"
 } >>MSG
 echo "::endgroup::"
 

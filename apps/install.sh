@@ -117,7 +117,7 @@ echo "Generating hardware configuration..."
 mkdir -p /mnt/perm/etc/nixos
 nixos-generate-config --root /mnt --show-hardware-config --no-filesystems >/mnt/perm/etc/nixos/hardware.nix
 ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
-test "$BOOT" = "BIOS" && sed -i "\$s|.*|  boot.loader.grub.device = \"$DEV\";\n\0|" /mnt/perm/etc/nixos/hardware.nix
+test "$BOOT" = "BIOS" && sed -i "\$i\\  boot.loader.grub.device = \"$DEV\";" /mnt/perm/etc/nixos/hardware.nix
 
 echo "Cloning NixOS configuration..."
 git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
