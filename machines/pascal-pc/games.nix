@@ -1,5 +1,9 @@
 { pkgs, ... }: {
-  home-manager.users.pascal.home.packages = [ pkgs.prismlauncher pkgs.retroarch-free pkgs.superTuxKart ];
+  home-manager.users.pascal.home.packages = [
+    pkgs.prismlauncher
+    # pkgs.retroarch-free # HACK: TEMP
+    pkgs.superTuxKart
+  ];
 
   environment.persistence."/perm".users.pascal.directories = [
     ".config/retroarch"
