@@ -13,9 +13,9 @@
     pkgs.lsof
     pkgs.ncdu
     pkgs.netcat
+    pkgs.pd.ntfy
+    pkgs.pd.nx
     pkgs.ripgrep
-    pkgs.scripts.ntfy
-    pkgs.scripts.nx
     pkgs.unzip
     pkgs.wireguard-tools
     pkgs.zip
