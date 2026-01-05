@@ -63,7 +63,7 @@ in {
             ${lib.concatStringsSep "\n  " settings}
         '';
       in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        run ${lib.getExe cfg.package} --headless --quit --script "${init}"
+        run ${lib.getExe cfg.package} --headless --quit --script ${init}
       '';
     };
 
