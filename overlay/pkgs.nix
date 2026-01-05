@@ -1,5 +1,5 @@
 pkgs: prev: {
-  nix = prev.nixVersions.latest; # TODO: Remove once nix 3.32 is released
+  nix = prev.nixVersions.latest; # HACK: TEMP (nix >=2.32)
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
 
   dynhostmgr = pkgs.rustPlatform.buildRustPackage {

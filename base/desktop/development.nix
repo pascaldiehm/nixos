@@ -47,7 +47,7 @@
         };
 
         settings = {
-          "network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # TODO: Remove once fixed upstream
+          "network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # HACK: TEMP (https://github.com/NixOS/nixpkgs/issues/454608)
           "run/window_placement/game_embed_mode" = 1;
         };
       };
