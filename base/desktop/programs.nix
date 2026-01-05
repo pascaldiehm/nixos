@@ -11,7 +11,7 @@
       pkgs.clock-rs
       pkgs.cryptsetup
       pkgs.dmidecode
-      pkgs.dogdns
+      pkgs.doggo
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.hardinfo2
