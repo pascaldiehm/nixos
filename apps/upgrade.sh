@@ -17,7 +17,7 @@ echo "::endgroup::"
 
 echo "::group::Dynhostmgr"
 pushd overlay/dynhostmgr
-cargo update -Z unstable-options --breaking # HACK: TEMP (https://github.com/rust-lang/cargo/issues/12425)
+cargo update -Z unstable-options --breaking # HACK: https://github.com/rust-lang/cargo/issues/12425
 cargo update
 popd
 
@@ -32,7 +32,7 @@ echo "::endgroup::"
 
 echo "::group::Waybar UPS plugin"
 pushd overlay/waybar-ups
-cargo update -Z unstable-options --breaking # HACK: TEMP (https://github.com/rust-lang/cargo/issues/12425)
+cargo update -Z unstable-options --breaking # HACK: https://github.com/rust-lang/cargo/issues/12425
 cargo update
 popd
 

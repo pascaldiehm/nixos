@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home-manager.users.pascal.home.packages = [
     pkgs.prismlauncher
-    # pkgs.retroarch-free # HACK: TEMP
+    # pkgs.retroarch-free # HACK: https://github.com/NixOS/nixpkgs/issues/475479
     pkgs.superTuxKart
   ];
 

@@ -1,5 +1,5 @@
 pkgs: prev: {
-  nix = prev.nixVersions.latest; # HACK: TEMP (nix >=2.32)
+  nix = prev.nixVersions.latest; # HACK: nix >=2.32
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
 
   dynhostmgr = pkgs.rustPlatform.buildRustPackage {
@@ -9,7 +9,7 @@ pkgs: prev: {
     meta.mainProgram = "dynhostmgr";
   };
 
-  # HACK: TEMP (https://nixpkgs-tracker.ocfox.me/?pr=475899)
+  # HACK: https://nixpkgs-tracker.ocfox.me/?pr=475899
   normalize = prev.normalize.overrideAttrs (prev: {
     postPatch = ''
       ${prev.postPatch or ""}

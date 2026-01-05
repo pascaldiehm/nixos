@@ -47,7 +47,7 @@
         };
 
         settings = {
-          "network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # HACK: TEMP (https://github.com/NixOS/nixpkgs/issues/454608)
+          "network/tls/editor_tls_certificates" = "/etc/ssl/certs/ca-certificates.crt"; # HACK: https://github.com/NixOS/nixpkgs/issues/454608
           "run/window_placement/game_embed_mode" = 1;
         };
       };

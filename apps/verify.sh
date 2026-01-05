@@ -17,7 +17,7 @@ while read -r MACHINE; do
 done < <(jq -r "keys[]" machines.json)
 echo "::endgroup::"
 
-# HACK: TEMP (https://github.com/oppiliappan/statix/issues/139)
+# HACK: https://github.com/oppiliappan/statix/issues/139
 echo "::group::Lint nix"
 echo "## Nix files" >>"$GITHUB_STEP_SUMMARY"
 nix build --accept-flake-config -o /nix/var/nix/gcroots/ci/statix github:oppiliappan/statix
