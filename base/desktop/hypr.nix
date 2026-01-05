@@ -24,21 +24,35 @@
       };
     };
 
-    services.hypridle = {
-      enable = true;
+    services = {
+      hyprpaper.settings = {
+        splash = false;
 
-      settings = {
-        general = {
-          after_sleep_cmd = "hyprctl dispatch dpms on";
-          before_sleep_cmd = "loginctl lock-session";
-          lock_cmd = "pidof hyprlock || hyprlock";
-          unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
-        };
+        # HACK: https://github.com/nix-community/stylix/pull/2087
+        wallpaper = lib.mkForce [
+          {
+            monitor = "";
+            path = toString ../../resources/wallpaper.jpg;
+          }
+        ];
+      };
 
-        listener = {
-          on-resume = "hyprctl dispatch dpms on";
-          on-timeout = "hyprctl dispatch dpms off";
-          timeout = 300;
+      hypridle = {
+        enable = true;
+
+        settings = {
+          general = {
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+            before_sleep_cmd = "loginctl lock-session";
+            lock_cmd = "pidof hyprlock || hyprlock";
+            unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
+          };
+
+          listener = {
+            on-resume = "hyprctl dispatch dpms on";
+            on-timeout = "hyprctl dispatch dpms off";
+            timeout = 300;
+          };
         };
       };
     };
