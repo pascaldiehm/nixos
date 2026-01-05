@@ -64,9 +64,8 @@
       settings = {
         bindm = [ "SUPER, mouse:272, movewindow" "SUPER, mouse:273, resizewindow" ];
         decoration.rounding = 10;
-        ecosystem.no_update_news = true;
         gesture = "3, horizontal, workspace";
-        windowrule = [ "bordersize 0, floating:0, onworkspace:w[t1]" "rounding 0, floating:0, onworkspace:w[t1]" ];
+        windowrule = [ "match:workspace w[t1], match:float 0, border_size 0, rounding 0" ];
         workspace = "w[t1], gapsout:0";
 
         animations = {
@@ -174,6 +173,11 @@
           "SUPER ALT, l, exec, ha light toggle lamp_desk"
         ];
 
+        ecosystem = {
+          no_donation_nag = true;
+          no_update_news = true;
+        };
+
         general = {
           border_size = 2;
           "col.active_border" = lib.mkForce "rgb(00dbde) rgb(fc00ff) 45deg";
@@ -192,6 +196,7 @@
           key_press_enables_dpms = true;
           middle_click_paste = false;
           mouse_move_enables_dpms = true;
+          session_lock_xray = true;
         };
       };
     };
