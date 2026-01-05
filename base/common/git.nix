@@ -9,7 +9,6 @@
       enable = true;
 
       settings = {
-        help.autoCorrect = "prompt";
         init.defaultBranch = "main";
         pull.rebase = true;
         rebase.autoStash = true;
