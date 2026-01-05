@@ -9,7 +9,7 @@
       nixpkgs.useGlobalPackages = true;
 
       autoCmd = lib.mapAttrsToList (event: command: { inherit command event; }) {
-        TermClose = ''lua if vim.v.event.status ~= 0 then vim.api.nvim_input("<Return>") end'';
+        TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input('<Return>') end";
         TermOpen = "setlocal nospell";
       };
 
@@ -148,7 +148,7 @@
             enable = true;
 
             config = {
-              cmd.__raw = ''vim.lsp.rpc.connect("127.0.0.1", 6005)'';
+              cmd.__raw = "vim.lsp.rpc.connect('127.0.0.1', 6005)";
               filetypes = [ "gdscript" ];
               root_markers = [ "project.godot" ];
             };
