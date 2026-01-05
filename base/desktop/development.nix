@@ -34,7 +34,6 @@
 
       godot = {
         enable = true;
-        android.enable = true;
 
         externalEditor = {
           enable = true;
