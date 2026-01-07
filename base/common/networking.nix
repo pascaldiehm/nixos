@@ -3,7 +3,6 @@
     hosts.mode = "0644";
 
     dynhosts.text = ''
-      goomba                     fd42:5041:5343:414c::1    2a01:4f8:c0c:988b::1 91.99.52.233
       bowser        192.168.1.88 fd42:5041:5343:414c::2
       pascal-pc     192.168.1.90 fd42:5041:5343:414c::1001
       pascal-laptop 192.168.1.91 fd42:5041:5343:414c::1002
@@ -19,6 +18,8 @@
     extraHosts = ''
       192.168.1.89 homeassistant
       192.168.1.99 pascal-phone
+      91.99.52.233 goomba
+      2a01:4f8:c0c:988b::1 goomba
     '';
 
     nameservers = [
