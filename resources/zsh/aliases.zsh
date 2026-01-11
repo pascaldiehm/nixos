@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+alias dog="doggo"
 alias fd="fd --hidden"
 alias l="ls --all --long --group"
 alias ls="eza"
