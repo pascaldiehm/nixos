@@ -145,7 +145,7 @@
 
         url = {
           "git@github.com:".insteadOf = "gh:";
-          "git@github.com:pascaldiehm/".insteadOf = "gh:/";
+          "git@github.com:pdiehm/".insteadOf = "gh:/";
         };
 
         user = {

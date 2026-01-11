@@ -1,7 +1,7 @@
 { lib, modulesPath, pkgs, ... }: {
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
   console.keyMap = "de";
-  environment.systemPackages = [ (pkgs.writeShellScriptBin "nixinstall" "nix run github:pascaldiehm/nixos#install") ];
+  environment.systemPackages = [ (pkgs.writeShellScriptBin "nixinstall" "nix run github:pdiehm/nixos#install") ];
   nixpkgs.hostPlatform = "x86_64-linux";
 
   nix.settings = {

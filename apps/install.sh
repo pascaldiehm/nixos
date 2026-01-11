@@ -120,8 +120,8 @@ ln -s /mnt/perm/etc/nixos/hardware.nix /etc/nixos/hardware.nix
 test "$BOOT" = "BIOS" && sed -i "\$i\\  boot.loader.grub.device = \"$DEV\";" /mnt/perm/etc/nixos/hardware.nix
 
 echo "Cloning NixOS configuration..."
-git clone https://github.com/pascaldiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
-git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pascaldiehm/nixos.git
+git clone https://github.com/pdiehm/nixos.git /mnt/perm/home/pascal/.config/nixos
+git --git-dir /mnt/perm/home/pascal/.config/nixos/.git remote set-url origin git@github.com:pdiehm/nixos.git
 chown --recursive 1000:100 /mnt/perm/home/pascal
 chmod 700 /mnt/perm/home/pascal
 
@@ -136,8 +136,8 @@ chmod 700 /mnt/perm/etc/nixos/.gnupg
 echo "disable-scdaemon" >/mnt/perm/etc/nixos/.gnupg/gpg-agent.conf
 
 echo "Installing secret key..."
-curl -fsSLO "https://raw.githubusercontent.com/pascaldiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
+curl -fsSLO "https://raw.githubusercontent.com/pdiehm/nixos/main/resources/secrets/$TYPE/key.gpg"
 gpg --decrypt key.gpg | gpg --homedir /mnt/perm/etc/nixos/.gnupg --import
 
 echo "Installing NixOS..."
-nixos-install --impure --no-channel-copy --no-root-password --flake "github:pascaldiehm/nixos#$MACHINE"
+nixos-install --impure --no-channel-copy --no-root-password --flake "github:pdiehm/nixos#$MACHINE"

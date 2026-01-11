@@ -5,7 +5,7 @@
     enable = true;
     dates = "Mon 01:00";
     flags = [ "--impure" ];
-    flake = "github:pascaldiehm/nixos";
+    flake = "github:pdiehm/nixos";
     operation = "boot";
     upgrade = false;
   };
