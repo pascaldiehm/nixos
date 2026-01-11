@@ -11,13 +11,11 @@
       pkgs.clock-rs
       pkgs.cryptsetup
       pkgs.dmidecode
-      pkgs.doggo
       pkgs.exfat
       pkgs.ffmpeg-full
       pkgs.hardinfo2
       pkgs.hexedit
       pkgs.imagemagickBig
-      pkgs.mtr
       pkgs.nmap
       pkgs.pd.ha
       pkgs.pd.mk
@@ -27,13 +25,10 @@
       pkgs.poppler-utils
       pkgs.rsync
       pkgs.steam-run-free
-      pkgs.tcpdump
-      pkgs.usbutils
       pkgs.vhs
       pkgs.wf-recorder
       pkgs.wl-clipboard
       pkgs.wl-mirror
-      pkgs.xh
       pkgs.yt-dlp
     ];
 
