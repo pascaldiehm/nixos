@@ -2,10 +2,12 @@
 
 function _backup() {
   if [ "$CURRENT" = 2 ]; then
-    _values command help status list restore rollback
+    _values command help status list restore clone
   elif [ "$CURRENT" = 3 ]; then
-    if [[ "${words[2]}" == (status|list|restore) ]]; then
+    if [[ "${words[2]}" == (status|list|clone) ]]; then
       _values machine "${(f)$(ls /home/pascal/.config/nixos/machines)}"
+    elif [ "${words[2]}" = "restore" ]; then
+      _files
     fi
   fi
 }
