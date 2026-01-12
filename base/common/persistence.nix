@@ -9,8 +9,9 @@
 
   system.activationScripts.clean-perm = let
     cfg = config.environment.persistence."/perm";
-    dirs = lib.map (dir: [ "/perm${dir.dirPath}" "/perm${dir.dirPath}/*" ]) cfg.directories;
-    files = lib.map (file: [ "/perm${file.filePath}" ]) cfg.files;
+    usr = cfg.users.pascal;
+    dirs = lib.map (dir: [ "/perm${dir.dirPath}" "/perm${dir.dirPath}/*" ]) (cfg.directories ++ usr.directories);
+    files = lib.map (file: [ "/perm${file.filePath}" ]) (cfg.files ++ usr.files);
     paths = lib.flatten (dirs ++ files) |> lib.concatMapStringsSep " -o " (loc: "-path ${lib.escapeShellArg loc}");
   in ''
     find /perm -not \( ${paths} \) -not -type d -exec rm "{}" +
