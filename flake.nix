@@ -1,11 +1,19 @@
 {
   inputs = {
-    impermanence.url = "github:nix-community/impermanence";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
     lanzaboote = {

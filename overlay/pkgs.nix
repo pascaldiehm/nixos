@@ -9,19 +9,6 @@ pkgs: prev: {
     meta.mainProgram = "dynhostmgr";
   };
 
-  # HACK: https://nixpkgs-tracker.ocfox.me/?pr=475899
-  normalize = prev.normalize.overrideAttrs (prev: {
-    postPatch = ''
-      ${prev.postPatch or ""}
-
-      sed -e '1i #include <string.h>' -i nid3lib/frame_desc.c
-      substituteInPlace nid3lib/frame_desc.c --replace-fail "int strcmp();" ""
-
-      sed -e '1i #include <unistd.h>' -i nid3lib/write.c
-      substituteInPlace nid3lib/write.c --replace-fail "int ftruncate();" ""
-    '';
-  });
-
   prettier = pkgs.importNpmLock.buildNodeModules rec {
     nodejs = pkgs.nodePackages.nodejs;
     npmRoot = ./prettier;

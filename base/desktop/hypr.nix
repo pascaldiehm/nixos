@@ -25,17 +25,7 @@
     };
 
     services = {
-      hyprpaper.settings = {
-        splash = false;
-
-        # HACK: https://github.com/nix-community/stylix/pull/2087
-        wallpaper = lib.mkForce [
-          {
-            monitor = "";
-            path = toString ../../resources/wallpaper.jpg;
-          }
-        ];
-      };
+      hyprpaper.settings.splash = false;
 
       hypridle = {
         enable = true;
