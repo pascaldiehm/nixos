@@ -29,7 +29,7 @@ elif [ "$1" = "restore" ]; then
   TMP="$(mktemp -d)"
   dup restore ${2:+--path-to-restore "${2#/}"} ${3:+--time "$3"} "${TARGET}/${MACHINE}" "$TMP"
 
-  cp -afrv "$TMP/." "${2:-/}"
+  cp -arv "$TMP/." "${2:-/}"
   rm -rf "$TMP"
 elif [ "$1" = "clone" ]; then
   if [ "$#" = 2 ]; then
