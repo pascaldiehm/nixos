@@ -87,8 +87,6 @@
 
       lsp = {
         keymaps = lib.mkNvimKeymaps {
-          i."<A-Space>".__raw = "vim.lsp.buf.signature_help";
-
           n = {
             gP.__raw = "vim.diagnostic.goto_prev";
             ga.__raw = "vim.lsp.buf.code_action";
@@ -195,20 +193,29 @@
           };
         };
 
-        cmp = {
+        blink-cmp = {
           enable = true;
 
           settings = {
-            preselect = "cmp.PreselectMode.None";
-            sources = [ { name = "nvim_lsp"; } { name = "path"; } { name = "buffer"; } ];
+            signature.enabled = true;
 
-            mapping = {
-              "<C-Return>" = "cmp.mapping.confirm({ select = true })";
-              "<C-Space>" = "cmp.mapping.complete()";
-              "<C-d>" = "cmp.mapping.scroll_docs(8)";
-              "<C-u>" = "cmp.mapping.scroll_docs(-8)";
-              "<S-Tab>" = "cmp.mapping.select_prev_item()";
-              "<Tab>" = "cmp.mapping.select_next_item()";
+            completion = {
+              list.selection.preselect = false;
+
+              documentation = {
+                auto_show = true;
+                auto_show_delay_ms = 0;
+              };
+            };
+
+            keymap = {
+              "<A-Space>" = [ "show_signature" "hide_signature" ];
+              "<C-Return>" = [ "select_and_accept" ];
+              "<C-Space>" = [ "show" "hide" ];
+              "<C-d>" = [ "scroll_documentation_down" "scroll_signature_down" "fallback" ];
+              "<C-u>" = [ "scroll_documentation_up" "scroll_signature_up" "fallback" ];
+              "<S-Tab>" = [ "select_prev" "fallback" ];
+              "<Tab>" = [ "select_next" "fallback" ];
             };
           };
         };
