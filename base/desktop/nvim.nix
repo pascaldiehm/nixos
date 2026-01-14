@@ -1,4 +1,4 @@
-{ config, inputs, lib, machine, pkgs, ... }: {
+{ inputs, lib, machine, pkgs, ... }: {
   home-manager.users.pascal = {
     imports = [ inputs.nixvim.homeModules.nixvim ];
 
@@ -178,7 +178,7 @@
         number = true;
         relativenumber = true;
         scrolloff = 8;
-        shell = "${lib.getExe config.users.users.pascal.shell} --interactive";
+        shell = "${lib.getExe pkgs.zsh} --interactive";
         shiftwidth = 2;
         signcolumn = "yes";
         smartcase = true;
