@@ -1,25 +1,31 @@
 { lib, pkgs, ... }: {
+  programs.hyprland.enable = true;
+
   home-manager.users.pascal = {
-    programs.hyprlock = {
-      enable = true;
+    programs = {
+      zsh.profileExtra = ''test "$(tty)" = "/dev/tty1" && exec start-hyprland'';
 
-      settings = {
-        general.hide_cursor = true;
+      hyprlock = {
+        enable = true;
 
-        background = {
-          blur_passes = 2;
-          blur_size = 4;
-          path = "screenshot";
-        };
+        settings = {
+          general.hide_cursor = true;
 
-        label = {
-          font_size = 64;
-          halign = "center";
-          position = "0, 20%";
-          shadow_passes = 2;
-          shadow_size = 4;
-          text = "$TIME";
-          valign = "center";
+          background = {
+            blur_passes = 2;
+            blur_size = 4;
+            path = "screenshot";
+          };
+
+          label = {
+            font_size = 64;
+            halign = "center";
+            position = "0, 20%";
+            shadow_passes = 2;
+            shadow_size = 4;
+            text = "$TIME";
+            valign = "center";
+          };
         };
       };
     };
@@ -49,7 +55,6 @@
 
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = false;
 
       settings = {
         bindm = [ "SUPER, mouse:272, movewindow" "SUPER, mouse:273, resizewindow" ];
@@ -190,10 +195,5 @@
         };
       };
     };
-  };
-
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
   };
 }
