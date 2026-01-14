@@ -64,7 +64,7 @@
           resolve-flags = 2;
           service-type = "org.freedesktop.NetworkManager.openconnect";
           stoken_source = "disabled";
-          useragent = "AnyConnect";
+          useragent = "AnyConnect - OpenConnect";
           xmlconfig-flags = 0;
         };
       };
