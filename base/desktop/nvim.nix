@@ -180,7 +180,6 @@
       };
 
       plugins = {
-        comment.enable = true;
         lspconfig.enable = true;
         lualine.enable = true;
         nvim-surround.enable = true;
