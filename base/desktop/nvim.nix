@@ -5,6 +5,7 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
+      extraConfigLua = lib.readFile ../../resources/vim/nvim.lua;
       filetype.extension.zsh = "sh";
       nixpkgs.useGlobalPackages = true;
 
@@ -32,26 +33,6 @@
         update_in_insert = true;
         virtual_text = true;
       };
-
-      extraConfigLua = ''
-        vim.keymap.del("n", "gra");
-        vim.keymap.del("n", "gri");
-        vim.keymap.del("n", "grn");
-        vim.keymap.del("n", "grr");
-        vim.keymap.del("n", "grt");
-
-        vim.keymap.set("i", ";", function()
-          local line = vim.api.nvim_get_current_line()
-          local col = vim.api.nvim_win_get_cursor(0)[2]
-          local ctx = line:sub(col, col + 1)
-
-          if ctx == "()" or ctx == "[]" or ctx == "{}" then
-            return "<Esc>la;<Esc>hi"
-          else
-            return ";"
-          end
-        end, { expr = true, noremap = true })
-      '';
 
       extraFiles = {
         "spell/de.utf-8.spl".source = ../../resources/vim/de.utf-8.spl;
@@ -118,14 +99,6 @@
             gr.__raw = "vim.lsp.buf.empty_rename";
           };
         };
-
-        luaConfig.pre = ''
-          vim.lsp.buf.empty_rename = function()
-            vim.ui.input({ prompt = "New Name: " }, function(name)
-              vim.lsp.buf.rename(name)
-            end)
-          end
-        '';
 
         servers = {
           bashls.enable = true;
