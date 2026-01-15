@@ -106,6 +106,7 @@
           cssls.enable = true;
           dockerls.enable = true;
           eslint.enable = true;
+          gdscript.enable = true;
           html.enable = true;
           java_language_server.enable = true;
           jsonls.enable = true;
@@ -115,16 +116,6 @@
           texlab.enable = true;
           ts_ls.enable = true;
           yamlls.enable = true;
-
-          gdscript = {
-            enable = true;
-
-            config = {
-              cmd.__raw = "vim.lsp.rpc.connect('127.0.0.1', 6005)";
-              filetypes = [ "gdscript" ];
-              root_markers = [ "project.godot" ];
-            };
-          };
 
           nixd = {
             enable = true;
