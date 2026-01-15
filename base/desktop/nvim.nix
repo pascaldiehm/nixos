@@ -5,7 +5,8 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
-      extraConfigLua = lib.readFile ../../resources/vim/nvim.lua;
+      extraConfigLua = "vim.opt.rtp:prepend('${pkgs.vimPlugins.nvim-treesitter}/runtime')"; # HACK: https://github.com/NixOS/nixpkgs/issues/478561
+      extraConfigLuaPre = lib.readFile ../../resources/vim/nvim.lua;
       filetype.extension.zsh = "sh";
       nixpkgs.useGlobalPackages = true;
 
@@ -172,7 +173,7 @@
         };
 
         combinePlugins = {
-          # enable = true; # HACK: => treesitter
+          enable = true;
           standalonePlugins = [ "onedark.nvim" ];
         };
       };
@@ -391,15 +392,10 @@
           };
         };
 
-        # HACK: https://github.com/NixOS/nixpkgs/issues/478561
         treesitter = {
           enable = true;
-          package = pkgs.vimPlugins.nvim-treesitter-legacy;
-
-          settings = {
-            highlight.enable = true;
-            indent.enable = true;
-          };
+          highlight.enable = true;
+          indent.enable = true;
         };
       };
     };
