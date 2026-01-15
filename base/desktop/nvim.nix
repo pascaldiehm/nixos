@@ -10,7 +10,7 @@
       nixpkgs.useGlobalPackages = true;
 
       autoCmd = lib.mapAttrsToList (event: command: { inherit command event; }) {
-        TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input('<Return>') end";
+        TermClose = "lua if vim.v.event.status ~= 0 then vim.api.nvim_input('<CR>') end";
         TermOpen = "setlocal nospell";
       };
 
@@ -42,46 +42,46 @@
       };
 
       keymaps = lib.mkNvimKeymaps {
-        "!"."<C-Bs>" = "<C-w>";
+        "!"."<C-BS>" = "<C-w>";
         nx.x = "\"_x";
 
         n = {
-          "<Space><Return>" = "<Cmd>terminal<Return>i";
-          "<Space><Space>" = "<Cmd>Oil<Return>";
+          "<Space><Return>" = "<Cmd>terminal<CR>i";
+          "<Space><Space>" = "<Cmd>Oil<CR>";
           X = "\"_D";
-          gQ = "<Cmd>cprevious<Return>";
+          gQ = "<Cmd>cprevious<CR>";
           gl = "<C-o>";
-          gq = "<Cmd>cnext<Return>";
+          gq = "<Cmd>cnext<CR>";
           vv = "gv";
         };
 
         nt = {
-          "<A-S-Tab>" = "<Cmd>tabprevious<Return>";
-          "<A-S-h>" = "<Cmd>wincmd H<Return>";
-          "<A-S-j>" = "<Cmd>wincmd J<Return>";
-          "<A-S-k>" = "<Cmd>wincmd K<Return>";
-          "<A-S-l>" = "<Cmd>wincmd L<Return>";
-          "<A-S-w>" = "<Cmd>new<Return>";
-          "<A-Tab>" = "<Cmd>tabnext<Return>";
-          "<A-h>" = "<Cmd>wincmd h<Return>";
-          "<A-j>" = "<Cmd>wincmd j<Return>";
-          "<A-k>" = "<Cmd>wincmd k<Return>";
-          "<A-l>" = "<Cmd>wincmd l<Return>";
-          "<A-t>" = "<Cmd>tab new<Return>";
-          "<A-w>" = "<Cmd>vertical new<Return>";
+          "<A-S-Tab>" = "<Cmd>tabprevious<CR>";
+          "<A-S-h>" = "<Cmd>wincmd H<CR>";
+          "<A-S-j>" = "<Cmd>wincmd J<CR>";
+          "<A-S-k>" = "<Cmd>wincmd K<CR>";
+          "<A-S-l>" = "<Cmd>wincmd L<CR>";
+          "<A-S-w>" = "<Cmd>new<CR>";
+          "<A-Tab>" = "<Cmd>tabnext<CR>";
+          "<A-h>" = "<Cmd>wincmd h<CR>";
+          "<A-j>" = "<Cmd>wincmd j<CR>";
+          "<A-k>" = "<Cmd>wincmd k<CR>";
+          "<A-l>" = "<Cmd>wincmd l<CR>";
+          "<A-t>" = "<Cmd>tab new<CR>";
+          "<A-w>" = "<Cmd>vertical new<CR>";
         };
 
         t = {
-          "<C-Bs>" = "<C-h>";
+          "<C-BS>" = "<C-h>";
           "<A-Esc>" = "<C-\\><C-n>";
         };
 
         x = {
           H = "<gv";
-          J = ":m '>+1<Return>gv=gv";
-          K = ":m '<-2<Return>gv=gv";
+          J = ":m '>+1<CR>gv=gv";
+          K = ":m '<-2<CR>gv=gv";
           L = ">gv";
-          O = ":sort<Return>";
+          O = ":sort<CR>";
         };
       };
 
@@ -314,7 +314,7 @@
             view_options.show_hidden = true;
 
             keymaps = {
-              "<Bs>" = "actions.parent";
+              "<BS>" = "actions.parent";
               "<Return>" = "actions.select";
               "~" = "actions.cd";
               _ = "actions.open_cwd";
