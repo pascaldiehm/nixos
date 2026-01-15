@@ -200,6 +200,8 @@
           enable = true;
 
           settings = {
+            cmdline.enabled = false;
+            fuzzy.sorts = [ "exact" "score" "sort_text" ];
             signature.enabled = true;
 
             completion = {
@@ -212,6 +214,7 @@
             };
 
             keymap = {
+              preset = "none";
               "<A-Space>" = [ "show_signature" "hide_signature" ];
               "<C-Return>" = [ "select_and_accept" ];
               "<C-Space>" = [ "show" "hide" ];
