@@ -117,6 +117,15 @@
           ts_ls.enable = true;
           yamlls.enable = true;
 
+          lua_ls = {
+            enable = true;
+
+            config.settings.Lua = {
+              runtime.version = "LuaJIT";
+              workspace.library = [ "${pkgs.neovim}/share/nvim/runtime/lua" ];
+            };
+          };
+
           nixd = {
             enable = true;
 
@@ -229,6 +238,7 @@
               nixfmt = [ (lib.getExe pkgs.nixfmt) "--strict" "--width=120" ];
               rustfmt = [ (lib.getExe pkgs.rustfmt) ];
               shfmt = [ (lib.getExe pkgs.shfmt) "--indent=2" ];
+              stylua = [ (lib.getExe pkgs.stylua) "--column-width=120" "--indent-type=Spaces" "--indent-width=2" ];
 
               bibtex-tidy = [
                 (lib.getExe pkgs.bibtex-tidy)
@@ -272,6 +282,7 @@
               javascriptreact = [ "prettier" ];
               json = [ "prettier" ];
               jsonc = [ "prettier" ];
+              lua = [ "stylua" ];
               markdown = [ "prettier" ];
               nix = [ "nixfmt" ];
               php = [ "prettier" ];

@@ -17,7 +17,7 @@ vim.keymap.set("i", ";", function()
 end, { expr = true, noremap = true })
 
 vim.lsp.buf.empty_rename = function()
-  vim.ui.input({ prompt = "New Name: " }, function (name)
+  vim.ui.input({ prompt = "New Name: " }, function(name)
     vim.lsp.buf.rename(name)
   end)
 end
