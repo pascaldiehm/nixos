@@ -146,12 +146,14 @@
         expandtab = true;
         hlsearch = false;
         ignorecase = true;
+        list = true;
         mouse = "";
         number = true;
         relativenumber = true;
         scrolloff = 8;
         shell = "${lib.getExe pkgs.zsh} --interactive";
         shiftwidth = 2;
+        showmode = false;
         signcolumn = "yes";
         smartcase = true;
         smartindent = true;
@@ -161,6 +163,7 @@
         splitbelow = true;
         splitright = true;
         tabstop = 2;
+        updatetime = 250;
         wrap = false;
       };
 
