@@ -183,7 +183,6 @@
 
       plugins = {
         lspconfig.enable = true;
-        lualine.enable = true;
         nvim-surround.enable = true;
         ts-autotag.enable = true;
         web-devicons.enable = true;
@@ -308,6 +307,16 @@
           settings = {
             current_line_blame = true;
             current_line_blame_opts.delay = 250;
+          };
+        };
+
+        lualine = {
+          enable = true;
+
+          settings = {
+            options.always_show_tabline = false;
+            sections.lualine_x = [ "lsp_status" "filetype" ];
+            tabline.lualine_a.__raw = "{ { 'tabs', mode = 1 } }";
           };
         };
 
