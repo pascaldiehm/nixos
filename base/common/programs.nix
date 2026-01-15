@@ -18,6 +18,7 @@
     pkgs.pciutils
     pkgs.pd.ntfy
     pkgs.pd.nx
+    pkgs.pv
     pkgs.ripgrep
     pkgs.tcpdump
     pkgs.unzip
