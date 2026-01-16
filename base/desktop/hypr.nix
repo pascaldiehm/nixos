@@ -3,7 +3,7 @@
 
   home-manager.users.pascal = {
     programs = {
-      zsh.profileExtra = ''test "$(tty)" = "/dev/tty1" && exec start-hyprland'';
+      zsh.profileExtra = ''test "$(tty)" = "/dev/tty1" && exec systemd-cat --identifier Hyprland start-hyprland'';
 
       hyprlock = {
         enable = true;
