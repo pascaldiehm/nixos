@@ -353,12 +353,18 @@
             "<Space>f" = "find_files hidden=true";
             "<Space>g" = "live_grep";
             "<Space>h" = "help_tags";
+            "<Space>j" = "jumplist";
             "<Space>l" = "resume";
+            "<Space>o" = "vim_options";
             "<Space>p" = "diagnostics";
             "<Space>q" = "quickfix";
             "<Space>r" = "lsp_references";
             "<Space>s" = "git_status";
-            "<Space>w" = "grep_string";
+            "<Space>t" = "todo-comments";
+            "<Space>w" = "lsp_workspace_symbols";
+            "<Space>x" = "current_buffer_fuzzy_find";
+            "<Space>y" = "grep_string";
+            "<Space>z" = "git_bcommits";
           };
 
           settings.defaults = {
@@ -388,7 +394,6 @@
 
         todo-comments = {
           enable = true;
-          keymaps.todoTelescope.key = "<Space>t";
 
           settings = {
             search.args = [ "--color=never" "--column" "--hidden" "--line-number" "--no-heading" "--smart-case" "--with-filename" ];
