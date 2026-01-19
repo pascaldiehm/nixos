@@ -44,10 +44,13 @@
 
     resolved = {
       enable = true;
-      dnsovertls = "opportunistic";
-      domains = [ "~." ];
-      extraConfig = "MulticastDNS=false";
-      llmnr = "false";
+
+      settings.Resolve = {
+        DNSOverTLS = "opportunistic";
+        Domains = "~.";
+        LLMNR = false;
+        MulticastDNS = false;
+      };
     };
   };
 
