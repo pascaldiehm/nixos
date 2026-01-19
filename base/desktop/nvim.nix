@@ -5,7 +5,7 @@
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
-      extraConfigLua = "vim.opt.rtp:prepend('${pkgs.vimPlugins.nvim-treesitter}/runtime')"; # HACK: https://github.com/NixOS/nixpkgs/issues/478561
+      extraConfigLua = "vim.opt.rtp:prepend('${pkgs.vimPlugins.nvim-treesitter}/runtime')"; # HACK: https://nixpkgs-tracker.ocfox.me/?pr=480516
       extraConfigLuaPre = lib.readFile ../../resources/vim/nvim.lua;
       filetype.extension.zsh = "sh";
       nixpkgs.useGlobalPackages = true;
