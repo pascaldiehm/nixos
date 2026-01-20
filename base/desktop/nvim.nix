@@ -146,6 +146,7 @@
         expandtab = true;
         hlsearch = false;
         ignorecase = true;
+        linebreak = true;
         list = true;
         mouse = "";
         number = true;
