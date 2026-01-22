@@ -62,8 +62,8 @@ function _prompt_git() {
   elif [ -f "$GIT_DIR/BISECT_LOG" ]; then
     echo -n " %F{1}(bisect)%f"
   elif [ -f "$GIT_DIR/rebase-merge/interactive" ]; then
-    local STEP="$(cat "$GIT_DIR/rebase-merge/msgnum")"
-    local TOTAL="$(cat "$GIT_DIR/rebase-merge/end")"
+    local STEP="$(<"$GIT_DIR/rebase-merge/msgnum")"
+    local TOTAL="$(<"$GIT_DIR/rebase-merge/end")"
     echo -n " %F{1}(rebase)%f %F{6}$STEP%F{8}/%F{6}$TOTAL%f"
   fi
 }

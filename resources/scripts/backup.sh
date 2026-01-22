@@ -3,7 +3,7 @@
 test "$UID" = 0 || exec sudo "$0" "$@"
 
 function dup() {
-  PASSPHRASE="$(cat "${BACKUP_PASS}")" duplicity --archive-dir /var/lib/duplicity --ssh-options "-i '${BACKUP_KEY}'" "$@"
+  PASSPHRASE="$(<"${BACKUP_PASS}")" duplicity --archive-dir /var/lib/duplicity --ssh-options "-i '${BACKUP_KEY}'" "$@"
 }
 
 if [ "$#" = 0 ]; then
