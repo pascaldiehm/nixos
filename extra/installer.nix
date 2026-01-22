@@ -25,14 +25,18 @@
 
     nginx = {
       enable = true;
+      proxyResolveWhileRunning = true;
+      resolver.addresses = [ "1.1.1.1" ];
 
-      virtualHosts.nix-substituter-proxy = {
+      virtualHosts.nix-cache = {
+        extraConfig = "recursive_error_pages on;";
+
         locations = {
           "/" = {
             proxyPass = "http://192.168.1.88:5779";
 
             extraConfig = ''
-              error_page 404 502 504 = @fallback;
+              error_page 502 504 = @fallback;
               proxy_connect_timeout 100ms;
               proxy_intercept_errors on;
             '';

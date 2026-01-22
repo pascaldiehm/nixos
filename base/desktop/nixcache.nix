@@ -9,12 +9,12 @@
     proxyResolveWhileRunning = true;
     resolver.addresses = [ "127.0.0.53" ];
 
-    virtualHosts.nix-substituter-proxy = {
+    virtualHosts.nix-cache = {
       extraConfig = "recursive_error_pages on;";
 
       locations = {
         "/" = {
-          proxyPass = "http://bowser:5779";
+          proxyPass = "http://192.168.1.88:5779";
 
           extraConfig = ''
             error_page 404 = @cache;
@@ -25,11 +25,12 @@
         };
 
         "@cache" = {
-          proxyPass = "http://bowser:5778";
+          proxyPass = "http://192.168.1.88:5778";
 
           extraConfig = ''
             error_page 502 504 = @upstream;
             proxy_connect_timeout 100ms;
+            proxy_intercept_errors on;
           '';
         };
 
