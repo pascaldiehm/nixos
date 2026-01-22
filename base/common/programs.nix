@@ -37,8 +37,8 @@
 
         text = lib.readFile ../../resources/scripts/ntfy.sh
           |> lib.templateString {
-            TOKEN = config.sops.common.ntfy.path;
             MACHINE = machine.name;
+            TOKEN = config.sops.common.ntfy.path;
           };
       };
 
