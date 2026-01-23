@@ -7,9 +7,15 @@
     completionInit = "autoload -U compinit && compinit -d /home/pascal/.local/state/zsh/.zcompdump";
     dotDir = "/home/pascal/.config/zsh";
     history.path = "/home/pascal/.local/state/zsh/.zsh_history";
-    plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) { zsh-completions.src = pkgs.zsh-completions; };
     setOptions = [ "PUSHD_SILENT" ];
     syntaxHighlighting.enable = true;
+
+    plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) {
+      zsh-completions = {
+        completions = [ "share/zsh/site-functions" ];
+        src = pkgs.zsh-completions;
+      };
+    };
 
     initContent = lib.mkMerge [
       (lib.readFile ../../resources/zsh/aliases.zsh)
