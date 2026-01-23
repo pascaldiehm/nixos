@@ -14,8 +14,8 @@
     ports = [ 1970 ];
 
     hostKeys = lib.singleton {
-      type = "ed25519";
       path = config.sops.common."ssh/${machine.name}/host".path;
+      type = "ed25519";
     };
 
     settings = {
