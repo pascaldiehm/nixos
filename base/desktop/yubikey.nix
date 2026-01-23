@@ -1,5 +1,8 @@
 { lib, pkgs, ... }: {
-  home-manager.users.pascal.home.packages = [ pkgs.yubikey-manager ];
+  home-manager.users.pascal = {
+    home.packages = [ pkgs.yubikey-manager ];
+    programs.gpg.scdaemonSettings.disable-ccid = true;
+  };
 
   security.pam.u2f = {
     enable = true;
@@ -14,11 +17,9 @@
     pcscd.enable = true;
 
     udev.extraRules = ''
-      ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-unlock" ''
-        ${lib.getExe pkgs.yubikey-manager} list --serials | grep -q 16869449 && ${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions || true
-      ''}"
+      ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", ENV{ID_SERIAL_SHORT}=="0016869449", RUN+="${lib.getExe' pkgs.systemd "loginctl"} unlock-sessions"
 
-      ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="1050/407/543", RUN+="${pkgs.writeShellScript "yubikey-lock" ''
+      ACTION=="remove", SUBSYSTEM=="input", ENV{PRODUCT}=="3/1050/407/110", ENV{ID_SERIAL_SHORT}=="0016869449", RUN+="${pkgs.writeShellScript "yubikey-lock" ''
         for DEVICE in /dev/input/event*; do
           ${lib.getExe pkgs.evtest} --query "$DEVICE" EV_KEY KEY_LEFTCTRL || exit 0
         done
