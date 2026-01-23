@@ -345,7 +345,11 @@
 
         telescope = {
           enable = true;
-          extensions.fzf-native.enable = true;
+
+          extensions = {
+            fzf-native.enable = true;
+            ui-select.enable = true;
+          };
 
           keymaps = {
             "<Space>a" = "spell_suggest";
@@ -371,13 +375,14 @@
 
           settings.defaults = {
             file_ignore_patterns = [ "^.git/" ];
+            layout_strategy = "flex";
 
             mappings.i = {
-              "<A-Return>".__raw = "require('telescope.actions').select_tab";
-              "<A-S-q>".__raw = "require('telescope.actions').smart_add_to_qflist";
-              "<A-q>".__raw = "require('telescope.actions').smart_send_to_qflist";
-              "<Esc>".__raw = "require('telescope.actions').close";
-              "<S-Return>".__raw = "require('telescope.actions').select_vertical";
+              "<A-Return>" = "select_tab";
+              "<A-S-q>" = "smart_add_to_qflist";
+              "<A-q>" = "smart_send_to_qflist";
+              "<Esc>" = "close";
+              "<S-Return>" = "select_vertical";
             };
 
             vimgrep_arguments = [
