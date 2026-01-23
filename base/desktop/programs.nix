@@ -33,8 +33,12 @@
     ];
 
     programs = {
-      kitty.enable = true;
       rofi.enable = true;
+
+      kitty = {
+        enable = true;
+        settings.scrollback_pager_history_size = 1024;
+      };
     };
 
     services = {
