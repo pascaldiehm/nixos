@@ -47,6 +47,7 @@
         nx.x = "\"_x";
 
         n = {
+          "<C-j>" = "m`J``";
           "<Space><Return>" = "<Cmd>terminal<CR>i";
           "<Space><Space>" = "<Cmd>Oil<CR>";
           X = "\"_D";
