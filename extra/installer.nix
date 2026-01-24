@@ -1,5 +1,5 @@
 { lib, modulesPath, pkgs, ... }: {
-  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
+  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ../overlay ];
   console.keyMap = "de";
   environment.systemPackages = [ (pkgs.writeShellScriptBin "nixinstall" "nix run github:pdiehm/nixos#install") ];
   nixpkgs.hostPlatform = "x86_64-linux";
