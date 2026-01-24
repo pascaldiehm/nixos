@@ -41,11 +41,10 @@ NixOS is a fully declarative Linux distribution - and this repository contains t
 ## Structure
 
 - [flake.nix](flake.nix): Entry point
-- [lib.nix](lib.nix): Helper functions
 - [machines.json](machines.json): List of machines
 - [apps](apps/): Scripts exported by flake
 - [base](base/): Shared configuration
-- [extra](extra/): Additional modules
+- [extra](extra/): Additional nix files
 - [machines](machines/): Machine-specific configuration
 - [modules](modules/): Custom options
 - [overlay](overlay/): Custom packages and overrides
