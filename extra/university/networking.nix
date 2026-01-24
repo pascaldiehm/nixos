@@ -71,9 +71,16 @@
     };
   };
 
+  # HACK: https://github.com/NixOS/nixpkgs/issues/480355
+  systemd.services.wpa_supplicant.serviceConfig.BindReadOnlyPaths = [
+    config.sops.secrets."university/eduroam/ca-cert".path
+    config.sops.secrets."university/eduroam/client-cert".path
+    config.sops.secrets."university/eduroam/private-key".path
+  ];
+
   sops.secrets = {
-    "university/eduroam/ca-cert" = { };
-    "university/eduroam/client-cert" = { };
-    "university/eduroam/private-key" = { };
+    "university/eduroam/ca-cert".owner = "wpa_supplicant";
+    "university/eduroam/client-cert".owner = "wpa_supplicant";
+    "university/eduroam/private-key".owner = "wpa_supplicant";
   };
 }
