@@ -8,7 +8,7 @@
   };
 
   services = {
-    backup."/home/pascal/shared" = { };
+    backup.targets."/home/pascal/shared" = { };
     openssh.authorizedKeysFiles = [ config.sops.secrets."bowser/backup-key".path ];
   };
 }

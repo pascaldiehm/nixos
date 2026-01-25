@@ -8,7 +8,7 @@
     ".local/share/supertuxkart"
   ];
 
-  services.backup = {
+  services.backup.targets = {
     "/home/pascal/.config/retroarch".include = [ "config" "playlists" "retroarch.cfg" "roms" "saves" ];
     "/home/pascal/.config/supertuxkart" = { };
     "/home/pascal/.local/share/PrismLauncher".include = [ "accounts.json" "icons" "instances" "prismlauncher.cfg" ];

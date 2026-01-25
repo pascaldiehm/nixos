@@ -2,11 +2,16 @@
   environment.persistence."/perm".users.pascal.directories = [ "docker" ];
 
   services.backup = {
-    "/home/pascal/docker".include = [ "**/.env" ];
+    postStart = "systemctl start docker.service";
+    preStart = "systemctl stop docker.service";
 
-    "/var/lib/docker/volumes" = {
-      excludeRegex = [ "[0-9a-f]{64}" ];
-      include = [ "*/" ];
+    targets = {
+      "/home/pascal/docker".include = [ "**/.env" ];
+
+      "/var/lib/docker/volumes" = {
+        excludeRegex = [ "[0-9a-f]{64}" ];
+        include = [ "*/" ];
+      };
     };
   };
 }

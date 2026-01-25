@@ -7,11 +7,13 @@ function dup() {
 }
 
 if [ "$#" = 0 ]; then
+  "${PRE_START}"
   dup cleanup --force "${TARGET}/${MACHINE}"
   dup remove-all-but-n-full --force 2 "${TARGET}/${MACHINE}"
 
   # shellcheck disable=SC2086
   dup incremental --full-if-older-than 1M / "${TARGET}/${MACHINE}" ${SPEC} --exclude "**"
+  "${POST_START}"
 elif [ "$1" = "help" ]; then
   echo "Usage: backup [command] [args...]"
   echo

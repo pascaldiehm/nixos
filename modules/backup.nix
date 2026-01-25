@@ -1,27 +1,41 @@
-{ config, lib, machine, pkgs, ... }: {
-  options.services.backup = lib.mkOption {
-    default = { };
+{ config, lib, machine, pkgs, ... }: let
+  cfg = config.services.backup;
+in {
+  options.services.backup = {
+    postStart = lib.mkOption {
+      default = "";
+      type = lib.types.lines;
+    };
 
-    type = lib.types.attrsOf (
-      lib.types.submodule {
-        options = {
-          excludeGlob = lib.mkOption {
-            default = [ ];
-            type = lib.types.listOf lib.types.str;
-          };
+    preStart = lib.mkOption {
+      default = "";
+      type = lib.types.lines;
+    };
 
-          excludeRegex = lib.mkOption {
-            default = [ ];
-            type = lib.types.listOf lib.types.str;
-          };
+    targets = lib.mkOption {
+      default = { };
 
-          include = lib.mkOption {
-            default = null;
-            type = lib.types.nullOr (lib.types.listOf lib.types.str);
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            excludeGlob = lib.mkOption {
+              default = [ ];
+              type = lib.types.listOf lib.types.str;
+            };
+
+            excludeRegex = lib.mkOption {
+              default = [ ];
+              type = lib.types.listOf lib.types.str;
+            };
+
+            include = lib.mkOption {
+              default = null;
+              type = lib.types.nullOr (lib.types.listOf lib.types.str);
+            };
           };
-        };
-      }
-    );
+        }
+      );
+    };
   };
 
   config = {
@@ -36,12 +50,14 @@
           loc: cfg: lib.map (glob: [ "--exclude" "${loc}/${glob}" ]) cfg.excludeGlob
           ++ lib.map (re: [ "--exclude-regexp" "${lib.escapeRegex loc}/${re}" ]) cfg.excludeRegex
           ++ (if cfg.include == null then [ "--include" loc ] else lib.map (inc: [ "--include" "${loc}/${inc}" ]) cfg.include)
-        ) config.services.backup;
+        ) cfg.targets;
       in lib.readFile ../resources/scripts/backup.sh
       |> lib.templateString {
         BACKUP_KEY = config.sops.common."backup/key".path;
         BACKUP_PASS = config.sops.common."backup/pass".path;
         MACHINE = machine.name;
+        POST_START = pkgs.writeShellScript "backup-post" cfg.postStart;
+        PRE_START = pkgs.writeShellScript "backup-pre" cfg.preStart;
         SPEC = lib.flatten paths |> lib.escapeShellArgs;
         TARGET = "sftp://pascal@bowser:1970/archive/Backups";
       };
@@ -55,7 +71,7 @@
         description = "Backup local files";
         preStart = "until ${lib.getExe pkgs.netcat} -z bowser 1970; do sleep 1; done";
         requires = [ "network-online.target" ];
-        startAt = "daily";
+        startAt = "00:30";
 
         serviceConfig = {
           ExecStart = lib.getExe pkgs.scripts.backup;
