@@ -17,13 +17,13 @@
       pkgs.hexedit
       pkgs.imagemagickBig
       pkgs.nmap
-      pkgs.pd.ha
-      pkgs.pd.mk
-      pkgs.pd.mnt
-      pkgs.pd.repo
-      pkgs.pd.wp-toggle
       pkgs.poppler-utils
       pkgs.rsync
+      pkgs.scripts.ha
+      pkgs.scripts.mk
+      pkgs.scripts.mnt
+      pkgs.scripts.repo
+      pkgs.scripts.wp-toggle
       pkgs.steam-run-free
       pkgs.vhs
       pkgs.wf-recorder

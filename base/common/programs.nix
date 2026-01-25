@@ -16,10 +16,10 @@
     pkgs.ncdu
     pkgs.netcat
     pkgs.pciutils
-    pkgs.pd.ntfy
-    pkgs.pd.nx
     pkgs.pv
     pkgs.ripgrep
+    pkgs.scripts.ntfy
+    pkgs.scripts.nx
     pkgs.tcpdump
     pkgs.unzip
     pkgs.usbutils

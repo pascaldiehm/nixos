@@ -38,7 +38,7 @@
       };
 
       settings = {
-        NOTIFYCMD = "${pkgs.writeShellScript "ntfy-ups" ''${lib.getExe pkgs.pd.ntfy} ups "$1"''}";
+        NOTIFYCMD = "${pkgs.writeShellScript "ntfy-ups" ''${lib.getExe pkgs.scripts.ntfy} ups "$1"''}";
         NOTIFYFLAG = lib.map (event: [ event "SYSLOG+EXEC" ]) [ "ONLINE" "ONBATT" "LOWBATT" "FSD" "SHUTDOWN" "REPLBATT" ];
       };
     };

@@ -26,7 +26,7 @@
 
   config = {
     environment.persistence."/perm".directories = [ "/var/lib/duplicity" ];
-    home-manager.users.pascal.home.packages = [ pkgs.pd.backup ];
+    home-manager.users.pascal.home.packages = [ pkgs.scripts.backup ];
 
     programs.scripts.backup = {
       deps = [ pkgs.duplicity ];
@@ -58,7 +58,7 @@
         startAt = "daily";
 
         serviceConfig = {
-          ExecStart = lib.getExe pkgs.pd.backup;
+          ExecStart = lib.getExe pkgs.scripts.backup;
           Type = "oneshot";
         };
       };

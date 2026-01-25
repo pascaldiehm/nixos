@@ -1,4 +1,5 @@
 pkgs: prev: {
+  mpv = prev.mpv.override { scripts = [ ]; };
   nix = prev.nixVersions.latest; # HACK: nix >=2.32
   nixfmt = prev.nixfmt.overrideAttrs (prev: { patches = (prev.patches or [ ]) ++ [ patches/nixfmt.patch ]; });
   pagmo2 = prev.pagmo2.overrideAttrs (prev: { outputs = [ "out" ]; }); # HACK: https://nixpkgs-tracker.ocfox.me/?pr=480871
