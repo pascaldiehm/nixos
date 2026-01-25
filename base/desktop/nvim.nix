@@ -93,7 +93,6 @@
             gP.__raw = "vim.diagnostic.goto_prev";
             ga.__raw = "vim.lsp.buf.code_action";
             gd.__raw = "vim.lsp.buf.definition";
-            gh.__raw = "vim.lsp.buf.hover";
             gi.__raw = "vim.lsp.buf.implementation";
             gp.__raw = "vim.diagnostic.goto_next";
             gr.__raw = "vim.lsp.buf.empty_rename";
