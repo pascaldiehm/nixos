@@ -148,7 +148,6 @@
         ignorecase = true;
         linebreak = true;
         list = true;
-        mouse = "";
         number = true;
         relativenumber = true;
         scrolloff = 8;
