@@ -30,25 +30,21 @@
       };
     };
 
-    services = {
-      hyprpaper.settings.splash = false;
+    services.hypridle = {
+      enable = true;
 
-      hypridle = {
-        enable = true;
+      settings = {
+        general = {
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+          before_sleep_cmd = "loginctl lock-session";
+          lock_cmd = "pidof hyprlock || hyprlock";
+          unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
+        };
 
-        settings = {
-          general = {
-            after_sleep_cmd = "hyprctl dispatch dpms on";
-            before_sleep_cmd = "loginctl lock-session";
-            lock_cmd = "pidof hyprlock || hyprlock";
-            unlock_cmd = "pkill -USR1 hyprlock && hyprctl dispatch dpms on";
-          };
-
-          listener = {
-            on-resume = "hyprctl dispatch dpms on";
-            on-timeout = "hyprctl dispatch dpms off";
-            timeout = 300;
-          };
+        listener = {
+          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = "hyprctl dispatch dpms off";
+          timeout = 300;
         };
       };
     };
