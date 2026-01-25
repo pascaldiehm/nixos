@@ -350,6 +350,8 @@
           };
 
           keymaps = {
+            "<Space>/" = "search_history";
+            "<Space>:" = "command_history";
             "<Space>a" = "spell_suggest";
             "<Space>b" = "buffers";
             "<Space>c" = "git_commits";
