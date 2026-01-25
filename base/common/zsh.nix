@@ -10,13 +10,6 @@
     setOptions = [ "PUSHD_SILENT" ];
     syntaxHighlighting.enable = true;
 
-    plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) {
-      zsh-completions = {
-        completions = [ "share/zsh/site-functions" ];
-        src = pkgs.zsh-completions;
-      };
-    };
-
     initContent = lib.mkMerge [
       (lib.readFile ../../resources/zsh/aliases.zsh)
       (lib.readFile ../../resources/zsh/completion.zsh)
@@ -24,5 +17,12 @@
       (lib.readFile ../../resources/zsh/input.zsh)
       (lib.readFile ../../resources/zsh/prompt.zsh)
     ];
+
+    plugins = lib.mapAttrsToList (name: value: value // { inherit name; }) {
+      zsh-completions = {
+        completions = [ "share/zsh/site-functions" ];
+        src = pkgs.zsh-completions;
+      };
+    };
   };
 }
