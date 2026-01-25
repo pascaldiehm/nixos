@@ -3,6 +3,7 @@
 export KEYTIMEOUT=1
 
 bindkey -rp ""
+bindkey -M vicmd -r :
 bindkey -R " "-"~" self-insert
 bindkey -R "\M-^@"-"\M-^?" self-insert
 
