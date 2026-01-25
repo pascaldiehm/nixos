@@ -6,6 +6,7 @@ alias l="ls --all --long --group"
 alias ls="eza"
 alias lsblk="lsblk --output NAME,TYPE,SIZE,PARTLABEL,LABEL,FSTYPE,MOUNTPOINTS"
 alias rg="rg --follow --hidden --smart-case"
+alias tx="tmux attach"
 alias which="which -as"
 
 if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
