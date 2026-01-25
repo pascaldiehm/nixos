@@ -39,7 +39,19 @@
 
       settings = {
         NOTIFYCMD = "${pkgs.writeShellScript "ntfy-ups" ''${lib.getExe pkgs.scripts.ntfy} ups "$1"''}";
-        NOTIFYFLAG = lib.map (event: [ event "SYSLOG+EXEC" ]) [ "ONLINE" "ONBATT" "LOWBATT" "FSD" "SHUTDOWN" "REPLBATT" ];
+
+        NOTIFYFLAG = lib.map (event: [ event "SYSLOG+EXEC" ]) [
+          "FSD"
+          "LOWBATT"
+          "NOCOMM"
+          "NOPARENT"
+          "NOTOVER"
+          "ONBATT"
+          "ONLINE"
+          "OVER"
+          "REPLBATT"
+          "SHUTDOWN"
+        ];
       };
     };
 
