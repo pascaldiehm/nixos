@@ -1,4 +1,5 @@
 { inputs, machine, ... }: {
+  hardware.enableRedistributableFirmware = true;
   networking.hostName = machine.name;
   nixpkgs.hostPlatform = "x86_64-linux";
   services.fwupd.enable = true;
