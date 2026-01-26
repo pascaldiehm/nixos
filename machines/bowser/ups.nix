@@ -43,7 +43,6 @@
         NOTIFYFLAG = lib.map (event: [ event "SYSLOG+EXEC" ]) [
           "FSD"
           "LOWBATT"
-          "NOCOMM"
           "NOPARENT"
           "NOTOVER"
           "ONBATT"
