@@ -1,13 +1,9 @@
 #!/usr/bin/env zsh
 
-export KEYTIMEOUT=1
-
 bindkey -rp ""
-bindkey -M vicmd -r :
 bindkey -R " "-"~" self-insert
 bindkey -R "\M-^@"-"\M-^?" self-insert
 
-bindkey "^[" vi-cmd-mode                         # Escape
 bindkey "^M" accept-line                         # Enter
 bindkey "^I" expand-or-complete                  # Tab
 bindkey "^[[C" forward-char                      # Right
