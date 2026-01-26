@@ -71,11 +71,11 @@ in {
         description = "Backup local files";
         preStart = "until ${lib.getExe pkgs.netcat} -z bowser 1970; do sleep 1; done";
         requires = [ "network-online.target" ];
-        startAt = "Mon 00:30";
+        startAt = "00:30";
 
         serviceConfig = {
           ExecStart = lib.getExe pkgs.scripts.backup;
-          Type = "oneshot";
+          Type = "idle";
         };
       };
     };
