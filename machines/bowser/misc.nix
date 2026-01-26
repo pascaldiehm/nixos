@@ -4,7 +4,7 @@
 
   environment = {
     persistence."/perm".users.pascal.directories = [ "shared" ];
-    systemPackages = [ pkgs.nix-serve ];
+    systemPackages = [ pkgs.nix-serve-ng ];
   };
 
   services = {
