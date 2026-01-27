@@ -2,8 +2,8 @@
   environment.persistence."/perm".users.pascal.directories = [ "docker" ];
 
   services.backup = {
-    postStart = "systemctl start docker.service";
-    preStart = "systemctl stop docker.service";
+    postStart = "systemctl start docker.service docker.socket";
+    preStart = "systemctl stop docker.service docker.socket";
 
     targets = {
       "/home/pascal/docker".include = [ "**/.env" ];
