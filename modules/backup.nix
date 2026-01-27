@@ -75,6 +75,7 @@ in {
 
         serviceConfig = {
           ExecStart = lib.getExe pkgs.scripts.backup;
+          TimeoutStartSec = "infinity";
           Type = "idle";
         };
       };

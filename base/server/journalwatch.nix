@@ -7,6 +7,7 @@
     requires = [ "network-online.target" ];
     restartIfChanged = false;
     script = lib.readFile ../../resources/scripts/journalwatch.sh;
+    serviceConfig.TimeoutStartSec = "infinity";
     wantedBy = [ "multi-user.target" ];
   };
 }
