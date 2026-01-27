@@ -62,7 +62,7 @@ if [ "$NIXOS_MACHINE_TYPE" = "desktop" ]; then
   }
 
   compdef _nothing ha
-  compdef '_arguments ":mode:(cmake flake license tex tex-letter)"' mk
+  compdef '_arguments ":what:($(mk))" ":where:_files"' mk
   compdef _files mktex
   compdef _files mnt
   compdef _repo repo
