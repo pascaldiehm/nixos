@@ -38,7 +38,7 @@ while read -r FILE; do
 
     FAILED=1
   fi
-done < <(find . -name "*.nix")
+done < <(find . -path ./resources -prune -o -name "*.nix")
 echo "::endgroup::"
 
 echo "::group::Lint shell"
